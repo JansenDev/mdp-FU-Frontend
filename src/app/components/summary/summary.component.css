@@ -1,0 +1,22 @@
+#summary {
+    position: absolute;
+    padding: 1rem 12rem 2rem 2rem;
+    margin-right: 2rem;
+    right: 0rem;
+    border: solid black;
+}
+
+.tag {
+    color:blue;
+    font-weight: bold;
+}
+
+.value {
+    font-weight: bold;
+}
+
+.period {
+    position: absolute;
+    right: 0rem;
+    padding-right: 1rem;
+}
