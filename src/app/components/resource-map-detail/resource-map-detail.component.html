@@ -1,5 +1,44 @@
 <p>resource-map-detail works!</p>
 <button (click)="toggleDetail()" mat-raised-button color="primary">Abrir detalle</button>
 <aside class="detail" [class.active]="showDetail">
+  <mat-tab-group (selectedTabChange)="tabChanged($event)" mat-stretch-tabs dynamicHeight backgroundColor="primary">
+    <mat-tab label="Productividad Horas">
+      <div class="detail-content">
+        <h2>Productividad Horas</h2>
+        <ul>
+          <li>Horas servicios</li>
+          <li>Licencias</li>
+          <li>Faltas</li>
+          <li>Vacaciones</li>
+          <li>Horas extras</li>
+          <li>Horas asignadas</li>
+          <li>Horas facturables</li>
+          <li>Eficiencia</li>
+          <li>Rendimiento</li>
+          <li>Capacidad</li>
+        </ul>
+      </div>
+    </mat-tab>
+    <mat-tab label="Datos de Contrato">
+      <div class="detail-content">
+        <h2>Datos de Contrato</h2>
+        <ul>
+          <li>Nro de Documento</li>
+          <li>Nombres y Apellidos</li>
+          <li>Modalidad</li>
+          <li>Fin de contrato</li>
+          <li>Salario</li>
+          <li>Bono</li>
+          <li>EPS</li>
+          <li>CLM</li>
+        </ul>
+      </div>
+    </mat-tab>
 
+    <mat-tab label="Servicios Asignados">
+      <div class="detail-content">
+        <h2>Servicios asignados</h2>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
 </aside>
