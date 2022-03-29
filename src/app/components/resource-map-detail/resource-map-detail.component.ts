@@ -8,8 +8,13 @@ import { Component, OnInit } from '@angular/core';
 export class ResourceMapDetailComponent implements OnInit {
 
   constructor() { }
+  showDetail = false;
 
   ngOnInit(): void {
+  }
+
+  toggleDetail(){
+    this.showDetail = !this.showDetail;
   }
 
 }

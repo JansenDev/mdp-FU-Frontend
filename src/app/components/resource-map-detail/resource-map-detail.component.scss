@@ -1,0 +1,17 @@
+@import "../../../assets/scss/variables.scss";
+
+.detail {
+  position: fixed;
+  top: 0;
+  left: 65%;
+  bottom: 0;
+  right: 0;
+  background: $secondary;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(+100%);
+  transition: all ease-out .5s;
+  &.active {
+    transform: translateX(0);
+  }
+}

@@ -10,9 +10,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { ComponentModule } from './components/component.module';
 import { PageModule } from './pages/page.module';
+import { ResourceMapDetailComponent } from './components/resource-map-detail/resource-map-detail.component';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    ResourceMapDetailComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -22,7 +27,8 @@ import { PageModule } from './pages/page.module';
     ReactiveFormsModule,
 
     ComponentModule,
-    PageModule
+    PageModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent],
