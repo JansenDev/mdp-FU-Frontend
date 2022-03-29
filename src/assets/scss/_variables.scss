@@ -1,26 +1,28 @@
-// color
-$primary: #2e4394;
-$secondary: #d8d8d8;
-$white: #fff;
-$black: #000;
-$gray: #adb5bd;
-$dark: #2c2b2b;
+:root {
+  // color
+  --primary: #2e4394;
+  --secondary: #d8d8d8;
+  --white: #fff;
+  --black: #000;
+  --gray: #adb5bd;
+  --dark: #2c2b2b;
 
-// more colors
-$cyan: #0dcaf0;
-$teal: #20c997;
-$green: #198754;
-$orange: #fd7e14;
-$red: #dc3545;
-$pink: #d63384;
-$purple: #6f42c1;
-$indigo: #6610f2;
-$blue: #0d6efd;
+  // more colors
+  --cyan: #0dcaf0;
+  --teal: #20c997;
+  --green: #198754;
+  --orange: #fd7e14;
+  --red: #dc3545;
+  --pink: #d63384;
+  --purple: #6f42c1;
+  --indigo: #6610f2;
+  --blue: #0d6efd;
 
-// color__indicador
-$indicador-success: #30fc8e;
-$indicador-warning: #fcf430;
-$indicador-success: #ff5757;
+  // color__indicador
+  --indicador-success: #30fc8e;
+  --indicador-warning: #fcf430;
+  --indicador-success: #ff5757;
 
-// font
-$font-family: "roboto", sans-serif;
+  // font
+  --font-family: Roboto, "Helvetica Neue", sans-serif;
+}
