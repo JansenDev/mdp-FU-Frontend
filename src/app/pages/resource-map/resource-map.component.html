@@ -4,10 +4,10 @@
   <h1>Mapa de Recursos Periodo MM-YYYY🌡️</h1>
 </div>
 
-<form class="filters--container">
+<form  class="filters--container" (submit)="ngSubmit()">
   <mat-form-field>
     <mat-label>Periodo</mat-label>
-    <mat-select>
+    <mat-select formControlName="cboxPeriodo">
       <mat-option value="one">Periodo 1</mat-option>
       <mat-option value="two">Periodo 2</mat-option>
       <mat-option value="two">Periodo 3</mat-option>
@@ -60,7 +60,8 @@
   </datalist>
 
   <div class="filters--btns">
-    <button type="submit" mat-raised-button color="primary" class="">
+    <button>normal</button>
+    <button mat-raised-button color="primary" class="">
       Buscar
     </button>
     <button mat-raised-button color="accent" class="">Apertura</button>
@@ -71,61 +72,61 @@
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="ln">
       <th mat-header-cell *matHeaderCellDef>LN</th>
-      <td mat-cell *matCellDef="let element">{{ element.position }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.linea_negocio }}</td>
     </ng-container>
 
     <ng-container matColumnDef="colaborador">
       <th mat-header-cell *matHeaderCellDef>Colaborador</th>
-      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.cod_colaborador }}</td>
     </ng-container>
 
     <ng-container matColumnDef="perfil">
       <th mat-header-cell *matHeaderCellDef>Perfil</th>
-      <td mat-cell *matCellDef="let element">{{ element.weight }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.perfil }}</td>
     </ng-container>
 
     <!-- Symbol Column -->
     <ng-container matColumnDef="nivel">
       <th mat-header-cell *matHeaderCellDef>Nivel</th>
-      <td mat-cell *matCellDef="let element">{{ element.symbol }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.nivel }}</td>
     </ng-container>
 
     <ng-container matColumnDef="f_inicio">
       <th mat-header-cell *matHeaderCellDef>f_inicio</th>
-      <td mat-cell *matCellDef="let element">{{ element.position }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.fecha_inicio }}</td>
     </ng-container>
 
     <ng-container matColumnDef="f_fin">
       <th mat-header-cell *matHeaderCellDef>f_fin</th>
-      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.fecha_fin }}</td>
     </ng-container>
 
     <ng-container matColumnDef="asignacion">
       <th mat-header-cell *matHeaderCellDef>asignacion</th>
-      <td mat-cell *matCellDef="let element">{{ element.weight }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.asignacion }}</td>
     </ng-container>
 
     <ng-container matColumnDef="clm_efectivo">
       <th mat-header-cell *matHeaderCellDef>clm_efectivo</th>
-      <td mat-cell *matCellDef="let element">{{ element.symbol }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.clm_efectivo }}</td>
     </ng-container>
 
     <ng-container matColumnDef="produccion">
       <th mat-header-cell *matHeaderCellDef>produccion</th>
-      <td mat-cell *matCellDef="let element">{{ element.position }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.produccion }}</td>
     </ng-container>
 
     <ng-container matColumnDef="productividad">
       <th mat-header-cell *matHeaderCellDef>productividad</th>
       <td mat-cell *matCellDef="let element">
-        {{ element.weight }}
+        {{ element.productividad }}
         <span class="circle productivity--success"></span>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="estatus">
       <th mat-header-cell *matHeaderCellDef>estatus</th>
-      <td mat-cell *matCellDef="let element">{{ element.weight }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.estado }}</td>
     </ng-container>
 
     <tr
@@ -135,8 +136,8 @@
     ></tr>
     <tr
       mat-row
-      (click)="activeRow = row"
-      [class.active]="activeRow == row"
+      (click)="rowSelected = row"
+      [class.active]="rowSelected == row"
       *matRowDef="let row; columns: displayedColumns"
     ></tr>
   </table>

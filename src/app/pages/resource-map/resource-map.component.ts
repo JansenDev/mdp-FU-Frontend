@@ -1,150 +1,9 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-  name1: string;
-  position1: number;
-  weight1: number;
-  symbol1: string;
-  name2: string;
-  position2: number;
-  weight2: number;
-  symbol2: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {
-    position: 1,
-    name: 'Hydrogen',
-    weight: 1.0079,
-    symbol: 'H',
-    position1: 1,
-    name1: 'Hydrogen',
-    weight1: 1.0079,
-    symbol1: 'H',
-    position2: 1,
-    name2: 'Hydrogen',
-    weight2: 1.0079,
-    symbol2: 'H',
-  },
-  {
-    position: 2,
-    name: 'Hydrogen1',
-    weight: 2.0079,
-    symbol: 'H',
-    position1: 1,
-    name1: 'Hydrogen',
-    weight1: 1.0079,
-    symbol1: 'H',
-    position2: 1,
-    name2: 'Hydrogen',
-    weight2: 1.0079,
-    symbol2: 'H',
-  },
-  {
-    position: 3,
-    name: 'Hydrogen3',
-    weight: 1.0079,
-    symbol: 'H',
-    position1: 1,
-    name1: 'Hydrogen',
-    weight1: 1.0079,
-    symbol1: 'H',
-    position2: 1,
-    name2: 'Hydrogen',
-    weight2: 1.0079,
-    symbol2: 'H',
-  },
-  {
-    position: 4,
-    name: 'Hydrogen4',
-    weight: 1.0079,
-    symbol: 'H',
-    position1: 1,
-    name1: 'Hydrogen',
-    weight1: 1.0079,
-    symbol1: 'H',
-    position2: 1,
-    name2: 'Hydrogen',
-    weight2: 1.0079,
-    symbol2: 'H',
-  },
-  {
-    position: 4,
-    name: 'Hydrogen5',
-    weight: 1.0079,
-    symbol: 'H',
-    position1: 1,
-    name1: 'Hydrogen',
-    weight1: 1.0079,
-    symbol1: 'H',
-    position2: 1,
-    name2: 'Hydrogen',
-    weight2: 1.0079,
-    symbol2: 'H',
-  },
-  {
-    position: 4,
-    name: 'Hydrogen6',
-    weight: 1.0079,
-    symbol: 'H',
-    position1: 1,
-    name1: 'Hydrogen',
-    weight1: 1.0079,
-    symbol1: 'H',
-    position2: 1,
-    name2: 'Hydrogen',
-    weight2: 1.0079,
-    symbol2: 'H',
-  },
-  {
-    position: 4,
-    name: 'Hydrogen7',
-    weight: 1.0079,
-    symbol: 'H',
-    position1: 1,
-    name1: 'Hydrogen',
-    weight1: 1.0079,
-    symbol1: 'H',
-    position2: 1,
-    name2: 'Hydrogen',
-    weight2: 1.0079,
-    symbol2: 'H',
-  },
-  {
-    position: 4,
-    name: 'Hydrogen8',
-    weight: 1.0079,
-    symbol: 'H',
-    position1: 1,
-    name1: 'Hydrogen',
-    weight1: 1.0079,
-    symbol1: 'H',
-    position2: 1,
-    name2: 'Hydrogen',
-    weight2: 1.0079,
-    symbol2: 'H',
-  },
-  {
-    position: 4,
-    name: 'Hydrogen9',
-    weight: 1.0079,
-    symbol: 'H',
-    position1: 1,
-    name1: 'Hydrogen',
-    weight1: 1.0079,
-    symbol1: 'H',
-    position2: 1,
-    name2: 'Hydrogen',
-    weight2: 1.0079,
-    symbol2: 'H',
-  },
-];
+import { IResourceResponse } from 'src/app/core/models/resource.model';
+import { ResourceService } from '../../core/services/resource.service';
 
 @Component({
   selector: 'app-resource-map',
@@ -153,11 +12,23 @@ const ELEMENT_DATA: PeriodicElement[] = [
   encapsulation: ViewEncapsulation.None,
 })
 export class ResourceMapComponent implements OnInit {
-  constructor() {}
+  constructor(
+    private resourceService: ResourceService,
+    private formBuilder: FormBuilder
+  ) {
+    this.resourceForm = this.formBuilder.group({
+      cboxPeriodo: [],
+    });
+  }
 
-  ngOnInit(): void {}
-
-  activeRow = {};
+  ngOnInit(): void {
+    this.getResourceByPeriodClientProfileNames(
+      2,
+      '2022-02',
+      'Industrias Stark'
+    );
+  }
+  rowSelected = {};
   displayedColumns: string[] = [
     'ln',
     'colaborador',
@@ -171,12 +42,36 @@ export class ResourceMapComponent implements OnInit {
     'produccion',
     'productividad',
   ];
+  @ViewChild(MatPaginator) paginator: MatPaginator = {} as MatPaginator;
+  dataSource: MatTableDataSource<IResourceResponse> =
+    new MatTableDataSource<IResourceResponse>([]);
+  resourceForm: FormGroup;
 
-  @ViewChild(MatPaginator)
-  paginator: MatPaginator = {} as MatPaginator;
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  getResourceByPeriodClientProfileNames(
+    idUser: number,
+    period: string,
+    client: string,
+    profile?: string,
+    names?: string
+  ) {
+    this.resourceService
+      .findResourceByPeriodClientProfileNames(
+        idUser,
+        period,
+        client,
+        profile,
+        names
+      )
+      .subscribe((resourceResponse) => {
+        console.log(resourceResponse);
+        this.dataSource = new MatTableDataSource<IResourceResponse>(
+          resourceResponse
+        );
+        this.dataSource.paginator = this.paginator;
+      });
+  }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+  ngSubmit() {
+    console.log('Submit');
   }
 }
