@@ -1,0 +1,154 @@
+<app-header></app-header>
+
+<div class="title">
+  <h1>Mapa de Recursos Periodo MM-YYYY🌡️</h1>
+</div>
+
+<form class="filters--container">
+  <mat-form-field>
+    <mat-label>Periodo</mat-label>
+    <mat-select>
+      <mat-option value="one">Periodo 1</mat-option>
+      <mat-option value="two">Periodo 2</mat-option>
+      <mat-option value="two">Periodo 3</mat-option>
+      <mat-option value="two">Periodo 4</mat-option>
+      <mat-option value="two">Periodo 5</mat-option>
+      <mat-option value="two">Periodo 6</mat-option>
+      <mat-option value="two">Periodo 7</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Cliente</mat-label>
+    <mat-select>
+      <mat-option value="one">Cliente 1</mat-option>
+      <mat-option value="one">Cliente 2</mat-option>
+      <mat-option value="one">Cliente 3</mat-option>
+      <mat-option value="one">Cliente 4</mat-option>
+      <mat-option value="one">Cliente 5</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Perfil</mat-label>
+    <mat-select>
+      <mat-option value="one">Perfil 1</mat-option>
+      <mat-option value="one">Perfil 2</mat-option>
+      <mat-option value="one">Perfil 3</mat-option>
+      <mat-option value="one">Perfil 4</mat-option>
+      <mat-option value="one">Perfil 5</mat-option>
+      <mat-option value="one">Perfil 6</mat-option>
+      <mat-option value="one">Perfil 7</mat-option>
+      <mat-option value="one">Perfil 8</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="filters--search">
+    <mat-label>Buscar</mat-label>
+    <input
+      matInput
+      placeholder="Nombres y apellidos"
+      list="data"
+      autocomplete="off"
+    />
+  </mat-form-field>
+
+  <datalist id="data">
+    <option value="Edge"></option>
+    <option value="Firefox"></option>
+    <option value="Chrome"></option>
+    <option value="Opera"></option>
+    <option value="Safari"></option>
+  </datalist>
+
+  <div class="filters--btns">
+    <button type="submit" mat-raised-button color="primary" class="">
+      Buscar
+    </button>
+    <button mat-raised-button color="accent" class="">Apertura</button>
+  </div>
+</form>
+
+<div class="table--container">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="ln">
+      <th mat-header-cell *matHeaderCellDef>LN</th>
+      <td mat-cell *matCellDef="let element">{{ element.position }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="colaborador">
+      <th mat-header-cell *matHeaderCellDef>Colaborador</th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="perfil">
+      <th mat-header-cell *matHeaderCellDef>Perfil</th>
+      <td mat-cell *matCellDef="let element">{{ element.weight }}</td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="nivel">
+      <th mat-header-cell *matHeaderCellDef>Nivel</th>
+      <td mat-cell *matCellDef="let element">{{ element.symbol }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="f_inicio">
+      <th mat-header-cell *matHeaderCellDef>f_inicio</th>
+      <td mat-cell *matCellDef="let element">{{ element.position }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="f_fin">
+      <th mat-header-cell *matHeaderCellDef>f_fin</th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="asignacion">
+      <th mat-header-cell *matHeaderCellDef>asignacion</th>
+      <td mat-cell *matCellDef="let element">{{ element.weight }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="clm_efectivo">
+      <th mat-header-cell *matHeaderCellDef>clm_efectivo</th>
+      <td mat-cell *matCellDef="let element">{{ element.symbol }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="produccion">
+      <th mat-header-cell *matHeaderCellDef>produccion</th>
+      <td mat-cell *matCellDef="let element">{{ element.position }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="productividad">
+      <th mat-header-cell *matHeaderCellDef>productividad</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.weight }}
+        <span class="circle productivity--success"></span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="estatus">
+      <th mat-header-cell *matHeaderCellDef>estatus</th>
+      <td mat-cell *matCellDef="let element">{{ element.weight }}</td>
+    </ng-container>
+
+    <tr
+      mat-header-row
+      *matHeaderRowDef="displayedColumns"
+      class="mat-table--header"
+    ></tr>
+    <tr
+      mat-row
+      (click)="activeRow = row"
+      [class.active]="activeRow == row"
+      *matRowDef="let row; columns: displayedColumns"
+    ></tr>
+  </table>
+</div>
+
+<div class="pagination--container">
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 20]"
+    aria-label="Select page of periodic elements"
+  >
+  </mat-paginator>
+</div>
+
+<!-- <app-test></app-test> -->
+<!-- <app-footer></app-footer> -->
