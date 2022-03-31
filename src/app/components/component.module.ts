@@ -13,8 +13,9 @@ import { ResourceMapDetailComponent } from './resource-map-detail/resource-map-d
     FooterComponent,
     HeaderComponent,
     SummaryComponent,
+    ResourceMapDetailComponent
   ],
   imports: [CommonModule, SharedModule],
-  exports: [TestComponent, FooterComponent, HeaderComponent, SummaryComponent],
+  exports: [TestComponent, FooterComponent, HeaderComponent, SummaryComponent,ResourceMapDetailComponent],
 })
 export class ComponentModule {}
