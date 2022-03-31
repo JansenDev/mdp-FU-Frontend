@@ -1,9 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { IResourceRequest, IResourceResponse } from '../models/resource.model';
+import {
+  IClientResponse,
+  ICollaboratorResponse,
+  IPeriodResponse,
+  IProfileResponse,
+  IResourceRequest,
+  IResourceResponse,
+} from '../models/resource.model';
 
-
+const { url_base } = environment;
 @Injectable({
   providedIn: 'root',
 })
@@ -13,28 +20,49 @@ export class ResourceService {
   findResourceByPeriodClientProfileNames(
     idUser: number,
     period: string,
-    client: string,
-    profile?: string,
-    names?: string
+    codClient: string,
+    codProfile?: string,
+    collaborator?: string
   ) {
-    const { url_base } = environment;
     const URL = `${url_base}/resources/${idUser}/maparecursos`;
 
-    let body: IResourceRequest = {
+    let bodyRequest: IResourceRequest = {
       periodo: period,
-      cliente: client,
+      cod_cliente: parseInt(codClient),
     };
 
-    if (profile) {
-      body['perfil'] = profile;
+    if (codProfile) {
+      bodyRequest['cod_perfil'] = codProfile;
     }
 
-    if (names) {
-      body['names'] = names;
+    if (collaborator) {
+      bodyRequest['cod_colaborador'] = collaborator;
     }
-    //
-    console.log(body);
 
-    return this.httpClient.post<IResourceResponse[]>(URL, body);
+    return this.httpClient.post<IResourceResponse[]>(URL, bodyRequest);
+  }
+
+  findAllPeriods() {
+    const URL = `${url_base}/resources/periodos`;
+
+    return this.httpClient.get<IPeriodResponse[]>(URL);
+  }
+
+  findAllProfiles() {
+    const URL = `${url_base}/resources/perfiles`;
+
+    return this.httpClient.get<IProfileResponse[]>(URL);
+  }
+
+  findAllCollaborator() {
+    const URL = `${url_base}/resources/colaboradores`;
+
+    return this.httpClient.get<ICollaboratorResponse[]>(URL);
+  }
+
+  findClientByUser(idUser: number) {
+    const URL = `${url_base}/resources/${idUser}/clientes`;
+
+    return this.httpClient.get<IClientResponse[]>(URL);
   }
 }

@@ -19,7 +19,6 @@ import { PageModule } from './pages/page.module';
     BrowserAnimationsModule,
 
     HttpClientModule,
-    ReactiveFormsModule,
 
     ComponentModule,
     PageModule
