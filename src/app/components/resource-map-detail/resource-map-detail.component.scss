@@ -6,7 +6,7 @@
   left: 70%;
   bottom: 0;
   right: 0;
-  background: $secondary;
+  background: var(--secondary);
   display: flex;
   flex-direction: column;
   transform: translateX(+100%);
@@ -38,10 +38,10 @@ li {
 }
 
 th.mat-header-cell{
-  background-color: $primary;
-  color: white;
+  background-color: var(--primary);
+  color: var(--white);
 }
 
 mat-tab-group.mat-tab-header{
-  background-color: $primary;
+  background-color: var(--primary);
 }
