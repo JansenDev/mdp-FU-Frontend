@@ -5,10 +5,11 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs'
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [TestpPipe],
-  imports: [CommonModule, MatSliderModule, MatCardModule, MatButtonModule, MatTabsModule],
-  exports: [TestpPipe, MatSliderModule, MatCardModule, MatButtonModule, MatTabsModule],
+  imports: [CommonModule, MatSliderModule, MatCardModule, MatButtonModule, MatTabsModule, MatTableModule],
+  exports: [TestpPipe, MatSliderModule, MatCardModule, MatButtonModule, MatTabsModule, MatTableModule],
 })
 export class SharedModule {}

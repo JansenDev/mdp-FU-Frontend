@@ -3,7 +3,7 @@
 .detail {
   position: fixed;
   top: 0;
-  left: 65%;
+  left: 70%;
   bottom: 0;
   right: 0;
   background: $secondary;
@@ -31,4 +31,17 @@ li {
 
 .detail-content{
   padding: 1.2em;
+}
+
+.service-table{
+  width: 100%;
+}
+
+th.mat-header-cell{
+  background-color: $primary;
+  color: white;
+}
+
+mat-tab-group.mat-tab-header{
+  background-color: $primary;
 }
