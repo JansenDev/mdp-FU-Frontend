@@ -3,11 +3,11 @@
     padding: 1rem 12rem 2rem 2rem;
     margin-right: 2rem;
     right: 0rem;
-    border: solid black;
+    border: solid var(--black);
 }
 
 .tag {
-    color:blue;
+    color:var(--blue);
     font-weight: bold;
 }
 
