@@ -5,10 +5,15 @@ import { HomeComponent } from './home/home.component';
 import { ComponentModule } from '../components/component.module';
 import { ResourceMapComponent } from './resource-map/resource-map.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ResourceMapDetailComponent } from '../components/resource-map-detail/resource-map-detail.component';
 
 @NgModule({
-  declarations: [HomeComponent, ResourceMapComponent],
+  declarations: [
+    HomeComponent,
+    ResourceMapComponent,
+    ResourceMapDetailComponent,
+  ],
   imports: [CommonModule, SharedModule, ComponentModule, ReactiveFormsModule],
-  exports: [HomeComponent, ResourceMapComponent],
+  exports: [HomeComponent, ResourceMapComponent, ResourceMapDetailComponent],
 })
 export class PageModule {}

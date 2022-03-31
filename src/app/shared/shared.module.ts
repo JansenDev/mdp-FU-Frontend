@@ -11,6 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ResourceMapDetailComponent } from '../components/resource-map-detail/resource-map-detail.component';
 
 @NgModule({
   declarations: [TestpPipe],
@@ -25,7 +26,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatTabsModule,
     MatFormFieldModule,
     MatSelectModule,
-    MatInputModule,
+    MatInputModule
   ],
 })
 export class SharedModule {}

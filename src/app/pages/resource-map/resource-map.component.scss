@@ -1,3 +1,5 @@
+$page__width: 80%;
+
 .title {
   margin-top: 70px !important;
   margin-bottom: 50px !important;
@@ -6,8 +8,6 @@
     color: var(--black);
     font-family: var(--font-family);
     font-size: 30px;
-    // margin: 0 auto !important;
-    // max-width: 380px;
     font-weight: 600;
 
     display: flex;
@@ -21,22 +21,19 @@
 }
 
 .table--container {
-  width: 80%;
+  width: $page__width;
   margin: 0 auto;
 }
 // buttons
 .filters {
   &--container {
-    width: 80%;
+    width: $page__width;
     margin: 5px auto;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
   }
   &--btns {
-    // width: 250px;
-    // display: flex;
-    // justify-content: space-between;
     padding-bottom: 1.25em;
 
     & > button {
@@ -115,7 +112,7 @@ table {
 
 // pagination
 .pagination--container {
-  width: 80%;
+  width: $page__width;
   margin: 20px auto;
 }
 

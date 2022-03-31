@@ -20,34 +20,6 @@ import { ResourceService } from '../../core/services/resource.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class ResourceMapComponent implements OnInit {
-  constructor(
-    private resourceService: ResourceService,
-    private formBuilder: FormBuilder
-  ) {
-    this.resourceForm = this.formBuilder.group({
-      cboxPeriod: ['', Validators.required],
-      cboxClient: ['', Validators.required],
-      cboxProfile: [''],
-      inNames: [''],
-    });
-    // default value
-    // this.resourceForm.patchValue({
-    //   cboxProfile: '',
-    // });
-  }
-
-  ngOnInit(): void {
-    this.getResourceByPeriodClientProfileNames(2, '2022-02', '12');
-    this.resourceInit();
-  }
-
-  resourceInit() {
-    this.getAllPeriods();
-    this.getAllPerfiles();
-    this.getAllCollaborator();
-    this.findClientByUser();
-  }
-
   rowSelected = {};
   displayedColumns: string[] = [
     'ln',
@@ -75,6 +47,50 @@ export class ResourceMapComponent implements OnInit {
   periodTitle = '';
 
   productivityIndicator: IProductivityIndicator = productivityIndicator;
+  showDetail = false;
+  cod_colaborador: any = null;
+
+  constructor(
+    private resourceService: ResourceService,
+    private formBuilder: FormBuilder
+  ) {
+    this.resourceForm = this.formBuilder.group({
+      cboxPeriod: ['', Validators.required],
+      cboxClient: ['', Validators.required],
+      cboxProfile: [''],
+      inNames: [''],
+    });
+    // add default values
+    // this.resourceForm.patchValue({
+    //   cboxProfile: '',
+    // });
+  }
+
+  ngOnInit(): void {
+    this.getResourceByPeriodClientProfileNames(2, '2022-02', '12');
+    this.resourceInit();
+  }
+
+  resourceInit() {
+    this.getAllPeriods();
+    this.getAllPerfiles();
+    this.getAllCollaborator();
+    this.findClientByUser();
+  }
+
+  onResourceMapDetail(resourceMapItem: IResourceResponse) {
+    this.rowSelected = resourceMapItem;
+
+    console.log(`ResourceMapItem: ${resourceMapItem.cod_colaborador}`);
+    this.cod_colaborador = resourceMapItem.cod_colaborador;
+    this.showDetail = false;
+
+    // TODO:Implementar mejor solución para el toogle de detalles
+    // TODO:Implementar boton ❌'cerrar ' a detalles
+    setTimeout(() => {
+      this.showDetail = !this.showDetail;
+    }, 500);
+  }
 
   getResourceByPeriodClientProfileNames(
     idUser: number,
@@ -155,7 +171,7 @@ export class ResourceMapComponent implements OnInit {
     const idUser = 2;
 
     this.resourceService.findClientByUser(idUser).subscribe((clientsData) => {
-      console.log(clientsData);
+      // console.log(clientsData);
 
       this.clientList = clientsData;
     });
