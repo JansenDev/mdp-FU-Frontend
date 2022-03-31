@@ -11,3 +11,15 @@ body {
   // font-family: Roboto, "Helvetica Neue", sans-serif;;
   font-family: var(--font-family);
 }
+
+.productivity--danger {
+  background-color: var(--indicador-danger);
+}
+
+.productivity--warning {
+  background-color: var(--indicador-warning);
+}
+
+.productivity--success {
+  background-color: var(--indicador-success);
+}

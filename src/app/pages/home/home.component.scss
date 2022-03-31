@@ -1,5 +1,134 @@
-.color {
-  background-color: var(--gray);
-  color: var(--blue);
-  font-family: var(--font-family);
+.title {
+  margin-top: 70px !important;
+  margin-bottom: 50px !important;
+
+  & > h1 {
+    color: var(--black);
+    font-family: var(--font-family);
+
+    font-size: 30px;
+    margin: 0 auto !important;
+    max-width: 530px;
+    font-weight: 600;
+    font-family: var(--font-family);
+  }
+}
+
+.table--container {
+  width: 80%;
+  margin: 0 auto;
+}
+// buttons
+.filters {
+  &--container {
+    width: 80%;
+    margin: 5px auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  &--btns {
+    // width: 250px;
+    // display: flex;
+    // justify-content: space-between;
+    padding-bottom: 1.25em;
+
+    & > button {
+      max-height: 40px;
+      width: 100px;
+    }
+
+    & button:last-child {
+      margin-left: 1.25em;
+    }
+  }
+}
+
+table {
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 0px 0px 1px rgba(0, 0, 0, 0.12) !important;
+
+  & .mat-table--header {
+    background-color: var(--primary);
+
+    & .mat-header-cell {
+      color: var(--white);
+      font-weight: bold;
+      font-size: 14px;
+
+      &:last-child {
+        padding-right: 0 !important;
+      }
+    }
+  }
+
+  .mat-row .mat-cell {
+    border-bottom: 1px solid var(--gray);
+    border-top: 1px solid transparent;
+  }
+
+  // TODO: mejorar color  al pasar el mouse en la fila
+  .mat-row:hover .mat-cell {
+    cursor: pointer;
+    background-color: var(--gray);
+    color: var(--white);
+  }
+
+  .active {
+    font-weight: bold;
+  }
+
+  & tbody tr td.mat-cell:last-child {
+    padding-right: 0 !important;
+  }
+
+  // thead tr th.mat-header-cell
+}
+
+.circle {
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  margin-left: 2.25em;
+  box-shadow: 0 0 1px 1px rgba(93, 93, 93, 0.993);
+}
+
+// pagination
+.pagination--container {
+  width: 80%;
+  margin: 20px auto;
+}
+
+@media (max-width: 1000px) {
+  .circle {
+    margin-left: 1em;
+  }
+
+  .filters {
+    &--container {
+      flex-direction: column;
+    }
+
+    &--btns {
+      display: flex;
+      justify-content: space-evenly;
+      padding: 1.25em 0;
+      & button {
+        width: 100% !important;
+      }
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .filters--container {
+    & .mat-form-field .mat-form-field-wrapper .mat-form-field-infix {
+      width: 120px !important;
+    }
+  }
+
 }
