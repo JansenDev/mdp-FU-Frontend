@@ -10,6 +10,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [TestpPipe],
@@ -24,7 +25,7 @@ import { MatInputModule } from '@angular/material/input';
     MatTabsModule,
     MatFormFieldModule,
     MatSelectModule,
-    MatInputModule
+    MatInputModule,
   ],
 })
 export class SharedModule {}

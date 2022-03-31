@@ -24,7 +24,6 @@ import { SharedModule } from './shared/shared.module';
     BrowserAnimationsModule,
 
     HttpClientModule,
-    ReactiveFormsModule,
 
     ComponentModule,
     PageModule,
