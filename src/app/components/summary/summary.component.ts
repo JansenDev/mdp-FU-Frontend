@@ -18,7 +18,7 @@ export class SummaryComponent implements OnInit {
   public production: number = 0;
   public productivity: number = 0;
   public period: Date = new Date();
-  public summary: any = {};//{"data":{"customer":"Fallo","clm_effective":13.85,"production":99.99,"productivity":9999.99,"period":1648721412}};
+  public summary: any = {}; //{"data":{"customer":"Fallo","clm_effective":13.85,"production":99.99,"productivity":9999.99,"period":1648721412}};
   
 
   constructor(private service: TestService) {
@@ -26,21 +26,28 @@ export class SummaryComponent implements OnInit {
   
 
   ngOnInit() {
-  
     this.getSummary();
+  /*
+    this.summary = this.summary.data;
 
     this.customer = this.summary.customer;
     this.clm_effective = this.summary.clm_effective;
     this.production = this.summary.production;
     this.productivity = this.summary.productivity;
     this.period = this.summary.period;
-    
+  */  
   }
 
   getSummary() {
     this.service.getSummary().subscribe(data => {
-      this.summary = data.data;
+      this.summary = data;
+      this.customer = data.data.customer;
+      this.clm_effective = data.data.clm_effective;
+      this.production = data.data.production;
+      this.productivity = data.data.productivity;
+      this.period = data.data.period;
       console.log("data", data.data)
+      // return data;
     }), (err: any) => {
       console.error(err);
     }
