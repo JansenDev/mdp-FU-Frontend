@@ -12,6 +12,7 @@ import {
   IResourceResponse,
 } from 'src/app/core/models/resource.model';
 import { ResourceService } from '../../core/services/resource.service';
+import { getIdCollaboratorFromNameLong } from '../../core/utils/utilities.util';
 
 @Component({
   selector: 'app-resource-map',
@@ -121,7 +122,7 @@ export class ResourceMapComponent implements OnInit {
       this.resourceForm.value;
 
     this.periodTitle = cboxPeriod;
-    let idCollaborator = this.getIdCollaboratorFromNameLong(
+    let idCollaborator = getIdCollaboratorFromNameLong(
       inNames,
       this.collaboratorList
     )!;
@@ -152,27 +153,27 @@ export class ResourceMapComponent implements OnInit {
     });
   }
 
-  getIdCollaboratorFromNameLong(
-    collaboratorNameLong: string,
-    collaboratorList: ICollaboratorResponse[]
-  ): number | null {
-    let collaboradorId = null;
+  // getIdCollaboratorFromNameLong(
+  //   collaboratorNameLong: string,
+  //   collaboratorList: ICollaboratorResponse[]
+  // ): number | null {
+  //   let collaboradorId = null;
 
-    for (let index = 0; index < collaboratorList.length; index++) {
-      const collaborator = this.collaboratorList[index];
+  //   for (let index = 0; index < collaboratorList.length; index++) {
+  //     const collaborator = this.collaboratorList[index];
 
-      if (
-        collaboratorNameLong.includes(collaborator.nombres) &&
-        collaboratorNameLong.includes(collaborator.apellido_pat) &&
-        collaboratorNameLong.includes(collaborator.apellido_mat)
-      ) {
-        collaboradorId = collaborator.cod_colaborador;
-        break;
-      }
-    }
+  //     if (
+  //       collaboratorNameLong.includes(collaborator.nombres) &&
+  //       collaboratorNameLong.includes(collaborator.apellido_pat) &&
+  //       collaboratorNameLong.includes(collaborator.apellido_mat)
+  //     ) {
+  //       collaboradorId = collaborator.cod_colaborador;
+  //       break;
+  //     }
+  //   }
 
-    return collaboradorId;
-  }
+  //   return collaboradorId;
+  // }
 
   findClientByUser() {
     const idUser = 2;
