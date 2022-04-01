@@ -8,6 +8,6 @@ export const productivityIndicator: IProductivityIndicator = {
 
 export const states: { [x: string]: string } = {
   A: 'Activo',
-  I: 'Inactive',
+  I: 'No Activo',
   C: 'Cesado',
 };
