@@ -1,9 +1,9 @@
 export interface Contract {
-  contractCode: number,
-  mode: string,
-  endDate: Date,
-  wage: string,
-  bonus: string,
-  eps: string,
-  clm: string
+  codContrato: number,
+  modalidad: string,
+  fechaFin: Date,
+  sueldoPlanilla: number,
+  bono: number,
+  eps: number,
+  clm: number
 }

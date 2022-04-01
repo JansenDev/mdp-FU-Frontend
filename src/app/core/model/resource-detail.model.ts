@@ -10,10 +10,10 @@ export interface Detail{
   horasExtra: number,
   totalHorasAsignaciones: number,
   totalHorasFacturables: number,
-  eficiencia: string,
-  rendimiento: string,
+  eficiencia: number,
+  rendimiento: number,
   capacity: number,
-  clm: string,
+  clm: number,
   fechaFinContrato: Date,
   colaborador: Collaborator,
   contratos: Contract[]
