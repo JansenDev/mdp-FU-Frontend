@@ -42,8 +42,8 @@ $page__width: 80%;
     }
 
     & button:first-child {
-      color: var(--primary);
-      color: var(--white);
+      background-color: var(--primary) ;
+      color: var(--white) ;;
     }
     // TODO:Escojer mejor color para Apertura
     & button:last-child {

@@ -99,7 +99,7 @@ export class ResourceMapComponent implements OnInit {
     idclient: string,
     idProfile?: string,
     collaborator?: number
-  ) {
+  ): void {
     this.resourceService
       .findResourceByPeriodClientProfileNames(
         idUser,
@@ -116,7 +116,7 @@ export class ResourceMapComponent implements OnInit {
       });
   }
 
-  ngSubmit() {
+  ngSubmit(): void {
     const idUser = 2;
     let { cboxPeriod, cboxClient, cboxProfile, inNames } =
       this.resourceForm.value;
@@ -136,51 +136,30 @@ export class ResourceMapComponent implements OnInit {
     );
   }
 
-  getAllPeriods() {
-    this.resourceService.findAllPeriods().subscribe((dataResponse) => {
-      this.periodsList = dataResponse;
-    });
-  }
-  getAllPerfiles() {
-    this.resourceService.findAllProfiles().subscribe((dataResponse) => {
-      this.profileList = dataResponse;
+  getAllPeriods(): void {
+    this.resourceService.findAllPeriods().subscribe((periodResponse) => {
+      this.periodsList = periodResponse;
     });
   }
 
-  getAllCollaborator() {
-    this.resourceService.findAllCollaborator().subscribe((dataResponse) => {
-      this.collaboratorList = dataResponse;
+  getAllPerfiles(): void {
+    this.resourceService.findAllProfiles().subscribe((profileResponse) => {
+      this.profileList = profileResponse;
     });
   }
 
-  // getIdCollaboratorFromNameLong(
-  //   collaboratorNameLong: string,
-  //   collaboratorList: ICollaboratorResponse[]
-  // ): number | null {
-  //   let collaboradorId = null;
+  getAllCollaborator(): void {
+    this.resourceService
+      .findAllCollaborator()
+      .subscribe((collaboratorResponse) => {
+        this.collaboratorList = collaboratorResponse;
+      });
+  }
 
-  //   for (let index = 0; index < collaboratorList.length; index++) {
-  //     const collaborator = this.collaboratorList[index];
-
-  //     if (
-  //       collaboratorNameLong.includes(collaborator.nombres) &&
-  //       collaboratorNameLong.includes(collaborator.apellido_pat) &&
-  //       collaboratorNameLong.includes(collaborator.apellido_mat)
-  //     ) {
-  //       collaboradorId = collaborator.cod_colaborador;
-  //       break;
-  //     }
-  //   }
-
-  //   return collaboradorId;
-  // }
-
-  findClientByUser() {
+  findClientByUser(): void {
     const idUser = 2;
 
     this.resourceService.findClientByUser(idUser).subscribe((clientsData) => {
-      // console.log(clientsData);
-
       this.clientList = clientsData;
     });
   }
