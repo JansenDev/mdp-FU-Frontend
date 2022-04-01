@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import {
-  IResourceRequest,
-  IResourceResponse,
-} from '../models/resource.model';
+import { IResourceRequest, IResourceResponse } from '../models/resource.model';
 import { IPeriodResponse } from '../models/period.model';
 import { IProfileResponse } from '../models/profile.model';
 import { ICollaboratorResponse } from '../models/collaborator.model';
@@ -18,13 +15,12 @@ export class ResourceService {
   constructor(private httpClient: HttpClient) {}
 
   findResourceByPeriodClientProfileNames(
-    idUser: number,
     period: string,
     codClient: string,
     codProfile?: string,
     collaborator?: number
   ) {
-    const URL = `${url_base}/resources/${idUser}/maparecursos`;
+    const URL = `${url_base}/resources/maparecursos`;
 
     let bodyRequest: IResourceRequest = {
       periodo: period,
@@ -42,7 +38,7 @@ export class ResourceService {
     return this.httpClient.post<IResourceResponse[]>(URL, bodyRequest);
   }
 
-  findAllPeriods() {
+    findAllPeriods() {
     const URL = `${url_base}/resources/periodos`;
 
     return this.httpClient.get<IPeriodResponse[]>(URL);
@@ -54,8 +50,8 @@ export class ResourceService {
     return this.httpClient.get<IProfileResponse[]>(URL);
   }
 
-  findAllCollaborator() {
-    const URL = `${url_base}/resources/colaboradores`;
+  findAllCollaboratorsByClient(client: number) {
+    const URL = `${url_base}/resources/${client}/colaboradores`;
 
     return this.httpClient.get<ICollaboratorResponse[]>(URL);
   }

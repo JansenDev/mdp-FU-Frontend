@@ -7,7 +7,9 @@ export const productivityIndicator: IProductivityIndicator = {
 };
 
 export const states: { [x: string]: string } = {
-  A: 'Activo',
-  I: 'No Activo',
-  C: 'Cesado',
+  A: 'activo',
+  I: 'no activo',
+  C: 'cesado',
 };
+
+export const USER_SESION = 8;

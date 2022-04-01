@@ -83,28 +83,34 @@
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="ln">
       <th mat-header-cell *matHeaderCellDef>LN</th>
-      <td mat-cell *matCellDef="let element">{{ element.linea_negocio }}</td>
+      <td mat-cell *matCellDef="let element">
+        {{ element.linea_negocio | uppercase }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="colaborador">
       <th mat-header-cell *matHeaderCellDef>Colaborador</th>
-      <td mat-cell *matCellDef="let element">{{ element.cod_colaborador }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.nombre_colaborador }}</td>
     </ng-container>
 
     <ng-container matColumnDef="estatus">
       <th mat-header-cell *matHeaderCellDef>Estado</th>
-      <td mat-cell *matCellDef="let element">{{ element.estado | state }}</td>
+      <td mat-cell *matCellDef="let element">
+        {{ element.estado | state | titlecase }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="perfil">
       <th mat-header-cell *matHeaderCellDef>Perfil</th>
-      <td mat-cell *matCellDef="let element">{{ element.perfil }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.nombre_perfil }}</td>
     </ng-container>
 
     <!-- Symbol Column -->
     <ng-container matColumnDef="nivel">
       <th mat-header-cell *matHeaderCellDef>Nivel</th>
-      <td mat-cell *matCellDef="let element">{{ element.nivel }}</td>
+      <td mat-cell *matCellDef="let element">
+        {{ element.nivel | titlecase }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="f_inicio">
@@ -124,7 +130,7 @@
     <ng-container matColumnDef="asignacion">
       <th mat-header-cell *matHeaderCellDef>Asignación</th>
       <td mat-cell *matCellDef="let element">
-        {{element.asignacion|number:'1.0' }}%
+        {{ element.asignacion | number: "1.0" }}%
       </td>
     </ng-container>
 
@@ -187,6 +193,7 @@
   [cod_colaborador]="cod_colaborador"
   [showDetail]="showDetail"
 ></app-resource-map-detail>
-<app-summary></app-summary>
+<!-- <app-summary></app-summary> -->
 
 <!-- <app-footer></app-footer> -->
+{{ this.resourceForm.controls['cboxClient'].value }}
