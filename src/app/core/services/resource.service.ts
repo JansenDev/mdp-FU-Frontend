@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import {
-  IClientResponse,
-  ICollaboratorResponse,
-  IPeriodResponse,
-  IProfileResponse,
   IResourceRequest,
   IResourceResponse,
 } from '../models/resource.model';
+import { IPeriodResponse } from '../models/period.model';
+import { IProfileResponse } from '../models/profile.model';
+import { ICollaboratorResponse } from '../models/collaborator.model';
+import { IClientResponse } from '../models/client.model';
 
 const { url_base } = environment;
 @Injectable({
@@ -22,7 +22,7 @@ export class ResourceService {
     period: string,
     codClient: string,
     codProfile?: string,
-    collaborator?: string
+    collaborator?: number
   ) {
     const URL = `${url_base}/resources/${idUser}/maparecursos`;
 

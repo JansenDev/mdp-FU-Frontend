@@ -37,28 +37,10 @@ export interface IResourceRequest {
   periodo: string;
   cod_cliente: string | number; //TEst borrar string
   cod_perfil?: string | number;
-  cod_colaborador?: string;
+  cod_colaborador?: number;
 }
 
-export interface IPeriodResponse {
-  periodo: string;
-}
 
-export interface IProfileResponse {
-  cod_perfil: number;
-  nombre_perfil: string;
-}
-
-export interface ICollaboratorResponse {
-  apellido_mat: string;
-  apellido_pat: string;
-  cod_colaborador: number;
-  nombres: string;
-}
-export interface IClientResponse {
-  cod_cliente: number;
-  nombre_corto: string;
-}
 
 export interface IProductivityIndicator {
   low: number;

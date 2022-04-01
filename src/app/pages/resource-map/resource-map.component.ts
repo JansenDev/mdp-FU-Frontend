@@ -3,12 +3,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { productivityIndicator } from 'src/app/core/constants/resource.constants';
+import { IClientResponse } from 'src/app/core/models/client.model';
+import { ICollaboratorResponse } from 'src/app/core/models/collaborator.model';
+import { IPeriodResponse } from 'src/app/core/models/period.model';
+import { IProfileResponse } from 'src/app/core/models/profile.model';
 import {
-  IClientResponse,
-  ICollaboratorResponse,
-  IPeriodResponse,
   IProductivityIndicator,
-  IProfileResponse,
   IResourceResponse,
 } from 'src/app/core/models/resource.model';
 import { ResourceService } from '../../core/services/resource.service';
@@ -42,11 +42,11 @@ export class ResourceMapComponent implements OnInit {
   periodsList: IPeriodResponse[] = [] as IPeriodResponse[];
 
   profileList: IProfileResponse[] = [];
-  collaboratorList: any = [];
+  collaboratorList: ICollaboratorResponse[] = [];
   clientList: IClientResponse[] = [];
   periodTitle = '';
-
   productivityIndicator: IProductivityIndicator = productivityIndicator;
+
   showDetail = false;
   cod_colaborador: any = null;
 
@@ -97,7 +97,7 @@ export class ResourceMapComponent implements OnInit {
     period: string,
     idclient: string,
     idProfile?: string,
-    collaborator?: string
+    collaborator?: number
   ) {
     this.resourceService
       .findResourceByPeriodClientProfileNames(
@@ -116,14 +116,18 @@ export class ResourceMapComponent implements OnInit {
   }
 
   ngSubmit() {
+    const idUser = 2;
     let { cboxPeriod, cboxClient, cboxProfile, inNames } =
       this.resourceForm.value;
 
     this.periodTitle = cboxPeriod;
-    let idCollaborator = this.getIdCollaboratorFromNameLong(inNames);
+    let idCollaborator = this.getIdCollaboratorFromNameLong(
+      inNames,
+      this.collaboratorList
+    )!;
 
     this.getResourceByPeriodClientProfileNames(
-      2,
+      idUser,
       cboxPeriod,
       cboxClient,
       cboxProfile,
@@ -148,10 +152,13 @@ export class ResourceMapComponent implements OnInit {
     });
   }
 
-  getIdCollaboratorFromNameLong(collaboratorNameLong: string) {
+  getIdCollaboratorFromNameLong(
+    collaboratorNameLong: string,
+    collaboratorList: ICollaboratorResponse[]
+  ): number | null {
     let collaboradorId = null;
 
-    for (let index = 0; index < this.collaboratorList.length; index++) {
+    for (let index = 0; index < collaboratorList.length; index++) {
       const collaborator = this.collaboratorList[index];
 
       if (
