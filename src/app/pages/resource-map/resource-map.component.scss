@@ -42,8 +42,8 @@ $page__width: 80%;
     }
 
     & button:first-child {
-      background-color: var(--primary) ;
-      color: var(--white) ;;
+      background-color: var(--primary);
+      color: var(--white);
     }
     // TODO:Escojer mejor color para Apertura
     & button:last-child {
@@ -97,8 +97,6 @@ table {
   & tbody tr td.mat-cell:last-child {
     padding-right: 0 !important;
   }
-
-  // thead tr th.mat-header-cell
 }
 
 .circle {

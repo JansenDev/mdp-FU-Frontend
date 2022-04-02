@@ -2,19 +2,20 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import {
-  productivityIndicator,
-  USER_SESION,
-} from 'src/app/core/constants/resource.constants';
+// models
 import { IClientResponse } from 'src/app/core/models/client.model';
-import { ICollaboratorResponse } from 'src/app/core/models/collaborator.model';
 import { IPeriodResponse } from 'src/app/core/models/period.model';
 import { IProfileResponse } from 'src/app/core/models/profile.model';
-import {
-  IProductivityIndicator,
-  IResourceResponse,
-} from 'src/app/core/models/resource.model';
+import { IResourceResponse } from 'src/app/core/models/resource.model';
+import { IProductivityIndicator } from 'src/app/core/models/resource.model';
+import { ICollaboratorResponse } from 'src/app/core/models/collaborator.model';
+// constants
+import { USER_SESION } from 'src/app/core/constants/resource.constants';
+import { PRODUCTIVITY_INDICATOR } from 'src/app/core/constants/resource.constants';
+// services
 import { ResourceService } from '../../core/services/resource.service';
+// utils
+import { findPeriodActive } from '../../core/utils/utilities.util';
 import { getIdCollaboratorFromNameLong } from '../../core/utils/utilities.util';
 
 @Component({
@@ -24,7 +25,8 @@ import { getIdCollaboratorFromNameLong } from '../../core/utils/utilities.util';
   encapsulation: ViewEncapsulation.None,
 })
 export class ResourceMapComponent implements OnInit {
-  @ViewChild(MatPaginator) paginator: MatPaginator = {} as MatPaginator;
+  @ViewChild(MatPaginator)
+  paginator: MatPaginator = {} as MatPaginator;
   dataSource: MatTableDataSource<IResourceResponse> =
     new MatTableDataSource<IResourceResponse>([]);
   displayedColumns: string[] = [
@@ -46,8 +48,8 @@ export class ResourceMapComponent implements OnInit {
   profileList: IProfileResponse[] = [];
   collaboratorList: ICollaboratorResponse[] = [];
   clientList: IClientResponse[] = [];
-  periodTitle = '';
-  productivityIndicator: IProductivityIndicator = productivityIndicator;
+  periodSelect = '';
+  productivityIndicator: IProductivityIndicator = PRODUCTIVITY_INDICATOR;
 
   showDetail = false;
   cod_colaborador: any = null;
@@ -65,40 +67,53 @@ export class ResourceMapComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.getResourceByPeriodClientProfileNames('2022-03', '1');
     this.resourceMapInit();
   }
 
   resourceMapInit(): void {
-    this.onChangeCollaborator();
-    this.getAllPeriods();
-    this.getAllPerfiles();
-    this.getClientByUser();
-
-    this.resourceForm.patchValue({
-      cboxPeriod: '2022-02',
-    });
-
-    // this.cboxDefaultValue(cboxPeriod, '2022-02');
+    this.onChangeCBoxCollaborator();
+    this.fillCBoxPeriod();
+    this.fillCBoxProfile();
+    this.fillCBoxClient();
   }
 
-  // cboxDefaultValue(cboxName: any, value: string) {
-  //   this.resourceForm.patchValue({
-  //     cboxPeriod: value,
-  //   });
-  // }
+  setPeriodActiveToCBoxPeriod(profileList: IPeriodResponse[]) {
+    const periodActual = findPeriodActive(profileList);
 
-  onChangeCollaborator(): void {
+    if (periodActual != '') {
+      this.resourceForm.patchValue({ cboxPeriod: periodActual });
+      this.periodSelect = periodActual;
+    }
+  }
+
+  ngSubmit(): void {
+    let { cboxPeriod, cboxClient, cboxProfile, inNames } =
+      this.resourceForm.value;
+
+    this.periodSelect = cboxPeriod;
+    let idCollaborator = getIdCollaboratorFromNameLong(
+      inNames,
+      this.collaboratorList
+    )!;
+
+    this.findAndsetResourceItems(
+      cboxPeriod,
+      cboxClient,
+      cboxProfile,
+      idCollaborator
+    );
+  }
+
+  onChangeCBoxCollaborator(): void {
     this.resourceForm.controls['cboxClient'].valueChanges.subscribe((value) => {
-      console.log(value);
-      this.getAllCollaborators(value);
+      this.fillCBoxCollaborator(value);
     });
   }
 
   onResourceMapDetail(resourceMapItem: IResourceResponse): void {
     this.rowSelected = resourceMapItem;
 
-    console.log(`ResourceMapItem: ${resourceMapItem.nombre_colaborador}`);
+    console.info(`My Resource Map Item: ${resourceMapItem.nombre_colaborador}`);
     this.cod_colaborador = resourceMapItem.nombre_colaborador;
     this.showDetail = false;
 
@@ -109,25 +124,7 @@ export class ResourceMapComponent implements OnInit {
     }, 500);
   }
 
-  ngSubmit(): void {
-    let { cboxPeriod, cboxClient, cboxProfile, inNames } =
-      this.resourceForm.value;
-
-    this.periodTitle = cboxPeriod;
-    let idCollaborator = getIdCollaboratorFromNameLong(
-      inNames,
-      this.collaboratorList
-    )!;
-
-    this.getResourceByPeriodClientProfileNames(
-      cboxPeriod,
-      cboxClient,
-      cboxProfile,
-      idCollaborator
-    );
-  }
-
-  getResourceByPeriodClientProfileNames(
+  findAndsetResourceItems(
     period: string,
     idclient: string,
     idProfile?: string,
@@ -148,21 +145,20 @@ export class ResourceMapComponent implements OnInit {
       });
   }
 
-  getAllPeriods(): void {
+  fillCBoxPeriod(): void {
     this.resourceService.findAllPeriods().subscribe((periodResponse) => {
       this.periodsList = periodResponse;
-      // console.log(periodResponse);
+      this.setPeriodActiveToCBoxPeriod(periodResponse);
     });
   }
 
-  getAllPerfiles(): void {
+  fillCBoxProfile(): void {
     this.resourceService.findAllProfiles().subscribe((profileResponse) => {
       this.profileList = profileResponse;
     });
   }
 
-  getAllCollaborators(idClient: number): void {
-    // const client = USER_SESION;
+  fillCBoxCollaborator(idClient: number): void {
     this.resourceService
       .findAllCollaboratorsByClient(idClient)
       .subscribe((collaboratorResponse) => {
@@ -170,7 +166,7 @@ export class ResourceMapComponent implements OnInit {
       });
   }
 
-  getClientByUser(): void {
+  fillCBoxClient(): void {
     const idUser = USER_SESION;
 
     this.resourceService.findClientByUser(idUser).subscribe((clientsData) => {

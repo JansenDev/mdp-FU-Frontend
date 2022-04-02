@@ -1,12 +1,12 @@
 import { IProductivityIndicator } from '../models/resource.model';
 
-export const productivityIndicator: IProductivityIndicator = {
+export const PRODUCTIVITY_INDICATOR: IProductivityIndicator = {
   low: 1.2,
   medium: 1.5,
   high: 1.8,
 };
 
-export const states: { [x: string]: string } = {
+export const STATE: { [x: string]: string } = {
   A: 'activo',
   I: 'no activo',
   C: 'cesado',

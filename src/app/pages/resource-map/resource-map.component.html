@@ -2,8 +2,7 @@
 
 <!-- Resource Map Start -->
 <div class="title">
-  <h1>Mapa de Recursos Periodo {{ periodTitle }}</h1>
-  <!-- <h1>  &nbsp;{{ periodTitle }}</h1> -->
+  <h1>Mapa de Recursos Periodo {{ periodSelect }}</h1>
 </div>
 
 <!-- Filters Start -->
@@ -90,7 +89,9 @@
 
     <ng-container matColumnDef="colaborador">
       <th mat-header-cell *matHeaderCellDef>Colaborador</th>
-      <td mat-cell *matCellDef="let element">{{ element.nombre_colaborador }}</td>
+      <td mat-cell *matCellDef="let element">
+        {{ element.nombre_colaborador }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="estatus">
@@ -196,4 +197,4 @@
 <!-- <app-summary></app-summary> -->
 
 <!-- <app-footer></app-footer> -->
-{{ this.resourceForm.controls['cboxClient'].value }}
+{{ this.resourceForm.controls["cboxClient"].value }}
