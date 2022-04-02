@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+// modules
+import { SharedModule } from '../shared/shared.module';
+// components
 import { TestComponent } from './test/test.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { HeaderComponent } from './layout/header/header.component';
-import { SharedModule } from '../shared/shared.module';
 import { SummaryComponent } from 'src/app/components/summary/summary.component';
 import { ResourceMapDetailComponent } from './resource-map-detail/resource-map-detail.component';
 
@@ -13,9 +16,16 @@ import { ResourceMapDetailComponent } from './resource-map-detail/resource-map-d
     FooterComponent,
     HeaderComponent,
     SummaryComponent,
-    ResourceMapDetailComponent
+    ResourceMapDetailComponent,
   ],
-  imports: [CommonModule, SharedModule],
-  exports: [TestComponent, FooterComponent, HeaderComponent, SummaryComponent,ResourceMapDetailComponent],
+  imports: [CommonModule, SharedModule, RouterModule],
+  exports: [
+    TestComponent,
+    FooterComponent,
+    HeaderComponent,
+    SummaryComponent,
+    ResourceMapDetailComponent,
+    RouterModule
+  ],
 })
 export class ComponentModule {}

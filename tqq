@@ -1,0 +1,34 @@
+[33ma2b4996[m[33m ([m[1;36mHEAD -> [m[1;32mUS-001[m[33m, [m[1;31morigin/US-001[m[33m)[m ADDED: cboxPeriod default value, optimize code
+[33mcf29f92[m Optimization, cbox onchange added
+[33m6e53cf7[m Print data optimized
+[33mc357b9d[m ADDED: statePipe
+[33mb2ab408[m Code Optimization
+[33md1b6076[m[33m ([m[1;32mQA[m[33m)[m Code optimization
+[33m37f1a06[m[33m ([m[1;31morigin/janssen-test[m[33m, [m[1;32mjanssen-test[m[33m)[m FIXED: reource detail import
+[33m387312d[m merge US-001 US-002 US-003
+[33m60d5efa[m Merge branch 'US-001' of https://github.com/JansenDev/mdp-FU-Frontend into janssen-test
+[33mf065485[m ADDED: resource table completed
+[33md93d33c[m Merge branch 'US-003' of https://github.com/JansenDev/mdp-FU-Frontend into QA
+[33mcbc8e47[m[33m ([m[1;31morigin/US-003[m[33m)[m Corrección de la integración
+[33m8ae84bc[m Integración de las ramas
+[33m1bce237[m Merge branch 'main' of https://github.com/JansenDev/mdp-FU-Frontend into US-003
+[33mf963441[m Merge branch 'US-002' of https://github.com/JansenDev/mdp-FU-Frontend into QA
+[33m4657b7e[m Integración
+[33m30afdc8[m :sparkles: Added table
+[33m73ce57e[m ADDED: dinamic resource-map table
+[33me7bbe8e[m Table in Home  modularized to resource-map comp.
+[33m91779c0[m ADDED: resource map template
+[33m71ae89b[m ✨Imported required modules
+[33m58a31b9[m :sparkles: Added MatTab component with main design
+[33m245c7e6[m Merge branch 'main' of https://github.com/JansenDev/mdp-FU-Frontend into US-003
+[33m4bd5b66[m Avance US-003 | Maquetación
+[33m0d1b43e[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m MODIFY: global variables
+[33mab4474e[m :sparkles: Added detail component
+[33m6fcd8f3[m Merge branch 'main' into US-002
+[33m8e96348[m Merge branch 'main' of https://github.com/JansenDev/mdp-FU-Frontend into US-003
+[33mba39d05[m[33m ([m[1;32mbase[m[33m)[m MODIFY: project base
+[33m709c85f[m Rama US-003
+[33mfc6a1e0[m :sparkles: Added Detail Component
+[33m03890dc[m[33m ([m[1;32mfeature/resource-map[m[33m)[m ADDED: angular material
+[33m3b462bb[m project base inial
+[33m7c989f8[m initial commit
