@@ -44,7 +44,6 @@ export class ResourceService {
 
     return this.httpClient.post<IResourceResponse[]>(URL, bodyRequest).pipe(
       map((resourceResponse) => {
-        console.log(resourceResponse);
         if (resourceResponse.length == 0) {
           this.notificationService.toast(
             'info',
@@ -94,14 +93,14 @@ export class ResourceService {
     return this.httpClient.get<IProfileResponse[]>(URL);
   }
 
-  findAllCollaboratorsByClient(client: number) {
-    const URL = `${url_base}/resources/${client}/colaboradores`;
+  findCollaboratorsByClientAndPeriod(client: number, period: string) {
+    const URL = `${url_base}/resources/${client}/colaboradores/${period}`;
 
     return this.httpClient.get<ICollaboratorResponse[]>(URL);
   }
 
-  findClientByUser(idUser: number) {
-    const URL = `${url_base}/resources/${idUser}/clientes`;
+  findClientByUserAndPeriod(idUser: number, period: string) {
+    const URL = `${url_base}/resources/${idUser}/clientes/${period}`;
 
     return this.httpClient.get<IClientResponse[]>(URL);
   }

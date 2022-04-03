@@ -48,7 +48,8 @@ export class ResourceMapComponent implements OnInit {
   profileList: IProfileResponse[] = [];
   collaboratorList: ICollaboratorResponse[] = [];
   clientList: IClientResponse[] = [];
-  periodSelect = '';
+  periodSelected = '';
+  clientSelectedByPeriod = '';
   productivityIndicator: IProductivityIndicator = PRODUCTIVITY_INDICATOR;
 
   showDetail = false;
@@ -71,26 +72,17 @@ export class ResourceMapComponent implements OnInit {
   }
 
   fillAllCBoxInit(): void {
-    this.onChangeCBoxCollaborator();
-    this.fillCBoxPeriod();
-    this.fillCBoxClient();
     this.fillCBoxProfile();
-  }
-
-  setPeriodActiveToCBoxPeriod(profileList: IPeriodResponse[]) {
-    const periodActual = findPeriodActive(profileList);
-
-    if (periodActual != '') {
-      this.resourceForm.patchValue({ cboxPeriod: periodActual });
-      this.periodSelect = periodActual;
-    }
+    this.onChangeCBoxClientFillInputCollaborators();
+    this.fillCBoxPeriod();
+    this.onChangeCBoxPeriodFillCBoxClient();
   }
 
   ngSubmit(): void {
     let { cboxPeriod, cboxClient, cboxProfile, inNames } =
       this.resourceForm.value;
 
-    this.periodSelect = cboxPeriod;
+    this.periodSelected = cboxPeriod;
     let idCollaborator = getIdCollaboratorFromNameLong(
       inNames,
       this.collaboratorList
@@ -102,12 +94,6 @@ export class ResourceMapComponent implements OnInit {
       cboxProfile,
       idCollaborator
     );
-  }
-
-  onChangeCBoxCollaborator(): void {
-    this.resourceForm.controls['cboxClient'].valueChanges.subscribe((value) => {
-      this.fillCBoxCollaborator(value);
-    });
   }
 
   onResourceMapDetail(resourceMapItem: IResourceResponse): void {
@@ -152,31 +138,57 @@ export class ResourceMapComponent implements OnInit {
     });
   }
 
+  setPeriodActiveToCBoxPeriod(profileList: IPeriodResponse[]) {
+    const periodActual = findPeriodActive(profileList);
+
+    if (periodActual != '') {
+      this.resourceForm.patchValue({ cboxPeriod: periodActual });
+      this.periodSelected = periodActual;
+    }
+  }
+
   fillCBoxProfile(): void {
     this.resourceService.findAllProfiles().subscribe({
       next: (profileResponse) => {
         this.profileList = profileResponse;
       },
-      error: (err) => {
-        console.log('err');
-        console.log(err.message);
-      },
+      error: (err) => console.log(err.message),
     });
   }
 
-  fillCBoxCollaborator(idClient: number): void {
+  fillCBoxCollaborator(idClient: number, period: string): void {
     this.resourceService
-      .findAllCollaboratorsByClient(idClient)
+      .findCollaboratorsByClientAndPeriod(idClient, period)
       .subscribe((collaboratorResponse) => {
         this.collaboratorList = collaboratorResponse;
       });
   }
 
-  fillCBoxClient(): void {
+  fillCBoxClient(periodSelected: string): void {
     const idUser = USER_SESION;
 
-    this.resourceService.findClientByUser(idUser).subscribe((clientsData) => {
-      this.clientList = clientsData;
-    });
+    this.resourceService
+      .findClientByUserAndPeriod(idUser, periodSelected)
+      .subscribe((clientsData) => {
+        this.clientList = clientsData;
+      });
+  }
+
+  onChangeCBoxPeriodFillCBoxClient() {
+    this.resourceForm.controls['cboxPeriod'].valueChanges.subscribe(
+      (periodSelected) => {
+        this.fillCBoxClient(periodSelected);
+      }
+    );
+  }
+
+  onChangeCBoxClientFillInputCollaborators(): void {
+    this.resourceForm.controls['cboxClient'].valueChanges.subscribe(
+      (clientSelected) => {
+        const periodSelected = this.resourceForm.controls['cboxPeriod'].value;
+
+        this.fillCBoxCollaborator(clientSelected, periodSelected);
+      }
+    );
   }
 }
