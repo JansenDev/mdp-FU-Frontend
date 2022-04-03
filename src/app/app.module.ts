@@ -4,10 +4,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
+// angular modules
 import { HttpClientModule } from '@angular/common/http';
+// project modules
 import { PageModule } from './pages/pages.module';
 import { ComponentModule } from './components/component.module';
+// external modules
+import { ToastContainerModule, ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,10 +20,11 @@ import { ComponentModule } from './components/component.module';
     BrowserAnimationsModule,
 
     HttpClientModule,
-    PageModule,
 
+    PageModule,
     ComponentModule,
-    // SharedModule,
+    ToastrModule.forRoot(),
+    ToastContainerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

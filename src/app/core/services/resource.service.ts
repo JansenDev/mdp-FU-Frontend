@@ -1,18 +1,25 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { catchError, map, throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { IResourceRequest, IResourceResponse } from '../models/resource.model';
+// models
 import { IPeriodResponse } from '../models/period.model';
-import { IProfileResponse } from '../models/profile.model';
-import { ICollaboratorResponse } from '../models/collaborator.model';
 import { IClientResponse } from '../models/client.model';
+import { IProfileResponse } from '../models/profile.model';
+import { IResourceRequest } from '../models/resource.model';
+import { IResourceResponse } from '../models/resource.model';
+import { ICollaboratorResponse } from '../models/collaborator.model';
+import { NotificationService } from './notification.service';
 
 const { url_base } = environment;
 @Injectable({
   providedIn: 'root',
 })
 export class ResourceService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(
+    private httpClient: HttpClient,
+    private notificationService: NotificationService
+  ) {}
 
   findResourceByPeriodClientProfileNames(
     period: string,
@@ -35,13 +42,50 @@ export class ResourceService {
       bodyRequest['cod_colaborador'] = collaborator;
     }
 
-    return this.httpClient.post<IResourceResponse[]>(URL, bodyRequest);
+    return this.httpClient.post<IResourceResponse[]>(URL, bodyRequest).pipe(
+      map((resourceResponse) => {
+        console.log(resourceResponse);
+        if (resourceResponse.length == 0) {
+          this.notificationService.toast(
+            'info',
+            'No se encontró recurso',
+            'Ups!',
+            5000
+          );
+        }
+        return resourceResponse;
+      })
+    );
   }
 
-    findAllPeriods() {
+  findAllPeriods() {
     const URL = `${url_base}/resources/periodos`;
 
-    return this.httpClient.get<IPeriodResponse[]>(URL);
+    return this.httpClient.get<IPeriodResponse[]>(URL).pipe(
+      catchError((err: HttpErrorResponse) => {
+        let message = '';
+
+        if (err.status == 0) {
+          message = `Error de conexión ${err.url}`;
+          this.notificationService.toast(
+            'error',
+            'Servidor fuera de línea',
+            'ERROR'
+          );
+        }
+
+        if (err.status == 500) {
+          message = `Error de conexión ${err.url}`;
+          this.notificationService.toast(
+            'error',
+            'Falla en el servidor',
+            'ERROR'
+          );
+        }
+
+        return throwError(() => new Error(message));
+      })
+    );
   }
 
   findAllProfiles() {

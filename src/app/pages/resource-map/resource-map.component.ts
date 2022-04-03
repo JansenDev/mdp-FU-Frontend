@@ -42,7 +42,7 @@ export class ResourceMapComponent implements OnInit {
     'produccion',
     'productividad',
   ];
-  rowSelected = {};
+  rowSelected: IResourceResponse = {} as IResourceResponse;
   resourceForm: FormGroup;
   periodsList: IPeriodResponse[] = [] as IPeriodResponse[];
   profileList: IProfileResponse[] = [];
@@ -67,14 +67,14 @@ export class ResourceMapComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.resourceMapInit();
+    this.fillAllCBoxInit();
   }
 
-  resourceMapInit(): void {
+  fillAllCBoxInit(): void {
     this.onChangeCBoxCollaborator();
     this.fillCBoxPeriod();
-    this.fillCBoxProfile();
     this.fillCBoxClient();
+    this.fillCBoxProfile();
   }
 
   setPeriodActiveToCBoxPeriod(profileList: IPeriodResponse[]) {
@@ -153,8 +153,14 @@ export class ResourceMapComponent implements OnInit {
   }
 
   fillCBoxProfile(): void {
-    this.resourceService.findAllProfiles().subscribe((profileResponse) => {
-      this.profileList = profileResponse;
+    this.resourceService.findAllProfiles().subscribe({
+      next: (profileResponse) => {
+        this.profileList = profileResponse;
+      },
+      error: (err) => {
+        console.log('err');
+        console.log(err.message);
+      },
     });
   }
 
