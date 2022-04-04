@@ -8,7 +8,7 @@ export interface IResourceResponse {
   clm_efectivo: string | number;
   produccion: string | number;
   productividad: string | number;
-
+  cod_colaborador: string;
   nombre_perfil: 3;
   nombre_colaborador: number;
 }

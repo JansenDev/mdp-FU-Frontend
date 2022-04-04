@@ -99,7 +99,7 @@ export class ResourceMapComponent implements OnInit {
   onResourceMapDetail(resourceMapItem: IResourceResponse): void {
     this.rowSelected = resourceMapItem;
 
-    console.info(`My Resource Map Item: ${resourceMapItem.nombre_colaborador}`);
+    console.info(`My Resource Map Item: ${resourceMapItem.cod_colaborador}`);
     this.cod_colaborador = resourceMapItem.nombre_colaborador;
     this.showDetail = false;
 
