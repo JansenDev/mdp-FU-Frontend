@@ -13,4 +13,4 @@ export const STATE: { [x: string]: string } = {
   C: 'cesado',
 };
 
-export const USER_SESION = 8;
+export const USER_SESION = 40;

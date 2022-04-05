@@ -49,12 +49,14 @@ export class ResourceMapComponent implements OnInit {
   collaboratorList: ICollaboratorResponse[] = [];
   clientList: IClientResponse[] = [];
   periodSelected = '';
-  clientSelectedByPeriod = '';
   productivityIndicator: IProductivityIndicator = PRODUCTIVITY_INDICATOR;
-
+  // inputs resource-detail component
   showDetail = false;
   cod_colaborador: any = null;
   cod_mapa_recurso: any = null;
+  // inputs summary component
+  cod_cliente: number | null = null;
+  periodo: string = '';
 
   constructor(
     private resourceService: ResourceService,
@@ -84,6 +86,8 @@ export class ResourceMapComponent implements OnInit {
       this.resourceForm.value;
 
     this.periodSelected = cboxPeriod;
+    this.periodo = cboxPeriod;
+    this.cod_cliente = parseInt(cboxClient);
 
     let inputNameWithoutExtraSpaces = inNames
       .split(' ')
@@ -101,10 +105,8 @@ export class ResourceMapComponent implements OnInit {
   onResourceMapDetail(resourceMapItem: IResourceResponse): void {
     this.rowSelected = resourceMapItem;
 
-    console.info(`\ncod_colaborador: ${resourceMapItem.cod_colaborador}`);
-    console.info(`cod_mapa_recurso: ${resourceMapItem.cod_mapa_recurso}`);
-    this.cod_colaborador = resourceMapItem.nombre_colaborador;
-    this.cod_mapa_recurso = resourceMapItem.cod_mapa_recurso;
+    this.cod_colaborador = parseInt(resourceMapItem.nombre_colaborador);
+    this.cod_mapa_recurso = parseInt(resourceMapItem.cod_mapa_recurso);
     this.showDetail = false;
 
     // TODO:Implementar mejor solución para el toogle de detalles
