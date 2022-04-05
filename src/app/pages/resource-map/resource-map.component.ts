@@ -175,7 +175,7 @@ export class ResourceMapComponent implements OnInit {
     const idUser = USER_SESION;
 
     this.resourceService
-      .findClientByUserAndPeriod(idUser, periodSelected)
+      .findClientByUserAndPeriod(idUser)
       .subscribe((clientsData) => {
         this.clientList = clientsData;
       });

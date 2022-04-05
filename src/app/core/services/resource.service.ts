@@ -99,8 +99,8 @@ export class ResourceService {
     return this.httpClient.get<ICollaboratorResponse[]>(URL);
   }
 
-  findClientByUserAndPeriod(idUser: number, period: string) {
-    const URL = `${url_base}/resources/${idUser}/clients/${period}`;
+  findClientByUserAndPeriod(idUser: number) {
+    const URL = `${url_base}/resources/${idUser}/clients`;
 
     return this.httpClient.get<IClientResponse[]>(URL);
   }
