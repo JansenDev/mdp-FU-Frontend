@@ -1,19 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ResourceDetailService } from 'src/app/core/services/resource-detail.service';
-import { ResourceAssignment } from 'src/app/core/model/resource-assignment.model';
-import { Contract } from 'src/app/core/model/contract.model';
-import { Service } from 'src/app/core/model/service.model';
-import { Detail } from 'src/app/core/model/resource-detail.model';
-import { Collaborator } from 'src/app/core/model/collaborator.model';
-
-export interface AssignedService {
-    type: string,
-    name: string,
-    percentage: number,
-    start: Date,
-    end: Date
-}
+import { Assignment } from 'src/app/core/models/assignment.model';
+import { Contract } from 'src/app/core/models/contract.model';
+import { Productivity } from 'src/app/core/models/productivity.model';
 
 @Component({
   selector: 'app-resource-map-detail',
@@ -25,77 +15,63 @@ export class ResourceMapDetailComponent implements OnInit {
   constructor(private resourceDetailService: ResourceDetailService) {  }
   showDetail = true; //TODO: dejar en false
   currentTab = 0;
-  apiData = {
+  /* apiData = {
+      productividad: {
+          eficiencia: "",
+          rendimiento: "",
+          horasServicio: 0,
+          licencias: 0,
+          faltas: 0,
+          vacaciones: 0,
+          horasExtra: 0,
+          totalHorasAsignaciones: 0,
+          totalHorasFacturables: 0,
+          capacity: 0
+      },
+      contrato: {
+          codColaborador: 0,
+          nroDocumento: "",
+          nombres: "",
+          apellidoPat: "",
+          apellidoMat: "",
+          sueldoPlanilla: "",
+          bono: "",
+          eps: "",
+          clm: "",
+          codContrato: 4,
+          modalidad: "",
+          fechaFin: ""
+      },
+      asignaciones: []
+  }; */
+  productivity: Productivity = {
+    eficiencia: "",
+    rendimiento: "",
     horasServicio: 0,
-  licencias: 0,
-  faltas: 0,
-  vacaciones: 0,
-  horasExtras: 0,
-  totalHorasAsignaciones: 0,
-  totalHorasFacturables: 0,
-  eficiencia: 0,
-  rendimiento: 0,
-  capacity: 0,
-  clm: 0,
-  fechaFinContrato: "",
-  colaborador: {
-    codColaborador: 1,
+    licencias: 0,
+    faltas: 0,
+    vacaciones: 0,
+    horasExtra: 0,
+    totalHorasAsignaciones: 0,
+    totalHorasFacturables: 0,
+    capacity: 0
+  }
+  contract: Contract = {
+    codColaborador: 0,
+    nroDocumento: "",
     nombres: "",
     apellidoPat: "",
     apellidoMat: "",
-    servicios: [
-      {
-        tipoServicio: "",
-        descripcionServicio: "",
-        AsignacionRecurso: {
-          porAsignacion: 0,
-          fechaInicio: "",
-          fechaFin: ""
-        }
-      }
-    ],
-    contratos: [
-      {
-        codContrato: 1,
-        modalidad: "",
-        fechaFin: "",
-        sueldoPlanilla: 0,
-        bono: 0,
-        eps: 0,
-        clm: 0
-      }
-    ]
-  },
-  id: 0
+    sueldoPlanilla: "",
+    bono: "",
+    eps: "",
+    clm: "",
+    codContrato: 4,
+    modalidad: "",
+    fechaFin: new Date()
   };
-  detail = {};
-  contracts: Contract[] = [];
-  services = [];
-  collaborator: Collaborator = {
-    codColaborador: 0,
-    nombres: '',
-    apellidoPat: '',
-    apellidoMat: '',
-    servicios: []
-  };
-  resourceAssignment = {};
-
-  tableData: AssignedService[] = [
-    {
-      type: 'PRY',
-      name: 'Proyecto1',
-      percentage: 50,
-      start: new Date('03-14'),
-      end: new Date('05-16')
-    },
-    {
-      type: 'RQ',
-      name: 'Requerimiento3',
-      percentage: 50,
-      start: new Date('03-30'),
-      end: new Date('05-10')
-    }
-  ]
+  assignments: Assignment[] = [];
+  tableData: Assignment[] = [];
   columnsToDisplay = ['service', 'name', 'percentage', 'start', 'end'];
 
   ngOnInit(): void {
@@ -113,19 +89,18 @@ export class ResourceMapDetailComponent implements OnInit {
     console.log(this.currentTab);
   }
 
+  //obtener el detalle
   loadDetail(id: number){
     this.resourceDetailService.getDetail(id)
     .subscribe(data => {
       console.log('fetched data: ', data);
-      this.apiData = data;
-      this.collaborator = data["colaborador"]
-      this.contracts = data["colaborador"]["contratos"];
-      this.services = data["colaborador"]["servicios"];
-      //this.services.forEach(service => servce["Asigna"])
-      console.log('fetched contracts: ', this.contracts);
-      console.log('fetched collab: ', this.collaborator);
-      console.log('fetched services: ', this.services);
-
+      this.productivity = data["productividad"];
+      this.contract = data["contrato"];
+      this.assignments = data["asignaciones"];
+      this.tableData = this.assignments;
+      console.log('fetched prod: ', this.productivity);
+      console.log('fetched contract: ', this.contract);
+      console.log('fetched assignments: ', this.assignments);
     }, error => {
       console.error(error);
     })
