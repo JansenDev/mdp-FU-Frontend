@@ -157,9 +157,6 @@ export class ResourceMapComponent implements OnInit {
     this.resourceService.findAllProfiles().subscribe({
       next: (profileResponse) => {
         this.profileList = profileResponse.sort();
-
-        // console.log(profileResponse);
-        // console.log(profileResponse.sort());
       },
       error: (err) => console.log(err.message),
     });
@@ -173,20 +170,18 @@ export class ResourceMapComponent implements OnInit {
       });
   }
 
-  fillCBoxClient(periodSelected: string): void {
+  fillCBoxClient(): void {
     const idUser = USER_SESION;
 
-    this.resourceService
-      .findClientByUserAndPeriod(idUser, periodSelected)
-      .subscribe((clientsData) => {
-        this.clientList = clientsData;
-      });
+    this.resourceService.findClientByUser(idUser).subscribe((clientsData) => {
+      this.clientList = clientsData;
+    });
   }
 
   onChangeCBoxPeriodFillCBoxClient() {
     this.resourceForm.controls['cboxPeriod'].valueChanges.subscribe(
       (periodSelected) => {
-        this.fillCBoxClient(periodSelected);
+        this.fillCBoxClient();
       }
     );
   }
