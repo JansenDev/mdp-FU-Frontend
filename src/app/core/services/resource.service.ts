@@ -25,9 +25,9 @@ export class ResourceService {
     period: string,
     codClient: string,
     codProfile?: string,
-    collaborator?: number
+    collaborator?: string
   ) {
-    const URL = `${url_base}/resources/maparecursos`;
+    const URL = `${url_base}/resources/resourcesmap`;
 
     let bodyRequest: IResourceRequest = {
       periodo: period,
@@ -39,7 +39,7 @@ export class ResourceService {
     }
 
     if (collaborator) {
-      bodyRequest['cod_colaborador'] = collaborator;
+      bodyRequest['nombres'] = collaborator;
     }
 
     return this.httpClient.post<IResourceResponse[]>(URL, bodyRequest).pipe(
@@ -58,7 +58,7 @@ export class ResourceService {
   }
 
   findAllPeriods() {
-    const URL = `${url_base}/resources/periodos`;
+    const URL = `${url_base}/resources/periods`;
 
     return this.httpClient.get<IPeriodResponse[]>(URL).pipe(
       catchError((err: HttpErrorResponse) => {
@@ -88,19 +88,19 @@ export class ResourceService {
   }
 
   findAllProfiles() {
-    const URL = `${url_base}/resources/perfiles`;
+    const URL = `${url_base}/resources/profiles`;
 
     return this.httpClient.get<IProfileResponse[]>(URL);
   }
 
   findCollaboratorsByClientAndPeriod(client: number, period: string) {
-    const URL = `${url_base}/resources/${client}/colaboradores/${period}`;
+    const URL = `${url_base}/resources/${client}/collaborators/${period}`;
 
     return this.httpClient.get<ICollaboratorResponse[]>(URL);
   }
 
   findClientByUserAndPeriod(idUser: number, period: string) {
-    const URL = `${url_base}/resources/${idUser}/clientes/${period}`;
+    const URL = `${url_base}/resources/${idUser}/clients/${period}`;
 
     return this.httpClient.get<IClientResponse[]>(URL);
   }

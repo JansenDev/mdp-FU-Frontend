@@ -7,6 +7,7 @@ import { IClientResponse } from 'src/app/core/models/client.model';
 import { IPeriodResponse } from 'src/app/core/models/period.model';
 import { IProfileResponse } from 'src/app/core/models/profile.model';
 import { IResourceResponse } from 'src/app/core/models/resource.model';
+import { IResourceMapFilters } from 'src/app/core/models/resource.model';
 import { IProductivityIndicator } from 'src/app/core/models/resource.model';
 import { ICollaboratorResponse } from 'src/app/core/models/collaborator.model';
 // constants
@@ -16,7 +17,6 @@ import { PRODUCTIVITY_INDICATOR } from 'src/app/core/constants/resource.constant
 import { ResourceService } from '../../core/services/resource.service';
 // utils
 import { findPeriodActive } from '../../core/utils/utilities.util';
-import { getIdCollaboratorFromNameLong } from '../../core/utils/utilities.util';
 
 @Component({
   selector: 'app-resource-map',
@@ -54,6 +54,7 @@ export class ResourceMapComponent implements OnInit {
 
   showDetail = false;
   cod_colaborador: any = null;
+  cod_mapa_recurso: any = null;
 
   constructor(
     private resourceService: ResourceService,
@@ -79,28 +80,31 @@ export class ResourceMapComponent implements OnInit {
   }
 
   ngSubmit(): void {
-    let { cboxPeriod, cboxClient, cboxProfile, inNames } =
+    let { cboxPeriod, cboxClient, cboxProfile, inNames }: IResourceMapFilters =
       this.resourceForm.value;
 
     this.periodSelected = cboxPeriod;
-    let idCollaborator = getIdCollaboratorFromNameLong(
-      inNames,
-      this.collaboratorList
-    )!;
+
+    let inputNameWithoutExtraSpaces = inNames
+      .split(' ')
+      .filter((name: string) => name !== '')
+      .join(' ');
 
     this.findAndsetResourceItems(
       cboxPeriod,
       cboxClient,
       cboxProfile,
-      idCollaborator
+      inputNameWithoutExtraSpaces
     );
   }
 
   onResourceMapDetail(resourceMapItem: IResourceResponse): void {
     this.rowSelected = resourceMapItem;
 
-    console.info(`My Resource Map Item: ${resourceMapItem.cod_colaborador}`);
+    console.info(`\ncod_colaborador: ${resourceMapItem.cod_colaborador}`);
+    console.info(`cod_mapa_recurso: ${resourceMapItem.cod_mapa_recurso}`);
     this.cod_colaborador = resourceMapItem.nombre_colaborador;
+    this.cod_mapa_recurso = resourceMapItem.cod_mapa_recurso;
     this.showDetail = false;
 
     // TODO:Implementar mejor solución para el toogle de detalles
@@ -114,7 +118,7 @@ export class ResourceMapComponent implements OnInit {
     period: string,
     idclient: string,
     idProfile?: string,
-    collaborator?: number
+    collaborator?: string
   ): void {
     this.resourceService
       .findResourceByPeriodClientProfileNames(
@@ -150,7 +154,10 @@ export class ResourceMapComponent implements OnInit {
   fillCBoxProfile(): void {
     this.resourceService.findAllProfiles().subscribe({
       next: (profileResponse) => {
-        this.profileList = profileResponse;
+        this.profileList = profileResponse.sort();
+
+        // console.log(profileResponse);
+        // console.log(profileResponse.sort());
       },
       error: (err) => console.log(err.message),
     });

@@ -18,6 +18,7 @@ export class ResourceMapDetailComponent implements OnInit {
   constructor() {}
   @Input() showDetail = false;
   @Input() cod_colaborador = null;
+  @Input() cod_mapa_recurso = null;
   currentTab = 0;
   tableData: AssignedService[] = [
     {

@@ -21,7 +21,7 @@
     <mat-label>Cliente</mat-label>
     <mat-select formControlName="cboxClient">
       <mat-option *ngFor="let client of clientList" [value]="client.cod_cliente"
-        >{{ client.nombre_corto }}
+        >{{ client.nombre_corto | titlecase }}
       </mat-option>
     </mat-select>
   </mat-form-field>
@@ -33,7 +33,7 @@
         *ngFor="let profile of profileList"
         [value]="profile.cod_perfil"
       >
-        {{ profile.nombre_perfil }}
+        {{ profile.nombre_perfil | uppercase }}
       </mat-option>
     </mat-select>
   </mat-form-field>
@@ -52,9 +52,9 @@
   <datalist id="data">
     <option
       *ngFor="let collaborator of collaboratorList"
-      value="{{ collaborator.nombres }} {{ collaborator.apellido_pat }} {{
-        collaborator.apellido_mat
-      }} "
+      value="{{ collaborator.nombres | titlecase }} {{
+        collaborator.apellido_pat | titlecase
+      }} {{ collaborator.apellido_mat | titlecase }}"
     ></option>
   </datalist>
 
@@ -68,9 +68,9 @@
     >
       Buscar
     </button>
-    <button type="button" mat-raised-button color="accent" class="">
+    <!-- <button type="button" mat-raised-button color="accent" class="">
       Apertura
-    </button>
+    </button> -->
   </div>
 </form>
 <!-- Filters End -->
@@ -180,7 +180,7 @@
 
 <div class="pagination--container">
   <mat-paginator
-    [pageSizeOptions]="[5, 10, 20]"
+    [pageSizeOptions]="[10, 15, 20]"
     aria-label="Select page of periodic elements"
   >
   </mat-paginator>
@@ -190,6 +190,7 @@
 <!-- Resource Map End -->
 <app-resource-map-detail
   [cod_colaborador]="cod_colaborador"
+  [cod_mapa_recurso]="cod_mapa_recurso"
   [showDetail]="showDetail"
 ></app-resource-map-detail>
-<app-summary></app-summary>
+<!-- <app-summary></app-summary> -->

@@ -10,7 +10,8 @@ export interface IResourceResponse {
   productividad: string | number;
   cod_colaborador: string;
   nombre_perfil: 3;
-  nombre_colaborador: number;
+  nombre_colaborador: string;
+  cod_mapa_recurso: string;
 }
 
 export interface IResourceRequest {
@@ -18,10 +19,18 @@ export interface IResourceRequest {
   cod_cliente: string | number; //TEst borrar string
   cod_perfil?: string | number;
   cod_colaborador?: number;
+  nombres?: string;
 }
 
 export interface IProductivityIndicator {
   low: number;
   medium: number;
   high: number;
+}
+
+export interface IResourceMapFilters {
+  cboxPeriod: string;
+  cboxClient: string;
+  cboxProfile: string;
+  inNames: string;
 }
