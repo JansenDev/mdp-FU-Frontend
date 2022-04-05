@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ResourceDetailService } from 'src/app/core/services/resource-detail.service';
 import { Assignment } from 'src/app/core/models/assignment.model';
 import { Contract } from 'src/app/core/models/contract.model';
@@ -13,37 +12,9 @@ import { Productivity } from 'src/app/core/models/productivity.model';
 export class ResourceMapDetailComponent implements OnInit {
 
   constructor(private resourceDetailService: ResourceDetailService) {  }
-  showDetail = true; //TODO: dejar en false
+  showDetail = false;
   currentTab = 0;
-  /* apiData = {
-      productividad: {
-          eficiencia: "",
-          rendimiento: "",
-          horasServicio: 0,
-          licencias: 0,
-          faltas: 0,
-          vacaciones: 0,
-          horasExtra: 0,
-          totalHorasAsignaciones: 0,
-          totalHorasFacturables: 0,
-          capacity: 0
-      },
-      contrato: {
-          codColaborador: 0,
-          nroDocumento: "",
-          nombres: "",
-          apellidoPat: "",
-          apellidoMat: "",
-          sueldoPlanilla: "",
-          bono: "",
-          eps: "",
-          clm: "",
-          codContrato: 4,
-          modalidad: "",
-          fechaFin: ""
-      },
-      asignaciones: []
-  }; */
+
   productivity: Productivity = {
     eficiencia: "",
     rendimiento: "",
@@ -56,6 +27,7 @@ export class ResourceMapDetailComponent implements OnInit {
     totalHorasFacturables: 0,
     capacity: 0
   }
+
   contract: Contract = {
     codColaborador: 0,
     nroDocumento: "",
@@ -70,6 +42,7 @@ export class ResourceMapDetailComponent implements OnInit {
     modalidad: "",
     fechaFin: new Date()
   };
+
   assignments: Assignment[] = [];
   tableData: Assignment[] = [];
   columnsToDisplay = ['service', 'name', 'percentage', 'start', 'end'];
@@ -81,12 +54,6 @@ export class ResourceMapDetailComponent implements OnInit {
 
   toggleDetail(){
     this.showDetail = !this.showDetail;
-  }
-
-  tabChanged(tabChangeEvent: MatTabChangeEvent): void {
-    //console.log('index = ', tabChangeEvent.index);
-    this.currentTab = tabChangeEvent.index;
-    console.log(this.currentTab);
   }
 
   //obtener el detalle
