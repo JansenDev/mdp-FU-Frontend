@@ -1,6 +1,6 @@
 export interface Productivity{
-  eficiencia: number,
-  rendimiento: number,
+  eficiencia: string,
+  rendimiento: string,
   horasServicio: number,
   licencias: number,
   faltas: number,
