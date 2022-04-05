@@ -1,9 +1,6 @@
-<app-header></app-header>
-
 <!-- Resource Map Start -->
 <div class="title">
-  <h1>Mapa de Recursos Periodo {{ periodTitle }}</h1>
-  <!-- <h1>  &nbsp;{{ periodTitle }}</h1> -->
+  <h1>Mapa de Recursos Periodo {{ periodSelected }}</h1>
 </div>
 
 <!-- Filters Start -->
@@ -24,7 +21,7 @@
     <mat-label>Cliente</mat-label>
     <mat-select formControlName="cboxClient">
       <mat-option *ngFor="let client of clientList" [value]="client.cod_cliente"
-        >{{ client.nombre_corto }}
+        >{{ client.nombre_corto | titlecase }}
       </mat-option>
     </mat-select>
   </mat-form-field>
@@ -36,7 +33,7 @@
         *ngFor="let profile of profileList"
         [value]="profile.cod_perfil"
       >
-        {{ profile.nombre_perfil }}
+        {{ profile.nombre_perfil | uppercase }}
       </mat-option>
     </mat-select>
   </mat-form-field>
@@ -55,9 +52,9 @@
   <datalist id="data">
     <option
       *ngFor="let collaborator of collaboratorList"
-      value="{{ collaborator.nombres }} {{ collaborator.apellido_pat }} {{
-        collaborator.apellido_mat
-      }} "
+      value="{{ collaborator.nombres | titlecase }} {{
+        collaborator.apellido_pat | titlecase
+      }} {{ collaborator.apellido_mat | titlecase }}"
     ></option>
   </datalist>
 
@@ -71,9 +68,9 @@
     >
       Buscar
     </button>
-    <button type="button" mat-raised-button color="accent" class="">
+    <!-- <button type="button" mat-raised-button color="accent" class="">
       Apertura
-    </button>
+    </button> -->
   </div>
 </form>
 <!-- Filters End -->
@@ -83,23 +80,36 @@
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="ln">
       <th mat-header-cell *matHeaderCellDef>LN</th>
-      <td mat-cell *matCellDef="let element">{{ element.linea_negocio }}</td>
+      <td mat-cell *matCellDef="let element">
+        {{ element.linea_negocio | uppercase }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="colaborador">
       <th mat-header-cell *matHeaderCellDef>Colaborador</th>
-      <td mat-cell *matCellDef="let element">{{ element.cod_colaborador }}</td>
+      <td mat-cell *matCellDef="let element">
+        {{ element.nombre_colaborador }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="estatus">
+      <th mat-header-cell *matHeaderCellDef>Estado</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.estado | state | titlecase }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="perfil">
       <th mat-header-cell *matHeaderCellDef>Perfil</th>
-      <td mat-cell *matCellDef="let element">{{ element.perfil }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.nombre_perfil }}</td>
     </ng-container>
 
     <!-- Symbol Column -->
     <ng-container matColumnDef="nivel">
       <th mat-header-cell *matHeaderCellDef>Nivel</th>
-      <td mat-cell *matCellDef="let element">{{ element.nivel }}</td>
+      <td mat-cell *matCellDef="let element">
+        {{ element.nivel | titlecase }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="f_inicio">
@@ -117,22 +127,24 @@
     </ng-container>
 
     <ng-container matColumnDef="asignacion">
-      <th mat-header-cell *matHeaderCellDef>asignacion</th>
-      <td mat-cell *matCellDef="let element">{{ element.asignacion }}</td>
+      <th mat-header-cell *matHeaderCellDef>Asignación</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.asignacion | number: "1.0" }}%
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="clm_efectivo">
-      <th mat-header-cell *matHeaderCellDef>clm_efectivo</th>
+      <th mat-header-cell *matHeaderCellDef>CLM Efectivo</th>
       <td mat-cell *matCellDef="let element">{{ element.clm_efectivo }}</td>
     </ng-container>
 
     <ng-container matColumnDef="produccion">
-      <th mat-header-cell *matHeaderCellDef>produccion</th>
+      <th mat-header-cell *matHeaderCellDef>Producción</th>
       <td mat-cell *matCellDef="let element">{{ element.produccion }}</td>
     </ng-container>
 
     <ng-container matColumnDef="productividad">
-      <th mat-header-cell *matHeaderCellDef>productividad</th>
+      <th mat-header-cell *matHeaderCellDef>Productividad</th>
       <td mat-cell *matCellDef="let element">
         {{ element.productividad }}
         <span
@@ -150,11 +162,6 @@
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="estatus">
-      <th mat-header-cell *matHeaderCellDef>estatus</th>
-      <td mat-cell *matCellDef="let element">{{ element.estado }}</td>
-    </ng-container>
-
     <tr
       mat-header-row
       *matHeaderRowDef="displayedColumns"
@@ -168,12 +175,12 @@
     ></tr>
   </table>
 </div>
-<!-- Filters End -->
+<!-- Table End -->
 <!-- Pagination Start -->
 
 <div class="pagination--container">
   <mat-paginator
-    [pageSizeOptions]="[ 5, 10, 20]"
+    [pageSizeOptions]="[10, 15, 20]"
     aria-label="Select page of periodic elements"
   >
   </mat-paginator>
@@ -183,8 +190,7 @@
 <!-- Resource Map End -->
 <app-resource-map-detail
   [cod_colaborador]="cod_colaborador"
+  [cod_mapa_recurso]="cod_mapa_recurso"
   [showDetail]="showDetail"
 ></app-resource-map-detail>
-<app-summary></app-summary>
-
-<!-- <app-footer></app-footer> -->
+<!-- <app-summary></app-summary> -->

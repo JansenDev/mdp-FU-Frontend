@@ -2,16 +2,21 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { productivityIndicator } from 'src/app/core/constants/resource.constants';
+// models
 import { IClientResponse } from 'src/app/core/models/client.model';
-import { ICollaboratorResponse } from 'src/app/core/models/collaborator.model';
 import { IPeriodResponse } from 'src/app/core/models/period.model';
 import { IProfileResponse } from 'src/app/core/models/profile.model';
-import {
-  IProductivityIndicator,
-  IResourceResponse,
-} from 'src/app/core/models/resource.model';
+import { IResourceResponse } from 'src/app/core/models/resource.model';
+import { IResourceMapFilters } from 'src/app/core/models/resource.model';
+import { IProductivityIndicator } from 'src/app/core/models/resource.model';
+import { ICollaboratorResponse } from 'src/app/core/models/collaborator.model';
+// constants
+import { USER_SESION } from 'src/app/core/constants/resource.constants';
+import { PRODUCTIVITY_INDICATOR } from 'src/app/core/constants/resource.constants';
+// services
 import { ResourceService } from '../../core/services/resource.service';
+// utils
+import { findPeriodActive } from '../../core/utils/utilities.util';
 
 @Component({
   selector: 'app-resource-map',
@@ -20,7 +25,10 @@ import { ResourceService } from '../../core/services/resource.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class ResourceMapComponent implements OnInit {
-  rowSelected = {};
+  @ViewChild(MatPaginator)
+  paginator: MatPaginator = {} as MatPaginator;
+  dataSource: MatTableDataSource<IResourceResponse> =
+    new MatTableDataSource<IResourceResponse>([]);
   displayedColumns: string[] = [
     'ln',
     'colaborador',
@@ -34,21 +42,19 @@ export class ResourceMapComponent implements OnInit {
     'produccion',
     'productividad',
   ];
-  @ViewChild(MatPaginator) paginator: MatPaginator = {} as MatPaginator;
-  dataSource: MatTableDataSource<IResourceResponse> =
-    new MatTableDataSource<IResourceResponse>([]);
-
+  rowSelected: IResourceResponse = {} as IResourceResponse;
   resourceForm: FormGroup;
   periodsList: IPeriodResponse[] = [] as IPeriodResponse[];
-
   profileList: IProfileResponse[] = [];
   collaboratorList: ICollaboratorResponse[] = [];
   clientList: IClientResponse[] = [];
-  periodTitle = '';
-  productivityIndicator: IProductivityIndicator = productivityIndicator;
+  periodSelected = '';
+  clientSelectedByPeriod = '';
+  productivityIndicator: IProductivityIndicator = PRODUCTIVITY_INDICATOR;
 
   showDetail = false;
   cod_colaborador: any = null;
+  cod_mapa_recurso: any = null;
 
   constructor(
     private resourceService: ResourceService,
@@ -60,29 +66,45 @@ export class ResourceMapComponent implements OnInit {
       cboxProfile: [''],
       inNames: [''],
     });
-    // add default values
-    // this.resourceForm.patchValue({
-    //   cboxProfile: '',
-    // });
   }
 
   ngOnInit(): void {
-    this.getResourceByPeriodClientProfileNames(2, '2022-02', '12');
-    this.resourceInit();
+    this.fillAllCBoxInit();
   }
 
-  resourceInit() {
-    this.getAllPeriods();
-    this.getAllPerfiles();
-    this.getAllCollaborator();
-    this.findClientByUser();
+  fillAllCBoxInit(): void {
+    this.fillCBoxProfile();
+    this.onChangeCBoxClientFillInputCollaborators();
+    this.fillCBoxPeriod();
+    this.onChangeCBoxPeriodFillCBoxClient();
   }
 
-  onResourceMapDetail(resourceMapItem: IResourceResponse) {
+  ngSubmit(): void {
+    let { cboxPeriod, cboxClient, cboxProfile, inNames }: IResourceMapFilters =
+      this.resourceForm.value;
+
+    this.periodSelected = cboxPeriod;
+
+    let inputNameWithoutExtraSpaces = inNames
+      .split(' ')
+      .filter((name: string) => name !== '')
+      .join(' ');
+
+    this.findAndsetResourceItems(
+      cboxPeriod,
+      cboxClient,
+      cboxProfile,
+      inputNameWithoutExtraSpaces
+    );
+  }
+
+  onResourceMapDetail(resourceMapItem: IResourceResponse): void {
     this.rowSelected = resourceMapItem;
 
-    console.log(`ResourceMapItem: ${resourceMapItem.cod_colaborador}`);
-    this.cod_colaborador = resourceMapItem.cod_colaborador;
+    console.info(`\ncod_colaborador: ${resourceMapItem.cod_colaborador}`);
+    console.info(`cod_mapa_recurso: ${resourceMapItem.cod_mapa_recurso}`);
+    this.cod_colaborador = resourceMapItem.nombre_colaborador;
+    this.cod_mapa_recurso = resourceMapItem.cod_mapa_recurso;
     this.showDetail = false;
 
     // TODO:Implementar mejor solución para el toogle de detalles
@@ -92,16 +114,14 @@ export class ResourceMapComponent implements OnInit {
     }, 500);
   }
 
-  getResourceByPeriodClientProfileNames(
-    idUser: number,
+  findAndsetResourceItems(
     period: string,
     idclient: string,
     idProfile?: string,
-    collaborator?: number
-  ) {
+    collaborator?: string
+  ): void {
     this.resourceService
       .findResourceByPeriodClientProfileNames(
-        idUser,
         period,
         idclient,
         idProfile,
@@ -115,72 +135,67 @@ export class ResourceMapComponent implements OnInit {
       });
   }
 
-  ngSubmit() {
-    const idUser = 2;
-    let { cboxPeriod, cboxClient, cboxProfile, inNames } =
-      this.resourceForm.value;
+  fillCBoxPeriod(): void {
+    this.resourceService.findAllPeriods().subscribe((periodResponse) => {
+      this.periodsList = periodResponse;
+      this.setPeriodActiveToCBoxPeriod(periodResponse);
+    });
+  }
 
-    this.periodTitle = cboxPeriod;
-    let idCollaborator = this.getIdCollaboratorFromNameLong(
-      inNames,
-      this.collaboratorList
-    )!;
+  setPeriodActiveToCBoxPeriod(profileList: IPeriodResponse[]) {
+    const periodActual = findPeriodActive(profileList);
 
-    this.getResourceByPeriodClientProfileNames(
-      idUser,
-      cboxPeriod,
-      cboxClient,
-      cboxProfile,
-      idCollaborator
+    if (periodActual != '') {
+      this.resourceForm.patchValue({ cboxPeriod: periodActual });
+      this.periodSelected = periodActual;
+    }
+  }
+
+  fillCBoxProfile(): void {
+    this.resourceService.findAllProfiles().subscribe({
+      next: (profileResponse) => {
+        this.profileList = profileResponse.sort();
+
+        // console.log(profileResponse);
+        // console.log(profileResponse.sort());
+      },
+      error: (err) => console.log(err.message),
+    });
+  }
+
+  fillCBoxCollaborator(idClient: number, period: string): void {
+    this.resourceService
+      .findCollaboratorsByClientAndPeriod(idClient, period)
+      .subscribe((collaboratorResponse) => {
+        this.collaboratorList = collaboratorResponse;
+      });
+  }
+
+  fillCBoxClient(periodSelected: string): void {
+    const idUser = USER_SESION;
+
+    this.resourceService
+      .findClientByUserAndPeriod(idUser, periodSelected)
+      .subscribe((clientsData) => {
+        this.clientList = clientsData;
+      });
+  }
+
+  onChangeCBoxPeriodFillCBoxClient() {
+    this.resourceForm.controls['cboxPeriod'].valueChanges.subscribe(
+      (periodSelected) => {
+        this.fillCBoxClient(periodSelected);
+      }
     );
   }
 
-  getAllPeriods() {
-    this.resourceService.findAllPeriods().subscribe((dataResponse) => {
-      this.periodsList = dataResponse;
-    });
-  }
-  getAllPerfiles() {
-    this.resourceService.findAllProfiles().subscribe((dataResponse) => {
-      this.profileList = dataResponse;
-    });
-  }
+  onChangeCBoxClientFillInputCollaborators(): void {
+    this.resourceForm.controls['cboxClient'].valueChanges.subscribe(
+      (clientSelected) => {
+        const periodSelected = this.resourceForm.controls['cboxPeriod'].value;
 
-  getAllCollaborator() {
-    this.resourceService.findAllCollaborator().subscribe((dataResponse) => {
-      this.collaboratorList = dataResponse;
-    });
-  }
-
-  getIdCollaboratorFromNameLong(
-    collaboratorNameLong: string,
-    collaboratorList: ICollaboratorResponse[]
-  ): number | null {
-    let collaboradorId = null;
-
-    for (let index = 0; index < collaboratorList.length; index++) {
-      const collaborator = this.collaboratorList[index];
-
-      if (
-        collaboratorNameLong.includes(collaborator.nombres) &&
-        collaboratorNameLong.includes(collaborator.apellido_pat) &&
-        collaboratorNameLong.includes(collaborator.apellido_mat)
-      ) {
-        collaboradorId = collaborator.cod_colaborador;
-        break;
+        this.fillCBoxCollaborator(clientSelected, periodSelected);
       }
-    }
-
-    return collaboradorId;
-  }
-
-  findClientByUser() {
-    const idUser = 2;
-
-    this.resourceService.findClientByUser(idUser).subscribe((clientsData) => {
-      // console.log(clientsData);
-
-      this.clientList = clientsData;
-    });
+    );
   }
 }
