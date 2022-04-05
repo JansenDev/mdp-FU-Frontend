@@ -1,30 +1,33 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { catchError, map, throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import {
-  IResourceRequest,
-  IResourceResponse,
-} from '../models/resource.model';
+// models
 import { IPeriodResponse } from '../models/period.model';
-import { IProfileResponse } from '../models/profile.model';
-import { ICollaboratorResponse } from '../models/collaborator.model';
 import { IClientResponse } from '../models/client.model';
+import { IProfileResponse } from '../models/profile.model';
+import { IResourceRequest } from '../models/resource.model';
+import { IResourceResponse } from '../models/resource.model';
+import { ICollaboratorResponse } from '../models/collaborator.model';
+import { NotificationService } from './notification.service';
 
 const { url_base } = environment;
 @Injectable({
   providedIn: 'root',
 })
 export class ResourceService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(
+    private httpClient: HttpClient,
+    private notificationService: NotificationService
+  ) {}
 
   findResourceByPeriodClientProfileNames(
-    idUser: number,
     period: string,
     codClient: string,
     codProfile?: string,
-    collaborator?: number
+    collaborator?: string
   ) {
-    const URL = `${url_base}/resources/${idUser}/maparecursos`;
+    const URL = `${url_base}/resources/resourcesmap`;
 
     let bodyRequest: IResourceRequest = {
       periodo: period,
@@ -36,32 +39,68 @@ export class ResourceService {
     }
 
     if (collaborator) {
-      bodyRequest['cod_colaborador'] = collaborator;
+      bodyRequest['nombres'] = collaborator;
     }
 
-    return this.httpClient.post<IResourceResponse[]>(URL, bodyRequest);
+    return this.httpClient.post<IResourceResponse[]>(URL, bodyRequest).pipe(
+      map((resourceResponse) => {
+        if (resourceResponse.length == 0) {
+          this.notificationService.toast(
+            'info',
+            'No se encontró recurso',
+            'Ups!',
+            5000
+          );
+        }
+        return resourceResponse;
+      })
+    );
   }
 
   findAllPeriods() {
-    const URL = `${url_base}/resources/periodos`;
+    const URL = `${url_base}/resources/periods`;
 
-    return this.httpClient.get<IPeriodResponse[]>(URL);
+    return this.httpClient.get<IPeriodResponse[]>(URL).pipe(
+      catchError((err: HttpErrorResponse) => {
+        let message = '';
+
+        if (err.status == 0) {
+          message = `Error de conexión ${err.url}`;
+          this.notificationService.toast(
+            'error',
+            'Servidor fuera de línea',
+            'ERROR'
+          );
+        }
+
+        if (err.status == 500) {
+          message = `Error de conexión ${err.url}`;
+          this.notificationService.toast(
+            'error',
+            'Falla en el servidor',
+            'ERROR'
+          );
+        }
+
+        return throwError(() => new Error(message));
+      })
+    );
   }
 
   findAllProfiles() {
-    const URL = `${url_base}/resources/perfiles`;
+    const URL = `${url_base}/resources/profiles`;
 
     return this.httpClient.get<IProfileResponse[]>(URL);
   }
 
-  findAllCollaborator() {
-    const URL = `${url_base}/resources/colaboradores`;
+  findCollaboratorsByClientAndPeriod(client: number, period: string) {
+    const URL = `${url_base}/resources/${client}/collaborators/${period}`;
 
     return this.httpClient.get<ICollaboratorResponse[]>(URL);
   }
 
-  findClientByUser(idUser: number) {
-    const URL = `${url_base}/resources/${idUser}/clientes`;
+  findClientByUserAndPeriod(idUser: number, period: string) {
+    const URL = `${url_base}/resources/${idUser}/clients/${period}`;
 
     return this.httpClient.get<IClientResponse[]>(URL);
   }

@@ -14,6 +14,7 @@ export class ResourceMapDetailComponent implements OnInit {
   constructor(private resourceDetailService: ResourceDetailService) {  }
   @Input() cod_colaborador = null;
   @Input() showDetail = false;
+  @Input() cod_mapa_recurso = null;
   currentTab = 0;
 
   productivity: Productivity = {

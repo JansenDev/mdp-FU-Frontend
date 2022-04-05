@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+// angular modules
 import { HttpClientModule } from '@angular/common/http';
-
+// project modules
+import { PageModule } from './pages/pages.module';
 import { ComponentModule } from './components/component.module';
-import { PageModule } from './pages/page.module';
-import { SharedModule } from './shared/shared.module';
+// external modules
+import { ToastContainerModule, ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,9 +21,10 @@ import { SharedModule } from './shared/shared.module';
 
     HttpClientModule,
 
-    // ComponentModule,
     PageModule,
-    // SharedModule,
+    ComponentModule,
+    ToastrModule.forRoot(),
+    ToastContainerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
