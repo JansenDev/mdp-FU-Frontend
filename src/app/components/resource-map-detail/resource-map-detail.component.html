@@ -1,24 +1,21 @@
+<!-- Botón de detalle usado en la rama en la que el componente estaba solo -->
+<!-- <button (click)="toggleDetail()" mat-raised-button color="primary">Abrir detalle</button> --> <!-- (click)="loadDetail(1)" -->
 <aside class="detail" [class.active]="showDetail">
-  <mat-tab-group
-    (selectedTabChange)="tabChanged($event)"
-    mat-stretch-tabs
-    dynamicHeight
-    backgroundColor="primary"
-  >
+  <mat-tab-group mat-stretch-tabs dynamicHeight backgroundColor="primary">
     <mat-tab label="Productividad Horas">
       <div class="detail-content">
         <h2>Productividad Horas</h2>
         <ul>
-          <li>Horas servicios</li>
-          <li>Licencias</li>
-          <li>Faltas</li>
-          <li>Vacaciones</li>
-          <li>Horas extras</li>
-          <li>Horas asignadas</li>
-          <li>Horas facturables</li>
-          <li>Eficiencia</li>
-          <li>Rendimiento</li>
-          <li>Capacidad</li>
+          <li>Horas servicios {{ productivity.horasServicio }}h</li>
+          <li>Licencias {{ productivity.licencias }}h</li>
+          <li>Faltas {{ productivity.faltas }}h</li>
+          <li>Vacaciones {{ productivity.vacaciones }}h</li>
+          <li>Horas extras {{ productivity.horasExtra }}h</li>
+          <li>Horas asignadas {{ productivity.totalHorasAsignaciones }}h</li>
+          <li>Horas facturables {{ productivity.totalHorasFacturables }}h</li>
+          <li>Eficiencia {{ productivity.eficiencia }}%</li>
+          <li>Rendimiento {{ productivity.rendimiento }}%</li>
+          <li>Capacidad {{productivity.capacity}}%</li>
         </ul>
       </div>
     </mat-tab>
@@ -26,14 +23,14 @@
       <div class="detail-content">
         <h2>Datos de Contrato</h2>
         <ul>
-          <li>Nro de Documento</li>
-          <li>Nombres y Apellidos</li>
-          <li>Modalidad</li>
-          <li>Fin de contrato</li>
-          <li>Salario</li>
-          <li>Bono</li>
-          <li>EPS</li>
-          <li>CLM</li>
+          <li>Nro de Documento {{ contract.nroDocumento }}</li>
+          <li>Nombres y Apellidos {{contract.nombres + ' ' + contract.apellidoPat + ' ' + contract.apellidoMat}}</li>
+          <li>Modalidad {{ contract.codContrato }}</li>
+          <li>Fin de contrato {{ contract.fechaFin }}</li>
+          <li>Salario {{ contract.sueldoPlanilla }}</li>
+          <li>Bono {{ contract.bono }} </li>
+          <li>EPS {{ contract.eps }}</li>
+          <li>CLM {{contract.clm }}</li>
         </ul>
       </div>
     </mat-tab>
@@ -44,33 +41,27 @@
         <table mat-table [dataSource]="tableData" class="service-table">
           <ng-container matColumnDef="service">
             <th mat-header-cell *matHeaderCellDef>Tipo</th>
-            <td mat-cell *matCellDef="let service">{{ service.type }}</td>
+            <td mat-cell *matCellDef="let assignment">{{assignment.tipoServicio}}</td>
           </ng-container>
 
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef>Servicio</th>
-            <td mat-cell *matCellDef="let service">{{ service.name }}</td>
+            <td mat-cell *matCellDef="let assignment">{{assignment.descripcionServicio}}</td>
           </ng-container>
 
           <ng-container matColumnDef="percentage">
             <th mat-header-cell *matHeaderCellDef>%Asig</th>
-            <td mat-cell *matCellDef="let service">
-              {{ service.percentage }}%
-            </td>
+            <td mat-cell *matCellDef="let assignment">{{assignment.porAsignacion }}%</td>
           </ng-container>
 
           <ng-container matColumnDef="start">
             <th mat-header-cell *matHeaderCellDef>Inicio</th>
-            <td mat-cell *matCellDef="let service">
-              {{ service.start | date: "dd-MM" }}
-            </td>
+            <td mat-cell *matCellDef="let assignment">{{assignment.fechaInicio | date:'dd-MM'}}</td>
           </ng-container>
 
           <ng-container matColumnDef="end">
             <th mat-header-cell *matHeaderCellDef>Fin</th>
-            <td mat-cell *matCellDef="let service">
-              {{ service.end | date: "dd-MM" }}
-            </td>
+            <td mat-cell *matCellDef="let assignment">{{assignment.fechaFin | date:'dd-MM'}}</td>
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
           <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
