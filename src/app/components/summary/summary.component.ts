@@ -82,6 +82,7 @@ export class SummaryComponent implements OnInit {
   ngOnInit() {
     this.getSummary();
     this.getResourceMap();
+    this.getPrueba();
   }
 
   getSummary() {
@@ -101,6 +102,12 @@ export class SummaryComponent implements OnInit {
     this.service.getResourceMap().subscribe(data => {
       this.resourceMap = data;
       console.log("mapa recursos:", this.resourceMap);
+    })
+  }
+
+  getPrueba() {
+    this.service.getPrueba().subscribe(data => {
+      console.log("PRUEBA DE DATA CARLOS: ", data);
     })
   }
 }
