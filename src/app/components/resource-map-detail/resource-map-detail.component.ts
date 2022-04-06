@@ -50,7 +50,7 @@ export class ResourceMapDetailComponent implements OnInit {
   columnsToDisplay = ['service', 'name', 'percentage', 'start', 'end'];
 
   ngOnInit(): void {
-    console.log(this.currentTab);
+    // console.log(this.currentTab);
     this.loadDetail(1);
   }
 
@@ -62,14 +62,14 @@ export class ResourceMapDetailComponent implements OnInit {
   loadDetail(id: number){
     this.resourceDetailService.getDetail(id)
     .subscribe(data => {
-      console.log('fetched data: ', data);
+      // console.log('fetched data: ', data);
       this.productivity = data["productividad"];
       this.contract = data["contrato"];
       this.assignments = data["asignaciones"];
       this.tableData = this.assignments;
-      console.log('fetched prod: ', this.productivity);
-      console.log('fetched contract: ', this.contract);
-      console.log('fetched assignments: ', this.assignments);
+      // console.log('fetched prod: ', this.productivity);
+      // console.log('fetched contract: ', this.contract);
+      // console.log('fetched assignments: ', this.assignments);
     }, error => {
       console.error(error);
     })
