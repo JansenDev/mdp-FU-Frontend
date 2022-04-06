@@ -1,8 +1,8 @@
 $page__width: 80%;
 
 .title {
-  margin-top: 70px !important;
-  margin-bottom: 50px !important;
+  margin-top: 50px !important;
+  margin-bottom: 40px !important;
 
   & > h1 {
     color: var(--black);
@@ -45,10 +45,6 @@ $page__width: 80%;
       background-color: var(--primary);
       color: var(--white);
     }
-    // // TODO:Escojer mejor color para Apertura
-    // & button:last-child {
-    //   // margin-left: 1.25em;
-    // }
   }
 }
 
@@ -67,8 +63,21 @@ table {
       font-weight: bold;
       font-size: 14px;
 
+      &:nth-child(8) {
+        text-align: center;
+      }
+      &:nth-child(9) {
+        text-align: right;
+      }
+      &:nth-child(10) {
+        text-align: right;
+      }
+      &:nth-child(11) {
+        text-align: center;
+      }
+
       &:last-child {
-        padding-right: 0 !important;
+        padding-right: 10px !important;
       }
     }
   }
@@ -76,9 +85,22 @@ table {
   .mat-row .mat-cell {
     border-bottom: 1px solid var(--gray);
     border-top: 1px solid transparent;
+
+    &:nth-child(8) {
+      text-align: center;
+    }
+    &:nth-child(9) {
+      text-align: right;
+    }
+    &:nth-child(10) {
+      text-align: right;
+    }
+    &:nth-child(11) {
+      text-align: center;
+    }
   }
 
-  // TODO: mejorar color  al pasar el mouse en la fila
+  // // TODO: mejorar color  al pasar el mouse en la fila
   .mat-row:hover .mat-cell {
     cursor: pointer;
     background-color: var(--gray);
@@ -95,7 +117,7 @@ table {
   }
 
   & tbody tr td.mat-cell:last-child {
-    padding-right: 0 !important;
+    padding-right: 10px !important;
   }
 }
 

@@ -135,12 +135,14 @@
 
     <ng-container matColumnDef="clm_efectivo">
       <th mat-header-cell *matHeaderCellDef>CLM Efectivo</th>
-      <td mat-cell *matCellDef="let element">{{ element.clm_efectivo }}</td>
+      <td mat-cell *matCellDef="let element">
+        {{ element.clm_efectivo |number:'.2'}}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="produccion">
       <th mat-header-cell *matHeaderCellDef>Producción</th>
-      <td mat-cell *matCellDef="let element">{{ element.produccion }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.produccion |number:'.2' }}</td>
     </ng-container>
 
     <ng-container matColumnDef="productividad">
@@ -180,7 +182,7 @@
 
 <div class="pagination--container">
   <mat-paginator
-    [pageSizeOptions]="[10, 15, 20]"
+    [pageSizeOptions]="[7, 15, 20]"
     aria-label="Select page of periodic elements"
   >
   </mat-paginator>
@@ -193,4 +195,5 @@
   [cod_mapa_recurso]="cod_mapa_recurso"
   [showDetail]="showDetail"
 ></app-resource-map-detail>
-<app-summary></app-summary>
+
+<app-summary [periodo]="periodo" [cod_cliente]="cod_cliente"></app-summary>
