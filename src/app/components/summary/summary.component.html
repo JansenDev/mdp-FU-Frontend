@@ -1,19 +1,22 @@
 <div id="summary">
-    <p> 
-        <span class="tag"> Cliente: </span> 
-        <span class="value"> {{this.customer}} </span> 
+    <p id="customer"> 
+        <span class="customer"> {{this.customer}} </span> 
     </p>
+    <hr class="line">
+
+    <br>
+    <br>
     <p> 
         <span class="tag"> CLM Efectivo: </span> 
-        <span class="value"> {{this.clm_effective}} </span> 
+        <span class="value number"> {{this.clm_effective | number: '2.2-4'}} </span> 
     </p>
     <p> 
         <span class="tag"> Producción: </span> 
-        <span class="value"> {{this.production}} </span> 
+        <span class="value number"> {{this.production | number: '3.2-4'}} </span> 
     </p>
     <p> 
         <span class="tag"> Productividad: </span> 
-        <span class="value"> {{this.productivity}} </span> 
+        <span class="value number"> {{this.productivity | number: '3.2-4'}} </span> 
     </p>
     <p class="period"> 
         <span class="tag"> Periodo: </span> 

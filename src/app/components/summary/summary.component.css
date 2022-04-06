@@ -1,23 +1,51 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 #summary {
     position: absolute;
-    padding: 1rem 12rem 2rem 2rem;
-    margin-right: 2rem;
+    padding: 1.5rem 12rem 2rem 2rem;
+    margin: 1rem 2rem;
     right: 0rem;
     border: solid var(--black);
+    font-size: 1rem;
 }
 
 .tag {
     color:var(--blue);
     font-weight: bold;
-    text-shadow: 1px 1px var(--gray);
+    text-shadow: 0.1rem 0.1rem var(--gray);
 }
 
 .value {
     font-weight: bold;
+    margin-left: 1rem;
+}
+
+.number {
+    position: absolute;
+    margin-right: 1rem;
+    right: 0rem;
 }
 
 .period {
     position: absolute;
     right: 0rem;
     padding-right: 1rem;
+}
+
+#customer {
+    font-size: 1.5rem;
+    text-shadow: 0.2rem 0.2rem var(--gray);
+    font-weight: bold;
+}
+
+.customer {
+    text-align: center !important;
+}
+
+.line {
+    border: 0.1rem solid var(--black);
 }
