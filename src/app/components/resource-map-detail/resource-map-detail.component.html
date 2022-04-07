@@ -18,7 +18,7 @@
           <li>Capacidad {{productivity.capacity}}h</li>
         </ul>
       </div>
-      <button (click)="closeDetail()">Cerrar</button>
+      <button mat-raised-button (click)="closeDetail()">Cerrar</button>
     </mat-tab>
     <mat-tab label="Datos de Contrato">
       <div class="detail-content">
@@ -34,7 +34,7 @@
           <li>CLM {{contract.clm }}</li>
         </ul>
       </div>
-      <button (click)="closeDetail()">Cerrar</button>
+      <button mat-raised-button (click)="closeDetail()">Cerrar</button>
     </mat-tab>
 
     <mat-tab label="Servicios Asignados">
@@ -43,32 +43,32 @@
         <table mat-table [dataSource]="tableData" class="service-table">
           <ng-container matColumnDef="service">
             <th mat-header-cell *matHeaderCellDef>Tipo</th>
-            <td mat-cell *matCellDef="let assignment">{{assignment.tipoServicio}}</td>
+            <td mat-cell *matCellDef="let assignment">{{assignment.tipo_servicio}}</td>
           </ng-container>
 
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef>Servicio</th>
-            <td mat-cell *matCellDef="let assignment">{{assignment.descripcionServicio}}</td>
+            <td mat-cell *matCellDef="let assignment">{{assignment.descripcion_servicio}}</td>
           </ng-container>
 
           <ng-container matColumnDef="percentage">
             <th mat-header-cell *matHeaderCellDef>%Asig</th>
-            <td mat-cell *matCellDef="let assignment">{{assignment.porAsignacion }}%</td>
+            <td mat-cell *matCellDef="let assignment">{{assignment.por_asignacion }}%</td>
           </ng-container>
 
           <ng-container matColumnDef="start">
             <th mat-header-cell *matHeaderCellDef>Inicio</th>
-            <td mat-cell *matCellDef="let assignment">{{assignment.fechaInicio | date:'dd-MM'}}</td>
+            <td mat-cell *matCellDef="let assignment">{{assignment.fecha_inicio | date:'dd-MM'}}</td>
           </ng-container>
 
           <ng-container matColumnDef="end">
             <th mat-header-cell *matHeaderCellDef>Fin</th>
-            <td mat-cell *matCellDef="let assignment">{{assignment.fechaFin | date:'dd-MM'}}</td>
+            <td mat-cell *matCellDef="let assignment">{{assignment.fecha_fin | date:'dd-MM'}}</td>
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
           <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
         </table>
-        <button (click)="closeDetail()">Cerrar</button>
+        <button mat-raised-button (click)="closeDetail()">Cerrar</button>
       </div>
     </mat-tab>
   </mat-tab-group>
