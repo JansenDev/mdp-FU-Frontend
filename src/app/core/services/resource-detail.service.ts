@@ -20,9 +20,9 @@ export class ResourceDetailService {
     return this.http.get<Productivity>(`${url}/productividad/${id}`);
   }
 
-  //YYYY-MM-DD
-  getContractByCollaboratorIdAndEndDate(id: number, endDate: string){
-    return this.http.get<Contract>(`${url}/contrato/${id}/${endDate}`)
+  //Formto de periodo: MM-YYYY
+  getContractByCollaboratorIdAndPeriod(id: number, period: string){
+    return this.http.get<Contract>(`${url}/contrato/${id}/${period}`)
   }
 
   getAssigmentsByCollaboratorCodeAndDates(id: number, startDate: string, endDate: string){
