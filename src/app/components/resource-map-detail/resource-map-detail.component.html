@@ -15,7 +15,7 @@
           <li>Horas facturables {{ productivity.total_horas_facturables }}h</li>
           <li>Eficiencia {{ productivity.eficiencia }}%</li>
           <li>Rendimiento {{ productivity.rendimiento }}%</li>
-          <li>Capacidad {{productivity.capacity}}%</li>
+          <li>Capacidad {{productivity.capacity}}h</li>
         </ul>
       </div>
       <button (click)="closeDetail()">Cerrar</button>
@@ -24,11 +24,11 @@
       <div class="detail-content">
         <h2>Datos de Contrato</h2>
         <ul>
-          <li>Nro de Documento {{ contract.nroDocumento }}</li>
-          <li>Nombres y Apellidos {{contract.nombres + ' ' + contract.apellidoPat + ' ' + contract.apellidoMat}}</li>
-          <li>Modalidad {{ contract.codContrato }}</li>
-          <li>Fin de contrato {{ contract.fechaFin }}</li>
-          <li>Salario {{ contract.sueldoPlanilla }}</li>
+          <li>Nro de Documento {{ contract.nro_documento }}</li>
+          <li>Nombres y Apellidos {{contract.nombres + ' ' + contract.apellido_pat + ' ' + contract.apellido_mat}}</li>
+          <li>Modalidad {{ contract.modalidad }}</li>
+          <li>Fin de contrato {{ contract.fecha_fin | date:'dd/MM/YYYY' }}</li>
+          <li>Salario {{ contract.sueldo_planilla }}</li>
           <li>Bono {{ contract.bono }} </li>
           <li>EPS {{ contract.eps }}</li>
           <li>CLM {{contract.clm }}</li>
