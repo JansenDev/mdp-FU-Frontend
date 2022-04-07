@@ -105,13 +105,13 @@ export class SummaryComponent implements OnInit {
   getResourceMap() {
     this.service.getResourceMap().subscribe(data => {
       this.resourceMap = data;
-      console.log("mapa recursos:", this.resourceMap);
+      // console.log("mapa recursos:", this.resourceMap);
     })
   }
 
   getPrueba() {
     this.service.getPrueba().subscribe(data => {
-      console.log("PRUEBA DE DATA CARLOS: ", data);
+      // console.log("PRUEBA DE DATA CARLOS: ", data);
     })
   }
 }

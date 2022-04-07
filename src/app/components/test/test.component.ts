@@ -11,7 +11,7 @@ export class TestComponent implements OnInit {
 
   ngOnInit(): void {
     this.servicio.findById().subscribe((value) => {
-      console.log(value);
+      // console.log(value);
     });
   }
 

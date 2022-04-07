@@ -57,6 +57,8 @@ export class ResourceMapComponent implements OnInit {
   // inputs summary component
   cod_cliente: number | null = null;
   periodo: string = '';
+  // TEMPORAL SESION
+  inputIdSesion: any = null;
 
   constructor(
     private resourceService: ResourceService,
@@ -67,11 +69,23 @@ export class ResourceMapComponent implements OnInit {
       cboxClient: ['', Validators.required],
       cboxProfile: [''],
       inNames: [''],
+      inputIdUser: ['1'],
     });
   }
 
   ngOnInit(): void {
     this.fillAllCBoxInit();
+    // TEMPORAL
+    this.onSesionTemp();
+  }
+  // TEMPORAL
+  onSesionTemp() {
+    this.resourceForm.controls['inputIdUser'].valueChanges.subscribe(
+      (id_sesion) => {
+        this.inputIdSesion = parseInt(id_sesion);
+        this.fillCBoxClient();
+      }
+    );
   }
 
   fillAllCBoxInit(): void {
@@ -82,12 +96,19 @@ export class ResourceMapComponent implements OnInit {
   }
 
   ngSubmit(): void {
-    let { cboxPeriod, cboxClient, cboxProfile, inNames }: IResourceMapFilters =
-      this.resourceForm.value;
+    let {
+      cboxPeriod,
+      cboxClient,
+      cboxProfile,
+      inNames,
+      inputIdUser,
+    }: IResourceMapFilters = this.resourceForm.value;
 
     this.periodSelected = cboxPeriod;
     this.periodo = cboxPeriod;
     this.cod_cliente = parseInt(cboxClient);
+
+    console.log(inputIdUser);
 
     let inputNameWithoutExtraSpaces = inNames
       .split(' ')
@@ -171,7 +192,8 @@ export class ResourceMapComponent implements OnInit {
   }
 
   fillCBoxClient(): void {
-    const idUser = USER_SESION;
+    // TEMPORAL
+    const idUser = this.inputIdSesion || this.resourceForm.value.inputIdUser;
 
     this.resourceService.findClientByUser(idUser).subscribe((clientsData) => {
       this.clientList = clientsData;

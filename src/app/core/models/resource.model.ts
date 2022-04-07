@@ -33,4 +33,6 @@ export interface IResourceMapFilters {
   cboxClient: string;
   cboxProfile: string;
   inNames: string;
+  // TEMPORAL SESION
+  inputIdUser:any
 }
