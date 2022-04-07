@@ -1,8 +1,8 @@
-$page__width: 80%;
+$page__width: 90%;
 
 .title {
-  margin-top: 50px !important;
-  margin-bottom: 40px !important;
+  margin-top: 25px !important;
+  margin-bottom: 30px !important;
 
   & > h1 {
     color: var(--black);
@@ -56,7 +56,6 @@ table {
     0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 0px 0px 1px rgba(0, 0, 0, 0.12) !important;
 
   & .mat-table--header {
-    background-color: var(--primary);
 
     & .mat-header-cell {
       color: var(--white);
@@ -100,6 +99,14 @@ table {
     }
   }
 
+    & tr.mat-row{
+      height: 33px;
+    }
+
+    & tr.mat-header-row{
+      height: 38px;
+    }
+
   // // TODO: mejorar color  al pasar el mouse en la fila
   .mat-row:hover .mat-cell {
     cursor: pointer;
@@ -133,7 +140,7 @@ table {
 // pagination
 .pagination--container {
   width: $page__width;
-  margin: 20px auto;
+  margin: 20px auto 0 auto;
 }
 
 @media (max-width: 1000px) {
