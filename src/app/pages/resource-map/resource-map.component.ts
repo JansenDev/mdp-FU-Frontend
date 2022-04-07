@@ -215,6 +215,7 @@ export class ResourceMapComponent implements OnInit {
       .findCollaboratorsByClientAndPeriod(idClient, period)
       .subscribe((collaboratorResponse) => {
         this.collaboratorList = collaboratorResponse;
+        console.log("collaboratorList", this.collaboratorList);
       });
   }
 
@@ -249,8 +250,8 @@ export class ResourceMapComponent implements OnInit {
     let me = this;
     setTimeout(function(){
       console.log("muestrame summary: ", me.summary);
-      console.log("parametros", me.nameClient, me.periodoToSummary, me.namePerfil, me.idClient);
-      me.summary.getPrueba(me.nameClient, me.periodoToSummary, me.namePerfil, me.idClient);
+      console.log("parametros", me.nameClient, me.periodoToSummary, me.namePerfil, me.idClient, me.cod_colaborador);
+      me.summary.getPrueba(me.nameClient, me.periodoToSummary, me.namePerfil, me.idClient, me.cod_colaborador);
     }, 500);
   }
 }
