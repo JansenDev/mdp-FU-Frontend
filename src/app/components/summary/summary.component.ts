@@ -72,7 +72,7 @@ export class SummaryComponent implements OnInit {
   public clm_effective: number = 0;
   public production: number = 0;
   public productivity: number = 0;
-  public period: Date = new Date();
+  public period: string = "";
   public summary: any = {}; //{"data":{"customer":"Fallo","clm_effective":13.85,"production":99.99,"productivity":9999.99,"period":1648721412}};
 
   @Input() periodo: string = '';
@@ -87,8 +87,8 @@ export class SummaryComponent implements OnInit {
   constructor(private service: SummaryService) {}
 
   ngOnInit() {
-    this.getSummary();
-    this.getResourceMap();
+    //this.getSummary();
+    //this.getResourceMap();
     this.getPrueba();
   }
 
@@ -114,8 +114,22 @@ export class SummaryComponent implements OnInit {
   }
 
   getPrueba() {
+<<<<<<< HEAD
     this.service.getPrueba().subscribe((data) => {
       // console.log("PRUEBA DE DATA CARLOS: ", data);
+=======
+    console.log("que me pasa jhonathan", this.filterSelects);
+    let input = {"cod_cliente": 1, "periodo": "03-2022"};
+    console.log("Input", input);
+    this.service.getPrueba(input).subscribe(data => {
+      console.log("PRUEBA DE DATA CARLOS: ", data);
+      this.summary = data;
+      this.customer = "this.summary.customer";
+      this.clm_effective = this.summary.clm_efectivo;
+      this.production = this.summary.produccion;
+      this.productivity = this.summary.productividad;
+      this.period = input.periodo;
+>>>>>>> cda34c714433903696282731b06466a8693071c7
     });
   }
 }
