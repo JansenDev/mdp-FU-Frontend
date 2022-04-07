@@ -73,8 +73,6 @@ export class SummaryComponent implements OnInit {
   public period: string = "";
   public summary: any = {}; //{"data":{"customer":"Fallo","clm_effective":13.85,"production":99.99,"productivity":9999.99,"period":1648721412}};
 
-  @Input() periodo: string = '';
-  @Input() cod_cliente: number | null = null;
   @Input() filterSelects: any;
   // public summary: any = {}; //{"data":{"customer":"Fallo","clm_effective":13.85,"production":99.99,"productivity":9999.99,"period":1648721412}};
 
@@ -110,7 +108,7 @@ export class SummaryComponent implements OnInit {
   }
 
   getPrueba() {
-    console.log("que me pasa jhonathan", this.cod_cliente, this.periodo);
+    console.log("que me pasa jhonathan", this.filterSelects);
     let input = {"cod_cliente": 1, "periodo": "03-2022"};
     console.log("Input", input);
     this.service.getPrueba(input).subscribe(data => {
