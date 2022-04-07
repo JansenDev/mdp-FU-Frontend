@@ -91,12 +91,6 @@ export class SummaryComponent implements OnInit {
     this.getPrueba();
   }
 
-  ngOnChanges() {
-    this.search = !this.search;
-    console.log("ONCHANGES");
-    this.getPrueba();
-  }
-
   getSummary() {
     this.service.getSummary().subscribe((data) => {
       this.summary = data;
