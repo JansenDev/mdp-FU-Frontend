@@ -9,10 +9,7 @@ const summaryURL = `https://62457c736b7ecf057c1ea959.mockapi.io/summary`;
 const ResourceMapURL = `https://62457c736b7ecf057c1ea959.mockapi.io/maparecursos`;
 
 const { url_base } = environment;
-const input_data = {
-  cod_cliente: 77889553,
-  periodo: "2022-02"
-};
+
 
 
 @Injectable({
@@ -30,10 +27,10 @@ export class SummaryService {
     return this.httpClient.get<IResourceResponse>(ResourceMapURL);
   }
 
-  getPrueba() {
+  getPrueba(input : any) {
     let URL = url_base + '/resources/montoservicio/';
     // console.log("URL CARLOS:", URL);
-    return this.httpClient.post<any>(URL, input_data);
+    return this.httpClient.post<any>(URL, input);
   }
 
 
