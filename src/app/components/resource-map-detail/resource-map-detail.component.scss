@@ -45,3 +45,8 @@ th.mat-header-cell{
 .mat-tab-group.mat-background-primary>.mat-tab-header{
   background-color: var(--primary);
 }
+
+.mat-tab-body-content > button {
+  background-color: var(--primary);
+  color: var(--white);
+}
