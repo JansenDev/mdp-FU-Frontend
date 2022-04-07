@@ -1,7 +1,7 @@
 export interface Assignment {
-  tipoServicio: string,
-  descripcionServicio: string,
-  porAsignacion: number,
-  fechaInicio: Date,
-  fechaFin: Date,
+  tipo_servicio: string,
+  descripcion_servicio: string,
+  por_asignacion: number,
+  fecha_inicio: Date,
+  fecha_fin: Date,
 }
