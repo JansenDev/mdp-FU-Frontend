@@ -126,20 +126,9 @@ export class ResourceMapComponent implements OnInit {
 
     this.nameClient = clientfound[0].nombre_corto;
 
-    // console.log(this.filterSelects);
-    // console.log(this.nameClient);
-    // console.log(inputIdUser);
-
     this.periodoToSummary=cboxPeriod
     this.idClient = cboxClient
     this.namePerfil = cboxProfile
-
-    console.log("nombre cliente: "+this.nameClient);
-    console.log("periodo: "+this.periodoToSummary);
-    console.log("perfil: "+this.namePerfil);
-    console.log("id_cliente:"+this.idClient);
-
-
 
     let inputNameWithoutExtraSpaces = inNames
       .split(' ')
