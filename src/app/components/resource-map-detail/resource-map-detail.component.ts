@@ -13,10 +13,10 @@ import { Productivity } from 'src/app/core/models/productivity.model';
 export class ResourceMapDetailComponent implements OnInit {
 
   constructor(private resourceDetailService: ResourceDetailService) {  }
-  @Input() cod_colaborador = 0;
   @Input() showDetail = false;
+  @Input() cod_colaborador = 0;
   @Input() cod_mapa_recurso = null;
-  @Output() closed = new EventEmitter();
+  @Output() closed = new EventEmitter(); //Emitter para mandar el valor de cerrar detalle de vuelta al padre
   currentTab = 0;
 
   productivity: Productivity = {
@@ -33,28 +33,25 @@ export class ResourceMapDetailComponent implements OnInit {
   }
 
   contract: Contract = {
-    codColaborador: 0,
-    nroDocumento: "",
+    cod_colaborador: 0,
+    nro_documento: "",
     nombres: "",
-    apellidoPat: "",
-    apellidoMat: "",
-    sueldoPlanilla: "",
+    apellido_pat: "",
+    apellido_mat: "",
+    sueldo_planilla: "",
     bono: "",
     eps: "",
     clm: "",
-    codContrato: 4,
+    cod_contrato: 0,
     modalidad: "",
-    fechaFin: new Date()
+    fecha_fin: new Date()
   };
 
   assignments: Assignment[] = [];
   tableData: Assignment[] = [];
   columnsToDisplay = ['service', 'name', 'percentage', 'start', 'end'];
 
-  ngOnInit(): void {
-    /* this.loadContract(this.cod_colaborador, endDate);
-    this.loadAssignments(id, startDate, endDate); */
-  }
+  ngOnInit(): void {}
 
   toggleDetail() {
     this.showDetail = !this.showDetail;
@@ -76,22 +73,23 @@ export class ResourceMapDetailComponent implements OnInit {
       })
   }
 
-  loadContract(id: number, endDate: string){
-    this.resourceDetailService.getContractByCollaboratorIdAndEndDate(id, endDate)
+  loadContract(id: number, period: string){
+    this.resourceDetailService.getContractByCollaboratorIdAndPeriod(id, period)
       .subscribe(contractData => {
-        console.log(contractData);
+        console.log('contract: ', contractData);
         this.contract = contractData;
       }, error => {
         console.error(error);
       })
   }
 
-  loadAssignments(id: number, startDate: string, endDate: string){
-    this.resourceDetailService.getAssigmentsByCollaboratorCodeAndDates(id, startDate,
-      endDate)
+  loadAssignments(id: number, period: string, clientId: number){
+    this.resourceDetailService.getAssigmentsByCollabCodePeriodAndClientCode(id, period,
+      clientId)
         .subscribe(assignmentData => {
-          console.log(assignmentData);
+          console.log('assignments: ', assignmentData);
           this.assignments = assignmentData;
+          this.tableData = this.assignments;
         }, error => {
           console.error(error);
         })
