@@ -26,7 +26,7 @@ import { ResourceMapDetailComponent } from 'src/app/components/resource-map-deta
   encapsulation: ViewEncapsulation.None,
 })
 export class ResourceMapComponent implements OnInit {
-  @ViewChild(ResourceMapDetailComponent, {static: false})
+  @ViewChild(ResourceMapDetailComponent, {static: false}) //permite llamar a los métodos del componente hijo desde este padre
   private resourceDetailComponent!: ResourceMapDetailComponent;
   @ViewChild(MatPaginator)
   paginator: MatPaginator = {} as MatPaginator;
@@ -58,7 +58,7 @@ export class ResourceMapComponent implements OnInit {
   cod_colaborador: any = null;
   cod_mapa_recurso: any = null;
   // inputs summary component
-  cod_cliente: number | null = null;
+  cod_cliente: number = 0;
   periodo: string = '';
 
   constructor(
@@ -110,6 +110,10 @@ export class ResourceMapComponent implements OnInit {
     this.cod_colaborador = parseInt(resourceMapItem.cod_colaborador);
     this.cod_mapa_recurso = parseInt(resourceMapItem.cod_mapa_recurso);
     this.resourceDetailComponent.loadProductivity(this.cod_mapa_recurso);
+    this.resourceDetailComponent.loadContract(this.cod_colaborador, this.periodo);
+    this.resourceDetailComponent.loadAssignments(this.cod_colaborador, this.periodo, this.cod_cliente);
+    console.log("cod cliente: ",this.cod_cliente)
+
     if (this.showDetail){
       this.showDetail = false;
     } else {
