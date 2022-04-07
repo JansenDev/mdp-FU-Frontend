@@ -81,14 +81,12 @@ export class SummaryComponent implements OnInit {
   @Input() namePerfil: any = null;
   @Input() idClient: any = null;
   @Input() search: boolean = false;
-  // public summary: any = {}; //{"data":{"customer":"Fallo","clm_effective":13.85,"production":99.99,"productivity":9999.99,"period":1648721412}};
 
   constructor(private service: SummaryService) {}
 
   ngOnInit() {
     //this.getSummary();
     //this.getResourceMap();
-    this.getPrueba();
   }
 
   getSummary() {
@@ -112,20 +110,18 @@ export class SummaryComponent implements OnInit {
     });
   }
 
-  getPrueba() {
-    console.log("que me pasa jhonathan", this.nameClient, this.periodoToSummary, this.namePerfil, this.idClient);
+  getPrueba(nameClient : any, periodoToSummary : any, namePerfil : any, idClient : any) {
+    console.log("que me pasa jhonathan", nameClient, periodoToSummary, namePerfil, idClient);
     // let input = {"cod_cliente": 1, "periodo": "03-2022"};
-    let input = {"cod_cliente": this.idClient, "periodo": this.periodoToSummary};
+    let input = {"cod_cliente": idClient, "periodo": periodoToSummary};
     console.log("Input", input);
     this.service.getPrueba(input).subscribe(data => {
       console.log("PRUEBA DE DATA CARLOS: ", data);
       this.summary = data;
-      // this.customer = "this.summary.customer";
-      this.customer = this.nameClient;
+      this.customer = nameClient;
       this.clm_effective = this.summary.clm_efectivo;
       this.production = this.summary.produccion;
       this.productivity = this.summary.productividad;
-      // this.period = input.periodo;
       this.period = this.periodoToSummary;
     });
   }

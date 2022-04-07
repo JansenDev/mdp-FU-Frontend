@@ -258,6 +258,6 @@ export class ResourceMapComponent implements OnInit {
 
   showSummary() {
     console.log("muestrame summary: ", this.summary);
-    this.summary.getPrueba();
+    this.summary.getPrueba(this.nameClient, this.periodoToSummary, this.namePerfil, this.idClient);
   }
 }
