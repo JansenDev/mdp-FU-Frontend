@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { SummaryService } from '../../core/services/summary.service';
 import { ISummaryResponse } from '../../core/models/summary.model';
 import { IResourceResponse } from '../../core/models/resource.model';
+import { ThisReceiver } from '@angular/compiler';
 
 // declare var me : any;
 @Component({
@@ -93,6 +94,7 @@ export class SummaryComponent implements OnInit {
   ngOnChanges() {
     this.search = !this.search;
     console.log("ONCHANGES");
+    this.getPrueba();
   }
 
   getSummary() {
