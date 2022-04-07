@@ -25,8 +25,8 @@ export class ResourceDetailService {
     return this.http.get<Contract>(`${url}/contrato/${id}/${period}`)
   }
 
-  getAssigmentsByCollaboratorCodeAndDates(id: number, startDate: string, endDate: string){
-    return this.http.get<Assignment[]>(`${url}/asignaciones/${id}/${startDate}/${endDate}`);
+  getAssigmentsByCollabCodePeriodAndClientCode(collabId: number, period: string, clientId: number){
+    return this.http.get<Assignment[]>(`${url}/asignaciones/${collabId}/${period}/${clientId}`);
   }
 
   /* getMockDetail(id: number){ //Detail response
