@@ -21,7 +21,7 @@ const input_data = {
 
 export class SummaryService {
   constructor(private httpClient: HttpClient) {}
-  
+
   getSummary() : Observable<ISummaryResponse> {
     return this.httpClient.get<ISummaryResponse>(summaryURL);
   }
@@ -32,9 +32,9 @@ export class SummaryService {
 
   getPrueba() {
     let URL = url_base + '/resources/montoservicio/';
-    console.log("URL CARLOS:", URL);
+    // console.log("URL CARLOS:", URL);
     return this.httpClient.post<any>(URL, input_data);
   }
-  
+
 
 }
