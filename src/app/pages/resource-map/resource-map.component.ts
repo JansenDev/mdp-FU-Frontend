@@ -18,6 +18,7 @@ import { ResourceService } from '../../core/services/resource.service';
 // utils
 import { findPeriodActive } from '../../core/utils/utilities.util';
 import { ResourceMapDetailComponent } from 'src/app/components/resource-map-detail/resource-map-detail.component';
+import { SummaryComponent } from 'src/app/components/summary/summary.component';
 
 @Component({
   selector: 'app-resource-map',
@@ -32,6 +33,9 @@ export class ResourceMapComponent implements OnInit {
   paginator: MatPaginator = {} as MatPaginator;
   dataSource: MatTableDataSource<IResourceResponse> =
     new MatTableDataSource<IResourceResponse>([]);
+
+  @ViewChild(SummaryComponent, {static: false}) summary !: SummaryComponent;
+
   displayedColumns: string[] = [
     'ln',
     'colaborador',
@@ -250,5 +254,10 @@ export class ResourceMapComponent implements OnInit {
         this.fillCBoxCollaborator(clientSelected, periodSelected);
       }
     );
+  }
+
+  showSummary() {
+    console.log("muestrame summary: ", this.summary);
+    this.summary.getPrueba();
   }
 }
