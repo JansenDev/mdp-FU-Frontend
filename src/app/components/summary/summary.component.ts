@@ -110,19 +110,19 @@ export class SummaryComponent implements OnInit {
     });
   }
 
-  getPrueba(nameClient : any, periodoToSummary : any, namePerfil : any, idClient : any) {
+  async getPrueba(nameClient : any, periodoToSummary : any, namePerfil : any, idClient : any) {
     console.log("que me pasa jhonathan", nameClient, periodoToSummary, namePerfil, idClient);
     // let input = {"cod_cliente": 1, "periodo": "03-2022"};
     let input = {"cod_cliente": idClient, "periodo": periodoToSummary};
     console.log("Input", input);
-    this.service.getPrueba(input).subscribe(data => {
+    await this.service.getPrueba(input).subscribe(data => {
       console.log("PRUEBA DE DATA CARLOS: ", data);
       this.summary = data;
       this.customer = nameClient;
       this.clm_effective = this.summary.clm_efectivo;
       this.production = this.summary.produccion;
       this.productivity = this.summary.productividad;
-      this.period = this.periodoToSummary;
+      this.period = periodoToSummary;
     });
   }
 }
