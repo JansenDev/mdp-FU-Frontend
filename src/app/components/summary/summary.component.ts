@@ -75,13 +75,11 @@ export class SummaryComponent implements OnInit {
   public period: string = "";
   public summary: any = {}; //{"data":{"customer":"Fallo","clm_effective":13.85,"production":99.99,"productivity":9999.99,"period":1648721412}};
 
-  @Input() periodo: string = '';
-  @Input() cod_cliente: number | null = null;
-
   @Input() nameClient: any = null;
   @Input() periodoToSummary: any = null;
   @Input() namePerfil: any = null;
   @Input() idClient: any = null;
+  @Input() search: boolean = false;
   // public summary: any = {}; //{"data":{"customer":"Fallo","clm_effective":13.85,"production":99.99,"productivity":9999.99,"period":1648721412}};
 
   constructor(private service: SummaryService) {}
@@ -90,6 +88,11 @@ export class SummaryComponent implements OnInit {
     //this.getSummary();
     //this.getResourceMap();
     this.getPrueba();
+  }
+
+  ngOnChanges() {
+    this.search = !this.search;
+    console.log("ONCHANGES");
   }
 
   getSummary() {
@@ -114,17 +117,20 @@ export class SummaryComponent implements OnInit {
   }
 
   getPrueba() {
-    console.log("que me pasa jhonathan", "this.filterSelects");
+    console.log("que me pasa jhonathan", this.nameClient, this.periodoToSummary, this.namePerfil, this.idClient);
     let input = {"cod_cliente": 1, "periodo": "03-2022"};
+    // let input = {"cod_cliente": this.idClient, "periodo": this.periodoToSummary};
     console.log("Input", input);
     this.service.getPrueba(input).subscribe(data => {
       console.log("PRUEBA DE DATA CARLOS: ", data);
       this.summary = data;
       this.customer = "this.summary.customer";
+      // this.customer = this.nameClient;
       this.clm_effective = this.summary.clm_efectivo;
       this.production = this.summary.produccion;
       this.productivity = this.summary.productividad;
       this.period = input.periodo;
+      // this.period = this.periodoToSummary;
     });
   }
 }

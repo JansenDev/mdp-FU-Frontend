@@ -63,6 +63,7 @@ export class ResourceMapComponent implements OnInit {
   periodoToSummary: any = null;
   namePerfil: any = null;
   idClient: any = null;
+  search: boolean = false;
 
   // TEMPORAL SESION
   inputIdSesion: any = null;
