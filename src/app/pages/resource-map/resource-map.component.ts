@@ -257,8 +257,11 @@ export class ResourceMapComponent implements OnInit {
   }
 
   showSummary() {
-    console.log("muestrame summary: ", this.summary);
-    console.log("parametros", this.nameClient, this.periodoToSummary, this.namePerfil, this.idClient);
-    this.summary.getPrueba(this.nameClient, this.periodoToSummary, this.namePerfil, this.idClient);
+    let me = this;
+    setTimeout(function(){
+      console.log("muestrame summary: ", me.summary);
+      console.log("parametros", me.nameClient, me.periodoToSummary, me.namePerfil, me.idClient);
+      me.summary.getPrueba(me.nameClient, me.periodoToSummary, me.namePerfil, me.idClient);
+    }, 500);
   }
 }
