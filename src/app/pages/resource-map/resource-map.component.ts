@@ -17,6 +17,7 @@ import { PRODUCTIVITY_INDICATOR } from 'src/app/core/constants/resource.constant
 import { ResourceService } from '../../core/services/resource.service';
 // utils
 import { findPeriodActive } from '../../core/utils/utilities.util';
+import { ResourceMapDetailComponent } from 'src/app/components/resource-map-detail/resource-map-detail.component';
 
 @Component({
   selector: 'app-resource-map',
@@ -25,6 +26,8 @@ import { findPeriodActive } from '../../core/utils/utilities.util';
   encapsulation: ViewEncapsulation.None,
 })
 export class ResourceMapComponent implements OnInit {
+  @ViewChild(ResourceMapDetailComponent, {static: false})
+  private resourceDetailComponent!: ResourceMapDetailComponent;
   @ViewChild(MatPaginator)
   paginator: MatPaginator = {} as MatPaginator;
   dataSource: MatTableDataSource<IResourceResponse> =
@@ -104,16 +107,19 @@ export class ResourceMapComponent implements OnInit {
 
   onResourceMapDetail(resourceMapItem: IResourceResponse): void {
     this.rowSelected = resourceMapItem;
-
-    this.cod_colaborador = parseInt(resourceMapItem.nombre_colaborador);
+    this.cod_colaborador = parseInt(resourceMapItem.cod_colaborador);
     this.cod_mapa_recurso = parseInt(resourceMapItem.cod_mapa_recurso);
-    this.showDetail = false;
+    this.resourceDetailComponent.loadProductivity(this.cod_mapa_recurso);
+    if (this.showDetail){
+      this.showDetail = false;
+    } else {
+      this.showDetail = true;
+    }
+    console.log(this.showDetail);
+  }
 
-    // TODO:Implementar mejor solución para el toogle de detalles
-    // TODO:Implementar boton ❌'cerrar ' a detalles
-    setTimeout(() => {
-      this.showDetail = !this.showDetail;
-    }, 500);
+  onClose(){
+    this.showDetail = false;
   }
 
   findAndsetResourceItems(
