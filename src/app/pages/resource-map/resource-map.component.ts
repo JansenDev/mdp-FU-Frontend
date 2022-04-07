@@ -55,8 +55,7 @@ export class ResourceMapComponent implements OnInit {
   cod_colaborador: any = null;
   cod_mapa_recurso: any = null;
   // inputs summary component
-  cod_cliente: number | null = null;
-  periodo: string = '';
+  filterSelects: IResourceMapFilters = {} as IResourceMapFilters;
   // TEMPORAL SESION
   inputIdSesion: any = null;
 
@@ -105,10 +104,9 @@ export class ResourceMapComponent implements OnInit {
     }: IResourceMapFilters = this.resourceForm.value;
 
     this.periodSelected = cboxPeriod;
-    this.periodo = cboxPeriod;
-    this.cod_cliente = parseInt(cboxClient);
 
     console.log(inputIdUser);
+    this.filterSelects = this.resourceForm.value;
 
     let inputNameWithoutExtraSpaces = inNames
       .split(' ')
