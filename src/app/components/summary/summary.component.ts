@@ -114,11 +114,7 @@ export class SummaryComponent implements OnInit {
   }
 
   getPrueba() {
-<<<<<<< HEAD
-    this.service.getPrueba().subscribe((data) => {
-      // console.log("PRUEBA DE DATA CARLOS: ", data);
-=======
-    console.log("que me pasa jhonathan", this.filterSelects);
+    console.log("que me pasa jhonathan", "this.filterSelects");
     let input = {"cod_cliente": 1, "periodo": "03-2022"};
     console.log("Input", input);
     this.service.getPrueba(input).subscribe(data => {
@@ -129,7 +125,6 @@ export class SummaryComponent implements OnInit {
       this.production = this.summary.produccion;
       this.productivity = this.summary.productividad;
       this.period = input.periodo;
->>>>>>> cda34c714433903696282731b06466a8693071c7
     });
   }
 }
