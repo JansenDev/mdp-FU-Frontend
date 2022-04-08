@@ -26,10 +26,10 @@ export class SummaryComponent implements OnInit {
   ngOnInit() {
   }
 
-  async getSummary(nameClient : any, periodoToSummary : any, namePerfil : any, idClient : any, nombres : string) {
-    console.log("que me pasa jhonathan", nameClient, periodoToSummary, namePerfil, idClient);
+  async getSummary(nameClient : any, periodoToSummary : any, namePerfil : any, idClient : any, nombre : string) {
+    console.log("que me pasa jhonathan", nameClient, periodoToSummary, namePerfil, idClient, nombre);
     // let input = {"cod_cliente": 1, "periodo": "03-2022"};
-    let input = {"cod_cliente": idClient, "periodo": periodoToSummary, "perfil": namePerfil, "nombres": nombres};
+    let input = {"cod_cliente": idClient, "periodo": periodoToSummary, "perfil": namePerfil, "nombre": nombre};
     console.log("Input", input);
     await this.service.getPrueba(input).subscribe(data => {
       console.log("PRUEBA DE DATA CARLOS: ", data);

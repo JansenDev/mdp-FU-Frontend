@@ -72,7 +72,7 @@ export class ResourceMapComponent implements OnInit {
   inputIdSesion: any = null;
   cod_cliente: number = 0;
   periodo: string = '';
-  nombres: string = '';
+  nombre: string = '';
   constructor(
     private resourceService: ResourceService,
     private formBuilder: FormBuilder
@@ -132,7 +132,7 @@ export class ResourceMapComponent implements OnInit {
       .split(' ')
       .filter((name: string) => name !== '')
       .join(' ');
-    this.nombres = inputNameWithoutExtraSpaces;
+    this.nombre = inputNameWithoutExtraSpaces;
     this.findAndsetResourceItems(
       cboxPeriod,
       cboxClient,
@@ -250,7 +250,7 @@ export class ResourceMapComponent implements OnInit {
 
   showSummary() {
     console.log("muestrame summary: ",this.summary);
-    console.log("parametros", this.nameClient, this.periodoToSummary, this.namePerfil, this.idClient, this.nombres);
-    this.summary.getSummary(this.nameClient, this.periodoToSummary, this.namePerfil, this.idClient, this.nombres);
+    console.log("parametros", this.nameClient, this.periodoToSummary, this.namePerfil, this.idClient, this.nombre);
+    this.summary.getSummary(this.nameClient, this.periodoToSummary, this.namePerfil, this.idClient, this.nombre);
   }
 }
