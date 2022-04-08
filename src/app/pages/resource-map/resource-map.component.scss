@@ -151,6 +151,13 @@ table {
   margin: 20px auto 0 auto;
 }
 
+.summary-container {
+  display: flex;
+  margin: 0 auto;
+  width: 90%;
+  justify-content: flex-end;
+}
+
 @media (max-width: 1000px) {
   .circle {
     margin-left: 1em;
