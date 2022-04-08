@@ -67,7 +67,6 @@ export class ResourceMapComponent implements OnInit {
   periodoToSummary: any = null;
   namePerfil: any = null;
   idClient: any = null;
-  search: boolean = false;
 
   // TEMPORAL SESION
   inputIdSesion: any = null;
@@ -141,6 +140,8 @@ export class ResourceMapComponent implements OnInit {
       cboxProfile,
       inputNameWithoutExtraSpaces
     );
+
+    this.showSummary();
   }
 
   onResourceMapDetail(resourceMapItem: IResourceResponse): void {
@@ -182,6 +183,8 @@ export class ResourceMapComponent implements OnInit {
           resourceResponse
         );
         this.dataSource.paginator = this.paginator;
+        if(resourceResponse.length == 0) this.summary.show = false;
+        else this.summary.show = true;
       });
   }
 
@@ -247,11 +250,8 @@ export class ResourceMapComponent implements OnInit {
   }
 
   showSummary() {
-    let me = this;
-    setTimeout(function(){
-      console.log("muestrame summary: ", me.summary);
-      console.log("parametros", me.nameClient, me.periodoToSummary, me.namePerfil, me.idClient, me.cod_colaborador);
-      me.summary.getPrueba(me.nameClient, me.periodoToSummary, me.namePerfil, me.idClient, me.cod_colaborador);
-    }, 500);
+    console.log("muestrame summary: ",this.summary);
+    console.log("parametros", this.nameClient, this.periodoToSummary, this.namePerfil, this.idClient, this.cod_colaborador);
+    this.summary.getSummary(this.nameClient, this.periodoToSummary, this.namePerfil, this.idClient, this.cod_colaborador);
   }
 }

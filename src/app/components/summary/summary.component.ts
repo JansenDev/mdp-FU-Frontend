@@ -13,104 +13,20 @@ import { ThisReceiver } from '@angular/compiler';
   styleUrls: ['./summary.component.css'],
 })
 export class SummaryComponent implements OnInit {
-  // private summary: ISummaryResponse = {"customer":"Fallo","clm_effective": 0,"production": 0,"productivity": 0,"period": new Date(1648721412)};
-  private resourceMap: any = [
-    {
-      linea_negocio: 'ATIS',
-      estado: 'C',
-      nombre_perfil: 'Jefe de Delivery',
-      nivel: 'Semisenior',
-      fecha_inicio: '2021-04-06',
-      fecha_fin: '2021-08-25',
-      asignacion: 100,
-      clm_efectivo: '2221.00',
-      produccion: '1035.00',
-      productividad: '2.14',
-      nombre_colaborador: 'Aldridge McAllaster Curnock',
-    },
-    {
-      linea_negocio: 'ATIS',
-      estado: 'C',
-      nombre_perfil: 'Jefe de Recursos Humanos',
-      nivel: 'Senior',
-      fecha_inicio: '2021-05-08',
-      fecha_fin: '2021-07-23',
-      asignacion: 75,
-      clm_efectivo: '2994.00',
-      produccion: '1384.00',
-      productividad: '2.16',
-      nombre_colaborador: 'Ninetta Randle Giorgio',
-    },
-    {
-      linea_negocio: 'PRY',
-      estado: 'A',
-      nombre_perfil: 'Gerente Finanzas',
-      nivel: 'Senior',
-      fecha_inicio: '2021-08-18',
-      fecha_fin: '2022-01-20',
-      asignacion: 100,
-      clm_efectivo: '2122.00',
-      produccion: '1909.00',
-      productividad: '1.11',
-      nombre_colaborador: 'Hanny Lamyman Fydo',
-    },
-    {
-      linea_negocio: 'ATIS',
-      estado: 'A',
-      nombre_perfil: 'Jefe de Delivery',
-      nivel: 'Junior',
-      fecha_inicio: '2021-04-01',
-      fecha_fin: '2022-02-23',
-      asignacion: 50,
-      clm_efectivo: '2136.00',
-      produccion: '1256.00',
-      productividad: '1.70',
-      nombre_colaborador: 'Vivienne McGeachie McQuade',
-    },
-  ];
-
   public customer: string = '';
   public clm_effective: number = 0;
   public production: number = 0;
   public productivity: number = 0;
   public period: string = "";
-  public summary: any = {}; //{"data":{"customer":"Fallo","clm_effective":13.85,"production":99.99,"productivity":9999.99,"period":1648721412}};
-
-  @Input() nameClient: any = null;
-  @Input() periodoToSummary: any = null;
-  @Input() namePerfil: any = null;
-  @Input() idClient: any = null;
-  @Input() search: boolean = false;
+  public summary: any = {};
+  public show: boolean = false;
 
   constructor(private service: SummaryService) {}
 
   ngOnInit() {
-    //this.getSummary();
-    //this.getResourceMap();
   }
 
-  getSummary() {
-    this.service.getSummary().subscribe((data) => {
-      this.summary = data;
-      this.customer = this.summary.customer;
-      this.clm_effective = this.summary.clm_effective;
-      this.production = this.summary.production;
-      this.productivity = this.summary.productivity;
-      this.period = this.summary.period;
-    }),
-      (err: any) => {
-        console.error(err);
-      };
-  }
-
-  getResourceMap() {
-    this.service.getResourceMap().subscribe((data) => {
-      this.resourceMap = data;
-      // console.log("mapa recursos:", this.resourceMap);
-    });
-  }
-
-  async getPrueba(nameClient : any, periodoToSummary : any, namePerfil : any, idClient : any, cod_colaborador : any) {
+  async getSummary(nameClient : any, periodoToSummary : any, namePerfil : any, idClient : any, cod_colaborador : any) {
     console.log("que me pasa jhonathan", nameClient, periodoToSummary, namePerfil, idClient);
     // let input = {"cod_cliente": 1, "periodo": "03-2022"};
     let input = {"cod_cliente": idClient, "periodo": periodoToSummary, "perfil": namePerfil, "cod_colaborador": cod_colaborador};
