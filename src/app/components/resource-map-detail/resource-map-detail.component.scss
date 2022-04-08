@@ -1,21 +1,27 @@
 @import "../../../assets/scss/variables.scss";
 
 .detail {
-  position: fixed;
-  top: 0;
-  left: 80%;
-  bottom: 0;
-  right: 0;
   padding: 1em 1em 0;
   background: var(--white);
   border-left: 1px solid black;
+  border-bottom: 1px solid black;
+  display: none;
+  /* transform: translateX(+100%);
+  transition: all ease-out .5s; */
+  &.active {
+    /* transform: translateX(0); */
+    display: inline-block;
+    width: 20%;
+    position: absolute;
+    right: 0;
+    top: 50px; //altura del header
+    bottom: 0;
+  }
+}
+
+.detail-container{
   display: flex;
   flex-direction: column;
-  transform: translateX(+100%);
-  transition: all ease-out .5s;
-  &.active {
-    transform: translateX(0);
-  }
 }
 
 .close-icon {

@@ -1,5 +1,13 @@
 $page__width: 80%;
 
+.main-container{
+  display: inline-block;
+  width: 100%;
+  &.active{
+    width: 80%;
+  }
+}
+
 .title {
   margin-top: 50px !important;
   margin-bottom: 40px !important;

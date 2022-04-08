@@ -1,7 +1,8 @@
 <!-- Botón de detalle usado en la rama en la que el componente estaba solo -->
 <!-- <button (click)="toggleDetail()" mat-raised-button color="primary">Abrir detalle</button> --> <!-- (click)="loadDetail(1)" -->
 <aside class="detail" [class.active]="showDetail">
-  <img (click)="closeDetail()" class="close-icon" src="../../../assets/img/close_icon.png" alt="close">
+  <div class="detail-container">
+    <img (click)="closeDetail()" class="close-icon" src="../../../assets/img/close_icon.png" alt="close">
   <h2>Productividad Horas</h2>
   <div class="detail-content">
       <ul>
@@ -91,4 +92,5 @@
         <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
       </table>
     </div>
+  </div>
 </aside>
