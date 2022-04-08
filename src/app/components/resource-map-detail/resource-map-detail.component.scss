@@ -1,36 +1,63 @@
 @import "../../../assets/scss/variables.scss";
 
 .detail {
-  position: fixed;
-  top: 0;
-  left: 65%;
-  bottom: 0;
-  right: 0;
-  background: var(--secondary);
-  display: flex;
-  flex-direction: column;
-  transform: translateX(+100%);
-  transition: all ease-out .5s;
+  padding: 1em 1em 0;
+  background: var(--white);
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+  display: none;
+  /* transform: translateX(+100%);
+  transition: all ease-out .5s; */
   &.active {
-    transform: translateX(0);
+    /* transform: translateX(0); */
+    display: inline-block;
+    width: 20%;
+    position: absolute;
+    right: 0;
+    top: 50px; //altura del header
+    bottom: 0;
   }
+  z-index: 2;
 }
 
-h2{
+.detail-container{
+  display: flex;
+  flex-direction: column;
+}
+
+.close-icon {
+  width: 1em;
+  position: absolute;
+  right: 0.5em;
+  top: 0.5em;
+}
+
+.mat-typography h2{
   margin: 0;
 }
 
 ul {
   margin: 0;
   padding: 0;
+  width: 100%;
 }
 
 li {
   list-style: none;
+  display: flex;
+  justify-content: flex-start;
+  gap: 0.5em;
+  width: 100%;
+}
+
+li > p {
+  text-align: left;
 }
 
 .detail-content{
-  padding: 1.2em;
+  margin-bottom: 0.8em;
+  display: flex;
+  flex-direction: row;
 }
 
 .service-table{

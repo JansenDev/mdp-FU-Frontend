@@ -3,8 +3,9 @@
   <h1>Mapa de Recursos Periodo {{ periodSelected }}</h1>
 </div>
 
-<!-- Filters Start -->
-<form
+<div class="main-container" [class.active]="showDetail">
+    <!-- Filters Start -->
+  <form
   [formGroup]="resourceForm"
   class="filters--container"
   (submit)="ngSubmit()"
@@ -85,11 +86,11 @@
       Apertura
     </button> -->
   </div>
-</form>
-<!-- Filters End -->
-<!-- Table  Start -->
+  </form>
+  <!-- Filters End -->
+  <!-- Table  Start -->
 
-<div class="table--container">
+  <div class="table--container">
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="ln">
       <th mat-header-cell *matHeaderCellDef>LN</th>
@@ -191,18 +192,22 @@
       *matRowDef="let row; columns: displayedColumns"
     ></tr>
   </table>
-</div>
-<!-- Table End -->
-<!-- Pagination Start -->
+  </div>
+  <!-- Table End -->
+  <!-- Pagination Start -->
 
-<div class="pagination--container">
+  <div class="pagination--container">
   <mat-paginator
     [pageSizeOptions]="[7, 15, 20]"
     aria-label="Select page of periodic elements"
   >
   </mat-paginator>
-</div>
-<!-- Pagination End -->
+  </div>
+  <!-- Pagination End -->
+  <div class="summary-container">
+    <app-summary></app-summary>
+  </div>
+</div> <!-- main-container end -->
 
 <!-- Resource Map End -->
 <app-resource-map-detail
@@ -211,5 +216,3 @@
   [cod_mapa_recurso]="cod_mapa_recurso"
   [showDetail]="showDetail"
 ></app-resource-map-detail>
-
-<app-summary></app-summary>
