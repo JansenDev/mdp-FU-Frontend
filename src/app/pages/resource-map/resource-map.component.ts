@@ -150,7 +150,7 @@ export class ResourceMapComponent implements OnInit {
     this.cod_mapa_recurso = parseInt(resourceMapItem.cod_mapa_recurso);
     this.resourceDetailComponent.loadProductivity(this.cod_mapa_recurso);
     this.resourceDetailComponent.loadContract(this.cod_colaborador, this.periodoToSummary);
-    this.resourceDetailComponent.loadAssignments(this.cod_colaborador, this.periodo, this.idClient);
+    this.resourceDetailComponent.loadAssignments(this.cod_colaborador, this.periodoToSummary, this.idClient);
 
     if (this.showDetail){
       this.showDetail = false;
