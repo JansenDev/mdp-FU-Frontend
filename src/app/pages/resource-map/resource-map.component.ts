@@ -151,7 +151,6 @@ export class ResourceMapComponent implements OnInit {
     this.resourceDetailComponent.loadProductivity(this.cod_mapa_recurso);
     this.resourceDetailComponent.loadContract(this.cod_colaborador, this.periodoToSummary);
     this.resourceDetailComponent.loadAssignments(this.cod_colaborador, this.periodo, this.idClient);
-    console.log("cod cliente: ",this.cod_cliente)
 
     if (this.showDetail){
       this.showDetail = false;
