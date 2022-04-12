@@ -5,12 +5,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 // angular modules
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 // project modules
 import { PageModule } from './pages/pages.module';
 import { ComponentModule } from './components/component.module';
 // external modules
 import { ToastContainerModule, ToastrModule } from 'ngx-toastr';
+import { TokenInterceptor } from './core/interceptor/token.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,7 +27,13 @@ import { ToastContainerModule, ToastrModule } from 'ngx-toastr';
     ToastrModule.forRoot(),
     ToastContainerModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
