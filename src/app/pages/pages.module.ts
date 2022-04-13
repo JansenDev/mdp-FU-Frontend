@@ -10,9 +10,15 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ResourceMapComponent } from './resource-map/resource-map.component';
+import { HiringRequestComponent } from './hiring-request/hiring-request.component';
 
 @NgModule({
-  declarations: [HomeComponent, ResourceMapComponent, NotFoundComponent],
+  declarations: [
+    HomeComponent,
+    ResourceMapComponent,
+    NotFoundComponent,
+    HiringRequestComponent,
+  ],
   imports: [
     CommonModule,
     SharedModule,
@@ -21,6 +27,11 @@ import { ResourceMapComponent } from './resource-map/resource-map.component';
 
     ReactiveFormsModule,
   ],
-  exports: [HomeComponent, ResourceMapComponent, PagesRoutingModule],
+  exports: [
+    HomeComponent,
+    ResourceMapComponent,
+    PagesRoutingModule,
+    HiringRequestComponent,
+  ],
 })
 export class PageModule {}

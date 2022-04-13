@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HiringRequestComponent } from './hiring-request/hiring-request.component';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ResourceMapComponent } from './resource-map/resource-map.component';
@@ -12,6 +13,10 @@ const routes: Routes = [
   {
     path: 'resources',
     component: ResourceMapComponent,
+  },
+  {
+    path: 'hiring-request',
+    component: HiringRequestComponent,
   },
   {
     path: '**',

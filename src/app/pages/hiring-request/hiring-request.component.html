@@ -1,0 +1,189 @@
+<div class="hiring--container">
+  <h1 class="hiring--title">
+    Registro de solicitud de contratación de colaboradores
+  </h1>
+
+  <!-- Form Start -->
+  <form class="hiring--form">
+    <mat-card class="form--title">Datos del Colaborador</mat-card>
+
+    <div class="form--contract">
+      <div class="contract-row1">
+        <mat-form-field>
+          <mat-label>Tipo documento</mat-label>
+          <mat-select required>
+            <mat-option value="DNI">DNI</mat-option>
+            <mat-option value="CE">CE</mat-option>
+            <mat-option value="PA">PA</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>N° documento</mat-label>
+          <input matInput maxlength="8" required />
+        </mat-form-field>
+
+        <div class="offset"></div>
+
+        <div class="offset"></div>
+      </div>
+
+      <div class="contract-row2">
+        <mat-form-field>
+          <mat-label>Nombre</mat-label>
+          <input matInput required />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Apellido Paterno</mat-label>
+          <input matInput required />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Apellido Materno</mat-label>
+          <input matInput required />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>F. Nacimiento</mat-label>
+          <input matInput [matDatepicker]="picker_nacimiento" />
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker_nacimiento"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker_nacimiento></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="contract-row3">
+        <mat-form-field>
+          <mat-label>N° Celular</mat-label>
+          <input matInput required />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Correo</mat-label>
+          <input matInput type="email" required />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Dirección</mat-label>
+          <input matInput required />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Distrito </mat-label>
+          <input matInput required />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="form--client">
+      <mat-card class="form--title">Datos del Cliente</mat-card>
+
+      <div class="client--row1">
+        <mat-form-field class="">
+          <mat-label>Cliente</mat-label>
+          <mat-select required>
+            <mat-option value="DNI">1</mat-option>
+            <mat-option value="CE">2</mat-option>
+            <mat-option value="PA">3</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="">
+          <mat-label>Linea de Negocio</mat-label>
+          <mat-select required>
+            <mat-option value="DNI">1</mat-option>
+            <mat-option value="CE">2</mat-option>
+            <mat-option value="PA">3</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="">
+          <mat-label>Puesto</mat-label>
+          <mat-select required>
+            <mat-option value="DNI">1</mat-option>
+            <mat-option value="CE">2</mat-option>
+            <mat-option value="PA">3</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="">
+          <mat-label>Nivel</mat-label>
+          <mat-select required>
+            <mat-option value="DNI">1</mat-option>
+            <mat-option value="CE">2</mat-option>
+            <mat-option value="PA">3</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="client--row2">
+        <mat-form-field class="">
+          <mat-label>Banda Salarial</mat-label>
+          <mat-select required>
+            <mat-option value="DNI">1</mat-option>
+            <mat-option value="CE">2</mat-option>
+            <mat-option value="PA">3</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="">
+          <mat-label>Modalidad</mat-label>
+          <mat-select required>
+            <mat-option value="DNI">Planilla</mat-option>
+            <mat-option value="CE">Practicante</mat-option>
+            <mat-option value="PA">RXH</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="">
+          <mat-label>Remuneración</mat-label>
+          <mat-select required>
+            <mat-option value="DNI">1</mat-option>
+            <mat-option value="CE">2</mat-option>
+            <mat-option value="PA">3</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="">
+          <mat-label>Bono Mensual</mat-label>
+          <mat-select required>
+            <mat-option value="DNI">1</mat-option>
+            <mat-option value="CE">2</mat-option>
+            <mat-option value="PA">3</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="client--row3">
+
+        <mat-radio-group>
+          <mat-radio-button class="example-margin" value="after"
+            >EPS</mat-radio-button
+          >
+          <mat-radio-button class="example-margin" value="before"
+            >SCTR</mat-radio-button
+          >
+        </mat-radio-group>
+
+        <mat-form-field>
+          <mat-label>F. Inicio</mat-label>
+          <input matInput [matDatepicker]="picker_f_inicio" />
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker_f_inicio"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker_f_inicio></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>F. Fin</mat-label>
+          <input matInput [matDatepicker]="picker_f_fin" />
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker_f_fin"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker_f_fin></mat-datepicker>
+        </mat-form-field>
+        <div class="offset"></div>
+      </div>
+    </div>
+
+    <div class="form--buttons">
+      <button mat-raised-button color="primary">Guardar</button>
+      <button mat-raised-button color="accent">Cancelar</button>
+    </div>
+  </form>
+  <!-- Form End -->
+</div>

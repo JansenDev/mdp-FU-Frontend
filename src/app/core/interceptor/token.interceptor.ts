@@ -23,16 +23,14 @@ export class TokenInterceptor implements HttpInterceptor {
 
   private addAuthorization(request: HttpRequest<unknown>) {
     const token = getToken();
-    console.log('INTERCEPTADO');
-    console.log(request);
 
     if (token) {
-      console.log('TOKEN AGREGADO: OK!');
       const auth = request.clone({
         headers: request.headers
           .set('Authorization', token)
           .set('Content-Type', 'application/json'),
       });
+
       return auth;
     }
 
