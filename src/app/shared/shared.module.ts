@@ -12,14 +12,21 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatIconModule } from '@angular/material/icon';
 import { StatePipe } from './pipes/state.pipe';
 
 @NgModule({
   declarations: [TestpPipe, StatePipe],
   imports: [CommonModule],
+  providers: [
+    {
+      provide: MAT_DATE_LOCALE,
+      useValue: 'en-GB',
+    },
+  ],
   exports: [
     TestpPipe,
     StatePipe,
@@ -36,7 +43,8 @@ import { StatePipe } from './pipes/state.pipe';
     MatDatepickerModule,
     MatNativeDateModule,
     MatCheckboxModule,
-    MatRadioModule
+    MatRadioModule,
+    MatIconModule,
   ],
 })
 export class SharedModule {}

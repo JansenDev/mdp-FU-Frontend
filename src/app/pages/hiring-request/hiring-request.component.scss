@@ -6,7 +6,7 @@ $width_content_page: 90%;
   height: calc(100% - 50px);
 
   & .hiring--title {
-    padding-top: 25px;
+    padding-top: 20px;
     font-weight: 600;
     text-shadow: 2px 2px var(--gray);
     color: var(--black);
@@ -16,16 +16,16 @@ $width_content_page: 90%;
 
   & .hiring--form {
     & .form--title {
-      margin: 25px 0 20px 0;
+      margin: 20px 0 20px 0;
     }
 
     & .form--buttons {
       width: max-content;
-      margin: 50px auto 0 auto;
+      margin: 20px auto 0 auto;
       padding-bottom: 20px;
 
-      & button{
-          padding: 0 25px;
+      & button {
+        padding: 0 25px;
       }
 
       & button:first-child {
@@ -33,34 +33,39 @@ $width_content_page: 90%;
       }
     }
 
-    & .form--contract {
-      & .contract-row1,
-      .contract-row2,
-      .contract-row3 {
-        @extend .section-flex;
+    & .form--collaborator {
+      & .collaborator--row1,
+      .collaborator--row2,
+      .collaborator--row3 {
+        @extend .basic-flex;
       }
     }
 
-    & .form--client {
-      & .client--row1,
-      .client--row2,
-      .client--row3 {
-        @extend .section-flex;
+    & .form--contract {
+      & .contract--row1,
+      .contract--row2,
+      .contract--row3,
+      .contract--row4 {
+        @extend .basic-flex;
       }
 
-      & .client--row3 {
+      & .contract--row3 {
         justify-content: space-between;
 
         & mat-radio-group {
           width: 300px;
           display: flex;
           align-items: center;
-          justify-content: center;
+          justify-content: space-evenly;
           min-width: 180px;
+        }
+      }
 
-          & .mat-radio-button:first-child {
-            margin-right: 50px;
-          }
+      & .contract--row4 {
+
+        & mat-form-field{
+
+          width: 80% !important;
         }
       }
     }
@@ -68,7 +73,7 @@ $width_content_page: 90%;
 }
 
 // utilities
-.section-flex {
+.basic-flex {
   display: flex;
   flex-direction: row;
   column-gap: 10px;
@@ -88,7 +93,7 @@ $width_content_page: 90%;
 
 // medias
 @media (max-width: 930px) {
-  .section-flex {
+  .basic-flex {
     display: grid;
     // flex-direction: column;
     // justify-content: space-between;
