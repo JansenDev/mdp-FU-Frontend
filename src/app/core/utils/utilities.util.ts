@@ -1,4 +1,5 @@
 import { IPeriodResponse } from '../models/period.model';
+import * as moment from 'moment';
 
 export function findPeriodActive(periodlist: IPeriodResponse[]): string {
   let codState = '';
@@ -13,4 +14,11 @@ export function findPeriodActive(periodlist: IPeriodResponse[]): string {
   }
 
   return codState;
+}
+
+export function timestampFormat(
+  timestamp: string,
+  format: string = 'DD-MM-YYYY'
+) {
+  return moment(timestamp).format(format);
 }

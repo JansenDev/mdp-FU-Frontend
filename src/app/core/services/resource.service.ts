@@ -57,6 +57,9 @@ export class ResourceService {
     );
   }
 
+  /**
+   * @deprecated The method should not be used
+   */
   findAllPeriods() {
     const URL = `${url_base}/resources/periods`;
 
@@ -87,6 +90,9 @@ export class ResourceService {
     );
   }
 
+  /**
+   * @deprecated The method should not be used
+   */
   findAllProfiles() {
     const URL = `${url_base}/resources/profiles`;
 
@@ -99,6 +105,9 @@ export class ResourceService {
     return this.httpClient.get<ICollaboratorResponse[]>(URL);
   }
 
+  /**
+   * @deprecated The method should not be used
+   */
   findClientByUser(idUser: number) {
     const URL = `${url_base}/resources/${idUser}/clients`;
 
