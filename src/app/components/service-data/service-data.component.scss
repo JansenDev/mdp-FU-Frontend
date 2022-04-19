@@ -1,0 +1,54 @@
+.form-container{
+  border: 1px solid black;
+}
+
+.service-form{
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: repeat(6, 16%);
+  justify-items: start;
+  row-gap: 5%;
+  grid-template-rows: repeat(5, 16%);
+}
+
+.client-label{
+  grid-column-start: 1;
+  grid-row-start: 1;
+}
+
+.client-input {
+  grid-column-start: 2;
+  grid-row-start: 1;
+}
+
+.col1{
+  grid-column-start: 1;
+}
+
+.col3{
+  grid-column-start: 3;
+}
+
+.col5{
+  grid-column-start: 5;
+}
+
+.row1{
+  grid-row-start: 1;
+}
+
+.row2{
+  grid-row-start: 2;
+}
+
+.row3{
+  grid-row-start: 3;
+}
+
+.row4{
+  grid-row-start: 4;
+}
+
+.row5{
+  grid-row-start: 5;
+}

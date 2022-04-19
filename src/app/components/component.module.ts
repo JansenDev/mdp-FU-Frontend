@@ -9,6 +9,7 @@ import { FooterComponent } from './layout/footer/footer.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { SummaryComponent } from 'src/app/components/summary/summary.component';
 import { ResourceMapDetailComponent } from './resource-map-detail/resource-map-detail.component';
+import { ServiceDataComponent } from './service-data/service-data.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { ResourceMapDetailComponent } from './resource-map-detail/resource-map-d
     HeaderComponent,
     SummaryComponent,
     ResourceMapDetailComponent,
+    ServiceDataComponent,
   ],
   imports: [CommonModule, SharedModule, RouterModule],
   exports: [
@@ -25,6 +27,7 @@ import { ResourceMapDetailComponent } from './resource-map-detail/resource-map-d
     HeaderComponent,
     SummaryComponent,
     ResourceMapDetailComponent,
+    ServiceDataComponent,
     RouterModule
   ],
 })
