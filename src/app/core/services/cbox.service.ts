@@ -1,10 +1,12 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, throwError } from 'rxjs';
+import { catchError, map, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IBusinessLine } from '../models/businessLine.model';
+import { IEPS } from '../models/EPS.model';
 import { IPeriodResponse } from '../models/period.model';
 import { IProfileResponse } from '../models/profile.model';
+import { ISalaryBandReponse } from '../models/salaryBand.model';
 import { NotificationService } from './notification.service';
 
 const url_base = environment.url_base;
@@ -18,7 +20,7 @@ export class CboxService {
     private notificationService: NotificationService
   ) {}
 
-  findBusinessLine() {
+  findAllBusinessLine() {
     const URL = `${url_base}/businessLine`;
 
     return this.httpClient.get<IBusinessLine[]>(URL);
@@ -56,6 +58,28 @@ export class CboxService {
         }
 
         return throwError(() => new Error(message));
+      })
+    );
+  }
+
+  findAllEPS() {
+    const URL = `${url_base}/eps`;
+    return this.httpClient.get<IEPS[]>(URL);
+  }
+
+  findSalaryBandByIdProfileAndLevel(idProfile: number, level: string) {
+    const URL = `${url_base}/salaryBand/${idProfile}/${level}`;
+    return this.httpClient.get<ISalaryBandReponse[]>(URL).pipe(
+      map((salaryBandResponse) => {
+        if (salaryBandResponse.length == 0 || salaryBandResponse == undefined) {
+          this.notificationService.toast(
+            'warning',
+            'No se encontró banda salarial',
+            'Warning'
+          );
+          return [{ cod_banda_salarial: null, maximo: 0, minimo: 0 }];
+        }
+        return salaryBandResponse;
       })
     );
   }

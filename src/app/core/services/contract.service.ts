@@ -15,8 +15,10 @@ export class ContractService {
   isValidDocumentNumber(documentNumber: string) {
     const URL = `${URL_BASE}/isThereAContractActive/${documentNumber}`;
     return this.httpClient.get<IDocumentNumberResponse[]>(URL).pipe(
-      map((value) => {
-        if (!value[0]?.bool) {
+      map((statusResponse) => {
+        const status = statusResponse[0];
+
+        if (!status?.bool) {
           return false;
         }
 

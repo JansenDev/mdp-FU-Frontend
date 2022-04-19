@@ -58,13 +58,37 @@ $width_content_page: 90%;
           align-items: center;
           justify-content: space-evenly;
           min-width: 180px;
+          gap: 10px;
+          & mat-form-field {
+            min-width: 100px;
+          }
+
+          & mat-checkbox {
+            margin-left: 8px;
+          }
         }
+
+        // & .row3--cboxEPS {
+        //   width: 300px;
+        //   display: flex;
+        //   align-items: center;
+        //   justify-content: space-evenly;
+        //   min-width: 100px;
+        //   gap: 10px;
+
+        //   & mat-form-field {
+        //     min-width: 100px;
+        //   }
+
+        //   & .cboxEPS--amount{
+        //     width: 40px;
+        //     text-align: right;
+        //   }
+        // }
       }
 
       & .contract--row4 {
-
-        & mat-form-field{
-
+        & mat-form-field {
           width: 80% !important;
         }
       }

@@ -33,7 +33,9 @@
             [minlength]="documentMaxLength"
             required
           />
-          <mat-hint *ngIf="!isvalidDocumentNumber"  style="color: red;" >Contrato vigente existente</mat-hint>
+          <mat-hint *ngIf="!isvalidDocumentNumber" style="color: red"
+            >Contrato vigente existente</mat-hint
+          >
         </mat-form-field>
 
         <div class="offset"></div>
@@ -131,7 +133,7 @@
             <mat-option
               *ngFor="let ln of businessLineList"
               [value]="ln.cod_linea_servicio"
-              >{{ ln.linea_servicio }}</mat-option
+              >{{ ln.cod_linea_servicio }}</mat-option
             >
           </mat-select>
         </mat-form-field>
@@ -160,7 +162,15 @@
       <div class="contract--row2">
         <mat-form-field>
           <mat-label>Banda Salarial </mat-label>
-          <input maxlength="5" formControlName="inputSalaryBand" matInput />
+          <input
+            value="Mínimo <-- {{
+              salaryBandObj.minimo | currency: 'S/ ':'symbol':'1.0'
+            }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{
+              salaryBandObj.maximo | currency: 'S/ ':'symbol':'1.0'
+            }} --> Máximo"
+
+            matInput
+          />
         </mat-form-field>
 
         <mat-form-field>
@@ -187,9 +197,41 @@
           <input maxlength="5" formControlName="inputMonthlyBonus" matInput />
         </mat-form-field>
       </div>
+
       <div class="contract--row3">
+        <!-- <div class="row3--cboxEPS"> -->
+        <mat-form-field>
+          <mat-label>EPS</mat-label>
+          <mat-hint>{{ amountCurrent | currency: "S/" }}</mat-hint>
+          <mat-select formControlName="cBoxEPS">
+            <mat-option (click)="setAmountCurrent('0')" value=""
+              >Ninguno</mat-option
+            >
+            <mat-option
+              *ngFor="let eps of EPSList"
+              [value]="eps.cod_eps"
+              (click)="setAmountCurrent(eps.monto_eps)"
+              >{{ eps.plan_eps }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <!-- <span class="cboxEPS--amount">{{ amountCurrent|currency:'S/' }}</span>
+        </div> -->
+
         <mat-radio-group>
-          <mat-checkbox formControlName="rbEPS">EPS</mat-checkbox>
+          <!-- <mat-checkbox formControlName="rbEPS">EPS</mat-checkbox> -->
+
+          <mat-form-field>
+            <mat-label>Asumo del costo</mat-label>
+            <mat-select
+              formControlName="cBoxBearCost"
+              [disabled]="formHiringRequest.controls['cBoxEPS'].value === ''"
+            >
+              <mat-option value="MDP">MDP</mat-option>
+              <mat-option value="Colaborador">Colaborador</mat-option>
+            </mat-select>
+          </mat-form-field>
+
           <mat-checkbox formControlName="rbSCTR">SCTR</mat-checkbox>
         </mat-radio-group>
 
@@ -224,7 +266,7 @@
           ></mat-datepicker-toggle>
           <mat-datepicker #picker_f_fin></mat-datepicker>
         </mat-form-field>
-        <div class="offset"></div>
+        <!-- <div class="offset"></div> -->
       </div>
 
       <div class="contract--row4">
