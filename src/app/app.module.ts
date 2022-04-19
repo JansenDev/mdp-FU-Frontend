@@ -11,9 +11,10 @@ import { PageModule } from './pages/pages.module';
 import { ComponentModule } from './components/component.module';
 // external modules
 import { ToastContainerModule, ToastrModule } from 'ngx-toastr';
+import { ServicesConfigurationComponent } from './services-configuration/services-configuration/services-configuration.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ServicesConfigurationComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
