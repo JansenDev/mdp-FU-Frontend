@@ -10,6 +10,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon'
 import { StatePipe } from './pipes/state.pipe';
 
 @NgModule({
@@ -29,6 +30,7 @@ import { StatePipe } from './pipes/state.pipe';
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
+    MatIconModule,
   ],
 })
 export class SharedModule {}

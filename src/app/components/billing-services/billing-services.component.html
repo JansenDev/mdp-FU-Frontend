@@ -16,7 +16,7 @@
         <mat-label class="label row2">Monto</mat-label>
         <input class="row2" placeholder="Monto">
 
-        <button class="row2">Guardar</button>
+        <button type="submit" class="row2">Guardar</button>
     </form>
 
     <div class="table--container">
@@ -55,13 +55,18 @@
                   {{ element.end_date | uppercase }}
                 </td>
               </ng-container>
-
               <ng-container matColumnDef="actions">
                 <th mat-header-cell *matHeaderCellDef>Acciones</th>
                 <td mat-cell *matCellDef="let element">
                   {{ element.actions | uppercase }}
                 </td>
               </ng-container>
+
+              <tr
+                mat-header-row
+                *matHeaderRowDef="displayedColumns"
+                class="mat-table--header"
+              ></tr>
         </table>
     </div>
 
@@ -82,7 +87,10 @@
                 <td>20000</td>
                 <td>14/07/2022</td>
                 <td>14/12/2022</td>
-                <td> Editar Eliminar </td>
+                <td>
+                    <mat-icon class="edit">edit</mat-icon>
+                    <mat-icon class="delete">delete</mat-icon>
+                </td>
             </tr>
             <tr>
                 <td>H001</td>
@@ -91,7 +99,10 @@
                 <td>20000</td>
                 <td>14/07/2022</td>
                 <td>14/12/2022</td>
-                <td> Editar Eliminar </td>
+                <td>
+                    <mat-icon class="edit">edit</mat-icon>
+                    <mat-icon class="delete">delete</mat-icon>
+                </td>
             </tr>
             <tr>
                 <td>H001</td>
@@ -100,7 +111,10 @@
                 <td>20000</td>
                 <td>14/07/2022</td>
                 <td>14/12/2022</td>
-                <td> Editar Eliminar </td>
+                <td>
+                    <mat-icon class="edit">edit</mat-icon>
+                    <mat-icon class="delete">delete</mat-icon>
+                </td>
             </tr>
             <tr>
                 <td>H001</td>
@@ -109,7 +123,10 @@
                 <td>20000</td>
                 <td>14/07/2022</td>
                 <td>14/12/2022</td>
-                <td> Editar Eliminar </td>
+                <td>
+                    <mat-icon class="edit">edit</mat-icon>
+                    <mat-icon class="delete">delete</mat-icon>
+                </td>
             </tr>
         </table>
     </div>

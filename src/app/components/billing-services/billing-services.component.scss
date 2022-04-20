@@ -18,7 +18,7 @@
 }
 
 .label {
-
+    font-family: var(--font-family);
 }
 
 button {
@@ -26,6 +26,14 @@ button {
     color: var(--white);
     padding: 1rem;
     text-align: center;
+}
+
+.edit {
+    color: rgb(255, 221, 0);
+}
+
+.delete {
+    color: red;
 }
 
 table {
