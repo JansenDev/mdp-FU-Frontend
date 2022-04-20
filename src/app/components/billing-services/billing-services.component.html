@@ -1,6 +1,6 @@
 <p>Facturación</p>
 <div class="form-container">
-    <form class="service-form">
+    <form class="service-form" (submit)="ngSubmit()">
         <mat-label class="label row1">Nombre del hito</mat-label>
         <input formControlName="nameHito" class="name-input row1" type="text" placeholder="Nombre del hito">
 
@@ -16,50 +16,59 @@
         <mat-label class="label row2">Monto</mat-label>
         <input formControlName="amount" class="row2" placeholder="Monto">
 
-        <button type="submit" class="row2">Guardar</button>
+        <button
+          type="submit"
+          mat-raised-button
+          class="row2 save-button"
+        >
+          Guardar
+        </button>
     </form>
 
-    <div class="table--container">
-        <table mat-table>
+<div class="table--container">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
             <ng-container matColumnDef="idHito">
-                <th mat-header-cell *matHeaderCellDef>Nro. Hito</th>
-                <td mat-cell *matCellDef="let element">
-                  {{ element.idHito | uppercase }}
+                <th class="table-headers" mat-header-cell *matHeaderCellDef>Nro. Hito</th>
+                <td class="table-values" mat-cell *matCellDef="let element">
+                  {{ element.idHito  }}
                 </td>
               </ng-container>
 
               <ng-container matColumnDef="nameHito">
-                <th mat-header-cell *matHeaderCellDef>Nombre del Hito</th>
-                <td mat-cell *matCellDef="let element">
-                  {{ element.nameHito | uppercase }}
+                <th class="table-headers" mat-header-cell *matHeaderCellDef>Nombre del Hito</th>
+                <td class="table-values" mat-cell *matCellDef="let element">
+                  {{ element.nameHito }}
                 </td>
               </ng-container>
 
               <ng-container matColumnDef="hours">
-                <th mat-header-cell *matHeaderCellDef>Horas</th>
-                <td mat-cell *matCellDef="let element">
-                  {{ element.hours | uppercase }}
+                <th class="table-headers" mat-header-cell *matHeaderCellDef>Horas</th>
+                <td class="table-values" mat-cell *matCellDef="let element">
+                  {{ element.hours }}
                 </td>
               </ng-container>
 
               <ng-container matColumnDef="start_date">
-                <th mat-header-cell *matHeaderCellDef>Fecha Inicio</th>
-                <td mat-cell *matCellDef="let element">
-                  {{ element.start_date | uppercase }}
+                <th class="table-headers" mat-header-cell *matHeaderCellDef>Fecha Inicio</th>
+                <td class="table-values" mat-cell *matCellDef="let element">
+                  {{ element.start_date }}
                 </td>
               </ng-container>
 
               <ng-container matColumnDef="end_date">
-                <th mat-header-cell *matHeaderCellDef>Fecha Fin</th>
-                <td mat-cell *matCellDef="let element">
-                  {{ element.end_date | uppercase }}
+                <th class="table-headers" mat-header-cell *matHeaderCellDef>Fecha Fin</th>
+                <td class="table-values" mat-cell *matCellDef="let element">
+                  {{ element.end_date }}
                 </td>
               </ng-container>
+
               <ng-container matColumnDef="actions">
-                <th mat-header-cell *matHeaderCellDef>Acciones</th>
-                <td mat-cell *matCellDef="let element">
-                  {{ element.actions | uppercase }}
+                <th class="table-headers" mat-header-cell *matHeaderCellDef>Acciones</th>
+                <td class="table-values" style="padding: 0;" mat-cell *matCellDef="let element">
+                  <button class="edit-button" mat-button><mat-icon class="edit-icon">edit</mat-icon></button>
+                  <button class="delete-button" mat-button><mat-icon class="delete-icon">delete</mat-icon></button>
                 </td>
+                
               </ng-container>
 
               <tr
@@ -67,67 +76,8 @@
                 *matHeaderRowDef="displayedColumns"
                 class="mat-table--header"
               ></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
     </div>
-
-    <div class="table--container">
-        <table>
-            <tr>
-              <th>Nro. Hito</th>
-              <th>Nombre del Hito</th>
-              <th>Horas</th>
-              <th>Fecha Inicio</th>
-              <th>Fecha Fin</th>
-              <th>Acciones</th>
-            </tr>
-            <tr>
-                <td>H001</td>
-                <td>Análisis y Diseño</td>
-                <td>320</td>
-                <td>20000</td>
-                <td>14/07/2022</td>
-                <td>14/12/2022</td>
-                <td>
-                    <mat-icon class="edit">edit</mat-icon>
-                    <mat-icon class="delete">delete</mat-icon>
-                </td>
-            </tr>
-            <tr>
-                <td>H001</td>
-                <td>Análisis y Diseño</td>
-                <td>320</td>
-                <td>20000</td>
-                <td>14/07/2022</td>
-                <td>14/12/2022</td>
-                <td>
-                    <mat-icon class="edit">edit</mat-icon>
-                    <mat-icon class="delete">delete</mat-icon>
-                </td>
-            </tr>
-            <tr>
-                <td>H001</td>
-                <td>Análisis y Diseño</td>
-                <td>320</td>
-                <td>20000</td>
-                <td>14/07/2022</td>
-                <td>14/12/2022</td>
-                <td>
-                    <mat-icon class="edit">edit</mat-icon>
-                    <mat-icon class="delete">delete</mat-icon>
-                </td>
-            </tr>
-            <tr>
-                <td>H001</td>
-                <td>Análisis y Diseño</td>
-                <td>320</td>
-                <td>20000</td>
-                <td>14/07/2022</td>
-                <td>14/12/2022</td>
-                <td>
-                    <mat-icon class="edit">edit</mat-icon>
-                    <mat-icon class="delete">delete</mat-icon>
-                </td>
-            </tr>
-        </table>
-    </div>
+    
 </div>

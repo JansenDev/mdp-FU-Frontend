@@ -21,19 +21,45 @@
     font-family: var(--font-family);
 }
 
-button {
+.save-button {
     background-color: var(--primary);
     color: var(--white);
-    padding: 1rem;
+    text-align: center;
+    padding: 0rem 1rem 2rem 1rem;
+}
+
+.actions {
+    padding-right: 0rem;
+}
+
+.table-headers {
     text-align: center;
 }
 
-.edit {
-    color: rgb(255, 221, 0);
+.table-values {
+    text-align: center;
 }
 
-.delete {
+.edit-icon {
+    color: rgb(255, 221, 0);
+    padding: 0;
+    margin: 0;
+}
+
+.delete-icon {
     color: red;
+    padding: 0;
+    margin: 0;
+}
+
+.edit-button {
+    padding: 0rem;
+    margin: 0rem;
+}
+
+.delete-button {
+    padding: 0rem;
+    margin: 0rem;
 }
 
 table {
