@@ -20,23 +20,23 @@ export interface ICreateServiceResponse {
   cod_linea_servicio:      string;
   tipo_servicio:           string;
   descripcion_servicio:    string;
-  fecha_inicio_prop:       null;
-  fecha_fin_prop:          null;
+  fecha_inicio_prop:       null | Date | string;
+  fecha_fin_prop:          null | Date | string;
   horas_venta:             number;
-  valor_venta:             string;
-  costo_propuesta:         null;
-  prod_venta:              null;
+  valor_venta:             null | number;
+  costo_propuesta:         null | number;
+  prod_venta:              null | number;
   fecha_ini_planificada:   Date;
   fecha_fin_planificada:   Date;
-  fecha_ini_real:          null;
-  fecha_fin_real:          null;
-  horas_planificadas:      null;
-  valor_venta_planificada: null;
-  costo_planificada:       null;
+  fecha_ini_real:          null | Date | string;
+  fecha_fin_real:          null | Date | string;
+  horas_planificadas:      null | number;
+  valor_venta_planificada: null | number;
+  costo_planificada:       null | number;
   fecha_reg:               Date;
   usuario_reg:             string;
-  fecha_act:               null;
-  usuario_act:             null;
+  fecha_act:               null | Date | string;
+  usuario_act:             null | string;
   estado:                  string;
   cod_cliente:             number;
   forma_pago:              string;
@@ -51,8 +51,8 @@ export interface NewPayment {
   descripcion_hito: string;
   horas:            number;
   monto:            string;
-  fecha_inicio:     Date;
-  fecha_fin:        Date;
+  fecha_inicio:     Date | null;
+  fecha_fin:        Date | null;
   numero_hito:      string;
 }
 
