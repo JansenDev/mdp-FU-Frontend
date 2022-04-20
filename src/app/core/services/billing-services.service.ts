@@ -12,7 +12,7 @@ const { url_base } = environment;
 export class BillingServicesService {
     constructor(private httpClient: HttpClient) {}
 
-    getHito() : Observable<any>{
+    getHitos() : Observable<any>{
         let URL = 'https://futurov01.herokuapp.com/api/v1' + '/resources/montoservicio/';
         return this.httpClient.get<any>(URL);
     }

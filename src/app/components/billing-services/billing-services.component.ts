@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { BillingServicesService } from 'src/app/core/services/billing-services.service';
@@ -29,10 +30,20 @@ export class BillingServicesComponent implements OnInit {
     'end_date',
     'actions'
   ];
-
-  constructor(private service : BillingServicesService) { }
+  resourceForm: FormGroup;
+  constructor(private service : BillingServicesService,
+    private formBuilder : FormBuilder) {
+      this.resourceForm = this.formBuilder.group({
+        nameHito: ['', Validators.required],
+        start_date: ['', Validators.required],
+        end_date: ['', Validators.required],
+        hours: ['', Validators.required],
+        amount: ['', Validators.required],
+      });
+     }
 
   ngOnInit(): void {
+    let hitos = this.service.getHitos(); // obtención de los hitos de la tabla
   }
 
   ngSubmit():void {

@@ -2,19 +2,19 @@
 <div class="form-container">
     <form class="service-form">
         <mat-label class="label row1">Nombre del hito</mat-label>
-        <input class="name-input row1" type="text" placeholder="Nombre del hito">
+        <input formControlName="nameHito" class="name-input row1" type="text" placeholder="Nombre del hito">
 
         <mat-label class="label row1">Fecha Inicio</mat-label>
-        <input type="date" class="start-date-input row1" placeholder="Fecha Inicio">
+        <input formControlName="start_date" type="date" class="start-date-input row1" placeholder="Fecha Inicio">
 
         <mat-label class="label row1">Fecha Fin</mat-label>
-        <input type="date" class="end-date-input row1" placeholder="Fecha Fin">
+        <input formControlName="end_date" type="date" class="end-date-input row1" placeholder="Fecha Fin">
 
         <mat-label class="label row2">Horas</mat-label>
-        <input class="row2" placeholder="Horas">
+        <input formControlName="hours" class="row2" placeholder="Horas">
 
         <mat-label class="label row2">Monto</mat-label>
-        <input class="row2" placeholder="Monto">
+        <input formControlName="amount" class="row2" placeholder="Monto">
 
         <button type="submit" class="row2">Guardar</button>
     </form>
