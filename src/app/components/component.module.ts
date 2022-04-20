@@ -9,6 +9,8 @@ import { FooterComponent } from './layout/footer/footer.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { SummaryComponent } from 'src/app/components/summary/summary.component';
 import { ResourceMapDetailComponent } from './resource-map-detail/resource-map-detail.component';
+import { ImboxFilterComponent } from './form/imbox-filter/imbox-filter.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,15 +19,18 @@ import { ResourceMapDetailComponent } from './resource-map-detail/resource-map-d
     HeaderComponent,
     SummaryComponent,
     ResourceMapDetailComponent,
+    ImboxFilterComponent,
   ],
-  imports: [CommonModule, SharedModule, RouterModule],
+  imports: [CommonModule, SharedModule, RouterModule, ReactiveFormsModule],
   exports: [
     TestComponent,
+    RouterModule,
     FooterComponent,
     HeaderComponent,
     SummaryComponent,
     ResourceMapDetailComponent,
-    RouterModule
+    ImboxFilterComponent,
+    ReactiveFormsModule,
   ],
 })
 export class ComponentModule {}

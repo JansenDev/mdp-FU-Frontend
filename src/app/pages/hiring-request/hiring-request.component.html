@@ -89,6 +89,7 @@
             maxlength="11"
           />
         </mat-form-field>
+
         <mat-form-field>
           <mat-label>Correo</mat-label>
           <input formControlName="inputEmail" matInput type="email" required />
@@ -168,7 +169,6 @@
             }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{
               salaryBandObj.maximo | currency: 'S/ ':'symbol':'1.0'
             }} --> Máximo"
-
             matInput
           />
         </mat-form-field>
@@ -202,15 +202,27 @@
         <!-- <div class="row3--cboxEPS"> -->
         <mat-form-field>
           <mat-label>EPS</mat-label>
-          <mat-hint>{{ amountCurrent | currency: "S/" }}</mat-hint>
+          <mat-hint
+            *ngIf="cBoxBearCostValue === 'parcial' && cBoxEPSValue !== null"
+            >{{ amountCurrent.parcial | currency: "S/" }}</mat-hint
+          >
+
+          <mat-hint
+            *ngIf="cBoxBearCostValue !== 'parcial' && cBoxEPSValue !== null"
+            >{{ amountCurrent.total | currency: "S/" }}</mat-hint
+          >
+
+          <mat-hint *ngIf="cBoxEPSValue === null">{{
+            0 | currency: "S/"
+          }}</mat-hint>
+
           <mat-select formControlName="cBoxEPS">
-            <mat-option (click)="setAmountCurrent('0')" value=""
-              >Ninguno</mat-option
-            >
+            <!-- log setAmountCurrent('0') -->
+            <mat-option [value]="null">Ninguno</mat-option>
             <mat-option
               *ngFor="let eps of EPSList"
               [value]="eps.cod_eps"
-              (click)="setAmountCurrent(eps.monto_eps)"
+              (click)="setAmountCurrent(eps)"
               >{{ eps.plan_eps }}
             </mat-option>
           </mat-select>
@@ -219,16 +231,14 @@
         </div> -->
 
         <mat-radio-group>
-          <!-- <mat-checkbox formControlName="rbEPS">EPS</mat-checkbox> -->
-
           <mat-form-field>
-            <mat-label>Asumo del costo</mat-label>
+            <mat-label>Asumo del costo (MDP)</mat-label>
             <mat-select
               formControlName="cBoxBearCost"
-              [disabled]="formHiringRequest.controls['cBoxEPS'].value === ''"
+              [disabled]="cBoxEPSValue === '' || cBoxEPSValue === null"
             >
-              <mat-option value="MDP">MDP</mat-option>
-              <mat-option value="Colaborador">Colaborador</mat-option>
+              <mat-option value="parcial">Parcial</mat-option>
+              <mat-option value="total">Total</mat-option>
             </mat-select>
           </mat-form-field>
 

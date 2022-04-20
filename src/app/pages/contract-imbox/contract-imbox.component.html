@@ -1,0 +1,26 @@
+<div class="imbox-contract">
+  <h2 class="imbox-contract--title">Bandeja Aprobación de contratación</h2>
+  <mat-card>Datos del Colaborador</mat-card>
+
+  <form [formGroup]="formFilter" (submit)="ngSubmit()">
+    <app-imbox-filter
+      formControlName="filterForm"
+      class="imbox-contract--filters"
+      [disabled]="true"
+    ></app-imbox-filter>
+
+    <div class="dib">
+      <div class="imbox-contract--buttons">
+        <button mat-raised-button color="primary" type="submit">Buscar</button>
+        <button mat-raised-button color="accent" type="button">Cancelar</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<h2>formFilter</h2>
+<pre>
+  {{ formFilter.value | json }}
+  valid:{{ formFilter.valid | json }}
+
+</pre>

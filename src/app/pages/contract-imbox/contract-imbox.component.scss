@@ -1,0 +1,50 @@
+$width_page: 90%;
+
+.imbox-contract {
+  width: $width_page;
+  margin: 15px auto 0 auto;
+
+  & form {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    position: relative;
+
+    & app-imbox-filter {
+      margin: auto;
+      & .filter {
+        width: 100%;
+      }
+    }
+
+    .imbox-contract--buttons {
+      display: flex;
+      width: max-content;
+      margin-left: auto;
+
+      & button:nth-child(2) {
+        margin-left: 5px;
+      }
+    }
+  }
+}
+
+// app-imbox-filter.imbox-contract--filters .filter{
+//   width: 55% !important;
+//   background-color: rgb(213, 116, 116);
+// }
+
+.dib {
+  display: inline-block;
+  float: right;
+}
+
+@media (max-width: 1230px) {
+  .imbox-contract {
+    & form {
+      & .imbox-contract--buttons {
+        display: block;
+      }
+    }
+  }
+}

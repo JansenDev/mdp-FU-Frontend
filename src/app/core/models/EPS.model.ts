@@ -1,5 +1,6 @@
 export interface IEPS {
   cod_eps: number;
-  monto_eps: string | number;
+  parcial: string | number;
+  total: string | number;
   plan_eps: string;
 }

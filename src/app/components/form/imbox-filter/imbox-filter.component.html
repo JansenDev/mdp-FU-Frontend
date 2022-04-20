@@ -1,0 +1,57 @@
+<div class="filter">
+  <div [formGroup]="formImboxFilter" class="filter-fields">
+    <mat-form-field>
+      <mat-label>Cliente</mat-label>
+      <!-- formControlName="cBoxDocumentType" -->
+      <mat-select formControlName="cboxClient">
+        <mat-option value="DNI">1</mat-option>
+        <mat-option value="RUC">2</mat-option>
+        <mat-option value="CE">3</mat-option>
+        <mat-option value="PA">Pasaporte</mat-option>
+        <mat-option value="PN">Part. </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Linea de Negocio</mat-label>
+      <mat-select formControlName="cboxLN">
+        <mat-option value="DNI">ATS</mat-option>
+        <mat-option value="RUC">SWF</mat-option>
+        <mat-option value="CE">3 </mat-option>
+        <mat-option value="PA">Pasaporte</mat-option>
+        <mat-option value="PN">Part. </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>N° documento</mat-label>
+      <input
+        formControlName="inputDocNumber"
+        matInput
+        minlength="8"
+        maxlength="15"
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Nombres y apellidos</mat-label>
+      <input formControlName="inputNames" matInput />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Estado</mat-label>
+      <mat-select formControlName="cboxStatus">
+        <mat-option value="DNI">Pendiente</mat-option>
+        <mat-option value="RUC">Pendiente GG</mat-option>
+        <mat-option value="CE">Aprobado</mat-option>
+        <mat-option value="PA">Rechazado</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+
+<h2>formImboxFilter</h2>
+<pre>
+  {{ formImboxFilter.value | json }}
+  valid: {{ formImboxFilter.valid }}
+</pre>

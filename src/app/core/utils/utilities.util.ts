@@ -20,5 +20,9 @@ export function timestampFormat(
   timestamp: string,
   format: string = 'DD-MM-YYYY'
 ) {
+  if (!timestamp) {
+    return null;
+  }
+
   return moment(timestamp).format(format);
 }

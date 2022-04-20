@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ContractImboxComponent } from './contract-imbox/contract-imbox.component';
 import { HiringRequestComponent } from './hiring-request/hiring-request.component';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
@@ -17,6 +18,10 @@ const routes: Routes = [
   {
     path: 'hiring-request',
     component: HiringRequestComponent,
+  },
+  {
+    path: 'contract-imbox',
+    component: ContractImboxComponent,
   },
   {
     path: '**',
