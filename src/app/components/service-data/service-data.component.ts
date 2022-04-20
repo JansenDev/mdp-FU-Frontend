@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ICreateServiceRequest } from 'src/app/core/models/service.model';
+import { ServicesService } from 'src/app/core/services/services.service';
 
 @Component({
   selector: 'app-service-data',
@@ -7,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ServiceDataComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private servicesService: ServicesService
+  ) { }
 
   ngOnInit(): void {
   }
