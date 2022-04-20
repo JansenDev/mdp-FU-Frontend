@@ -10,6 +10,7 @@ import { HeaderComponent } from './layout/header/header.component';
 import { SummaryComponent } from 'src/app/components/summary/summary.component';
 import { ResourceMapDetailComponent } from './resource-map-detail/resource-map-detail.component';
 import { ServiceDataComponent } from './service-data/service-data.component';
+import { BillingServicesComponent } from './billing-services/billing-services.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { ServiceDataComponent } from './service-data/service-data.component';
     SummaryComponent,
     ResourceMapDetailComponent,
     ServiceDataComponent,
+    BillingServicesComponent,
   ],
   imports: [CommonModule, SharedModule, RouterModule],
   exports: [
@@ -28,6 +30,7 @@ import { ServiceDataComponent } from './service-data/service-data.component';
     SummaryComponent,
     ResourceMapDetailComponent,
     ServiceDataComponent,
+    BillingServicesComponent,
     RouterModule
   ],
 })

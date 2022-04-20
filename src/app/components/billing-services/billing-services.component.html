@@ -1,0 +1,116 @@
+<p>Facturación</p>
+<div class="form-container">
+    <form class="service-form">
+        <mat-label class="label row1">Nombre del hito</mat-label>
+        <input class="name-input row1" type="text" placeholder="Nombre del hito">
+
+        <mat-label class="label row1">Fecha Inicio</mat-label>
+        <input type="date" class="start-date-input row1" placeholder="Fecha Inicio">
+
+        <mat-label class="label row1">Fecha Fin</mat-label>
+        <input type="date" class="end-date-input row1" placeholder="Fecha Fin">
+
+        <mat-label class="label row2">Horas</mat-label>
+        <input class="row2" placeholder="Horas">
+
+        <mat-label class="label row2">Monto</mat-label>
+        <input class="row2" placeholder="Monto">
+
+        <button class="row2">Guardar</button>
+    </form>
+
+    <div class="table--container">
+        <table mat-table>
+            <ng-container matColumnDef="idHito">
+                <th mat-header-cell *matHeaderCellDef>Nro. Hito</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.idHito | uppercase }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="nameHito">
+                <th mat-header-cell *matHeaderCellDef>Nombre del Hito</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.nameHito | uppercase }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="hours">
+                <th mat-header-cell *matHeaderCellDef>Horas</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.hours | uppercase }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="start_date">
+                <th mat-header-cell *matHeaderCellDef>Fecha Inicio</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.start_date | uppercase }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="end_date">
+                <th mat-header-cell *matHeaderCellDef>Fecha Fin</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.end_date | uppercase }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.actions | uppercase }}
+                </td>
+              </ng-container>
+        </table>
+    </div>
+
+    <div class="table--container">
+        <table>
+            <tr>
+              <th>Nro. Hito</th>
+              <th>Nombre del Hito</th>
+              <th>Horas</th>
+              <th>Fecha Inicio</th>
+              <th>Fecha Fin</th>
+              <th>Acciones</th>
+            </tr>
+            <tr>
+                <td>H001</td>
+                <td>Análisis y Diseño</td>
+                <td>320</td>
+                <td>20000</td>
+                <td>14/07/2022</td>
+                <td>14/12/2022</td>
+                <td> Editar Eliminar </td>
+            </tr>
+            <tr>
+                <td>H001</td>
+                <td>Análisis y Diseño</td>
+                <td>320</td>
+                <td>20000</td>
+                <td>14/07/2022</td>
+                <td>14/12/2022</td>
+                <td> Editar Eliminar </td>
+            </tr>
+            <tr>
+                <td>H001</td>
+                <td>Análisis y Diseño</td>
+                <td>320</td>
+                <td>20000</td>
+                <td>14/07/2022</td>
+                <td>14/12/2022</td>
+                <td> Editar Eliminar </td>
+            </tr>
+            <tr>
+                <td>H001</td>
+                <td>Análisis y Diseño</td>
+                <td>320</td>
+                <td>20000</td>
+                <td>14/07/2022</td>
+                <td>14/12/2022</td>
+                <td> Editar Eliminar </td>
+            </tr>
+        </table>
+    </div>
+</div>
