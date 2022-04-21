@@ -29,11 +29,6 @@ $width_page: 90%;
   }
 }
 
-// app-imbox-filter.imbox-contract--filters .filter{
-//   width: 55% !important;
-//   background-color: rgb(213, 116, 116);
-// }
-
 .dib {
   display: inline-block;
   float: right;
@@ -46,5 +41,16 @@ $width_page: 90%;
         display: block;
       }
     }
+  }
+}
+
+// Imbox
+
+.imbox-contract {
+  & .imbox-contract--table {
+      & table {
+        margin-top: 70px;
+        width: 100%;
+      }
   }
 }

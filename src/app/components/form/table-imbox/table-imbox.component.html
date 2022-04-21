@@ -1,0 +1,78 @@
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <!-- Position Column -->
+  <ng-container matColumnDef="dateReg">
+    <th mat-header-cell *matHeaderCellDef>F. Reg</th>
+    <td mat-cell *matCellDef="let element">{{ element.position }}</td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="client">
+    <th mat-header-cell *matHeaderCellDef>Cliente</th>
+    <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="businessLine">
+    <th mat-header-cell *matHeaderCellDef>LN</th>
+    <td mat-cell *matCellDef="let element">{{ element.weight }}</td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="profile">
+    <th mat-header-cell *matHeaderCellDef>Puesto</th>
+    <td mat-cell *matCellDef="let element">{{ element.symbol }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="docNumber">
+    <th mat-header-cell *matHeaderCellDef>Nro Doc.</th>
+    <td mat-cell *matCellDef="let element">{{ element.uno }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="names">
+    <th mat-header-cell *matHeaderCellDef>Nombres y apellidos</th>
+    <td mat-cell *matCellDef="let element">{{ element.dos }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="modality">
+    <th mat-header-cell *matHeaderCellDef>Modality</th>
+    <td mat-cell *matCellDef="let element">{{ element.tres }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="amount">
+    <th mat-header-cell *matHeaderCellDef>Monto</th>
+    <td mat-cell *matCellDef="let element">{{ element.cuatro }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="bonus">
+    <th mat-header-cell *matHeaderCellDef>Bono</th>
+    <td mat-cell *matCellDef="let element">{{ element.bonus }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="eps">
+    <th mat-header-cell *matHeaderCellDef>EPS</th>
+    <td mat-cell *matCellDef="let element">{{ element.eps }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="sctr">
+    <th mat-header-cell *matHeaderCellDef>Sctr</th>
+    <td mat-cell *matCellDef="let element">{{ element.sctr }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="status">
+    <th mat-header-cell *matHeaderCellDef>Sctr</th>
+    <td mat-cell *matCellDef="let element">{{ element.status }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="dateApproval">
+    <th mat-header-cell *matHeaderCellDef>F. Aprobación</th>
+    <td mat-cell *matCellDef="let element">{{ element.dateApproval }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="action">
+    <th mat-header-cell *matHeaderCellDef>Accion</th>
+    <td mat-cell *matCellDef="let element">{{ element.action }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>

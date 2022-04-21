@@ -35,6 +35,9 @@ export class HiringRequestService {
     if (cod_eps) {
       hiringRequest['cod_eps'] = cod_eps;
       hiringRequest['eps_parcial_total'] = eps_parcial_total;
+    } else {
+      hiringRequest['cod_eps'] = undefined;
+      hiringRequest['eps_parcial_total'] = undefined;
     }
 
     if (ind_sctr) {
@@ -43,25 +46,18 @@ export class HiringRequestService {
       hiringRequest['ind_sctr'] = 'N';
     }
 
-    if (bono_men && bono_men ) {
+    if (bono_men && bono_men) {
       hiringRequest['bono_men'] = bono_men;
+    } else {
+      hiringRequest['bono_men'] = undefined;
     }
 
     if (condicional_adicional) {
       hiringRequest['condicional_adicional'] = condicional_adicional;
+    } else {
+      hiringRequest['condicional_adicional'] = undefined;
     }
 
-    return this.httpClient.post<IStatusRequestSimple>(URL, hiringRequest).pipe(
-      catchError((err: HttpErrorResponse) => {
-        let message = err.error.message;
-
-        if (err.status == 409) {
-          this.notificationService.toast('warning', message, 'WARNING', 8000);
-
-        }
-
-        return throwError(() => Error(message));
-      })
-    );
+    return this.httpClient.post<IStatusRequestSimple>(URL, hiringRequest);
   }
 }

@@ -26,3 +26,12 @@ export function timestampFormat(
 
   return moment(timestamp).format(format);
 }
+export function isHighDateEnd(
+  inputDateStart: Date | string,
+  inputDateEnd: Date | string
+): boolean {
+  const dateStart = moment(inputDateStart);
+  const dateEnd = moment(inputDateEnd);
+
+  return dateEnd.diff(dateStart) > 0;
+}

@@ -9,6 +9,11 @@ import {
   NG_VALUE_ACCESSOR,
   Validators,
 } from '@angular/forms';
+import { IBusinessLine } from 'src/app/core/models/businessLine.model';
+import { IClientResponse } from 'src/app/core/models/client.model';
+import { CboxService } from 'src/app/core/services/cbox.service';
+import { ClientService } from 'src/app/core/services/client.service';
+import { getToken } from 'src/app/core/utils/token.storage';
 
 @Component({
   selector: 'app-imbox-filter',
@@ -31,15 +36,50 @@ import {
 export class ImboxFilterComponent implements OnInit, ControlValueAccessor {
   formImboxFilter: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+  businessLineList: IBusinessLine[] = [] as IBusinessLine[];
+  clientList: IClientResponse[] = [] as IClientResponse[];
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private cboxService: CboxService,
+    private clientService: ClientService
+  ) {
     this.formImboxFilter = this.formBuilder.group({
       cboxClient: [''],
       cboxLN: [''],
-      inputDocNumber: ['1'],
-      inputNames: ['', Validators.required],
+      inputDocNumber: [''],
+      inputNames: [''],
       cboxStatus: [''],
     });
   }
+
+  ngOnInit(): void {
+    this.fillAllFields();
+  }
+
+  fillAllFields() {
+    this.fillCboxBussinesLine();
+    this.fillCboxClient();
+  }
+
+  fillCboxBussinesLine() {
+    this.cboxService.findAllBusinessLine().subscribe({
+      next: (businessLineList) => {
+        this.businessLineList = businessLineList;
+      },
+    });
+  }
+
+  fillCboxClient() {
+    const { id_sesion } = JSON.parse(getToken());
+    this.clientService.findClientByUser(id_sesion).subscribe({
+      next: (clientList) => {
+        this.clientList = clientList;
+      },
+    });
+  }
+
+  // overrides
   onChange: any = () => {};
   onTouched: any = () => {};
 
@@ -56,19 +96,13 @@ export class ImboxFilterComponent implements OnInit, ControlValueAccessor {
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
-
   //* communicate the inner form validation to the parent form
   validate(control: FormControl) {
-    console.log(control);
-
     return this.formImboxFilter.valid
       ? null
       : { formFilter: { valid: false, errors: this.formImboxFilter.errors } };
   }
-
   setDisabledState?(isDisabled: boolean): void {
     isDisabled ? this.formImboxFilter.disable() : this.formImboxFilter.enable();
   }
-
-  ngOnInit(): void {}
 }

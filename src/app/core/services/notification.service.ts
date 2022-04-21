@@ -20,7 +20,7 @@ export class NotificationService {
     type: keyof INotificationType = 'error',
     message: string = '',
     title: string = '',
-    timeOut: number = 2500
+    timeOut: number = 3000
   ) {
     const TOAST_CONFIG: Partial<IndividualConfig> = {
       enableHtml: true,

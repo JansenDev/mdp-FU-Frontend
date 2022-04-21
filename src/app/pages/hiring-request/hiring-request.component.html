@@ -193,7 +193,7 @@
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>Bono Mensual</mat-label>
+          <mat-label>Bono</mat-label>
           <input maxlength="5" formControlName="inputMonthlyBonus" matInput />
         </mat-form-field>
       </div>
@@ -289,7 +289,7 @@
 
     <div class="form--buttons">
       <button
-        [disabled]="formHiringRequest.invalid"
+        [disabled]="formHiringRequest.invalid "
         type="submit"
         mat-raised-button
         color="primary"
@@ -307,15 +307,4 @@
     </div>
   </form>
   <!-- Form End -->
-
-  <pre>
-inputNameColl: {{
-      formHiringRequest.controls["inputNameColl"].valid | json
-    }}</pre
-  >
-  <pre>
- {{ formHiringRequest.controls["inputDocumentNumber"].value | json }}</pre
-  >
-  <pre> {{ formHiringRequest.valid }}</pre>
-  <pre> {{ formHiringRequest.value | json }}</pre>
 </div>

@@ -11,6 +11,7 @@ import { SummaryComponent } from 'src/app/components/summary/summary.component';
 import { ResourceMapDetailComponent } from './resource-map-detail/resource-map-detail.component';
 import { ImboxFilterComponent } from './form/imbox-filter/imbox-filter.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TableImboxComponent } from './form/table-imbox/table-imbox.component';
 
 @NgModule({
   declarations: [
@@ -20,17 +21,19 @@ import { ReactiveFormsModule } from '@angular/forms';
     SummaryComponent,
     ResourceMapDetailComponent,
     ImboxFilterComponent,
+    TableImboxComponent,
   ],
   imports: [CommonModule, SharedModule, RouterModule, ReactiveFormsModule],
   exports: [
     TestComponent,
     RouterModule,
+    ReactiveFormsModule,
     FooterComponent,
     HeaderComponent,
     SummaryComponent,
     ResourceMapDetailComponent,
     ImboxFilterComponent,
-    ReactiveFormsModule,
+    TableImboxComponent,
   ],
 })
 export class ComponentModule {}
