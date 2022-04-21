@@ -9,6 +9,11 @@ import { ServicesService } from 'src/app/core/services/services.service';
 })
 export class ServiceDataComponent implements OnInit {
 
+  currencies = [
+    { value: 'sol-0', viewValue: 'SOL' },
+    { value: 'dolar-1', viewValue: 'DOLAR' }
+  ]
+
   constructor(
     private servicesService: ServicesService
   ) { }
