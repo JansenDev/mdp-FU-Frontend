@@ -12,7 +12,6 @@ export interface ICreateServiceRequest {
   fecha_ini_real:        null | Date | string;
   fecha_fin_real:        null | Date | string;
   forma_pago:            string;
-  estado:                string;
 }
 
 export interface ICreateServiceResponse {
