@@ -25,20 +25,20 @@ export class ServicesService {
     return this.http.post<ICreateServiceResponse>( `${ this._api }/services/create`, service );
   }
 
-  getServiceLines(): Observable<IServiceLineResponse> {
-    return this.http.get<IServiceLineResponse>( `${ this._api }/service-line/all` );
+  getServiceLines(): Observable<IServiceLineResponse[]> {
+    return this.http.get<IServiceLineResponse[]>( `${ this._api }/service-line/all` );
   }
 
-  getClientsByCodUser(): Observable<IClientResponse> {
-    return this.http.get<IClientResponse>( `${ this._api }/clients/user`, { headers: {'api': '3'} } );
+  getClientsByCodUser(): Observable<IClientResponse[]> {
+    return this.http.get<IClientResponse[]>( `${ this._api }/clients/user`, { headers: {'api': '3'} } );
   }
 
-  getServiceTypeByCodServiceLine(codServiceLine: string): Observable<IServiceTypeResponse> {
-    return this.http.get<IServiceTypeResponse>( `${ this._api }/service-type/service-line/${ codServiceLine }` );
+  getServiceTypeByCodServiceLine(codServiceLine: string): Observable<IServiceTypeResponse[]> {
+    return this.http.get<IServiceTypeResponse[]>( `${ this._api }/service-type/service-line/${ codServiceLine }` );
   }
 
-  getPaymentMethodsByServiceType(serviceType: string): Observable<IPaymentMethodResponse> {
-    return this.http.get<IPaymentMethodResponse>( `${ this._api }/payment-method/${ serviceType }` );
+  getPaymentMethodsByServiceType(serviceType: string): Observable<IPaymentMethodResponse[]> {
+    return this.http.get<IPaymentMethodResponse[]>( `${ this._api }/payment-method/${ serviceType }` );
   }
 
 }
