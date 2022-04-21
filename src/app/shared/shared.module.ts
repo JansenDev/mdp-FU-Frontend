@@ -11,6 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { StatePipe } from './pipes/state.pipe';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [TestpPipe, StatePipe],
@@ -29,6 +30,7 @@ import { StatePipe } from './pipes/state.pipe';
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
+    FormsModule
   ],
 })
 export class SharedModule {}
