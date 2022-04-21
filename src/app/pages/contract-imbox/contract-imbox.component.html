@@ -1,5 +1,6 @@
 <div class="imbox-contract">
   <h2 class="imbox-contract--title">Bandeja Aprobación de contratación</h2>
+
   <mat-card>Datos del Colaborador</mat-card>
 
   <form [formGroup]="formFilter" (submit)="ngSubmit()">
@@ -12,7 +13,14 @@
     <div class="dib">
       <div class="imbox-contract--buttons">
         <button mat-raised-button color="primary" type="submit">Buscar</button>
-        <button mat-raised-button color="accent" (click)="onCancel()"  type="button">Limpiar</button>
+        <button
+          mat-raised-button
+          color="basic"
+          (click)="onCancel()"
+          type="button"
+        >
+          Limpiar
+        </button>
       </div>
     </div>
   </form>
@@ -43,7 +51,9 @@
 
       <ng-container matColumnDef="profile">
         <th mat-header-cell *matHeaderCellDef>Puesto</th>
-        <td mat-cell *matCellDef="let element">{{ element.puesto }}</td>
+        <td mat-cell *matCellDef="let element">
+          {{ element.puesto | titlecase }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="docNumber">
@@ -54,13 +64,15 @@
       <ng-container matColumnDef="names">
         <th mat-header-cell *matHeaderCellDef>Nombres y apellidos</th>
         <td mat-cell *matCellDef="let element">
-          {{ element.nombre_apellidos }}
+          {{ element.nombre_apellidos | titlecase }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="modality">
         <th mat-header-cell *matHeaderCellDef>Modality</th>
-        <td mat-cell *matCellDef="let element">{{ element.modalidad }}</td>
+        <td mat-cell *matCellDef="let element">
+          {{ element.modalidad | uppercase }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="amount">
@@ -105,15 +117,26 @@
 
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef>Accion</th>
-        <td mat-cell *matCellDef="let element">ACTION</td>
+        <td mat-cell *matCellDef="let element">
+          <a routerLink="/">APROBAR</a>
+        </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
   </div>
+
+  <div class="pagination--container">
+    <mat-paginator
+      [pageSizeOptions]="[10, 15, 20]"
+      showFirstLastButtons
+      aria-label="Select page of periodic elements"
+    >
+    </mat-paginator>
+  </div>
 </div>
-<br />
+<!-- <br />
 <br />
 <br />
 <h2>formFilter</h2>
@@ -121,4 +144,4 @@
   {{ formFilter.value | json }}
   valid:{{ formFilter.valid | json }}
 
-</pre>
+</pre> -->

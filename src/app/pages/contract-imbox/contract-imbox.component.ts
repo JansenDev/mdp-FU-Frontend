@@ -1,5 +1,8 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { IContractImbox } from 'src/app/core/models/contract-imbox-model';
 import { ContractImboxService } from 'src/app/core/services/contract-imbox.service';
 @Component({
   selector: 'app-contract-imbox',
@@ -9,8 +12,11 @@ import { ContractImboxService } from 'src/app/core/services/contract-imbox.servi
 })
 export class ContractImboxComponent implements OnInit {
   formFilter: FormGroup;
+  @ViewChild(MatPaginator)
+  paginator: MatPaginator = {} as MatPaginator;
+  dataSource: MatTableDataSource<IContractImbox> =
+    new MatTableDataSource<IContractImbox>([]);
 
-  // ^TMP
   displayedColumns: string[] = [
     'dateReg',
     'client',
@@ -27,9 +33,6 @@ export class ContractImboxComponent implements OnInit {
     'dateApproval',
     'action',
   ];
-
-  dataSource = [];
-  contractImboxList: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -56,30 +59,35 @@ export class ContractImboxComponent implements OnInit {
     this.contractImboxService
       .findContractSolicitudeBy()
       .subscribe((contractImboxList) => {
-        this.dataSource = contractImboxList;
+        this.dataSource = new MatTableDataSource<IContractImbox>(
+          contractImboxList
+        );
+        this.dataSource.paginator = this.paginator;
       });
   }
 
   ngSubmit() {
-    console.log('send filtered');
     let { cboxClient, cboxLN, inputDocNumber, inputNames, cboxStatus } =
       this.formFilter.value.filterForm;
 
-    console.log(this.formFilter.value);
-
-    this.contractImboxService
-      .findContractSolicitudeBy(
-        cboxClient,
-        cboxLN,
-        inputDocNumber,
-        inputNames,
-        cboxStatus
-      )
-      .subscribe({
-        next: (contractImboxList) => {
-          this.dataSource = contractImboxList;
-        },
-      });
+    if (cboxClient || cboxLN || inputDocNumber || inputNames || cboxStatus) {
+      this.contractImboxService
+        .findContractSolicitudeBy(
+          cboxClient,
+          cboxLN,
+          inputDocNumber,
+          inputNames,
+          cboxStatus
+        )
+        .subscribe({
+          next: (contractImboxList) => {
+            this.dataSource = new MatTableDataSource<IContractImbox>(
+              contractImboxList
+            );
+            this.dataSource.paginator = this.paginator;
+          },
+        });
+    }
   }
 
   onCancel() {

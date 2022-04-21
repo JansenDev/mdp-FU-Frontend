@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { IContractImbox } from '../models/contract-imbox-model';
 
 const { url_base } = environment;
 
@@ -41,7 +42,7 @@ export class ContractImboxService {
       options['nombre_apellidos'] = names;
     }
 
-    return this.httpClient.post<any>(URL, options).pipe(
+    return this.httpClient.post<IContractImbox[]>(URL, options).pipe(
       map(data=>{
         console.log(data);
 
