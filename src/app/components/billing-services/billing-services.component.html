@@ -1,6 +1,6 @@
 <p>Facturación</p>
 <div class="form-container">
-    <form class="service-form" (submit)="ngSubmit()">
+    <form class="service-form" [formGroup]="resourceForm" (submit)="ngSubmit()">
         <mat-label class="label row1">Nombre del hito</mat-label>
         <input formControlName="nameHito" class="name-input row1" type="text" placeholder="Nombre del hito">
 
@@ -11,10 +11,10 @@
         <input formControlName="end_date" type="date" class="end-date-input row1" placeholder="Fecha Fin">
 
         <mat-label class="label row2">Horas</mat-label>
-        <input formControlName="hours" class="row2" placeholder="Horas">
+        <input formControlName="hours" type="number" class="row2" placeholder="Horas">
 
         <mat-label class="label row2">Monto</mat-label>
-        <input formControlName="amount" class="row2" placeholder="Monto">
+        <input formControlName="amount" type="number" class="row2" placeholder="Monto">
 
         <button
           type="submit"
@@ -27,38 +27,45 @@
 
 <div class="table--container">
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-            <ng-container matColumnDef="idHito">
+            <ng-container matColumnDef="cod_servicio">
                 <th class="table-headers" mat-header-cell *matHeaderCellDef>Nro. Hito</th>
                 <td class="table-values" mat-cell *matCellDef="let element">
-                  {{ element.idHito  }}
+                  {{ element.cod_servicio  }}
                 </td>
               </ng-container>
 
-              <ng-container matColumnDef="nameHito">
+              <ng-container matColumnDef="descripcion_hito">
                 <th class="table-headers" mat-header-cell *matHeaderCellDef>Nombre del Hito</th>
                 <td class="table-values" mat-cell *matCellDef="let element">
-                  {{ element.nameHito }}
+                  {{ element.descripcion_hito }}
                 </td>
               </ng-container>
 
-              <ng-container matColumnDef="hours">
+              <ng-container matColumnDef="horas">
                 <th class="table-headers" mat-header-cell *matHeaderCellDef>Horas</th>
                 <td class="table-values" mat-cell *matCellDef="let element">
-                  {{ element.hours }}
+                  {{ element.horas }}
+                </td>
+              </ng-container>
+              
+              <ng-container matColumnDef="monto">
+                <th class="table-headers" mat-header-cell *matHeaderCellDef>Monto</th>
+                <td class="table-values" mat-cell *matCellDef="let element">
+                  {{ element.monto }}
                 </td>
               </ng-container>
 
-              <ng-container matColumnDef="start_date">
+              <ng-container matColumnDef="fecha_inicio">
                 <th class="table-headers" mat-header-cell *matHeaderCellDef>Fecha Inicio</th>
                 <td class="table-values" mat-cell *matCellDef="let element">
-                  {{ element.start_date }}
+                  {{ element.fecha_inicio | date: "dd/MM/YYYY"}}
                 </td>
               </ng-container>
 
-              <ng-container matColumnDef="end_date">
+              <ng-container matColumnDef="fecha_fin">
                 <th class="table-headers" mat-header-cell *matHeaderCellDef>Fecha Fin</th>
                 <td class="table-values" mat-cell *matCellDef="let element">
-                  {{ element.end_date }}
+                  {{ element.fecha_fin | date: "dd/MM/YYYY"}}
                 </td>
               </ng-container>
 

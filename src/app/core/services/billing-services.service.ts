@@ -12,13 +12,13 @@ const { url_base } = environment;
 export class BillingServicesService {
     constructor(private httpClient: HttpClient) {}
 
-    getHitos() : Observable<any>{
-        let URL = 'https://futurov01.herokuapp.com/api/v1' + '/resources/montoservicio/';
-        return this.httpClient.get<any>(URL);
+    getHitos(input : any) : Observable<any> {
+        let URL = 'https://futurov01.herokuapp.com/api/v1' + '/payment-service/get/';
+        return this.httpClient.post<any>(URL, input);
     }
 
-    registerHito(input : any) {
-        let URL = 'https://futurov01.herokuapp.com/api/v1' + '/resources/montoservicio/';
+    registerHito(input : any) : Observable<any> {
+        let URL = 'https://futurov01.herokuapp.com/api/v1' + '/payment-service/create';
         return this.httpClient.post<any>(URL, input);
     }
 }

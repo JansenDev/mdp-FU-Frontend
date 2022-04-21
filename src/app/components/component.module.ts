@@ -11,7 +11,7 @@ import { SummaryComponent } from 'src/app/components/summary/summary.component';
 import { ResourceMapDetailComponent } from './resource-map-detail/resource-map-detail.component';
 import { ServiceDataComponent } from './service-data/service-data.component';
 import { BillingServicesComponent } from './billing-services/billing-services.component';
-
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     TestComponent,
@@ -22,7 +22,7 @@ import { BillingServicesComponent } from './billing-services/billing-services.co
     ServiceDataComponent,
     BillingServicesComponent,
   ],
-  imports: [CommonModule, SharedModule, RouterModule],
+  imports: [CommonModule, SharedModule, RouterModule, ReactiveFormsModule],
   exports: [
     TestComponent,
     FooterComponent,
@@ -31,7 +31,8 @@ import { BillingServicesComponent } from './billing-services/billing-services.co
     ResourceMapDetailComponent,
     ServiceDataComponent,
     BillingServicesComponent,
-    RouterModule
+    RouterModule,
+    ReactiveFormsModule
   ],
 })
 export class ComponentModule {}
