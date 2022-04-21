@@ -21,7 +21,6 @@ import { ToastContainerModule, ToastrModule } from 'ngx-toastr';
     BrowserAnimationsModule,
 
     HttpClientModule,
-
     PageModule,
     ComponentModule,
     ToastrModule.forRoot(),
