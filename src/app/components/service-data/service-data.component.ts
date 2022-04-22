@@ -22,13 +22,13 @@ export class ServiceDataComponent implements OnInit {
   selectedServiceType = '';
   selectedPaymentMethod = '';
   formData: ICreateServiceRequest = {
-    cod_cliente: 0,
+    cod_cliente: null,
     cod_linea_servicio: "",
     tipo_servicio: "",
     descripcion_servicio: "",
-    horas_venta: 0,
+    horas_venta: null,
     moneda: "",
-    valor_venta: 0,
+    valor_venta: null,
     fecha_ini_planificada: "",
     fecha_fin_planificada: "",
     fecha_ini_real: null,
@@ -48,6 +48,7 @@ export class ServiceDataComponent implements OnInit {
   ngOnInit(): void {
     this.loadClients();
     this.loadServiceLines()
+    console.log("selected client:", this.selectedClient);
   }
 
   loadClients(){
@@ -107,5 +108,4 @@ export class ServiceDataComponent implements OnInit {
     console.log(this.ServiceForm);
     this.createService(this.formData);
   }
-
 }
