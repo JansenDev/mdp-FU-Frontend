@@ -3,40 +3,50 @@
 <mat-card class="mat-elevation-z6">
 
     <form class="service-form" [formGroup]="resourceForm" (submit)="ngSubmit()">
-        <mat-label class="label row1">Nombre del hito</mat-label>
-        <input formControlName="nameHito" class="name-input row1"
+      <mat-form-field class="row1" appearance="outline">
+        <mat-label class="label">Nombre del hito</mat-label>
+        <input formControlName="nameHito" class="name-input" matInput
         type="text" placeholder="Nombre del hito" required>
+
+      </mat-form-field>  
       
-        <mat-label class="label row1">Fecha Inicio</mat-label>
-        <input formControlName="start_date" type="date" 
-        class="start-date-input row1" placeholder="Fecha Inicio" required>
+      <mat-form-field class="row1" appearance="outline">
+        <mat-label class="label">Fecha Inicio</mat-label>
+        <input formControlName="start_date" type="date" matInput
+        class="start-date-input" placeholder="Fecha Inicio" required>
+      </mat-form-field>  
 
-        <mat-label class="label row1">Fecha Fin</mat-label>
-        <input formControlName="end_date" type="date" class="end-date-input row1" 
-        placeholder="Fecha Fin" required>
+      <mat-form-field class="row1" appearance="outline">
+        <mat-label class="label">Fecha Fin</mat-label>
+        <input formControlName="end_date" type="date" matInput
+        class="end-date-input" placeholder="Fecha Fin" required>
+      </mat-form-field>  
 
-        <mat-label class="label row2">Horas</mat-label>
-        <input formControlName="hours" type="number" class="row2" 
-        placeholder="Horas" required>
-
-        <mat-label class="label row2">Monto</mat-label>
-        <input formControlName="amount" type="number" class="row2" 
-        placeholder="Monto" required>
-
-        <button
-          type="submit"
-          mat-raised-button
-          class="row2 save-button"
-        >
-          {{this.isUpdate == true ? "Actualizar" : "Guardar" }}
-        </button>
+      <mat-form-field class="row2" appearance="outline">
+        <mat-label class="label">Horas</mat-label>
+        <input formControlName="hours" type="number" matInput
+        class="" placeholder="Horas" required>
+      </mat-form-field>
+      
+      <mat-form-field class="row2" appearance="outline">
+        <mat-label class="label">Monto</mat-label>
+        <input formControlName="amount" type="number" matInput
+        class="" placeholder="Monto" required>
+      </mat-form-field>
+      <button
+        type="submit"
+        mat-raised-button
+        class="save-button"
+      >
+        {{this.isUpdate == true ? "Actualizar" : "Guardar" }}
+      </button>
     </form>
     <div class="table--container">
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-            <ng-container matColumnDef="cod_servicio">
+            <ng-container matColumnDef="cod_hito">
                 <th class="table-headers" mat-header-cell *matHeaderCellDef>Nro. Hito</th>
                 <td class="table-values" mat-cell *matCellDef="let element">
-                  {{ element.cod_servicio  }}
+                  {{ element.cod_hito }}
                 </td>
               </ng-container>
 

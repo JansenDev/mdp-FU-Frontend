@@ -12,23 +12,23 @@ import { BillingServicesService } from 'src/app/core/services/billing-services.s
 
 export class BillingServicesComponent implements OnInit {
   
-  private nameHito = '';
-  private startDate = '';
-  private endDate = '';
-  private hours = '';
-  private amount = '';
+  public nameHito = '';
+  public startDate = '';
+  public endDate = '';
+  public hours = '';
+  public amount = '';
   public isUpdate = false;
   public cod_hito = null;
   public numero_hito = null;
-  
+  private monto_total = 100000;
+
   @ViewChild(MatPaginator)
   paginator: MatPaginator = {} as MatPaginator;
   dataSource: MatTableDataSource<any> =
     new MatTableDataSource<any>([]);
 
   displayedColumns: string[] = [
-    'cod_servicio',
-    //'cod_hito',
+    'cod_hito',
     'descripcion_hito',
     'horas',
     'monto',
@@ -36,6 +36,7 @@ export class BillingServicesComponent implements OnInit {
     'fecha_fin',
     'actions'
   ];
+  
 
   resourceForm: FormGroup;
   constructor(private service : BillingServicesService,
@@ -96,9 +97,17 @@ export class BillingServicesComponent implements OnInit {
         "monto": this.resourceForm.value.amount,
         "fecha_inicio": this.resourceForm.value.start_date,
         "fecha_fin": this.resourceForm.value.end_date
+      }
+      console.log("input de actualizar", input);
+      await this.service.updateHito(input).subscribe(data => {
+        console.log("data de actualizar", data);
+      });
     }
-    }
-    
+    this.resourceForm.controls['nameHito'].setValue(null);
+    this.resourceForm.controls['start_date'].setValue(null);
+    this.resourceForm.controls['end_date'].setValue(null);
+    this.resourceForm.controls['hours'].setValue(null);
+    this.resourceForm.controls['amount'].setValue(null);
   }
 
   async getHitos() {

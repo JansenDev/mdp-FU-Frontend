@@ -5,10 +5,10 @@
 }
 
 .service-form {
-    padding: 1rem;
+    padding: 1.5rem;
     display: grid;
     justify-items: start;
-    row-gap: 5%;
+    align-items: center;
 }
 
 .label {
@@ -19,7 +19,7 @@
     background-color: var(--primary);
     color: var(--white);
     text-align: center;
-    padding: 0rem 1rem 2rem 1rem;
+    padding: 0rem 1rem 0rem 1rem;
 }
 
 .actions {
@@ -68,16 +68,17 @@ table {
 .table--container {
     width: 90%;
     margin: 0 auto;
+    padding: 0;
 }
 
 .row1 {
     grid-row-start: 1;
-    height: 1.5rem;
+    height: 4rem;
 }
 
 .row2 {
     grid-row-start: 2;
-    height: 1.5rem;
+    height: 4rem;
 }
 
 .col1 {
