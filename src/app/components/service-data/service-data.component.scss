@@ -1,14 +1,13 @@
 @import "../../../assets/scss/variables.scss";
 
-.form-container{
-  border: 1px solid black;
-}
+
 
 .service-form{
   display: grid;
   grid-template-columns: repeat(3, 3fr);
   grid-template-rows: repeat(5, 5fr);
   align-items: center;
+  padding: 1.5rem;
 }
 
 mat-form-field{
