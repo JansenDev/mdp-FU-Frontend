@@ -19,9 +19,24 @@ button{
   color: var(--white);
 }
 
+/* Eliminar flechas de number inputs */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] { //Firefox
+  -moz-appearance: textfield;
+}
+/* --------------- */
+
+.error-hint{
+  color: var(--red);
+}
+
 .save-btn{
   background-color: var(--primary);
-
 }
 
 .cancel-btn{
