@@ -1,12 +1,12 @@
 // Service
 export interface ICreateServiceRequest {
-  cod_cliente:           number;
+  cod_cliente:           number | null;
   cod_linea_servicio:    string;
   tipo_servicio:         string;
   descripcion_servicio:  string;
-  horas_venta:           number;
+  horas_venta:           number | null;
   moneda:                string;
-  valor_venta:           number;
+  valor_venta:           number | null;
   fecha_ini_planificada: Date | string;
   fecha_fin_planificada: Date | string;
   fecha_ini_real:        null | Date | string;
