@@ -1,19 +1,16 @@
 import { Component, forwardRef, OnInit } from '@angular/core';
 import {
-  AbstractControl,
   ControlValueAccessor,
   FormBuilder,
   FormControl,
   FormGroup,
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
-  Validators,
 } from '@angular/forms';
 import { IBusinessLine } from 'src/app/core/models/businessLine.model';
 import { IClientResponse } from 'src/app/core/models/client.model';
 import { CboxService } from 'src/app/core/services/cbox.service';
 import { ClientService } from 'src/app/core/services/client.service';
-import { getToken } from 'src/app/core/utils/token.storage';
 
 @Component({
   selector: 'app-imbox-filter',
@@ -71,8 +68,7 @@ export class ImboxFilterComponent implements OnInit, ControlValueAccessor {
   }
 
   fillCboxClient() {
-    const { id_sesion } = JSON.parse(getToken());
-    this.clientService.findClientByUser(id_sesion).subscribe({
+    this.clientService.findAllClients().subscribe({
       next: (clientList) => {
         this.clientList = clientList;
       },

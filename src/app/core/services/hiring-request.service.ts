@@ -1,10 +1,8 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IHiringRequest } from '../models/hiring-request.model';
 import { IStatusRequestSimple } from '../models/status-request-simple.model';
-import { NotificationService } from './notification.service';
 
 const { url_base } = environment;
 
@@ -14,7 +12,6 @@ const { url_base } = environment;
 export class HiringRequestService {
   constructor(
     private httpClient: HttpClient,
-    private notificationService: NotificationService
   ) {}
 
   registerHiringRequest(hiringContractBody: IHiringRequest) {
@@ -60,4 +57,7 @@ export class HiringRequestService {
 
     return this.httpClient.post<IStatusRequestSimple>(URL, hiringRequest);
   }
+
+
+
 }

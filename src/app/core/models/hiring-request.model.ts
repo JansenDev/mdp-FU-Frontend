@@ -1,4 +1,5 @@
 export interface IHiringRequest {
+  cod_solicitud_contratacion?: number;
   tipo_documento: string;
   nro_documento: string;
   nombre: string;
@@ -24,4 +25,7 @@ export interface IHiringRequest {
   ind_sctr?: string;
   bono_men?: number | null;
   condicional_adicional?: string;
+  puesto?: string;
+  plan_eps?: string;
+  nombre_corto?: string;
 }

@@ -1,4 +1,5 @@
 export interface IContractImbox {
+  cod_solicitud_contratacion: number;
   cod_linea_negocio: string;
   estado: string;
   fecha_reg: string;

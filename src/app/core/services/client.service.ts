@@ -16,4 +16,9 @@ export class ClientService {
 
     return this.httpClient.get<IClientResponse[]>(URL);
   }
+
+  findAllClients() {
+    const URL = `${url_base}/clients`;
+    return this.httpClient.get<IClientResponse[]>(URL);
+  }
 }

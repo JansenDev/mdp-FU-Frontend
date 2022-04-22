@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IContractImbox } from '../models/contract-imbox-model';
+import { IHiringRequest } from '../models/hiring-request.model';
 
 const { url_base } = environment;
 
@@ -12,7 +12,7 @@ const { url_base } = environment;
 export class ContractImboxService {
   constructor(private httpClient: HttpClient) {}
 
-  findContractSolicitudeBy(
+  filterHiringRequesBy(
     idClient?: number,
     businessLine?: string,
     docNumber?: string,
@@ -39,16 +39,28 @@ export class ContractImboxService {
     }
 
     if (names) {
-      options['nombre_apellidos'] = names;
+      options['nombre'] = names;
     }
 
-    return this.httpClient.post<IContractImbox[]>(URL, options).pipe(
-      map(data=>{
-        console.log(data);
+    return this.httpClient.post<IContractImbox[]>(URL, options).pipe();
+  }
 
-        return data
-      })
-    )
+  getHiringRequestById(idHiringRequest: string | number) {
+    const URL = `${url_base}/contractSolicitude/${idHiringRequest}`;
+
+    return this.httpClient.get<IHiringRequest>(URL);
+  }
+
+  approveHiringRequest(idHiringRequest: string | number) {
+    const URL = `${url_base}/contractSolicitude/approve/${idHiringRequest}`;
+
+    return this.httpClient.get<any>(URL);
+  }
+
+  rejectHiringRequest(idHiringRequest: string | number) {
+    const URL = `${url_base}/contractSolicitude/reject/${idHiringRequest}`;
+
+    return this.httpClient.get<any>(URL);
   }
 }
 
@@ -57,7 +69,7 @@ export interface IFilterContractImboxRequest {
   cod_linea_negocio?: string;
   estado?: string;
   nro_documento?: string;
-  nombre_apellidos?: string;
+  nombre?: string;
 }
 
 export interface IFilterContract {

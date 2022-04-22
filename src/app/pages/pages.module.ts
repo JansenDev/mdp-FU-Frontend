@@ -10,6 +10,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { ResourceMapComponent } from './resource-map/resource-map.component';
 import { HiringRequestComponent } from './hiring-request/hiring-request.component';
 import { ContractImboxComponent } from './contract-imbox/contract-imbox.component';
+import { ApproveHiringRequestComponent } from './approve-hiring-request/approve-hiring-request.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { ContractImboxComponent } from './contract-imbox/contract-imbox.componen
     NotFoundComponent,
     HiringRequestComponent,
     ContractImboxComponent,
+    ApproveHiringRequestComponent,
   ],
   imports: [
     CommonModule,

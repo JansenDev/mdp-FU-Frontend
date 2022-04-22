@@ -2,8 +2,10 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { IContractImbox } from 'src/app/core/models/contract-imbox-model';
 import { ContractImboxService } from 'src/app/core/services/contract-imbox.service';
+import * as util from '../../core/utils/utilities.util';
 @Component({
   selector: 'app-contract-imbox',
   templateUrl: './contract-imbox.component.html',
@@ -36,28 +38,29 @@ export class ContractImboxComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private contractImboxService: ContractImboxService
+    private contractImboxService: ContractImboxService,
+    private router: Router
   ) {
     this.formFilter = this.formBuilder.group({
       filterForm: [
         {
-          cboxClient: null,
-          cboxLN: null,
+          cboxClient: '',
+          cboxLN: '',
           inputDocNumber: null,
           inputNames: null,
-          cboxStatus: null,
+          cboxStatus: '',
         },
       ],
     });
   }
 
   ngOnInit(): void {
-    this.getContractSolicitudes();
+    this.fillTableHiringRequests();
   }
 
-  getContractSolicitudes() {
+  fillTableHiringRequests() {
     this.contractImboxService
-      .findContractSolicitudeBy()
+      .filterHiringRequesBy()
       .subscribe((contractImboxList) => {
         this.dataSource = new MatTableDataSource<IContractImbox>(
           contractImboxList
@@ -66,40 +69,61 @@ export class ContractImboxComponent implements OnInit {
       });
   }
 
+  onApproveHiringRequest(hiringRequestSelected: IContractImbox) {
+    this.router.navigate([
+      'contract-imbox',
+      'approveHiringRequestComponent',
+      hiringRequestSelected.cod_solicitud_contratacion,
+    ]);
+  }
+
   ngSubmit() {
     let { cboxClient, cboxLN, inputDocNumber, inputNames, cboxStatus } =
       this.formFilter.value.filterForm;
 
-    if (cboxClient || cboxLN || inputDocNumber || inputNames || cboxStatus) {
-      this.contractImboxService
-        .findContractSolicitudeBy(
-          cboxClient,
-          cboxLN,
-          inputDocNumber,
-          inputNames,
-          cboxStatus
-        )
-        .subscribe({
-          next: (contractImboxList) => {
-            this.dataSource = new MatTableDataSource<IContractImbox>(
-              contractImboxList
-            );
-            this.dataSource.paginator = this.paginator;
-          },
-        });
-    }
+    // const inputNamesTrim = util.trimAllSpaces(inputNames);
+
+    this.contractImboxService
+      .filterHiringRequesBy(
+        cboxClient,
+        cboxLN,
+        inputDocNumber,
+        inputNames,
+        cboxStatus
+      )
+      .subscribe({
+        next: (contractImboxList) => {
+          this.dataSource = new MatTableDataSource<IContractImbox>(
+            contractImboxList
+          );
+          this.dataSource.paginator = this.paginator;
+        },
+      });
   }
 
-  onCancel() {
+  onClean() {
     this.formFilter.reset({
       filterForm: {
-        cboxClient: null,
-        cboxLN: null,
+        cboxClient: '',
+        cboxLN: '',
         inputDocNumber: null,
         inputNames: null,
-        cboxStatus: null,
+        cboxStatus: '',
       },
     });
-    this.getContractSolicitudes();
+    // this.getContractSolicitudes();
   }
+
+  isPendingHiringRequest(pendingStatus: string): boolean {
+    let status = false;
+
+    if (
+      pendingStatus === 'Pendiente Aprobacion' ||
+      pendingStatus === 'Pendiente Aprobacion GG'
+    ) {
+      status = true;
+    }
+    return status;
+  }
+
 }

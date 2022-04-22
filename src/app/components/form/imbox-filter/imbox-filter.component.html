@@ -3,6 +3,7 @@
     <mat-form-field>
       <mat-label>Cliente</mat-label>
       <mat-select formControlName="cboxClient">
+        <mat-option value="">Todos</mat-option>
         <mat-option
           *ngFor="let client of clientList"
           [value]="client.cod_cliente"
@@ -14,6 +15,7 @@
     <mat-form-field>
       <mat-label>Linea de Negocio</mat-label>
       <mat-select formControlName="cboxLN">
+        <mat-option value="">Todos</mat-option>
         <mat-option
           *ngFor="let ln of businessLineList"
           [value]="ln.cod_linea_servicio"
@@ -40,8 +42,13 @@
     <mat-form-field>
       <mat-label>Estado</mat-label>
       <mat-select formControlName="cboxStatus">
-        <mat-option value="Pendiente Aprobacion">Pendiente Aprobacion</mat-option>
-        <mat-option value="Pendiente Aprobacion GG">Pendiente Aprobacion GG</mat-option>
+        <mat-option value="">Todos</mat-option>
+        <mat-option value="Pendiente Aprobacion"
+          >Pendiente Aprobacion</mat-option
+        >
+        <mat-option value="Pendiente Aprobacion GG"
+          >Pendiente Aprobacion GG</mat-option
+        >
         <mat-option value="Aprobado">Aprobado</mat-option>
         <mat-option value="Rechazado">Rechazado</mat-option>
       </mat-select>

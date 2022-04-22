@@ -35,3 +35,28 @@ export function isHighDateEnd(
 
   return dateEnd.diff(dateStart) > 0;
 }
+
+export function toCapitalizeFirstLetterCase(word: string): string {
+  if (word.trim() === '') return '';
+
+  return word.charAt(0).toUpperCase() + word.slice(1);
+}
+
+export function toCapitalizeCase(words: string): string {
+  if (words.trim() === '') return '';
+
+  let wordsCapitalized = words
+    .split(' ')
+    .filter((name: string) => name !== '')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+
+  return wordsCapitalized;
+}
+
+export function trimAllSpaces(words: string): string {
+  return words
+    .split(' ')
+    .filter((name: string) => name !== '')
+    .join(' ');
+}
