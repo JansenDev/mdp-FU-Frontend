@@ -18,11 +18,15 @@ export class BillingServicesComponent implements OnInit {
   private endDate = '';
   private hours = '';
   private amount = '';
-
+  public isUpdate = false;
+  public cod_hito = null;
+  public numero_hito = null;
   
   @ViewChild(MatPaginator)
   paginator: MatPaginator = {} as MatPaginator;
-  
+  dataSource: MatTableDataSource<any> =
+    new MatTableDataSource<any>([]);
+
   displayedColumns: string[] = [
     'cod_servicio',
     //'cod_hito',
@@ -33,8 +37,6 @@ export class BillingServicesComponent implements OnInit {
     'fecha_fin',
     'actions'
   ];
-
-  dataSource = [];
 
   resourceForm: FormGroup;
   constructor(private service : BillingServicesService,
@@ -68,21 +70,36 @@ export class BillingServicesComponent implements OnInit {
     console.log("this.resourceValue",this.resourceForm.value)
 
     this.registerHito()
+    this.getHitos()
   }
 
   async registerHito() {
-    let input = {
-      "cod_servicio": this.resourceForm.value.cod_servicio,
-      "descripcion_hito": this.resourceForm.value.nameHito,
-      "fecha_inicio": this.resourceForm.value.start_date,
-      "fecha_fin": this.resourceForm.value.end_date,
-      "horas": this.resourceForm.value.hours,
-      "monto": this.resourceForm.value.amount
-    };
-    console.log("input register", input);
-    await this.service.registerHito(input).subscribe(data => {
-      console.log("data registerHito", data);
-    });
+    if (this.isUpdate == false) { // Si es registrar
+      let input = {
+        "cod_servicio": this.resourceForm.value.cod_servicio,
+        "descripcion_hito": this.resourceForm.value.nameHito,
+        "fecha_inicio": this.resourceForm.value.start_date,
+        "fecha_fin": this.resourceForm.value.end_date,
+        "horas": this.resourceForm.value.hours,
+        "monto": this.resourceForm.value.amount
+      };
+      console.log("input register", input);
+      await this.service.registerHito(input).subscribe(data => {
+        console.log("data registerHito", data);
+      });
+    } else { // Si es actualizar
+      this.isUpdate = false;
+      let input = {
+        "cod_hito": this.cod_hito,
+        "numero_hito": this.numero_hito,
+        "descripcion_hito": this.resourceForm.value.nameHito,
+        "horas": this.resourceForm.value.hours,
+        "monto": this.resourceForm.value.amount,
+        "fecha_inicio": this.resourceForm.value.start_date,
+        "fecha_fin": this.resourceForm.value.end_date
+    }
+    }
+    
   }
 
   async getHitos() {
@@ -92,6 +109,28 @@ export class BillingServicesComponent implements OnInit {
     await this.service.getHitos(input).subscribe(data => {
       console.log("GET HITOS", data);
       this.dataSource = data;
+      this.dataSource.paginator = this.paginator;
+    });
+  }
+
+  updateHito(element : any) {
+    this.resourceForm.controls['nameHito'].setValue(element.descripcion_hito);
+    this.resourceForm.controls['start_date'].setValue(element.fecha_inicio);
+    this.resourceForm.controls['end_date'].setValue(element.fecha_fin);
+    this.resourceForm.controls['hours'].setValue(element.horas);
+    this.resourceForm.controls['amount'].setValue(element.monto);
+    this.isUpdate = true;
+    this.cod_hito = element.cod_hito;
+    this.numero_hito = element.numero_hito;
+    console.log("editando", element);
+  }
+
+  async deleteHito(element : any) {
+    let input = {
+      "cod_hito": element.cod_hito
+    }
+    await this.service.deleteHito(input).subscribe(data => {
+      console.log("eliminando", data);
     });
   }
 }
