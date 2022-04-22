@@ -1,20 +1,27 @@
+<br>
 <p>Facturación</p>
-<div class="form-container">
+<mat-card class="mat-elevation-z6">
+
     <form class="service-form" [formGroup]="resourceForm" (submit)="ngSubmit()">
         <mat-label class="label row1">Nombre del hito</mat-label>
-        <input formControlName="nameHito" class="name-input row1" type="text" placeholder="Nombre del hito">
-
+        <input formControlName="nameHito" class="name-input row1"
+        type="text" placeholder="Nombre del hito" required>
+      
         <mat-label class="label row1">Fecha Inicio</mat-label>
-        <input formControlName="start_date" type="date" class="start-date-input row1" placeholder="Fecha Inicio">
+        <input formControlName="start_date" type="date" 
+        class="start-date-input row1" placeholder="Fecha Inicio" required>
 
         <mat-label class="label row1">Fecha Fin</mat-label>
-        <input formControlName="end_date" type="date" class="end-date-input row1" placeholder="Fecha Fin">
+        <input formControlName="end_date" type="date" class="end-date-input row1" 
+        placeholder="Fecha Fin" required>
 
         <mat-label class="label row2">Horas</mat-label>
-        <input formControlName="hours" type="number" class="row2" placeholder="Horas">
+        <input formControlName="hours" type="number" class="row2" 
+        placeholder="Horas" required>
 
         <mat-label class="label row2">Monto</mat-label>
-        <input formControlName="amount" type="number" class="row2" placeholder="Monto">
+        <input formControlName="amount" type="number" class="row2" 
+        placeholder="Monto" required>
 
         <button
           type="submit"
@@ -24,7 +31,6 @@
           {{this.isUpdate == true ? "Actualizar" : "Guardar" }}
         </button>
     </form>
-
     <div class="table--container">
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
             <ng-container matColumnDef="cod_servicio">
@@ -94,4 +100,4 @@
       >
       </mat-paginator>
     </div>
-</div>
+  </mat-card>

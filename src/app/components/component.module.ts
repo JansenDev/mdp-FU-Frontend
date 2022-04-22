@@ -21,6 +21,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ResourceMapDetailComponent,
     ServiceDataComponent,
     BillingServicesComponent,
+    
   ],
   imports: [CommonModule, SharedModule, RouterModule, ReactiveFormsModule],
   exports: [
@@ -32,7 +33,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ServiceDataComponent,
     BillingServicesComponent,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
 })
 export class ComponentModule {}

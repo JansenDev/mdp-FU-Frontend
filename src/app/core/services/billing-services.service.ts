@@ -13,22 +13,22 @@ export class BillingServicesService {
     constructor(private httpClient: HttpClient) {}
 
     getHitos(input : any) : Observable<any> {
-        let URL = url_base + '/payment-service/get/';
+        let URL = 'https://futurov01.herokuapp.com/api/v1' + '/payment-service/get/';
         return this.httpClient.post<any>(URL, input);
     }
 
     registerHito(input : any) : Observable<any> {
-        let URL = url_base + '/payment-service/create';
+        let URL = 'https://futurov01.herokuapp.com/api/v1' + '/payment-service/create';
         return this.httpClient.post<any>(URL, input);
     }
 
     updateHito(input : any) : Observable<any> {
-        let URL = url_base + '/payment-service/update';
+        let URL = 'https://futurov01.herokuapp.com/api/v1' + '/payment-service/update';
         return this.httpClient.post<any>(URL, input);
     }
     
     deleteHito(input : any) : Observable<any> {
-        let URL = url_base + '/payment-service/delete';
+        let URL = 'https://futurov01.herokuapp.com/api/v1' + '/payment-service/delete';
         return this.httpClient.post<any>(URL, input);
     }
 }

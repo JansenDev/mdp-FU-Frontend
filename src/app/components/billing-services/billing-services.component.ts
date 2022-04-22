@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { BillingServicesService } from 'src/app/core/services/billing-services.service';
-
 @Component({
   selector: 'app-billing-services',
   templateUrl: './billing-services.component.html',
@@ -108,7 +107,7 @@ export class BillingServicesComponent implements OnInit {
     }
     await this.service.getHitos(input).subscribe(data => {
       console.log("GET HITOS", data);
-      this.dataSource = data;
+      this.dataSource = new MatTableDataSource<any>(data);
       this.dataSource.paginator = this.paginator;
     });
   }
