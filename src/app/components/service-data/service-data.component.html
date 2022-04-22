@@ -1,53 +1,107 @@
 <p>Datos del servicio</p>
-<div class="form-container">
-  <form class="service-form">
+<mat-card class="form-container mat-elevation-z6">
+  <form #serviceForm = "ngForm" (ngSubmit)="submitForm()" class="service-form" >
+    <mat-form-field appearance="outline">
+      <mat-label class="client-label">Cliente</mat-label>
+      <mat-select class="client-input" #validClient="ngModel" [(ngModel)]="formData.cod_cliente" name="cod_cliente"
+      [(value)]="selectedClient" required>
+        <mat-option *ngFor="let client of clients" [value]="client.cod_cliente">
+          {{ client.nombre_corto }}
+        </mat-option>
+      </mat-select>
+      <mat-hint *ngIf="validClient.invalid && (validClient.dirty || validClient.touched)" class="error-hint">Campo requerido</mat-hint>
+    </mat-form-field>
 
-    <mat-label class="col1 row1 client-label">Cliente</mat-label>
-    <mat-select class="col2 row1 client-input">
-      <mat-option>
-      </mat-option>
-    </mat-select>
+    <mat-form-field class="col2" appearance="outline">
+      <mat-label class="business-label">Línea de negocio</mat-label>
+      <mat-select class="business-input" #validServiceLine="ngModel" [(ngModel)]="formData.cod_linea_servicio" name="cod_linea_servicio"
+       (selectionChange)="loadServiceTypes($event.value)"
+       [(value)]="selectedServiceLine" required>
+        <mat-option *ngFor="let serviceLine of serviceLines" [value]="serviceLine.cod_linea_servicio">
+          {{ serviceLine.linea_servicio  | titlecase }} ({{ serviceLine.cod_linea_servicio | uppercase }})
+        </mat-option>
+      </mat-select>
+      <mat-hint *ngIf="validServiceLine.invalid && (validServiceLine.dirty || validServiceLine.touched)" class="error-hint">Campo requerido</mat-hint>
+    </mat-form-field>
 
-    <mat-label class="col1 row2 service-label">Servicio</mat-label>
-    <input type="text" class="col2 row2 service-input">
+    <mat-form-field class="col3" appearance="outline">
+      <mat-label class="service-type">Tipo de servicio</mat-label>
+      <mat-select class="service-type-input" #validServiceType="ngModel" [(ngModel)]="formData.tipo_servicio" name="tipo_servicio"
+      (selectionChange)="loadPaymentMethods($event.value)"
+      [(value)]="selectedServiceType" required [disabled]="selectedServiceLine ? false : true">
+        <mat-option *ngFor="let serviceType of serviceTypes" [value]="serviceType.cod_tipo_servicio">
+          {{ serviceType.nombre_tipo_servicio  | titlecase }} ({{ serviceType.cod_tipo_servicio | uppercase }})
+        </mat-option>
+      </mat-select>
+      <mat-hint *ngIf="validServiceType.invalid && (validServiceType.dirty || validServiceType.touched)" class="error-hint">Campo requerido</mat-hint>
+    </mat-form-field>
 
-    <mat-label class="col1 row3 sale-hours-label">Horas venta</mat-label>
-    <input type="text" class="col2 row3 sale-hours-input">
+    <mat-form-field appearance="outline">
+      <mat-label class="service-label">Servicio</mat-label>
+      <input name="descripcion_servicio" #validServiceDescription="ngModel" [(ngModel)]="formData.descripcion_servicio" required
+      name="descripcion_servicio" matInput type="text" class="service-input">
+      <mat-hint *ngIf="validServiceDescription.invalid && (validServiceDescription.dirty || validServiceDescription.touched)" class="error-hint">Campo requerido</mat-hint>
+    </mat-form-field>
 
-    <mat-label class="col1 row4 status-label">Estado registro</mat-label>
-    <input type="text" disabled class="col2 row4 status-value">
+    <mat-form-field class="col2" appearance="outline">
+      <mat-label class="start-date-label">Fecha de inicio</mat-label>
+    <input [(ngModel)]="formData.fecha_ini_planificada" #validStartDate="ngModel" required name="fecha_ini_planificada"
+    matInput type="date" class="start-date-input">
+    <mat-hint *ngIf="validStartDate.invalid && (validStartDate.dirty || validStartDate.touched)" class="error-hint">Campo requerido</mat-hint>
+    </mat-form-field>
 
-    <mat-label class="col3 row1 business-label">Línea de negocio</mat-label>
-    <mat-select class="col4 row1 business-input">
-      <mat-option></mat-option>
-    </mat-select>
+    <mat-form-field class="col3" appearance="outline">
+      <mat-label class="end-date-label">Fecha de fin</mat-label>
+      <input [(ngModel)]="formData.fecha_fin_planificada" #validEndDate="ngModel" min="{{serviceForm.value.fecha_ini_planificada}}" required name="fecha_fin_planificada"
+      matInput type="date" class="end-date-input">
+      <mat-hint *ngIf="validEndDate.invalid && (validEndDate.dirty || validEndDate.touched)" class="error-hint">Campo requerido</mat-hint>
+    </mat-form-field>
 
-    <mat-label class="col3 row2 start-date-label">Fecha de inicio</mat-label>
-    <input type="date" class="col4 row2 start-date-input">
+    <mat-form-field appearance="outline">
+      <mat-label class="sale-hours-label">Horas venta</mat-label>
+      <input  [(ngModel)]="formData.horas_venta" #validSaleHours="ngModel" name="horas_venta" required matInput type="number"
+      class="sale-hours-input">
+      <mat-hint *ngIf="validSaleHours.invalid && (validSaleHours.dirty || validSaleHours.touched)" class="error-hint">Campo requerido</mat-hint>
+    </mat-form-field>
 
-    <mat-label class="col3 row3 currency-label">Moneda</mat-label>
-    <mat-select class="col4 row3 currency-input">
-      <mat-option></mat-option>
-    </mat-select>
+    <mat-form-field class="col2" appearance="outline">
+      <mat-label class="currency-label">Moneda</mat-label>
+      <mat-select  [(ngModel)]="formData.moneda" #validCurrency="ngModel" required name="moneda" class="currency-input">
+        <mat-option *ngFor="let currency of currencies" [value]="currency.viewValue">
+          {{ currency.viewValue }}
+        </mat-option>
+      </mat-select>
+      <mat-hint *ngIf="validCurrency.invalid && (validCurrency.dirty || validCurrency.touched)" class="error-hint">Campo requerido</mat-hint>
+    </mat-form-field>
 
-    <mat-label class="col3 row4 payment-method-label">Forma de pago</mat-label>
-    <mat-select class="col4 row4 payment-method-input">
-      <mat-option></mat-option>
-    </mat-select>
+    <mat-form-field class="col3" appearance="outline">
+      <mat-label class="sale-value-label">Valor de venta</mat-label>
+      <input  [(ngModel)]="formData.valor_venta" #validSaleValue="ngModel" name="valor_venta" required matInput type="number"
+      class="sale-value-input">
+      <mat-hint *ngIf="validSaleValue.invalid && (validSaleValue.dirty || validSaleValue.touched)" class="error-hint">Campo requerido</mat-hint>
+    </mat-form-field>
 
-    <mat-label class="col5 row1 service-type">Tipo de servicio</mat-label>
-    <mat-select class="col6 row1 service-type-input">
-      <mat-option></mat-option>
-    </mat-select>
+    <mat-form-field appearance="outline">
+      <mat-label class="status-label">Estado registro</mat-label>
+      <input matInput type="text" disabled class="status-value">
+    </mat-form-field>
 
-    <mat-label class="col5 row2 end-date-label">Fecha de fin</mat-label>
-    <input type="date" class="col6 row2 end-date-input">
+    <mat-form-field class="col2" appearance="outline">
+      <mat-label class="payment-method-label">Forma de pago</mat-label>
+      <mat-select class="payment-method-input" #validPaymentMethod="ngModel" [(ngModel)]="formData.forma_pago" required
+      name="forma_pago" [(value)]="selectedPaymentMethod" [disabled]="selectedServiceType ? false : true">
+        <mat-option *ngFor="let paymentMethod of paymentMethods" [value]="paymentMethod.forma_pago">
+          {{ paymentMethod.forma_pago  | titlecase }}
+        </mat-option>
+      </mat-select>
+      <mat-hint *ngIf="validPaymentMethod.invalid && (validPaymentMethod.dirty || validPaymentMethod.touched)" class="error-hint">Campo requerido</mat-hint>
+    </mat-form-field>
 
-    <mat-label class="col5 row3 sale-value-label">Valor de venta</mat-label>
-    <input type="text" class="col6 row3 sale-value-input">
-    <button class="row5 col3">Guardar</button>
-    <button class="row5 col4">Cancelar</button>
+    <div class="btn-area row5">
+      <button type="submit" mat-raised-button class="save-btn" [disabled]="serviceForm.invalid">Guardar</button>
+      <button mat-raised-button class="cancel-btn">Cancelar</button>
+    </div>
   </form>
 
-</div>
+</mat-card>
 

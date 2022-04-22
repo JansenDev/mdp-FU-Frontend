@@ -12,6 +12,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon'
 import { StatePipe } from './pipes/state.pipe';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [TestpPipe, StatePipe],
@@ -31,6 +32,7 @@ import { StatePipe } from './pipes/state.pipe';
     MatSelectModule,
     MatInputModule,
     MatIconModule,
+    FormsModule
   ],
 })
 export class SharedModule {}
