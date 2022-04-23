@@ -1,6 +1,6 @@
 <div class="approve-hiring--container">
   <h1 class="approve-hiring--title">
-    Aprobación de contratación de Colaboradores
+    Aprobación de Contratación de Colaboradores
   </h1>
 
   <!-- Form Start -->
@@ -197,6 +197,7 @@
 
     <div class="form--buttons">
       <button
+        *ngIf="isPendingHiringRequest(statusHiringRequest)"
         (click)="onApprove(idHiringRequest)"
         type="submit"
         mat-raised-button
@@ -205,6 +206,7 @@
         Aceptar
       </button>
       <button
+        *ngIf="isPendingHiringRequest(statusHiringRequest)"
         (click)="onReject(idHiringRequest)"
         type="submit"
         mat-raised-button

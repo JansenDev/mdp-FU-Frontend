@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { IContractImbox } from 'src/app/core/models/contract-imbox-model';
 import { ContractImboxService } from 'src/app/core/services/contract-imbox.service';
+import { getToken } from 'src/app/core/utils/token.storage';
 import * as util from '../../core/utils/utilities.util';
 @Component({
   selector: 'app-contract-imbox',
@@ -36,6 +37,8 @@ export class ContractImboxComponent implements OnInit {
     'action',
   ];
 
+  nombrePerfil = '';
+
   constructor(
     private formBuilder: FormBuilder,
     private contractImboxService: ContractImboxService,
@@ -52,7 +55,17 @@ export class ContractImboxComponent implements OnInit {
         },
       ],
     });
+
+    // ^TEMP
+    this.setNombrePerfil();
   }
+
+  // ^TEMP Start
+  setNombrePerfil() {
+    const { userProfile } = JSON.parse(getToken());
+    this.nombrePerfil = userProfile || null;
+  }
+  // ^TEMP END
 
   ngOnInit(): void {
     this.fillTableHiringRequests();
@@ -81,14 +94,14 @@ export class ContractImboxComponent implements OnInit {
     let { cboxClient, cboxLN, inputDocNumber, inputNames, cboxStatus } =
       this.formFilter.value.filterForm;
 
-    // const inputNamesTrim = util.trimAllSpaces(inputNames);
+    const inputNamesTrim = util.trimAllSpaces(inputNames);
 
     this.contractImboxService
       .filterHiringRequesBy(
         cboxClient,
         cboxLN,
         inputDocNumber,
-        inputNames,
+        inputNamesTrim,
         cboxStatus
       )
       .subscribe({
@@ -125,5 +138,4 @@ export class ContractImboxComponent implements OnInit {
     }
     return status;
   }
-
 }

@@ -28,4 +28,5 @@ export interface IHiringRequest {
   puesto?: string;
   plan_eps?: string;
   nombre_corto?: string;
+  estado?:string
 }

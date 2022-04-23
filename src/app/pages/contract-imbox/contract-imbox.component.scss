@@ -55,10 +55,37 @@ $width_page: 90%;
         0px 8px 10px 1px rgba(0, 0, 0, 0.14),
         0px 0px 0px 1px rgba(0, 0, 0, 0.12) !important;
 
-      & .mat-table--header {
+      & .mat-header-row {
         & th.mat-header-cell {
           background-color: var(--primary);
           color: var(--white);
+
+          &:nth-child(8) {
+            text-align: center;
+          }
+
+          &:nth-child(9) {
+            text-align: center;
+          }
+
+          &:nth-child(10) {
+            text-align: center;
+          }
+
+          &:nth-child(11) {
+            text-align: center;
+          }
+
+          &:nth-child(12) {
+            text-align: center;
+          }
+
+          &:nth-child(13) {
+            text-align: center;
+          }
+          &:nth-child(14) {
+            text-align: center;
+          }
         }
 
         // & .mat-header-cell {
@@ -75,14 +102,43 @@ $width_page: 90%;
         //   &:nth-child(10) {
         //     text-align: right;
         //   }
-        //   &:nth-child(11) {
-        //     text-align: center;
-        //   }
+        // &:nth-child(12) {
+        //   text-align: center;
+        // }
 
         //   &:last-child {
         //     padding-right: 10px !important;
         //   }
         // }
+      }
+
+      & tr.mat-row {
+        height: 33px;
+
+        & td.mat-cell {
+          &:nth-child(8) {
+            text-align: center;
+          }
+
+          &:nth-child(9) {
+            text-align: center;
+          }
+
+          &:nth-child(10) {
+            text-align: center;
+          }
+
+          &:nth-child(11) {
+            text-align: center;
+          }
+
+          &:nth-child(13) {
+            text-align: center;
+          }
+          &:nth-child(14) {
+            text-align: center;
+          }
+        }
       }
 
       // .mat-row .mat-cell {
@@ -103,9 +159,9 @@ $width_page: 90%;
       //   }
       // }
 
-      & tr.mat-row {
-        height: 33px;
-      }
+      // & tr.mat-row {
+      //   height: 33px;
+      // }
 
       & tr.mat-header-row {
         height: 38px;
@@ -142,6 +198,22 @@ $width_page: 90%;
   display: inline-block;
   float: right;
 }
+
+.fg-approve {
+  color: red;
+  @extend .fg-base
+}
+
+.fg-reject {
+  color: green;
+  @extend .fg-base
+}
+
+.fg-base{
+  font-weight: 500;
+}
+
+
 // medias filter
 @media (max-width: 1230px) {
   .imbox-contract {

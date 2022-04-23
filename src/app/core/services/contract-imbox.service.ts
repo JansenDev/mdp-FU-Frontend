@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { IContractImbox } from '../models/contract-imbox-model';
 import { IHiringRequest } from '../models/hiring-request.model';
+import { IStatusRequestSimple } from '../models/status-request-simple.model';
 
 const { url_base } = environment;
 
@@ -54,13 +55,13 @@ export class ContractImboxService {
   approveHiringRequest(idHiringRequest: string | number) {
     const URL = `${url_base}/contractSolicitude/approve/${idHiringRequest}`;
 
-    return this.httpClient.get<any>(URL);
+    return this.httpClient.get<IStatusRequestSimple>(URL);
   }
 
   rejectHiringRequest(idHiringRequest: string | number) {
     const URL = `${url_base}/contractSolicitude/reject/${idHiringRequest}`;
 
-    return this.httpClient.get<any>(URL);
+    return this.httpClient.get<IStatusRequestSimple>(URL);
   }
 }
 

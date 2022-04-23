@@ -6,7 +6,9 @@ import { ISalaryBandReponse } from 'src/app/core/models/salaryBand.model';
 import { CboxService } from 'src/app/core/services/cbox.service';
 import { ContractImboxService } from 'src/app/core/services/contract-imbox.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
+import { getToken } from 'src/app/core/utils/token.storage';
 import * as util from '../../core/utils/utilities.util';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-approve-hiring-request',
@@ -22,6 +24,8 @@ export class ApproveHiringRequestComponent implements OnInit {
     maximo: 0,
     minimo: 0,
   };
+
+  statusHiringRequest = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -65,6 +69,22 @@ export class ApproveHiringRequestComponent implements OnInit {
   }
   // TODO: update status message
   onApprove(idHiringRequest: string | number): void {
+    Swal.fire({
+      title: 'Confirme Aprobación',
+      // text: "Aceptar Aprobacion",
+      icon: 'success',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirmar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.approveRequest(idHiringRequest);
+      }
+    });
+  }
+
+  private approveRequest(idHiringRequest: string | number) {
     this.contractImboxService.approveHiringRequest(idHiringRequest).subscribe({
       next: (status) => {
         this.notification.toast(
@@ -77,7 +97,8 @@ export class ApproveHiringRequestComponent implements OnInit {
         this.backPage();
       },
       error: (err: HttpErrorResponse) => {
-        console.log(err.message);
+        console.log(err);
+        this.notification.toast('error', err.error.message, 'ERROR', 5000);
       },
     });
   }
@@ -85,14 +106,29 @@ export class ApproveHiringRequestComponent implements OnInit {
   // TODO: update status message
 
   onReject(idHiringRequest: string | number): void {
+    Swal.fire({
+      title: 'Confirmar "Rechazo" de Solicitud',
+      // text: "Aceptar Aprobacion",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirmar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.rejectRequest(idHiringRequest)
+      }
+    });
+  }
+
+  private rejectRequest(idHiringRequest: string | number) {
     this.contractImboxService.rejectHiringRequest(idHiringRequest).subscribe({
       next: (status) => {
         this.notification.toast('info', 'Solicitud Rechazada', 'SUCCESS', 5000);
-
         this.backPage();
       },
       error: (err: HttpErrorResponse) => {
-        console.log(err.message);
+        this.notification.toast('error', err.error.message, 'ERROR', 5000);
       },
     });
   }
@@ -188,6 +224,8 @@ export class ApproveHiringRequestComponent implements OnInit {
           inputRemuneration: hiringRequestSelected.remuneracion,
           rbSCTR: ind_sctr,
         });
+
+        this.statusHiringRequest = hiringRequestSelected.estado!;
       });
   }
 
@@ -197,5 +235,26 @@ export class ApproveHiringRequestComponent implements OnInit {
 
   private backPage() {
     this.router.navigate(['contract-imbox']);
+  }
+
+  isPendingHiringRequest(pendingStatus: string): boolean {
+    let status = false;
+
+    const { userProfile } = JSON.parse(getToken());
+
+    if (
+      pendingStatus === 'Pendiente Aprobacion' ||
+      pendingStatus === 'Pendiente Aprobacion GG'
+    ) {
+      status = true;
+    }
+
+    // RRHH
+
+    if (pendingStatus === 'Pendiente Aprobacion GG' && userProfile === 'RRHH') {
+      status = false;
+    }
+
+    return status;
   }
 }

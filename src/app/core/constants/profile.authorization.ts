@@ -5,7 +5,7 @@ export const CONSULTAR_MAPA_RECURSOS = 'QUERY_RESOURCES_MAP';
 export const CONSULTAR_MAPA_SERVICIO = 'QUERY_SERVICES_MAP';
 export const BANDEJA_APROBACION_CONTRATO = 'CONTRACT_APPROVAL_INBOX';
 
-export const authorizations: Authorizations = {
+export const authorizations: IAuthorizations = {
   DELIVERY_MANAGER: [
     REG_USUARIO,
     REG_SOLICITUD_CONTRATO,
@@ -27,7 +27,7 @@ export const authorizations: Authorizations = {
   GG: [BANDEJA_APROBACION_CONTRATO],
 };
 
-export interface Authorizations {
+export interface IAuthorizations {
   DELIVERY_MANAGER: string[];
   PROJECT_MANAGER: string[];
   RRHH: string[];

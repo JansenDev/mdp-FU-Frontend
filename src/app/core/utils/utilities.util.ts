@@ -54,8 +54,9 @@ export function toCapitalizeCase(words: string): string {
   return wordsCapitalized;
 }
 
-export function trimAllSpaces(words: string): string {
-  return words
+export function trimAllSpaces(words: string | null): string {
+  if (!words) return '';
+  return words!
     .split(' ')
     .filter((name: string) => name !== '')
     .join(' ');

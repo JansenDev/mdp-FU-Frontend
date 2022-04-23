@@ -7,7 +7,7 @@
         <mat-option
           *ngFor="let client of clientList"
           [value]="client.cod_cliente"
-          >{{ client.nombre_corto }}</mat-option
+          >{{ client.nombre_corto|titlecase }}</mat-option
         >
       </mat-select>
     </mat-form-field>
@@ -19,7 +19,7 @@
         <mat-option
           *ngFor="let ln of businessLineList"
           [value]="ln.cod_linea_servicio"
-          >{{ ln.cod_linea_servicio }}</mat-option
+          >{{ ln.cod_linea_servicio|uppercase  }}</mat-option
         >
       </mat-select>
     </mat-form-field>

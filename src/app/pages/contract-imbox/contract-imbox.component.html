@@ -1,5 +1,7 @@
 <div class="imbox-contract">
-  <h2 class="imbox-contract--title">Bandeja Aprobación de contratación</h2>
+  <h2 class="imbox-contract--title">
+    Bandeja Aprobación de contratación: {{ nombrePerfil }}
+  </h2>
 
   <mat-card>Datos del Colaborador</mat-card>
 
@@ -34,7 +36,9 @@
 
       <ng-container matColumnDef="client">
         <th mat-header-cell *matHeaderCellDef>Cliente</th>
-        <td mat-cell *matCellDef="let element">{{ element.nombre_corto }}</td>
+        <td mat-cell *matCellDef="let element">
+          {{ element.nombre_corto | titlecase }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="businessLine">
@@ -64,7 +68,7 @@
       </ng-container>
 
       <ng-container matColumnDef="modality">
-        <th mat-header-cell *matHeaderCellDef>Modality</th>
+        <th mat-header-cell *matHeaderCellDef>Modalidad</th>
         <td mat-cell *matCellDef="let element">
           {{ element.modalidad | uppercase }}
         </td>
@@ -92,7 +96,7 @@
       </ng-container>
 
       <ng-container matColumnDef="sctr">
-        <th mat-header-cell *matHeaderCellDef>Sctr</th>
+        <th mat-header-cell *matHeaderCellDef>SCTR</th>
         <td mat-cell *matCellDef="let element">
           {{ element.ind_sctr === "N" ? "NO" : "SI" }}
         </td>
@@ -113,7 +117,19 @@
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef>Accion</th>
         <td mat-cell *matCellDef="let element">
-          <a *ngIf="isPendingHiringRequest(element.estado)"  (click)="onApproveHiringRequest(element)">APROBAR</a>
+          <a
+            *ngIf="isPendingHiringRequest(element.estado)"
+            (click)="onApproveHiringRequest(element)"
+            class="fg-approve"
+            >APROBAR</a
+          >
+
+          <a
+            *ngIf="!isPendingHiringRequest(element.estado)"
+            (click)="onApproveHiringRequest(element)"
+            class="fg-reject"
+            >VER</a
+          >
         </td>
       </ng-container>
 

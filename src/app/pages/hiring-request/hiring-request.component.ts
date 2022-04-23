@@ -15,7 +15,7 @@ import { ContractService } from 'src/app/core/services/contract.service';
 import { HiringRequestService } from 'src/app/core/services/hiring-request.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 // utils
-import { getToken, setToken } from 'src/app/core/utils/token.storage';
+import { getToken } from 'src/app/core/utils/token.storage';
 import { DOCUMENT_TYPY_LENGTH } from '../../core/constants/resource.constants';
 import * as util from '../../core/utils/utilities.util';
 
@@ -47,8 +47,6 @@ export class HiringRequestComponent implements OnInit {
     private clientService: ClientService,
     private hiringRequest: HiringRequestService
   ) {
-    setToken({ id_sesion: 40 });
-
     this.formHiringRequest = this.formBuilder.group({
       cBoxDocumentType: ['DNI'],
       inputDocumentNumber: ['', [Validators.pattern(/^\d{8,15}$/)]],
@@ -273,6 +271,19 @@ export class HiringRequestComponent implements OnInit {
   }
 
   onSubmitHiringRquest() {
+    const bonus = this.formHiringRequest.controls['inputMonthlyBonus'].value;
+    let bonusParsed = parseInt(bonus);
+
+    if (bonus !== null && bonusParsed > 600) {
+      this.notification.toast(
+        'error',
+        'Bono no puede ser mayor a S/ 600',
+        'ERROR',
+        5000
+      );
+      return;
+    }
+
     if (!this.isvalidDocumentNumber) {
       this.notification.toast('info', 'Existe contrato vigente', ' Info');
       return;
@@ -284,6 +295,7 @@ export class HiringRequestComponent implements OnInit {
       this.hiringRequest.registerHiringRequest(formValues).subscribe({
         next: (status) => {
           this.notification.toast('success', status.message, ' SUCCESS', 5000);
+          this.cleanForm();
         },
         error: (errorResponse: HttpErrorResponse) => {
           console.log(errorResponse);
