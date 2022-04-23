@@ -13,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatIconModule } from '@angular/material/icon';
@@ -24,7 +25,7 @@ import { StatePipe } from './pipes/state.pipe';
   providers: [
     {
       provide: MAT_DATE_LOCALE,
-      useValue: 'en-GB',
+      useValue: 'es',
     },
   ],
   exports: [
@@ -45,6 +46,7 @@ import { StatePipe } from './pipes/state.pipe';
     MatCheckboxModule,
     MatRadioModule,
     MatIconModule,
+    MatMomentDateModule,
   ],
 })
 export class SharedModule {}

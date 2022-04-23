@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 // model
 import { IBusinessLine } from 'src/app/core/models/businessLine.model';
 import { IClientResponse } from 'src/app/core/models/client.model';
@@ -40,6 +41,8 @@ export class HiringRequestComponent implements OnInit {
 
   amountCurrent: IEPS = {} as IEPS;
   constructor(
+    private _adapter: DateAdapter<any>,
+    @Inject(MAT_DATE_LOCALE) private _locale: string,
     private formBuilder: FormBuilder,
     private notification: NotificationService,
     private cboxService: CboxService,
@@ -79,6 +82,7 @@ export class HiringRequestComponent implements OnInit {
 
   ngOnInit(): void {
     this.fillAllCBoxInit();
+    this.setSpanishDateFormat()
   }
 
   fillAllCBoxInit() {
@@ -93,6 +97,11 @@ export class HiringRequestComponent implements OnInit {
     this.onChangeCboxProfile();
     this.onChangeInputDateStart();
     this.onChangeInputDateEnd();
+  }
+
+  setSpanishDateFormat(){
+    this._locale = 'es';
+    this._adapter.setLocale(this._locale);
   }
 
   onChangeInputDateStart() {
