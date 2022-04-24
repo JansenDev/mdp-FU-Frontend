@@ -23,11 +23,12 @@ export class ServicesService {
 
   createService({...service}: ICreateServiceRequest ): Observable<ICreateServiceResponse> {
     if (service.moneda == "DOLAR"){
-      service.valor_venta_dolar = service.valor_venta;
-      service.valor_venta = service.valor_venta_dolar! * service.tasa_cambio!;
-
-      service.costo_venta_dolar = service.costo_venta;
-      service.costo_venta = service.costo_venta_dolar! * service.tasa_cambio!;
+      service.valor_venta_sol = service.valor_venta! * service.tasa_cambio!;
+      service.costo_venta_sol = service.costo_venta! * service.tasa_cambio!;
+    }
+    if (service.moneda == 'SOL') {
+      service.valor_venta_sol = service.valor_venta!;
+      service.costo_venta_sol = service.costo_venta!;
     }
     return this.http.post<ICreateServiceResponse>( `${ this._api }/services/create`, service );
   }
