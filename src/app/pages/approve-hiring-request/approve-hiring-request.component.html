@@ -192,6 +192,14 @@
           <mat-label>Condición</mat-label>
           <input formControlName="inputCondition" matInput />
         </mat-form-field>
+
+        <mat-radio-group class="contract--asig-family">
+          <mat-checkbox
+            [disabled]="!isPendingHiringRequest(statusHiringRequest)"
+            formControlName="cboxAsig"
+            >Asig. familiar</mat-checkbox
+          >
+        </mat-radio-group>
       </div>
     </div>
 

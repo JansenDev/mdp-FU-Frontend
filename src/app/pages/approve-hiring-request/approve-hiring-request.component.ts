@@ -62,6 +62,7 @@ export class ApproveHiringRequestComponent implements OnInit {
       inputDateStart: [{ value: null, disabled: true }],
       inputDateEnd: [{ value: null, disabled: true }],
       inputCondition: [{ value: null, disabled: true }],
+      cboxAsig: [false],
     });
   }
   ngOnInit(): void {
@@ -85,22 +86,27 @@ export class ApproveHiringRequestComponent implements OnInit {
   }
 
   private approveRequest(idHiringRequest: string | number) {
-    this.contractImboxService.approveHiringRequest(idHiringRequest).subscribe({
-      next: (status) => {
-        this.notification.toast(
-          'success',
-          'Solicitud Aceptada ',
-          'SUCCESS',
-          5000
-        );
+    const asig_family: boolean =
+      this.formApproveHiringRequest.controls['cboxAsig'].value;
 
-        this.backPage();
-      },
-      error: (err: HttpErrorResponse) => {
-        console.log(err);
-        this.notification.toast('error', err.error.message, 'ERROR', 5000);
-      },
-    });
+    this.contractImboxService
+      .approveHiringRequest(idHiringRequest, asig_family)
+      .subscribe({
+        next: (status) => {
+          this.notification.toast(
+            'success',
+            'Solicitud Aceptada ',
+            'SUCCESS',
+            5000
+          );
+
+          this.backPage();
+        },
+        error: (err: HttpErrorResponse) => {
+          console.log(err);
+          this.notification.toast('error', err.error.message, 'ERROR', 5000);
+        },
+      });
   }
 
   // TODO: update status message
@@ -116,7 +122,7 @@ export class ApproveHiringRequestComponent implements OnInit {
       confirmButtonText: 'Confirmar',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.rejectRequest(idHiringRequest)
+        this.rejectRequest(idHiringRequest);
       }
     });
   }
@@ -195,6 +201,9 @@ export class ApproveHiringRequestComponent implements OnInit {
           hiringRequestSelected.fecha_nacimiento
         );
 
+        let ind_asign_familiar: boolean =
+          hiringRequestSelected.ind_asign_familiar == 'S' ? true : false;
+
         this.formApproveHiringRequest.patchValue({
           cBoxBearCost: eps_parcial_total.toUpperCase(), //
           cBoxBusinessLine: hiringRequestSelected.cod_linea_negocio,
@@ -223,6 +232,7 @@ export class ApproveHiringRequestComponent implements OnInit {
           inputProvince: hiringRequestSelected.provincia.toUpperCase(),
           inputRemuneration: hiringRequestSelected.remuneracion,
           rbSCTR: ind_sctr,
+          cboxAsig: ind_asign_familiar,
         });
 
         this.statusHiringRequest = hiringRequestSelected.estado!;

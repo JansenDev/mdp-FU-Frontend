@@ -52,8 +52,8 @@ export class ContractImboxService {
     return this.httpClient.get<IHiringRequest>(URL);
   }
 
-  approveHiringRequest(idHiringRequest: string | number) {
-    const URL = `${url_base}/contractSolicitude/approve/${idHiringRequest}`;
+  approveHiringRequest(idHiringRequest: string | number, asig_family: boolean) {
+    const URL = `${url_base}/contractSolicitude/approve/${idHiringRequest}/${asig_family}`;
 
     return this.httpClient.get<IStatusRequestSimple>(URL);
   }

@@ -96,6 +96,12 @@ $width_content_page: 90%;
         & mat-form-field {
           width: 80% !important;
         }
+
+        & .contract--asig-family {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
       }
     }
   }
@@ -142,22 +148,20 @@ $width_content_page: 90%;
   width: 0;
 }
 
-.mat-input-element:disabled{
+.mat-input-element:disabled {
   color: unset;
 }
 
-
-
-.mat-checkbox-disabled .mat-checkbox-label span{
+.mat-checkbox-disabled .mat-checkbox-label span {
   // color: red !important;
 }
 
-mat-checkbox.mat-checkbox-disabled{
-// color: red !important;
-// background-color: red !important;
+mat-checkbox.mat-checkbox-disabled {
+  // color: red !important;
+  // background-color: red !important;
 }
 
 input:disabled {
-//   color: red !important;
-// background-color: red !important;
+  //   color: red !important;
+  // background-color: red !important;
 }

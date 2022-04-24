@@ -123,7 +123,7 @@
               *ngFor="let client of clientList"
               [value]="client.cod_cliente"
             >
-              {{ client.nombre_corto }}
+              {{ client.nombre_corto | titlecase }}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -289,7 +289,7 @@
 
     <div class="form--buttons">
       <button
-        [disabled]="formHiringRequest.invalid "
+        [disabled]="formHiringRequest.invalid"
         type="submit"
         mat-raised-button
         color="primary"

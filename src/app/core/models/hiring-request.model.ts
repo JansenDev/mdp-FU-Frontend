@@ -29,4 +29,5 @@ export interface IHiringRequest {
   plan_eps?: string;
   nombre_corto?: string;
   estado?:string
+  ind_asign_familiar?:string
 }

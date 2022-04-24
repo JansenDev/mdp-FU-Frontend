@@ -11,6 +11,7 @@ import { SummaryComponent } from 'src/app/components/summary/summary.component';
 import { ResourceMapDetailComponent } from './resource-map-detail/resource-map-detail.component';
 import { ImboxFilterComponent } from './form/imbox-filter/imbox-filter.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SidebarComponent } from './layout/sidebar/sidebar.component';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     SummaryComponent,
     ResourceMapDetailComponent,
     ImboxFilterComponent,
+    SidebarComponent,
   ],
   imports: [CommonModule, SharedModule, RouterModule, ReactiveFormsModule],
   exports: [
@@ -32,6 +34,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     SummaryComponent,
     ResourceMapDetailComponent,
     ImboxFilterComponent,
+    SidebarComponent
   ],
 })
 export class ComponentModule {}
