@@ -6,7 +6,12 @@ export interface ICreateServiceRequest {
   descripcion_servicio:  string;
   horas_venta:           number | null;
   moneda:                string;
+  tasa_cambio:           number | null;
+  costo_venta:           number | null;
+  costo_venta_dolar:     number | null;
   valor_venta:           number | null;
+  valor_venta_dolar:     number | null;
+  tarifa:                number | null;
   fecha_ini_planificada: Date | string;
   fecha_fin_planificada: Date | string;
   fecha_ini_real:        null | Date | string;
@@ -70,4 +75,10 @@ export interface IServiceTypeResponse {
 // Payment Method
 export interface IPaymentMethodResponse {
   forma_pago: string;
+}
+
+// Exchange Rate
+export interface IExchangeRateResponse {
+  periodo:     string;
+  tasa_cambio: string;
 }

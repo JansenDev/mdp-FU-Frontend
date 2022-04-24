@@ -37,20 +37,22 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label class="service-label">Servicio</mat-label>
+      <mat-label class="service-label">Nombre de Servicio</mat-label>
       <input name="descripcion_servicio" #validServiceDescription="ngModel" [(ngModel)]="formData.descripcion_servicio" required
       name="descripcion_servicio" matInput type="text" class="service-input">
       <mat-hint *ngIf="validServiceDescription.invalid && (validServiceDescription.dirty || validServiceDescription.touched)" class="error-hint">Campo requerido</mat-hint>
     </mat-form-field>
 
-    <mat-form-field class="col2" appearance="outline">
-      <mat-label class="start-date-label">Fecha de inicio</mat-label>
-    <input [(ngModel)]="formData.fecha_ini_planificada" #validStartDate="ngModel" required name="fecha_ini_planificada"
-    matInput type="date" class="start-date-input">
-    <mat-hint *ngIf="validStartDate.invalid && (validStartDate.dirty || validStartDate.touched)" class="error-hint">Campo requerido</mat-hint>
-    </mat-form-field>
+    <div class="short-container">
+      <mat-form-field class="col2 short-field" appearance="outline">
+        <mat-label class="start-date-label">Fecha de inicio</mat-label>
+      <input [(ngModel)]="formData.fecha_ini_planificada" #validStartDate="ngModel" required name="fecha_ini_planificada"
+      matInput type="date" class="start-date-input">
+      <mat-hint *ngIf="validStartDate.invalid && (validStartDate.dirty || validStartDate.touched)" class="error-hint">Campo requerido</mat-hint>
+      </mat-form-field>
+    </div>
 
-    <mat-form-field class="col3" appearance="outline">
+    <mat-form-field class="col3 short-field" appearance="outline">
       <mat-label class="end-date-label">Fecha de fin</mat-label>
       <input [(ngModel)]="formData.fecha_fin_planificada" #validEndDate="ngModel" min="{{serviceForm.value.fecha_ini_planificada}}" required name="fecha_fin_planificada"
       matInput type="date" class="end-date-input">
@@ -64,7 +66,7 @@
       <mat-hint *ngIf="validSaleHours.invalid && (validSaleHours.dirty || validSaleHours.touched)" class="error-hint">Campo requerido</mat-hint>
     </mat-form-field>
 
-    <mat-form-field class="col2" appearance="outline">
+    <mat-form-field class="col2 short-field" appearance="outline">
       <mat-label class="currency-label">Moneda</mat-label>
       <mat-select  [(ngModel)]="formData.moneda" #validCurrency="ngModel" required name="moneda" class="currency-input">
         <mat-option *ngFor="let currency of currencies" [value]="currency.viewValue">
@@ -74,17 +76,30 @@
       <mat-hint *ngIf="validCurrency.invalid && (validCurrency.dirty || validCurrency.touched)" class="error-hint">Campo requerido</mat-hint>
     </mat-form-field>
 
-    <mat-form-field class="col3" appearance="outline">
-      <mat-label class="sale-value-label">Valor de venta</mat-label>
-      <input  [(ngModel)]="formData.valor_venta" #validSaleValue="ngModel" name="valor_venta" required matInput type="number"
+    <mat-form-field class="col3" appearance="fill" floatLabel="always">
+      <mat-label class="sale-value-label">Costo de venta {{ formData.moneda === 'SOL' ? 'en soles' : 'en dolares' }}</mat-label>
+      <input  [(ngModel)]="formData.costo_venta" #validCostValue="ngModel" name="costo_venta" required matInput type="number"
       class="sale-value-input">
-      <mat-hint *ngIf="validSaleValue.invalid && (validSaleValue.dirty || validSaleValue.touched)" class="error-hint">Campo requerido</mat-hint>
+      <span matPrefix>{{ formData.moneda === 'SOL' ? 'S/.' : '$' }}&nbsp;</span>
+      <span matSuffix>.00</span>
+      <mat-hint *ngIf="validCostValue.invalid && (validCostValue.dirty || validCostValue.touched)" class="error-hint">Campo requerido</mat-hint>
+      <mat-hint *ngIf="formData.moneda === 'DOLAR' && formData.costo_venta ">Tipo de cambio: {{ formData.tasa_cambio }}, En soles: S/.{{ calculateSoles('costo') | number : '1.2-2' }}</mat-hint>
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field class="col1" appearance="fill" floatLabel="always">
+      <mat-label class="sale-value-label">Valor de venta {{ formData.moneda === 'SOL' ? 'en soles' : 'en dolares' }}</mat-label>
+      <input  [(ngModel)]="formData.valor_venta" #validCostValue="ngModel" name="valor_venta" required matInput type="number"
+      class="sale-value-input">
+      <span matPrefix>{{ formData.moneda === 'SOL' ? 'S/.' : '$' }}&nbsp;</span>
+      <span matSuffix>.00</span>
+      <mat-hint *ngIf="validCostValue.invalid && (validCostValue.dirty || validCostValue.touched)" class="error-hint">Campo requerido</mat-hint>
+      <mat-hint *ngIf="formData.moneda === 'DOLAR' && formData.valor_venta ">Tipo de cambio: {{ formData.tasa_cambio }}, En soles: S/.{{ calculateSoles('valor') | number : '1.2-2' }}</mat-hint>
+    </mat-form-field>
+
+    <!-- <mat-form-field appearance="outline">
       <mat-label class="status-label">Estado registro</mat-label>
       <input matInput type="text" disabled class="status-value">
-    </mat-form-field>
+    </mat-form-field> -->
 
     <mat-form-field class="col2" appearance="outline">
       <mat-label class="payment-method-label">Forma de pago</mat-label>
@@ -97,6 +112,15 @@
       <mat-hint *ngIf="validPaymentMethod.invalid && (validPaymentMethod.dirty || validPaymentMethod.touched)" class="error-hint">Campo requerido</mat-hint>
     </mat-form-field>
 
+    <mat-form-field class="col1" appearance="fill" floatLabel="always">
+      <mat-label class="sale-value-label">Tarifa promedio en soles</mat-label>
+      <input [(ngModel)]="formData.tarifa" [value]="formData.horas_venta && formData.valor_venta ? calculateRate() : 0 " #validRate="ngModel" name="tarifa" required matInput type="number"
+      class="sale-value-input" disabled>
+      <span matPrefix>S/.&nbsp;</span>
+
+      <mat-hint *ngIf="validRate.invalid && (validRate.dirty || validRate.touched)" class="error-hint">Campo requerido</mat-hint>
+    </mat-form-field>
+
     <div class="btn-area row5">
       <button type="submit" mat-raised-button class="save-btn" [disabled]="serviceForm.invalid">Guardar</button>
       <button mat-raised-button class="cancel-btn">Cancelar</button>
@@ -104,4 +128,6 @@
   </form>
 
 </mat-card>
+
+<pre>{{formData | json}}</pre>
 
