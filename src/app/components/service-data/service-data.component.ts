@@ -50,18 +50,11 @@ export class ServiceDataComponent implements OnInit {
     { value: 'dolar-1', viewValue: 'DOLAR' }
   ]
   exchangeRate!: IExchangeRateResponse;
-  date: string | Date | null = new Date();
   disableBtns = false;
 
-  constructor(
-    private servicesService: ServicesService,
-    private datePipe: DatePipe
-  ) {
-    this.date = this.datePipe.transform(this.date, 'yyyy-MM-dd') ;
-  }
+  constructor(private servicesService: ServicesService) {}
 
   ngOnInit(): void {
-    console.log(this.date);
     this.loadClients();
     this.loadServiceLines()
     console.log("selected client:", this.selectedClient);
@@ -100,6 +93,7 @@ export class ServiceDataComponent implements OnInit {
     }, error => {
       console.error(error);
     });
+    console.log('selected sl: ', this.selectedServiceLine);
   }
 
   loadPaymentMethods(serviceType: string){
@@ -160,7 +154,7 @@ export class ServiceDataComponent implements OnInit {
 
   calculateRate(){
     setTimeout(() => {
-      if (this.formData.moneda = 'DOLAR'){
+      if (this.formData.moneda == 'DOLAR'){
         this.formData.tarifa = (this.formData.valor_venta! * this.formData.tasa_cambio!) / this.formData.horas_venta!;
       } else {
           this.formData.tarifa = this.formData.valor_venta! / this.formData.horas_venta!;
@@ -171,6 +165,5 @@ export class ServiceDataComponent implements OnInit {
       return parseFloat(this.formData.tarifa!.toFixed(2));
     }
     return
-
   }
 }
