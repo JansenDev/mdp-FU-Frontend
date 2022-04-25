@@ -7,7 +7,9 @@ import { environment } from '../../../environments/environment';
 import { ICreateServiceRequest,
          ICreateServiceResponse,
          IExchangeRateResponse,
+         IGetServiceResponse,
          IPaymentMethodResponse,
+         IPostServiceRequest,
          IServiceLineResponse,
          IServiceTypeResponse} from '../models/service.model';
 import { IClientResponse } from '../models/client.model';
@@ -51,6 +53,10 @@ export class ServicesService {
 
   getExchangeRate(): Observable<IExchangeRateResponse> {
     return this.http.get<IExchangeRateResponse>( `${ this._api }/period/last-period` );
+  }
+
+  findServices(filters: IPostServiceRequest): Observable<IGetServiceResponse[]> {
+    return this.http.post<IGetServiceResponse[]>( `${ this._api }/services/get`, filters);
   }
 
 }

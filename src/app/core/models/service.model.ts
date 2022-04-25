@@ -87,3 +87,29 @@ export interface IExchangeRateResponse {
   periodo:     string;
   tasa_cambio: string;
 }
+
+// Service
+export interface IGetServiceResponse {
+  cod_servicio:                number;
+  nombre_corto:                string;
+  tipo_servicio:               string;
+  etapa:                       null;
+  estado:                      string;
+  horas_venta:                 number;
+  valor_venta:                 string;
+  fecha_ini_planificada:       Date;
+  fecha_fin_planificada:       Date;
+  fecha_ini_real:              null;
+  fecha_fin_real:              null;
+  horas_planificadas:          null;
+  valor_venta_planificada:     null;
+  horas_ejecutadas:            null;
+  horas_produccion_ejecutadas: null;
+}
+
+export interface IPostServiceRequest {
+  cod_cliente:       number | string;
+  cod_linea_negocio: string;
+  estado:            string;
+}
+
