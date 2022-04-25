@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 // Interfaces
@@ -13,6 +13,7 @@ import { ICreateServiceRequest,
          IServiceLineResponse,
          IServiceTypeResponse} from '../models/service.model';
 import { IClientResponse } from '../models/client.model';
+import { NotificationService } from './notification.service';
 
 
 @Injectable({
@@ -21,7 +22,9 @@ import { IClientResponse } from '../models/client.model';
 export class ServicesService {
     private _api: string = `${ environment.url_base }`;
 
-  constructor( private http: HttpClient ) { }
+  constructor(
+    private http: HttpClient,
+    private  notificationService: NotificationService) { }
 
   createService({...service}: ICreateServiceRequest ): Observable<ICreateServiceResponse> {
     if (service.moneda == "DOLAR"){
@@ -32,7 +35,20 @@ export class ServicesService {
       service.valor_venta_sol = service.valor_venta!;
       service.costo_venta_sol = service.costo_venta!;
     }
-    return this.http.post<ICreateServiceResponse>( `${ this._api }/services/create`, service );
+    return this.http.post<ICreateServiceResponse>( `${ this._api }/services/create`, service )
+    .pipe(
+      map((res: ICreateServiceResponse) => {
+        if (res) {
+          this.notificationService.toast(
+            'success',
+            'Servicio creado satisfactoriamente',
+            'Servicio',
+            0
+          );
+        }
+        return res;
+      })
+    ); ;
   }
 
   getServiceLines(): Observable<IServiceLineResponse[]> {

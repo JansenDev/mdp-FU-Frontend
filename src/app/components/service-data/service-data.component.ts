@@ -1,13 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ICreateServiceRequest, IExchangeRateResponse, IPaymentMethodResponse, IServiceLineResponse, IServiceTypeResponse } from 'src/app/core/models/service.model';
+import { ICreateServiceRequest, IExchangeRateResponse, IPaymentMethodResponse, IServiceLineResponse, IServiceTypeResponse, ICreateServiceResponse } from 'src/app/core/models/service.model';
 import { NgForm } from '@angular/forms';
 import { ServicesService } from 'src/app/core/services/services.service';
 import { IClientResponse } from 'src/app/core/models/client.model';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-service-data',
   templateUrl: './service-data.component.html',
-  styleUrls: ['./service-data.component.scss']
+  styleUrls: ['./service-data.component.scss'],
+  providers: [DatePipe]
 })
 export class ServiceDataComponent implements OnInit {
 
@@ -17,6 +19,7 @@ export class ServiceDataComponent implements OnInit {
   serviceLines: IServiceLineResponse[] = [];
   serviceTypes: IServiceTypeResponse[] = [];
   paymentMethods: IPaymentMethodResponse[] = [];
+  serviceResponse: any = null;
   selectedClient = '';
   selectedServiceLine = '';
   selectedServiceType = '';
@@ -47,12 +50,18 @@ export class ServiceDataComponent implements OnInit {
     { value: 'dolar-1', viewValue: 'DOLAR' }
   ]
   exchangeRate!: IExchangeRateResponse;
+  date: string | Date | null = new Date();
+  disableBtns = false;
 
   constructor(
-    private servicesService: ServicesService
-  ) { }
+    private servicesService: ServicesService,
+    private datePipe: DatePipe
+  ) {
+    this.date = this.datePipe.transform(this.date, 'yyyy-MM-dd') ;
+  }
 
   ngOnInit(): void {
+    console.log(this.date);
     this.loadClients();
     this.loadServiceLines()
     console.log("selected client:", this.selectedClient);
@@ -117,9 +126,12 @@ export class ServiceDataComponent implements OnInit {
       subscribe(createdService => {
         console.log('created service: ', createdService);
         this.cod_servicio = createdService;
+        this.serviceResponse = createdService;
+        console.log('response: ', this.serviceResponse);
       },  error => {
         console.error(error);
       })
+    this.disableBtns = true;
   }
 
   submitForm(){
@@ -148,10 +160,17 @@ export class ServiceDataComponent implements OnInit {
 
   calculateRate(){
     setTimeout(() => {
-      this.formData.tarifa = this.formData.valor_venta! / this.formData.horas_venta!;
+      if (this.formData.moneda = 'DOLAR'){
+        this.formData.tarifa = (this.formData.valor_venta! * this.formData.tasa_cambio!) / this.formData.horas_venta!;
+      } else {
+          this.formData.tarifa = this.formData.valor_venta! / this.formData.horas_venta!;
+      }
     }, 0);
-    return this.formData.tarifa;
+
+    if (this.formData.tarifa){
+      return parseFloat(this.formData.tarifa!.toFixed(2));
+    }
+    return
+
   }
-
-
 }

@@ -2,18 +2,15 @@
 
 .service-form{
   display: grid;
-  grid-template-columns: repeat(3, 3fr);
-  grid-template-rows: repeat(5, 5fr);
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(4, 1fr);
   align-items: center;
   padding: 1.5rem;
+  column-gap: 0.75rem;
 }
 
 mat-form-field{
   width: 90%;
-}
-
-.mat-form-field-appearance-outline .mat-form-field-prefix, .mat-form-field-appearance-outline .mat-form-field-suffix {
-  top: 0;
 }
 
 button{
@@ -30,10 +27,31 @@ input::-webkit-inner-spin-button {
 input[type=number] { //Firefox
   -moz-appearance: textfield;
 }
-/* --------------- */
+/* ----------------------------------- */
+
+/* Eliminar fondo gris de inputs con aspecto fill */
+
+::ng-deep.mat-form-field-appearance-fill.mat-form-field-disabled .mat-form-field-flex {
+  background-color: transparent;
+}
 
 ::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
   background-color: transparent;
+}
+
+/* ------------------------------------------------------- */
+
+.circle{
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: block;
+  margin-left: 5px;
+}
+
+.status{
+  display: block;
+  margin: 0;
 }
 
 .error-hint{
@@ -42,14 +60,27 @@ input[type=number] { //Firefox
 
 .save-btn{
   background-color: var(--primary);
+  grid-column-start: 3;
+  justify-self: center;
 }
 
 .cancel-btn{
   background-color: var(--red);
+  grid-column-start: 4;
+  justify-self: center;
 }
 
 .sale-value-input{
   text-align: right;
+}
+
+.rate{
+  padding: .75em .75em 0 0;
+}
+
+.status-container{
+  display: flex;
+  align-items: center;
 }
 
 .col1{
@@ -57,37 +88,52 @@ input[type=number] { //Firefox
   justify-self: left;
 }
 
-.btn-area{
-  grid-column-start: 2;
-  display: flex;
-  justify-content: space-evenly;
-}
-
-.short-container{
-  width: 90%;
-  display: flex;
+.col1-long{
+  grid-column-start: 1;
+  grid-column-end: 3;
+  justify-self: left;
 }
 
 .col2{
   grid-column-start: 2;
-  justify-self: center;
+  grid-column-end: 3;
+  justify-self: left;
+}
+
+.col2-long{
+  grid-column-start: 3;
+  grid-column-end: 5;
+  justify-self: left;
 }
 
 .col3{
   grid-column-start: 3;
-  justify-self: right;
-}
-
-.short-field{
-  width: 40%;
+  justify-self: left;
 }
 
 .col4 {
   grid-column-start: 4;
+  justify-self: end;
 }
 
-.col5{
+.col4-long{
+  grid-column: 5 / span 2;
+  justify-self: center;
+}
+
+.col5 {
   grid-column-start: 5;
+  justify-self: right;
+}
+
+.col5-long {
+  grid-column: 5 / span 2;
+  justify-self: center;
+}
+
+.col6{
+  grid-column-start: 5;
+  justify-self: end;
 }
 
 .row1{
