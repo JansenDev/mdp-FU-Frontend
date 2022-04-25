@@ -115,7 +115,7 @@
     </mat-form-field>
 
       <button type="submit" mat-raised-button class="save-btn" [disabled]="serviceForm.invalid || disableBtns"> <mat-icon>save</mat-icon> Guardar</button>
-      <button mat-raised-button class="cancel-btn"><mat-icon>close</mat-icon> Cancelar</button>
+      <button mat-raised-button type="" class="cancel-btn" routerLink="/service-map" ><mat-icon>close</mat-icon> Cancelar</button>
   </form>
   <div *ngIf="this.serviceResponse" class="status-container">
     <h3 class="status">
