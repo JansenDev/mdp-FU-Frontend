@@ -3,6 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { IGetServiceResponse, IPostServiceRequest } from 'src/app/core/models/service.model';
 import { ServicesService } from 'src/app/core/services/services.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-service-map',
@@ -13,6 +14,7 @@ export class ServiceMapComponent implements OnInit {
   
   public clients : any;
   public lines : any;
+  resourceForm: FormGroup;
 
   paginator: MatPaginator = {} as MatPaginator;
   dataSource: MatTableDataSource<any> =
@@ -35,25 +37,52 @@ export class ServiceMapComponent implements OnInit {
     'horas_ejecutadas',
     'produccion_ejecutada',
   ];
-  constructor(private service : ServicesService) {
-
+  constructor(private service : ServicesService, private formBuilder : FormBuilder) {
+    this.resourceForm = this.formBuilder.group({
+      cboxClient: ['', Validators.required],
+      cboxLine: ['', Validators.required],
+      cboxState: ['', Validators.required],
+    });
   }
   services: IGetServiceResponse[] = [];
 
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getClients();
+    this.getServicesLine();
+  }
 
-  findServices(filters: IPostServiceRequest): void {
+  findServices(filters: any): void {
     this.service.findServices(filters).subscribe(res => {
-      this.services = res;
-      console.log(this.services);
+      this.dataSource.data = res;
+      console.log("findServices", this.dataSource.data);
     }, err => {
       console.log(err);
     });
   }
 
   ngSubmit() {
+    let {
+      cboxClient,
+      cboxLine,
+      cboxState,
+    } = this.resourceForm.value;
 
+    console.log("submiteando...");
+    console.log("this.resourceForm.value", this.resourceForm.value);
+    
+
+
+    let input = {
+      "cod_cliente": cboxClient,
+      "cod_linea_negocio": cboxLine,
+      "estado": cboxState
+    }
+
+    this.findServices(input);
+    console.log("cliente combo", cboxClient);
+    console.log("cliente linea", cboxLine);
+    console.log("cliente estado", cboxState);
   }
 
   getClients() {
@@ -69,5 +98,8 @@ export class ServiceMapComponent implements OnInit {
       this.lines = data;
     })
   }
-
+  
+  createService() {
+    console.log("CREAR SERVICIO");
+  }
 }
