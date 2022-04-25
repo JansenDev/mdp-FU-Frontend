@@ -1,7 +1,7 @@
 $page__width: 90%;
 
 .main-container{
-  display: flex;
+  display: inline-block;
   width: 100%;
   &.active{
     width: 80%;

@@ -27,10 +27,6 @@ $page__width: 90%;
   }
 }
 
-::ng-deep .px-2 {
-  margin: 0 30px;
-}
-
 .filters {
   &--container {
     width: $page__width;
