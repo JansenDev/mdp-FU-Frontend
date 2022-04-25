@@ -1,9 +1,20 @@
-$page__width: 90%;
+$page__width: 100%;
 
-.main-container{
+.resource-map {
+  width: calc(100% - 60px);
+  display: inline-block;
+  margin-left: 60px;
+
+  & .resource-map--container {
+    width: 90%;
+    margin: 0 auto;
+  }
+}
+
+.main-container {
   display: inline-block;
   width: 100%;
-  &.active{
+  &.active {
     width: 80%;
   }
 }
@@ -64,7 +75,6 @@ table {
     0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 0px 0px 1px rgba(0, 0, 0, 0.12) !important;
 
   & .mat-table--header {
-
     & .mat-header-cell {
       color: var(--white);
       font-weight: bold;
@@ -107,13 +117,13 @@ table {
     }
   }
 
-    & tr.mat-row{
-      height: 33px;
-    }
+  & tr.mat-row {
+    height: 33px;
+  }
 
-    & tr.mat-header-row{
-      height: 38px;
-    }
+  & tr.mat-header-row {
+    height: 38px;
+  }
 
   // // TODO: mejorar color  al pasar el mouse en la fila
   .mat-row:hover .mat-cell {

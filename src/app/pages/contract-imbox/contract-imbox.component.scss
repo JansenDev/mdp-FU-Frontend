@@ -2,7 +2,13 @@ $width_page: 90%;
 
 // Imbox
 
-.imbox-contract {
+.imbox-contract{
+  width: calc(100% - 60px);
+  display: inline-block;
+  margin-left: 60px;
+}
+
+.imbox-contract--container {
   width: $width_page;
   margin: 20px auto 0 auto;
 
@@ -201,22 +207,21 @@ $width_page: 90%;
 
 .fg-approve {
   color: red;
-  @extend .fg-base
+  @extend .fg-base;
 }
 
 .fg-reject {
   color: green;
-  @extend .fg-base
+  @extend .fg-base;
 }
 
-.fg-base{
+.fg-base {
   font-weight: 500;
 }
 
-
 // medias filter
 @media (max-width: 1230px) {
-  .imbox-contract {
+  .imbox-contract--container {
     & form {
       & .imbox-contract--buttons {
         display: block;

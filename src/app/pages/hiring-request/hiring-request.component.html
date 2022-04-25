@@ -1,310 +1,317 @@
-<div class="hiring--container">
-  <h1 class="hiring--title">
-    Registro de solicitud de contratación de colaboradores
-  </h1>
+<div class="hiring-request">
+  <div class="hiring--container">
+    <h1 class="hiring--title">
+      Registro de solicitud de contratación de colaboradores
+    </h1>
 
-  <!-- Form Start -->
-  <form
-    [formGroup]="formHiringRequest"
-    (submit)="onSubmitHiringRquest()"
-    class="hiring--form"
-  >
-    <mat-card class="form--title">Datos del Colaborador</mat-card>
+    <!-- Form Start -->
+    <form
+      [formGroup]="formHiringRequest"
+      (submit)="onSubmitHiringRquest()"
+      class="hiring--form"
+    >
+      <mat-card class="form--title">Datos del Colaborador</mat-card>
 
-    <div class="form--collaborator">
-      <div class="collaborator--row1">
-        <mat-form-field>
-          <mat-label>Tipo documento</mat-label>
-          <mat-select formControlName="cBoxDocumentType" required>
-            <mat-option value="DNI">DNI</mat-option>
-            <mat-option value="RUC">RUC</mat-option>
-            <mat-option value="CE">Carné de extranjería</mat-option>
-            <mat-option value="PA">Pasaporte</mat-option>
-            <mat-option value="PN">Part. Nacimiento</mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>N° documento</mat-label>
-          <input
-            matInput
-            formControlName="inputDocumentNumber"
-            [maxlength]="documentMaxLength"
-            [minlength]="documentMaxLength"
-            required
-          />
-          <mat-hint *ngIf="!isvalidDocumentNumber" style="color: red"
-            >Contrato vigente existente</mat-hint
-          >
-        </mat-form-field>
-
-        <div class="offset"></div>
-
-        <div class="offset"></div>
-
-        <div class="offset"></div>
-      </div>
-
-      <div class="collaborator--row2">
-        <mat-form-field>
-          <mat-label>Nombre</mat-label>
-          <input formControlName="inputNameColl" matInput required />
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Apellido Paterno</mat-label>
-          <input formControlName="inputLastname" matInput required />
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Apellido Materno</mat-label>
-          <input formControlName="inputLastnameMt" matInput required />
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>F. Nacimiento</mat-label>
-          <input
-            matInput
-            formControlName="inputBithDate"
-            [matDatepicker]="picker_nacimiento"
-          />
-          <mat-hint>DD/MM/YYYY</mat-hint>
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="picker_nacimiento"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #picker_nacimiento></mat-datepicker>
-        </mat-form-field>
-
-        <div class="offset"></div>
-      </div>
-
-      <div class="collaborator--row3">
-        <mat-form-field>
-          <mat-label>N° Celular</mat-label>
-          <input
-            formControlName="inputPhone"
-            matInput
-            required
-            maxlength="11"
-          />
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Correo</mat-label>
-          <input formControlName="inputEmail" matInput type="email" required />
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Dirección</mat-label>
-          <input formControlName="inputAddress" matInput required />
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Provincia </mat-label>
-          <input formControlName="inputProvince" matInput required />
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Distrito </mat-label>
-          <input formControlName="inputDistrict" matInput required />
-        </mat-form-field>
-      </div>
-    </div>
-
-    <div class="form--contract">
-      <mat-card class="form--title">Datos del Contrato</mat-card>
-
-      <div class="contract--row1">
-        <mat-form-field>
-          <mat-label>Cliente</mat-label>
-          <mat-select formControlName="cBoxClient" required>
-            <mat-option
-              *ngFor="let client of clientList"
-              [value]="client.cod_cliente"
-            >
-              {{ client.nombre_corto | titlecase }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Linea de Negocio</mat-label>
-          <mat-select formControlName="cBoxBusinessLine" required>
-            <mat-option
-              *ngFor="let ln of businessLineList"
-              [value]="ln.cod_linea_servicio"
-              >{{ ln.cod_linea_servicio }}</mat-option
-            >
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Puesto</mat-label>
-          <mat-select formControlName="cBoxProfile" required>
-            <mat-option
-              *ngFor="let profile of profileList"
-              [value]="profile.cod_perfil"
-              >{{ profile.nombre_perfil | uppercase }}</mat-option
-            >
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Nivel</mat-label>
-          <mat-select formControlName="cBoxLevel" required>
-            <mat-option value="junior">Junior</mat-option>
-            <mat-option value="semisenior">Semi Senior</mat-option>
-            <mat-option value="senior">Senior</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-
-      <div class="contract--row2">
-        <mat-form-field>
-          <mat-label>Banda Salarial </mat-label>
-          <input
-            value="Mínimo <-- {{
-              salaryBandObj.minimo | currency: 'S/ ':'symbol':'1.0'
-            }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{
-              salaryBandObj.maximo | currency: 'S/ ':'symbol':'1.0'
-            }} --> Máximo"
-            matInput
-          />
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Modalidad</mat-label>
-          <mat-select formControlName="cBoxmodality" required>
-            <mat-option value="planilla">Planilla</mat-option>
-            <mat-option value="practicante">Practicante</mat-option>
-            <mat-option value="RXH">RXH</mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Remuneración</mat-label>
-          <input
-            maxlength="5"
-            formControlName="inputRemuneration"
-            matInput
-            required
-          />
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Bono</mat-label>
-          <input maxlength="5" formControlName="inputMonthlyBonus" matInput />
-        </mat-form-field>
-      </div>
-
-      <div class="contract--row3">
-        <!-- <div class="row3--cboxEPS"> -->
-        <mat-form-field>
-          <mat-label>EPS</mat-label>
-          <mat-hint
-            *ngIf="cBoxBearCostValue === 'parcial' && cBoxEPSValue !== null"
-            >{{ amountCurrent.parcial | currency: "S/" }}</mat-hint
-          >
-
-          <mat-hint
-            *ngIf="cBoxBearCostValue !== 'parcial' && cBoxEPSValue !== null"
-            >{{ amountCurrent.total | currency: "S/" }}</mat-hint
-          >
-
-          <mat-hint *ngIf="cBoxEPSValue === null">{{
-            0 | currency: "S/"
-          }}</mat-hint>
-
-          <mat-select formControlName="cBoxEPS">
-            <!-- log setAmountCurrent('0') -->
-            <mat-option [value]="null">Ninguno</mat-option>
-            <mat-option
-              *ngFor="let eps of EPSList"
-              [value]="eps.cod_eps"
-              (click)="setAmountCurrent(eps)"
-              >{{ eps.plan_eps }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <!-- <span class="cboxEPS--amount">{{ amountCurrent|currency:'S/' }}</span>
-        </div> -->
-
-        <mat-radio-group>
+      <div class="form--collaborator">
+        <div class="collaborator--row1">
           <mat-form-field>
-            <mat-label>Asumo del costo (MDP)</mat-label>
-            <mat-select
-              formControlName="cBoxBearCost"
-              [disabled]="cBoxEPSValue === '' || cBoxEPSValue === null"
-            >
-              <mat-option value="parcial">Parcial</mat-option>
-              <mat-option value="total">Total</mat-option>
+            <mat-label>Tipo documento</mat-label>
+            <mat-select formControlName="cBoxDocumentType" required>
+              <mat-option value="DNI">DNI</mat-option>
+              <mat-option value="RUC">RUC</mat-option>
+              <mat-option value="CE">Carné de extranjería</mat-option>
+              <mat-option value="PA">Pasaporte</mat-option>
+              <mat-option value="PN">Part. Nacimiento</mat-option>
             </mat-select>
           </mat-form-field>
 
-          <mat-checkbox formControlName="rbSCTR">SCTR</mat-checkbox>
-        </mat-radio-group>
+          <mat-form-field>
+            <mat-label>N° documento</mat-label>
+            <input
+              matInput
+              formControlName="inputDocumentNumber"
+              [maxlength]="documentMaxLength"
+              [minlength]="documentMaxLength"
+              required
+            />
+            <mat-hint *ngIf="!isvalidDocumentNumber" style="color: red"
+              >Contrato vigente existente</mat-hint
+            >
+          </mat-form-field>
 
-        <mat-form-field>
-          <mat-label>F. Inicio</mat-label>
-          <input
-            matInput
-            formControlName="inputDateStart"
-            [matDatepicker]="picker_f_inicio"
-            required
-          />
-          <mat-hint>DD/MM/YYYY</mat-hint>
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="picker_f_inicio"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #picker_f_inicio></mat-datepicker>
-        </mat-form-field>
+          <div class="offset"></div>
 
-        <mat-form-field>
-          <mat-label>F. Fin</mat-label>
-          <input
-            matInput
-            formControlName="inputDateEnd"
-            [matDatepicker]="picker_f_fin"
-            required
-          />
-          <mat-hint>DD/MM/YYYY</mat-hint>
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="picker_f_fin"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #picker_f_fin></mat-datepicker>
-        </mat-form-field>
-        <!-- <div class="offset"></div> -->
+          <div class="offset"></div>
+
+          <div class="offset"></div>
+        </div>
+
+        <div class="collaborator--row2">
+          <mat-form-field>
+            <mat-label>Nombre</mat-label>
+            <input formControlName="inputNameColl" matInput required />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Apellido Paterno</mat-label>
+            <input formControlName="inputLastname" matInput required />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Apellido Materno</mat-label>
+            <input formControlName="inputLastnameMt" matInput required />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>F. Nacimiento</mat-label>
+            <input
+              matInput
+              formControlName="inputBithDate"
+              [matDatepicker]="picker_nacimiento"
+            />
+            <mat-hint>DD/MM/YYYY</mat-hint>
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker_nacimiento"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker_nacimiento></mat-datepicker>
+          </mat-form-field>
+
+          <div class="offset"></div>
+        </div>
+
+        <div class="collaborator--row3">
+          <mat-form-field>
+            <mat-label>N° Celular</mat-label>
+            <input
+              formControlName="inputPhone"
+              matInput
+              required
+              maxlength="11"
+            />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Correo</mat-label>
+            <input
+              formControlName="inputEmail"
+              matInput
+              type="email"
+              required
+            />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Dirección</mat-label>
+            <input formControlName="inputAddress" matInput required />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Provincia </mat-label>
+            <input formControlName="inputProvince" matInput required />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Distrito </mat-label>
+            <input formControlName="inputDistrict" matInput required />
+          </mat-form-field>
+        </div>
       </div>
 
-      <div class="contract--row4">
-        <mat-form-field>
-          <mat-label>Condición</mat-label>
-          <input formControlName="inputCondition" matInput />
-        </mat-form-field>
-      </div>
-    </div>
+      <div class="form--contract">
+        <mat-card class="form--title">Datos del Contrato</mat-card>
 
-    <div class="form--buttons">
-      <button
-        [disabled]="formHiringRequest.invalid"
-        type="submit"
-        mat-raised-button
-        color="primary"
-      >
-        Guardar
-      </button>
-      <button
-        type="button"
-        mat-raised-button
-        color="accent"
-        (click)="onCancel()"
-      >
-        Cancelar
-      </button>
-    </div>
-  </form>
-  <!-- Form End -->
+        <div class="contract--row1">
+          <mat-form-field>
+            <mat-label>Cliente</mat-label>
+            <mat-select formControlName="cBoxClient" required>
+              <mat-option
+                *ngFor="let client of clientList"
+                [value]="client.cod_cliente"
+              >
+                {{ client.nombre_corto | titlecase }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Linea de Negocio</mat-label>
+            <mat-select formControlName="cBoxBusinessLine" required>
+              <mat-option
+                *ngFor="let ln of businessLineList"
+                [value]="ln.cod_linea_servicio"
+                >{{ ln.cod_linea_servicio }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Puesto</mat-label>
+            <mat-select formControlName="cBoxProfile" required>
+              <mat-option
+                *ngFor="let profile of profileList"
+                [value]="profile.cod_perfil"
+                >{{ profile.nombre_perfil | uppercase }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Nivel</mat-label>
+            <mat-select formControlName="cBoxLevel" required>
+              <mat-option value="junior">Junior</mat-option>
+              <mat-option value="semisenior">Semi Senior</mat-option>
+              <mat-option value="senior">Senior</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="contract--row2">
+          <mat-form-field>
+            <mat-label>Banda Salarial </mat-label>
+            <input
+              value="Mínimo <-- {{
+                salaryBandObj.minimo | currency: 'S/ ':'symbol':'1.0'
+              }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{
+                salaryBandObj.maximo | currency: 'S/ ':'symbol':'1.0'
+              }} --> Máximo"
+              matInput
+            />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Modalidad</mat-label>
+            <mat-select formControlName="cBoxmodality" required>
+              <mat-option value="planilla">Planilla</mat-option>
+              <mat-option value="practicante">Practicante</mat-option>
+              <mat-option value="RXH">RXH</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Remuneración</mat-label>
+            <input
+              maxlength="5"
+              formControlName="inputRemuneration"
+              matInput
+              required
+            />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Bono</mat-label>
+            <input maxlength="5" formControlName="inputMonthlyBonus" matInput />
+          </mat-form-field>
+        </div>
+
+        <div class="contract--row3">
+          <!-- <div class="row3--cboxEPS"> -->
+          <mat-form-field>
+            <mat-label>EPS</mat-label>
+            <mat-hint
+              *ngIf="cBoxBearCostValue === 'parcial' && cBoxEPSValue !== null"
+              >{{ amountCurrent.parcial | currency: "S/" }}</mat-hint
+            >
+
+            <mat-hint
+              *ngIf="cBoxBearCostValue !== 'parcial' && cBoxEPSValue !== null"
+              >{{ amountCurrent.total | currency: "S/" }}</mat-hint
+            >
+
+            <mat-hint *ngIf="cBoxEPSValue === null">{{
+              0 | currency: "S/"
+            }}</mat-hint>
+
+            <mat-select formControlName="cBoxEPS">
+              <!-- log setAmountCurrent('0') -->
+              <mat-option [value]="null">Ninguno</mat-option>
+              <mat-option
+                *ngFor="let eps of EPSList"
+                [value]="eps.cod_eps"
+                (click)="setAmountCurrent(eps)"
+                >{{ eps.plan_eps }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <!-- <span class="cboxEPS--amount">{{ amountCurrent|currency:'S/' }}</span>
+          </div> -->
+
+          <mat-radio-group>
+            <mat-form-field>
+              <mat-label>Asumo del costo (MDP)</mat-label>
+              <mat-select
+                formControlName="cBoxBearCost"
+                [disabled]="cBoxEPSValue === '' || cBoxEPSValue === null"
+              >
+                <mat-option value="parcial">Parcial</mat-option>
+                <mat-option value="total">Total</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-checkbox formControlName="rbSCTR">SCTR</mat-checkbox>
+          </mat-radio-group>
+
+          <mat-form-field>
+            <mat-label>F. Inicio</mat-label>
+            <input
+              matInput
+              formControlName="inputDateStart"
+              [matDatepicker]="picker_f_inicio"
+              required
+            />
+            <mat-hint>DD/MM/YYYY</mat-hint>
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker_f_inicio"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker_f_inicio></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>F. Fin</mat-label>
+            <input
+              matInput
+              formControlName="inputDateEnd"
+              [matDatepicker]="picker_f_fin"
+              required
+            />
+            <mat-hint>DD/MM/YYYY</mat-hint>
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker_f_fin"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker_f_fin></mat-datepicker>
+          </mat-form-field>
+          <!-- <div class="offset"></div> -->
+        </div>
+
+        <div class="contract--row4">
+          <mat-form-field>
+            <mat-label>Condición</mat-label>
+            <input formControlName="inputCondition" matInput />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="form--buttons">
+        <button
+          [disabled]="formHiringRequest.invalid"
+          type="submit"
+          mat-raised-button
+          color="primary"
+        >
+          Guardar
+        </button>
+        <button
+          type="button"
+          mat-raised-button
+          color="accent"
+          (click)="onCancel()"
+        >
+          Cancelar
+        </button>
+      </div>
+    </form>
+    <!-- Form End -->
+  </div>
 </div>

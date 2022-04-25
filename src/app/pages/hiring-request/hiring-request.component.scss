@@ -1,5 +1,11 @@
 $width_content_page: 90%;
 
+.hiring-request {
+  width: calc(100% - 60px);
+  display: inline-block;
+  margin-left: 60px;
+}
+
 .hiring--container {
   width: $width_content_page;
   margin: 0 auto;

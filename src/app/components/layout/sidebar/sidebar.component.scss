@@ -1,125 +1,116 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;1,300;1,400&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;1,300;1,400&display=swap");
 
-:root {
-    --niceblue: #3db5ff;
-}
-
-* {
-    box-sizing: border-box;
-}
-
-// body {
-//     font-family: "Open Sans", sans-serif;
-//     font-weight: 300;
-//     background-image: url("https://www.toptal.com/designers/subtlepatterns/uploads/type.png")  repeat;
-//     background-color: #363e4d;
+// * {
+//   box-sizing: border-box;
 // }
 
 .flex-centered {
-    display: inline-block;
-    // align-items: center;
-    // height: 100vh;
-    // width: 300px;
-    // margin: 0 auto;
+  position: fixed;
+  //   top: 30%;
+//   top: 55px;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  margin: 10% auto; /* Will not center vertically and won't work in IE6/7. */
 }
 
 /* ----- Menu ----- */
 
 menu#side-menu {
-    display: inline-block;
-    background: rgba(0, 0, 0, 0.5);
-    padding: 0;
-    margin: 0;
-    max-width: 250px;
-    border-radius: 10px;
+  display: inline-block;
+  background: #2e4294ef;
+  padding: 0;
+  margin: 0;
+  max-width: 250px;
+  border-radius: 10px;
 }
 
 menu#side-menu ul {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 menu#side-menu ul li.side-menu-item {
-    list-style-type: none;
-    display: block;
+  list-style-type: none;
+  display: block;
 }
 
 menu#side-menu ul li.side-menu-item .side-menu-item-wrapper {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
 }
 
 menu#side-menu ul li.side-menu-item .side-menu-icon {
-    padding: 1rem 1.15rem;
-    font-size: 1.5rem;
-    cursor: pointer;
+  padding: 1rem 1.15rem;
+  font-size: 1.5rem;
+  cursor: pointer;
 }
 
 menu#side-menu ul li.side-menu-item .side-menu-icon svg {
-    position: relative;
-    top: 0.1rem;
+  position: relative;
+  top: 0.1rem;
 }
 
 menu#side-menu ul li.side-menu-item .side-menu-text {
-    padding: 1rem 0;
-    width: 0;
-    opacity: 0;
-    cursor: pointer;
-    font-size: 1rem;
+  padding: 1rem 0;
+  width: 0;
+  opacity: 0;
+  cursor: pointer;
+  font-size: 1rem;
 }
 
 menu#side-menu ul li.side-menu-item .side-menu-text a {
-    color: #cecece;
-    text-decoration: none;
+  color: #fff;
+  text-decoration: none;
 }
 
 menu#side-menu ul li.side-menu-item:first-child:hover {
-     border-radius: 10px 10px 0 0;
+  border-radius: 10px 10px 0 0;
 }
 
 menu#side-menu ul li.side-menu-item:last-child:hover {
-    border-radius: 0 0 10px 10px;
+  border-radius: 0 0 10px 10px;
 }
 
 menu#side-menu ul li.side-menu-item:hover {
-    background: rgba(0, 0, 0, 0.25);
+  background: rgba(0, 0, 0, 0.25);
 }
 
 menu#side-menu ul li.side-menu-item:hover .side-menu-icon .svg-icon path,
 menu#side-menu ul li.side-menu-item:hover .side-menu-icon .svg-icon polygon,
 menu#side-menu ul li.side-menu-item:hover .side-menu-icon .svg-icon rect {
-    fill: var(--niceblue);
+  fill: #3db5ff;
 }
 
 menu#side-menu ul li.side-menu-item:hover .side-menu-text a {
-    color: var(--niceblue);
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+  color: #3db5ff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
 }
 
 menu#side-menu:hover > ul li.side-menu-item .side-menu-text {
-    opacity: 1;
-    padding-right: 1.5rem;
-    width: 100%;
-    min-width: 200px;
-   transition: all 0.15s ease-in-out;
+  opacity: 1;
+  padding-right: 1.5rem;
+  width: 100%;
+  min-width: 200px;
+  transition: all 0.15s ease-in-out;
 }
 
 /* ----- SVG Icons - svgicons.sparkk.fr ----- */
 
 menu#side-menu ul li.side-menu-item .svg-icon {
-    width: 1em;
-    height: 1em;
+  width: 1em;
+  height: 1em;
 }
 
 menu#side-menu ul li.side-menu-item .svg-icon path,
 menu#side-menu ul li.side-menu-item .svg-icon polygon,
 menu#side-menu ul li.side-menu-item .svg-icon rect {
-    fill: #cecece;
+  fill: #fff;
 }
 
 menu#side-menu ul li.side-menu-item .svg-icon circle {
-    stroke: #cecece;
-    stroke-width: 1;
+  stroke: #fff;
+  stroke-width: 1;
 }
