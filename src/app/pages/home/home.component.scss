@@ -1,6 +1,14 @@
+.home {
+  width: calc(100% - 60px);
+  display: inline-block;
+  margin-left: 60px;
+}
+
 .home--container {
-  margin-top: 40px;
-  padding-left: 20px;
+  width: 90%;
+  margin: 0 auto 0 auto;
+  display: block;
+
   ol,
   li {
     margin: 0;

@@ -13,4 +13,12 @@ export const STATE: { [x: string]: string } = {
   C: 'cesado',
 };
 
+export const DOCUMENT_TYPY_LENGTH = {
+  DNI: 8,
+  CE: 12,
+  RUC: 11,
+  PA: 12,
+  PN: 15,
+};
+
 export const USER_SESION = 40;

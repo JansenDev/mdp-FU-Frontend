@@ -1,0 +1,54 @@
+$width_fields_container: 85%;
+$gap_field: 15px;
+
+.filter {
+  margin-top: 20px;
+//   width: $width_fields_container;
+  display: inline-block;
+
+  & .filter-fields {
+    display: flex;
+    gap: $gap_field;
+
+    & mat-form-field {
+      display: block;
+      position: relative;
+      min-width: 150px;
+      width: 330px;
+    }
+
+    & mat-form-field:nth-child(4) {
+      min-width: 180px;
+    }
+
+    & mat-form-field:nth-child(5) {
+      min-width: 140px;
+    //   margin-right: $gap_field;
+      //   padding-right: 25%;;
+    }
+  }
+}
+
+@media (max-width: 930px) {
+  .filter {
+    width: 100%;
+
+    & .filter-fields {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+
+      & mat-form-field {
+        position: relative;
+        min-width: 120px;
+        width: 100%;
+      }
+      //     & mat-form-field:nth-child(4){
+      //         min-width: 180px;
+      //     }
+
+      //     & mat-form-field:nth-child(5){
+      //      min-width: 140px;
+      //   }
+    }
+  }
+}

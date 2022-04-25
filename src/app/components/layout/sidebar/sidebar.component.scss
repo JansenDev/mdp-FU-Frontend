@@ -1,0 +1,116 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;1,300;1,400&display=swap");
+
+// * {
+//   box-sizing: border-box;
+// }
+
+.flex-centered {
+  position: fixed;
+  //   top: 30%;
+//   top: 55px;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  margin: 10% auto; /* Will not center vertically and won't work in IE6/7. */
+}
+
+/* ----- Menu ----- */
+
+menu#side-menu {
+  display: inline-block;
+  background: #2e4294ef;
+  padding: 0;
+  margin: 0;
+  max-width: 250px;
+  border-radius: 10px;
+}
+
+menu#side-menu ul {
+  padding: 0;
+  margin: 0;
+}
+
+menu#side-menu ul li.side-menu-item {
+  list-style-type: none;
+  display: block;
+}
+
+menu#side-menu ul li.side-menu-item .side-menu-item-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+menu#side-menu ul li.side-menu-item .side-menu-icon {
+  padding: 1rem 1.15rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+menu#side-menu ul li.side-menu-item .side-menu-icon svg {
+  position: relative;
+  top: 0.1rem;
+}
+
+menu#side-menu ul li.side-menu-item .side-menu-text {
+  padding: 1rem 0;
+  width: 0;
+  opacity: 0;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+menu#side-menu ul li.side-menu-item .side-menu-text a {
+  color: #fff;
+  text-decoration: none;
+}
+
+menu#side-menu ul li.side-menu-item:first-child:hover {
+  border-radius: 10px 10px 0 0;
+}
+
+menu#side-menu ul li.side-menu-item:last-child:hover {
+  border-radius: 0 0 10px 10px;
+}
+
+menu#side-menu ul li.side-menu-item:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+menu#side-menu ul li.side-menu-item:hover .side-menu-icon .svg-icon path,
+menu#side-menu ul li.side-menu-item:hover .side-menu-icon .svg-icon polygon,
+menu#side-menu ul li.side-menu-item:hover .side-menu-icon .svg-icon rect {
+  fill: #3db5ff;
+}
+
+menu#side-menu ul li.side-menu-item:hover .side-menu-text a {
+  color: #3db5ff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+menu#side-menu:hover > ul li.side-menu-item .side-menu-text {
+  opacity: 1;
+  padding-right: 1.5rem;
+  width: 100%;
+  min-width: 200px;
+  transition: all 0.15s ease-in-out;
+}
+
+/* ----- SVG Icons - svgicons.sparkk.fr ----- */
+
+menu#side-menu ul li.side-menu-item .svg-icon {
+  width: 1em;
+  height: 1em;
+}
+
+menu#side-menu ul li.side-menu-item .svg-icon path,
+menu#side-menu ul li.side-menu-item .svg-icon polygon,
+menu#side-menu ul li.side-menu-item .svg-icon rect {
+  fill: #fff;
+}
+
+menu#side-menu ul li.side-menu-item .svg-icon circle {
+  stroke: #fff;
+  stroke-width: 1;
+}

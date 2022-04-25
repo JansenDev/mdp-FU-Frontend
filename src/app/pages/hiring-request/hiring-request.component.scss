@@ -1,0 +1,137 @@
+$width_content_page: 90%;
+
+.hiring-request {
+  width: calc(100% - 60px);
+  display: inline-block;
+  margin-left: 60px;
+}
+
+.hiring--container {
+  width: $width_content_page;
+  margin: 0 auto;
+  height: calc(100% - 50px);
+
+  & .hiring--title {
+    padding-top: 20px;
+    font-weight: 600;
+    text-shadow: 2px 2px var(--gray);
+    color: var(--black);
+    font-family: var(--font-family);
+    font-size: 30px;
+  }
+
+  & .hiring--form {
+    & .form--title {
+      margin: 20px 0 20px 0;
+    }
+
+    & .form--buttons {
+      width: max-content;
+      margin: 20px auto 0 auto;
+      padding-bottom: 20px;
+
+      & button {
+        padding: 0 25px;
+      }
+
+      & button:first-child {
+        margin-right: 20px;
+      }
+    }
+
+    & .form--collaborator {
+      & .collaborator--row1,
+      .collaborator--row2,
+      .collaborator--row3 {
+        @extend .basic-flex;
+      }
+    }
+
+    & .form--contract {
+      & .contract--row1,
+      .contract--row2,
+      .contract--row3,
+      .contract--row4 {
+        @extend .basic-flex;
+      }
+
+      & .contract--row3 {
+        justify-content: space-between;
+
+        & mat-radio-group {
+          width: 300px;
+          display: flex;
+          align-items: center;
+          justify-content: space-evenly;
+          min-width: 180px;
+          gap: 10px;
+          & mat-form-field {
+            min-width: 100px;
+          }
+
+          & mat-checkbox {
+            margin-left: 8px;
+          }
+        }
+
+        // & .row3--cboxEPS {
+        //   width: 300px;
+        //   display: flex;
+        //   align-items: center;
+        //   justify-content: space-evenly;
+        //   min-width: 100px;
+        //   gap: 10px;
+
+        //   & mat-form-field {
+        //     min-width: 100px;
+        //   }
+
+        //   & .cboxEPS--amount{
+        //     width: 40px;
+        //     text-align: right;
+        //   }
+        // }
+      }
+
+      & .contract--row4 {
+        & mat-form-field {
+          width: 80% !important;
+        }
+      }
+    }
+  }
+}
+
+// utilities
+.basic-flex {
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
+  justify-content: space-between;
+
+  & mat-form-field {
+    width: 300px;
+    min-width: 180px;
+  }
+}
+
+.offset {
+  background-color: transparent;
+  width: 300px;
+  min-width: 180px;
+}
+
+// medias
+@media (max-width: 930px) {
+  .basic-flex {
+    display: grid;
+    // flex-direction: column;
+    // justify-content: space-between;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 0 50px;
+
+    & mat-form-field {
+      width: 100%;
+    }
+  }
+}

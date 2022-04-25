@@ -24,6 +24,13 @@ body {
   background-color: var(--indicador-success);
 }
 
+.mat-raised-button.mat-primary {
+  background-color: var(--primary);
+}
+
+.mat-raised-button.mat-accent {
+  background-color: var(--red);
+}
 
 // @import '~@angular/material/theming';
 // @include mat-core();

@@ -12,6 +12,10 @@ import { ResourceMapDetailComponent } from './resource-map-detail/resource-map-d
 import { ServiceDataComponent } from './service-data/service-data.component';
 import { BillingServicesComponent } from './billing-services/billing-services.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ImboxFilterComponent } from './form/imbox-filter/imbox-filter.component';
+import { SidebarComponent } from './layout/sidebar/sidebar.component';
+
+
 @NgModule({
   declarations: [
     TestComponent,
@@ -21,11 +25,15 @@ import { ReactiveFormsModule } from '@angular/forms';
     ResourceMapDetailComponent,
     ServiceDataComponent,
     BillingServicesComponent,
-    
+
+    ImboxFilterComponent,
+    SidebarComponent,
   ],
   imports: [CommonModule, SharedModule, RouterModule, ReactiveFormsModule],
   exports: [
     TestComponent,
+    RouterModule,
+    ReactiveFormsModule,
     FooterComponent,
     HeaderComponent,
     SummaryComponent,
@@ -33,7 +41,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ServiceDataComponent,
     BillingServicesComponent,
     RouterModule,
-    ReactiveFormsModule,
+    ImboxFilterComponent,
+    SidebarComponent
   ],
 })
 export class ComponentModule {}

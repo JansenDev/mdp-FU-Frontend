@@ -1,0 +1,231 @@
+$width_page: 90%;
+
+// Imbox
+
+.imbox-contract{
+  width: calc(100% - 60px);
+  display: inline-block;
+  margin-left: 60px;
+}
+
+.imbox-contract--container {
+  width: $width_page;
+  margin: 20px auto 0 auto;
+
+  & .imbox-contract--title {
+    // padding-top: 10px;
+    font-weight: 600;
+    text-shadow: 2px 2px var(--gray);
+    color: var(--black);
+    font-family: var(--font-family);
+    font-size: 30px;
+  }
+
+  & .imbox-contract--buttons {
+    & .mat-raised-button.mat-primary {
+      background-color: var(--primary);
+    }
+  }
+
+  & form {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    position: relative;
+
+    & app-imbox-filter {
+      margin: auto;
+      & .filter {
+        width: 100%;
+      }
+    }
+
+    .imbox-contract--buttons {
+      display: flex;
+      width: max-content;
+      margin-left: auto;
+
+      & button:nth-child(2) {
+        margin-left: 5px;
+      }
+    }
+  }
+
+  & .imbox-contract--table {
+    & table {
+      margin-top: 60px;
+      width: 100%;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2),
+        0px 8px 10px 1px rgba(0, 0, 0, 0.14),
+        0px 0px 0px 1px rgba(0, 0, 0, 0.12) !important;
+
+      & .mat-header-row {
+        & th.mat-header-cell {
+          background-color: var(--primary);
+          color: var(--white);
+
+          &:nth-child(8) {
+            text-align: center;
+          }
+
+          &:nth-child(9) {
+            text-align: center;
+          }
+
+          &:nth-child(10) {
+            text-align: center;
+          }
+
+          &:nth-child(11) {
+            text-align: center;
+          }
+
+          &:nth-child(12) {
+            text-align: center;
+          }
+
+          &:nth-child(13) {
+            text-align: center;
+          }
+          &:nth-child(14) {
+            text-align: center;
+          }
+        }
+
+        // & .mat-header-cell {
+        //   color: var(--white);
+        //   font-weight: bold;
+        //   font-size: 14px;
+
+        //   &:nth-child(8) {
+        //     text-align: center;
+        //   }
+        //   &:nth-child(9) {
+        //     text-align: right;
+        //   }
+        //   &:nth-child(10) {
+        //     text-align: right;
+        //   }
+        // &:nth-child(12) {
+        //   text-align: center;
+        // }
+
+        //   &:last-child {
+        //     padding-right: 10px !important;
+        //   }
+        // }
+      }
+
+      & tr.mat-row {
+        height: 33px;
+
+        & td.mat-cell {
+          &:nth-child(8) {
+            text-align: center;
+          }
+
+          &:nth-child(9) {
+            text-align: center;
+          }
+
+          &:nth-child(10) {
+            text-align: center;
+          }
+
+          &:nth-child(11) {
+            text-align: center;
+          }
+
+          &:nth-child(13) {
+            text-align: center;
+          }
+          &:nth-child(14) {
+            text-align: center;
+          }
+        }
+      }
+
+      // .mat-row .mat-cell {
+      //   border-bottom: 1px solid var(--gray);
+      //   border-top: 1px solid transparent;
+
+      //   &:nth-child(8) {
+      //     text-align: center;
+      //   }
+      //   &:nth-child(9) {
+      //     text-align: right;
+      //   }
+      //   &:nth-child(10) {
+      //     text-align: right;
+      //   }
+      //   &:nth-child(11) {
+      //     text-align: center;
+      //   }
+      // }
+
+      // & tr.mat-row {
+      //   height: 33px;
+      // }
+
+      & tr.mat-header-row {
+        height: 38px;
+        background-color: var(--primary);
+
+        th {
+          color: var(--white);
+          font-weight: bold;
+          font-size: 14px;
+        }
+      }
+
+      // // TODO: mejorar color  al pasar el mouse en la fila
+      .mat-row:hover .mat-cell {
+        cursor: pointer;
+        background-color: var(--gray);
+        color: var(--white);
+      }
+
+      & tbody tr td.mat-cell:last-child {
+        padding-right: 10px !important;
+      }
+    }
+  }
+
+  // pagination
+  & .pagination--container {
+    margin: 20px auto 0 auto;
+  }
+}
+
+// utlis filter
+.dib {
+  display: inline-block;
+  float: right;
+}
+
+.fg-approve {
+  color: red;
+  @extend .fg-base;
+}
+
+.fg-reject {
+  color: green;
+  @extend .fg-base;
+}
+
+.fg-base {
+  font-weight: 500;
+}
+
+// medias filter
+@media (max-width: 1230px) {
+  .imbox-contract--container {
+    & form {
+      & .imbox-contract--buttons {
+        display: block;
+      }
+    }
+  }
+}

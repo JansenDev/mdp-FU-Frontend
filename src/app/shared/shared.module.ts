@@ -10,14 +10,24 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon'
+import { MatIconModule } from '@angular/material/icon';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
 import { StatePipe } from './pipes/state.pipe';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [TestpPipe, StatePipe],
-  imports: [
-    CommonModule,
+  imports: [CommonModule],
+  providers: [
+    {
+      provide: MAT_DATE_LOCALE,
+      useValue: 'es',
+    },
   ],
   exports: [
     TestpPipe,
@@ -32,7 +42,13 @@ import { FormsModule } from '@angular/forms';
     MatSelectModule,
     MatInputModule,
     MatIconModule,
-    FormsModule
+    FormsModule,
+    MatGridListModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCheckboxModule,
+    MatRadioModule,
+    MatMomentDateModule,
   ],
 })
 export class SharedModule {}
