@@ -125,12 +125,14 @@ export class ServiceDataComponent implements OnInit {
       },  error => {
         console.error(error);
       })
-    this.disableBtns = true;
   }
 
   submitForm(){
     console.log(this.ServiceForm);
     this.createService(this.formData);
+    if (this.serviceResponse){
+      this.disableBtns = true;
+    }
   }
 
   loadExchangeRate() {
