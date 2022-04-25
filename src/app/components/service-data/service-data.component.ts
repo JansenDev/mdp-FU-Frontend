@@ -40,6 +40,7 @@ export class ServiceDataComponent implements OnInit {
     fecha_fin_real: null,
     forma_pago: ""
   }
+  cod_servicio : any;
 
   currencies = [
     { value: 'sol-0', viewValue: 'SOL' },
@@ -115,6 +116,7 @@ export class ServiceDataComponent implements OnInit {
     this.servicesService.createService(service).
       subscribe(createdService => {
         console.log('created service: ', createdService);
+        this.cod_servicio = createdService;
       },  error => {
         console.error(error);
       })

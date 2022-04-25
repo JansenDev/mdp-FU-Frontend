@@ -16,7 +16,7 @@ const routes: Routes = [
     component: ResourceMapComponent,
   },
   {
-    path: 'services',
+    path: 'service-map',
     component: ServiceMapComponent,
   },
   {

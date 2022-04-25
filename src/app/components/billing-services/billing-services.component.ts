@@ -11,7 +11,7 @@ import { BillingServicesService } from 'src/app/core/services/billing-services.s
 
 
 export class BillingServicesComponent implements OnInit {
-  
+  public hitos = [];
   public nameHito = '';
   public startDate = '';
   public endDate = '';
@@ -20,8 +20,8 @@ export class BillingServicesComponent implements OnInit {
   public isUpdate = false;
   public cod_hito = null;
   public numero_hito = null;
-  private monto_total = 100000;
-
+  private monto_total = 1000000;
+  private suma_total = 0;
   @ViewChild(MatPaginator)
   paginator: MatPaginator = {} as MatPaginator;
   dataSource: MatTableDataSource<any> =
@@ -42,7 +42,7 @@ export class BillingServicesComponent implements OnInit {
   constructor(private service : BillingServicesService,
     private formBuilder : FormBuilder) {
       this.resourceForm = this.formBuilder.group({
-        cod_servicio: 1, // luego cambiar
+        cod_servicio: 11, // luego cambiar
         nameHito: ['', Validators.required],
         start_date: ['', Validators.required],
         end_date: ['', Validators.required],
@@ -73,8 +73,12 @@ export class BillingServicesComponent implements OnInit {
     this.getHitos()
   }
 
-  async registerHito() {
+  registerHito() {
     if (this.isUpdate == false) { // Si es registrar
+      if(this.suma_total + this.resourceForm.value.amount >= this.monto_total) {
+        alert("No debe exceder la suma");
+        return;
+      }
       let input = {
         "cod_servicio": this.resourceForm.value.cod_servicio,
         "descripcion_hito": this.resourceForm.value.nameHito,
@@ -84,11 +88,15 @@ export class BillingServicesComponent implements OnInit {
         "monto": this.resourceForm.value.amount
       };
       console.log("input register", input);
-      await this.service.registerHito(input).subscribe(data => {
+      this.service.registerHito(input).subscribe(data => {
         console.log("data registerHito", data);
       });
     } else { // Si es actualizar
       this.isUpdate = false;
+      if(this.suma_total >= this.monto_total) {
+        alert("No debe exceder la suma");
+        return;
+      }
       let input = {
         "cod_hito": this.cod_hito,
         "numero_hito": this.numero_hito,
@@ -99,28 +107,36 @@ export class BillingServicesComponent implements OnInit {
         "fecha_fin": this.resourceForm.value.end_date
       }
       console.log("input de actualizar", input);
-      await this.service.updateHito(input).subscribe(data => {
+      this.service.updateHito(input).subscribe(data => {
         console.log("data de actualizar", data);
       });
     }
-    this.resourceForm.controls['nameHito'].setValue(null);
-    this.resourceForm.controls['start_date'].setValue(null);
-    this.resourceForm.controls['end_date'].setValue(null);
-    this.resourceForm.controls['hours'].setValue(null);
-    this.resourceForm.controls['amount'].setValue(null);
+    this.resourceForm.controls['nameHito'].setValue("");
+    this.resourceForm.controls['start_date'].setValue("");
+    this.resourceForm.controls['end_date'].setValue("");
+    this.resourceForm.controls['hours'].setValue(0);
+    this.resourceForm.controls['amount'].setValue(0);
   }
 
-  async getHitos() {
+   getHitos() {
     let input = {
-      "cod_servicio" : 1
+      "cod_servicio" : 11
     }
-    await this.service.getHitos(input).subscribe(data => {
+    this.service.getHitos(input).subscribe(data => {
       console.log("GET HITOS", data);
       this.dataSource = new MatTableDataSource<any>(data);
+      this.hitos = data;
+      this.suma_total = this.sumMontos(data);
       this.dataSource.paginator = this.paginator;
+      console.log("SUMA TOTAL DE LOS HITOS = ", this.suma_total);
     });
   }
-
+  sumMontos(data : any) {
+    let suma = 0;
+    for(let i = 0; i < data.length; i++)
+      suma += parseInt(data[i].monto);
+    return suma;
+  }
   updateHito(element : any) {
     this.resourceForm.controls['nameHito'].setValue(element.descripcion_hito);
     this.resourceForm.controls['start_date'].setValue(element.fecha_inicio);
@@ -133,12 +149,12 @@ export class BillingServicesComponent implements OnInit {
     console.log("editando", element);
   }
 
-  async deleteHito(element : any) {
+  deleteHito(element : any) {
     let input = {
       "cod_hito": element.cod_hito
     }
-    await this.service.deleteHito(input).subscribe(data => {
+    this.service.deleteHito(input).subscribe(data => {
       console.log("eliminando", data);
-    });
+    });  
   }
 }

@@ -49,3 +49,8 @@ $page__width: 90%;
     }
   }
 }
+
+.pagination--container {
+  width: $page__width;
+  margin: 20px auto 0 auto;
+}

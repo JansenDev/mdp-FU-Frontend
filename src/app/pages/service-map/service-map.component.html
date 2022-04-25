@@ -31,12 +31,135 @@
 
       <div class="filters--btns">
         <button mat-raised-button color="primary">Buscar</button>
+        <button mat-raised-button color="primary">Crear Servicio</button>
       </div>
     </form>
+
+    <div class="table--container">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="codigo">
+          <th mat-header-cell *matHeaderCellDef>Còdigo</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.codigo }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="nombre_servicio">
+          <th mat-header-cell *matHeaderCellDef>Nombre servicio</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.nombre_servicio }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="tipo_servicio">
+          <th mat-header-cell *matHeaderCellDef>Tipo de servicio</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.tipo_servicio }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="etapa">
+          <th mat-header-cell *matHeaderCellDef>Etapa</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.etapa }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="estado">
+          <th mat-header-cell *matHeaderCellDef>Estado</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.estado }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="horas_venta">
+          <th mat-header-cell *matHeaderCellDef>Horas venta</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.horas_venta }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="valor_venta">
+          <th mat-header-cell *matHeaderCellDef>Valor de venta</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.valor_venta }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fecha_inicio_planificada">
+          <th mat-header-cell *matHeaderCellDef>Fecha Inicio Planificada</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.fecha_inicio_planificada }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fecha_fin_planificada">
+          <th mat-header-cell *matHeaderCellDef>Fecha Fin Planificada</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.fecha_fin_planificada }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fecha_inicio_real">
+          <th mat-header-cell *matHeaderCellDef>Fecha Inicio Real</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.fecha_inicio_real }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fecha_fin_real">
+          <th mat-header-cell *matHeaderCellDef>Fecha Fin Real</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.fecha_fin_real }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="horas_planificada">
+          <th mat-header-cell *matHeaderCellDef>Horas planificadas</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.horas_planificada }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="valor_venta_planificada">
+          <th mat-header-cell *matHeaderCellDef>Valor de venta planificada</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.valor_venta_planificada }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="horas_ejecutadas">
+          <th mat-header-cell *matHeaderCellDef>Horas ejecutadas</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.horas_ejecutadas }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="produccion_ejecutada">
+          <th mat-header-cell *matHeaderCellDef>Producción ejecutada</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.produccion_ejecutada }}
+          </td>
+        </ng-container>
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayedColumns"
+          class="mat-table--header"
+        ></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+        ></tr>
+
+      </table>
+    </div>
+    <div class="pagination--container">
+      <mat-paginator
+        [pageSizeOptions]="[5, 10, 15]"
+        aria-label="Select page of periodic elements"
+      >
+      </mat-paginator>
+      </div>
   </div>
 
-    <div>
-      <button mat-raised-button color="primary">Crear Servicio</button>
-    </div>
   </div>
 </main>
