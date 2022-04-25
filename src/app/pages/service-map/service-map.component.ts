@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { IGetServiceResponse, IPostServiceRequest } from 'src/app/core/models/service.model';
@@ -16,6 +16,7 @@ export class ServiceMapComponent implements OnInit {
   public lines : any;
   resourceForm: FormGroup;
 
+  @ViewChild(MatPaginator)
   paginator: MatPaginator = {} as MatPaginator;
   dataSource: MatTableDataSource<any> =
     new MatTableDataSource<any>([]);
@@ -54,7 +55,9 @@ export class ServiceMapComponent implements OnInit {
 
   findServices(filters: any): void {
     this.service.findServices(filters).subscribe(res => {
-      this.dataSource.data = res;
+      this.dataSource = new MatTableDataSource(res);
+      // this.dataSource.data = res;
+      this.dataSource.paginator = this.paginator
       console.log("findServices", this.dataSource.data);
     }, err => {
       console.log(err);
