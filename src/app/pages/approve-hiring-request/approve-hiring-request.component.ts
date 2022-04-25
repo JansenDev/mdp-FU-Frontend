@@ -191,14 +191,19 @@ export class ApproveHiringRequestComponent implements OnInit {
           hiringRequestSelected.nombre
         );
 
-        let fecha_fin = util.timestampFormat(hiringRequestSelected.fecha_fin);
+        let fecha_fin = util.timestampFormat(
+          hiringRequestSelected.fecha_fin,
+          'DD-MM-YYYY'
+        );
 
         let fecha_inicio = util.timestampFormat(
-          hiringRequestSelected.fecha_inicio
+          hiringRequestSelected.fecha_inicio,
+          'DD-MM-YYYY'
         );
 
         let fecha_nacimiento = util.timestampFormat(
-          hiringRequestSelected.fecha_nacimiento
+          hiringRequestSelected.fecha_nacimiento,
+          'DD-MM-YYYY'
         );
 
         let ind_asign_familiar: boolean =
