@@ -70,7 +70,7 @@
         <ng-container matColumnDef="nombre_servicio">
           <th mat-header-cell *matHeaderCellDef>Nombre servicio</th>
           <td mat-cell *matCellDef="let element">
-            {{ element.nombre_corto | titlecase }}
+            {{ element.descripcion_servicio | titlecase }}
           </td>
         </ng-container>
         <ng-container matColumnDef="tipo_servicio">

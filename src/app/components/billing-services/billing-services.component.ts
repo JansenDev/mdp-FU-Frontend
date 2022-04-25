@@ -25,6 +25,7 @@ export class BillingServicesComponent implements OnInit {
   private suma_total = 0;
   @Input() subject!: Subject<any>;
   cod_servicio: number = 0;
+  disableBilling: boolean = true;
   @ViewChild(MatPaginator)
   paginator: MatPaginator = {} as MatPaginator;
   dataSource: MatTableDataSource<any> =
@@ -45,7 +46,7 @@ export class BillingServicesComponent implements OnInit {
   constructor(private service : BillingServicesService,
     private formBuilder : FormBuilder) {
       this.resourceForm = this.formBuilder.group({
-        cod_servicio: 11, // luego cambiar
+        cod_servicio: [''],
         nameHito: ['', Validators.required],
         start_date: ['', Validators.required],
         end_date: ['', Validators.required],
@@ -56,8 +57,33 @@ export class BillingServicesComponent implements OnInit {
 
   ngOnInit(): void {
     let hitos = this.getHitos(); // obtención de los hitos de la tabla
+    this.resourceForm.controls['nameHito'].disable();
+    this.resourceForm.controls['start_date'].disable();
+    this.resourceForm.controls['end_date'].disable();
+    this.resourceForm.controls['hours'].disable();
+    this.resourceForm.controls['amount'].disable();
     this.subject.subscribe((data: any) => {
-      console.log("cod_servicio: ", data);
+      this.cod_servicio = data.cod_servicio;
+      this.disableBilling = data.disableBilling;
+      //const buttonNameHito : any = document.getElementById('nameHito');
+
+      if(this.disableBilling) {
+        this.resourceForm.controls['nameHito'].disable();
+        this.resourceForm.controls['start_date'].disable();
+        this.resourceForm.controls['end_date'].disable();
+        this.resourceForm.controls['hours'].disable();
+        this.resourceForm.controls['amount'].disable();
+      } else {
+        this.resourceForm.controls['nameHito'].enable();
+        this.resourceForm.controls['start_date'].enable();
+        this.resourceForm.controls['end_date'].enable();
+        this.resourceForm.controls['hours'].enable();
+        this.resourceForm.controls['amount'].enable();
+      }
+      // console.log("boton de nombre hito", buttonNameHito);
+      //buttonNameHito.setAttribute('disabled', ' ')
+      console.log("cod_servicio y disableBilling: ", data);
+      this.getHitos()
     })
   }
 
@@ -85,7 +111,7 @@ export class BillingServicesComponent implements OnInit {
         return;
       }
       let input = {
-        "cod_servicio": this.resourceForm.value.cod_servicio,
+        "cod_servicio": this.cod_servicio,
         "descripcion_hito": this.resourceForm.value.nameHito,
         "fecha_inicio": this.resourceForm.value.start_date,
         "fecha_fin": this.resourceForm.value.end_date,
@@ -118,16 +144,16 @@ export class BillingServicesComponent implements OnInit {
         this.getHitos()
       });
     }
-    this.resourceForm.controls['nameHito'].setValue("");
-    this.resourceForm.controls['start_date'].setValue("");
-    this.resourceForm.controls['end_date'].setValue("");
-    this.resourceForm.controls['hours'].setValue(0);
-    this.resourceForm.controls['amount'].setValue(0);
+    this.resourceForm.controls['nameHito'].setValue(" ");
+    this.resourceForm.controls['start_date'].setValue(new Date());
+    this.resourceForm.controls['end_date'].setValue(new Date());
+    this.resourceForm.controls['hours'].setValue(1);
+    this.resourceForm.controls['amount'].setValue(1);
   }
 
    getHitos() {
     let input = {
-      "cod_servicio" : 11
+      "cod_servicio" : this.cod_servicio
     }
     this.service.getHitos(input).subscribe(data => {
       console.log("GET HITOS", data);

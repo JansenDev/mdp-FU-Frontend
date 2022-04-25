@@ -5,41 +5,45 @@
     <form #serviceForm="ngForm" class="service-form" [formGroup]="resourceForm" (submit)="ngSubmit()">
       <mat-form-field class="row1" appearance="outline">
         <mat-label class="label">Nombre del hito</mat-label>
-        <input formControlName="nameHito" class="name-input" matInput
+        <input id="nameHito" formControlName="nameHito" class="name-input" 
+        matInput 
         type="text" placeholder="Nombre del hito" required>
 
       </mat-form-field>  
       
       <mat-form-field class="row1" appearance="outline">
         <mat-label class="label">Fecha Inicio</mat-label>
-        <input formControlName="start_date" type="date" matInput
+        <input formControlName="start_date" type="date" matInput 
         class="start-date-input" placeholder="Fecha Inicio" required>
       </mat-form-field>  
 
       <mat-form-field class="row1" appearance="outline">
         <mat-label class="label">Fecha Fin</mat-label>
-        <input formControlName="end_date" type="date" matInput min="{{serviceForm.value.start_date}}"
+        <input formControlName="end_date" type="date" 
+        matInput min="{{serviceForm.value.start_date}}"
         class="end-date-input" placeholder="Fecha Fin" required>
       </mat-form-field>  
 
       <mat-form-field class="row2" appearance="outline">
         <mat-label class="label">Horas</mat-label>
-        <input formControlName="hours" type="number" matInput
+        <input formControlName="hours" type="number" 
+        matInput min="1"
         class="" placeholder="Horas" required>
       </mat-form-field>
       
       <mat-form-field class="row2" appearance="outline">
         <mat-label class="label">Monto</mat-label>
-        <input formControlName="amount" type="number" matInput
+        <input formControlName="amount" type="number" 
+        matInput min="1"
         class="" placeholder="Monto" required>
       </mat-form-field>
       <button
-        [disabled]="resourceForm.invalid"
+        [disabled]="resourceForm.invalid || disableBilling"
         type="submit"
         mat-raised-button
         class="save-button"
       >
-        {{this.isUpdate == true ? "Actualizar" : "Guardar" }}
+        {{isUpdate == true ? "Actualizar" : "Guardar" }}
       </button>
     </form>
     <div class="table--container">
