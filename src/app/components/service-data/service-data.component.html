@@ -119,8 +119,8 @@
       <button type="submit" mat-raised-button class="save-btn" [disabled]="serviceForm.invalid || disableBtns"> <mat-icon>save</mat-icon> Guardar</button>
       <button mat-raised-button class="cancel-btn"><mat-icon>close</mat-icon> Cancelar</button>
   </form>
-  <div class="status-container">
-    <h3 *ngIf="this.serviceResponse" class="status">
+  <div *ngIf="this.serviceResponse" class="status-container">
+    <h3 class="status">
       <b>Estado: {{ this.serviceResponse.estado | titlecase }}</b>
     </h3>
     <span
