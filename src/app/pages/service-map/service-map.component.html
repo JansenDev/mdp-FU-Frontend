@@ -35,22 +35,23 @@
       </mat-form-field>
 
       <div class="filters--btns">
-        <button 
+        <button
           type="submit"
-          mat-raised-button 
+          mat-raised-button
           color="primary"
           (click)="ngSubmit()"
           [disabled]="resourceForm.invalid"
         >
         Buscar
         </button>
-        
-        <button 
+
+        <button
           type="submit"
-          mat-raised-button 
+          mat-raised-button
           color="primary"
           id="create_service"
           (click)="createService()"
+          routerLink="/services-configuration"
         >
         Crear servicio
         </button>
