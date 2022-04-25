@@ -66,7 +66,7 @@
 
     <mat-form-field class="col2" appearance="outline">
       <mat-label class="currency-label">Moneda</mat-label>
-      <mat-select  [(ngModel)]="formData.moneda" #validCurrency="ngModel" required name="moneda" class="currency-input">
+      <mat-select [(ngModel)]="formData.moneda" #validCurrency="ngModel" required name="moneda" class="currency-input">
         <mat-option *ngFor="let currency of currencies" [value]="currency.viewValue">
           {{ currency.viewValue }}
         </mat-option>
