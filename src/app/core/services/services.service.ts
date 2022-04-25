@@ -6,6 +6,7 @@ import { environment } from '../../../environments/environment';
 // Interfaces
 import { ICreateServiceRequest,
          ICreateServiceResponse,
+         IExchangeRateResponse,
          IPaymentMethodResponse,
          IServiceLineResponse,
          IServiceTypeResponse} from '../models/service.model';
@@ -16,12 +17,19 @@ import { IClientResponse } from '../models/client.model';
   providedIn: 'root'
 })
 export class ServicesService {
-
-  private _api: string = `${ environment.url_base }`;
+    private _api: string = `${ environment.url_base }`;
 
   constructor( private http: HttpClient ) { }
 
-  createService( service: ICreateServiceRequest ): Observable<ICreateServiceResponse> {
+  createService({...service}: ICreateServiceRequest ): Observable<ICreateServiceResponse> {
+    if (service.moneda == "DOLAR"){
+      service.valor_venta_sol = service.valor_venta! * service.tasa_cambio!;
+      service.costo_venta_sol = service.costo_venta! * service.tasa_cambio!;
+    }
+    if (service.moneda == 'SOL') {
+      service.valor_venta_sol = service.valor_venta!;
+      service.costo_venta_sol = service.costo_venta!;
+    }
     return this.http.post<ICreateServiceResponse>( `${ this._api }/services/create`, service );
   }
 
@@ -39,6 +47,10 @@ export class ServicesService {
 
   getPaymentMethodsByServiceType(serviceType: string): Observable<IPaymentMethodResponse[]> {
     return this.http.get<IPaymentMethodResponse[]>( `${ this._api }/payment-method/${ serviceType }` );
+  }
+
+  getExchangeRate(): Observable<IExchangeRateResponse> {
+    return this.http.get<IExchangeRateResponse>( `${ this._api }/period/last-period` );
   }
 
 }
