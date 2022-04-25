@@ -18,7 +18,7 @@ export function findPeriodActive(periodlist: IPeriodResponse[]): string {
 
 export function timestampFormat(
   timestamp: string,
-  format: string = 'YYYY-MM--DD'
+  format: string = 'YYYY-MM-DD'
 ) {
   if (!timestamp) {
     return null;
