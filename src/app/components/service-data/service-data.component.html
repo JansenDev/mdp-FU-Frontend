@@ -43,14 +43,12 @@
       <mat-hint *ngIf="validServiceDescription.invalid && (validServiceDescription.dirty || validServiceDescription.touched)" class="error-hint">Campo requerido</mat-hint>
     </mat-form-field>
 
-
-      <mat-form-field class="col3" appearance="outline">
-        <mat-label class="start-date-label">Fecha de inicio</mat-label>
-      <input [(ngModel)]="formData.fecha_ini_planificada" #validStartDate="ngModel" min="{{this.date}}" required name="fecha_ini_planificada"
-      matInput type="date" class="start-date-input">
-      <mat-hint *ngIf="validStartDate.invalid && (validStartDate.dirty || validStartDate.touched)" class="error-hint">Campo requerido</mat-hint>
-      </mat-form-field>
-
+    <mat-form-field class="col3" appearance="outline">
+      <mat-label class="start-date-label">Fecha de inicio</mat-label>
+    <input [(ngModel)]="formData.fecha_ini_planificada" #validStartDate="ngModel" min="{{this.date}}" required name="fecha_ini_planificada"
+    matInput type="date" class="start-date-input">
+    <mat-hint *ngIf="validStartDate.invalid && (validStartDate.dirty || validStartDate.touched)" class="error-hint">Campo requerido</mat-hint>
+    </mat-form-field>
 
     <mat-form-field class="col4" appearance="outline">
       <mat-label class="end-date-label">Fecha de fin</mat-label>
@@ -76,7 +74,7 @@
       <mat-hint *ngIf="validCurrency.invalid && (validCurrency.dirty || validCurrency.touched)" class="error-hint">Campo requerido</mat-hint>
     </mat-form-field>
 
-    <mat-form-field class="col4" appearance="fill" floatLabel="always">
+    <mat-form-field *ngIf="selectedServiceLine == 'PRY' " class="col4" appearance="fill" floatLabel="always">
       <mat-label class="sale-value-label">Costo de venta {{ formData.moneda === 'SOL' ? 'en soles' : 'en dolares' }}</mat-label>
       <input  [(ngModel)]="formData.costo_venta" #validCostValue="ngModel" name="costo_venta" required matInput type="number"
       class="sale-value-input">

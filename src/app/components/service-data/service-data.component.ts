@@ -100,6 +100,7 @@ export class ServiceDataComponent implements OnInit {
     }, error => {
       console.error(error);
     });
+    console.log('selected sl: ', this.selectedServiceLine);
   }
 
   loadPaymentMethods(serviceType: string){
