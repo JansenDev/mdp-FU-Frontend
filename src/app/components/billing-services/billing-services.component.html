@@ -2,7 +2,7 @@
 <p>Facturación</p>
 <mat-card class="mat-elevation-z6">
 
-    <form class="service-form" [formGroup]="resourceForm" (submit)="ngSubmit()">
+    <form #serviceForm="ngForm" class="service-form" [formGroup]="resourceForm" (submit)="ngSubmit()">
       <mat-form-field class="row1" appearance="outline">
         <mat-label class="label">Nombre del hito</mat-label>
         <input formControlName="nameHito" class="name-input" matInput
@@ -18,7 +18,7 @@
 
       <mat-form-field class="row1" appearance="outline">
         <mat-label class="label">Fecha Fin</mat-label>
-        <input formControlName="end_date" type="date" matInput
+        <input formControlName="end_date" type="date" matInput min="{{serviceForm.value.start_date}}"
         class="end-date-input" placeholder="Fecha Fin" required>
       </mat-form-field>  
 

@@ -90,6 +90,7 @@ export class BillingServicesComponent implements OnInit {
       console.log("input register", input);
       this.service.registerHito(input).subscribe(data => {
         console.log("data registerHito", data);
+        this.getHitos();
       });
     } else { // Si es actualizar
       this.isUpdate = false;
@@ -109,6 +110,7 @@ export class BillingServicesComponent implements OnInit {
       console.log("input de actualizar", input);
       this.service.updateHito(input).subscribe(data => {
         console.log("data de actualizar", data);
+        this.getHitos()
       });
     }
     this.resourceForm.controls['nameHito'].setValue("");
@@ -147,6 +149,7 @@ export class BillingServicesComponent implements OnInit {
     this.cod_hito = element.cod_hito;
     this.numero_hito = element.numero_hito;
     console.log("editando", element);
+
   }
 
   deleteHito(element : any) {
@@ -155,6 +158,8 @@ export class BillingServicesComponent implements OnInit {
     }
     this.service.deleteHito(input).subscribe(data => {
       console.log("eliminando", data);
+      this.getHitos();
     });  
+
   }
 }
