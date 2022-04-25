@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ICreateServiceRequest, IPaymentMethodResponse, IServiceLineResponse, IServiceTypeResponse } from 'src/app/core/models/service.model';
+import { ICreateServiceRequest, IExchangeRateResponse, IPaymentMethodResponse, IServiceLineResponse, IServiceTypeResponse } from 'src/app/core/models/service.model';
 import { NgForm } from '@angular/forms';
 import { ServicesService } from 'src/app/core/services/services.service';
 import { IClientResponse } from 'src/app/core/models/client.model';
@@ -27,19 +27,26 @@ export class ServiceDataComponent implements OnInit {
     tipo_servicio: "",
     descripcion_servicio: "",
     horas_venta: null,
-    moneda: "",
+    moneda: "SOL",
+    tasa_cambio: null,
+    costo_venta: null,
+    costo_venta_sol: null,
     valor_venta: null,
+    valor_venta_sol: null,
+    tarifa: null,
     fecha_ini_planificada: "",
     fecha_fin_planificada: "",
     fecha_ini_real: null,
     fecha_fin_real: null,
     forma_pago: ""
   }
+  cod_servicio : any;
 
   currencies = [
     { value: 'sol-0', viewValue: 'SOL' },
     { value: 'dolar-1', viewValue: 'DOLAR' }
   ]
+  exchangeRate!: IExchangeRateResponse;
 
   constructor(
     private servicesService: ServicesService
@@ -49,6 +56,7 @@ export class ServiceDataComponent implements OnInit {
     this.loadClients();
     this.loadServiceLines()
     console.log("selected client:", this.selectedClient);
+    this.loadExchangeRate();
   }
 
   loadClients(){
@@ -90,6 +98,15 @@ export class ServiceDataComponent implements OnInit {
     subscribe(paymentMethods => {
       console.log('payment methods: ', paymentMethods);
       this.paymentMethods = paymentMethods;
+      if (this.paymentMethods.length === 1){
+        this.selectedPaymentMethod = paymentMethods[0].forma_pago;
+        this.formData.forma_pago = paymentMethods[0].forma_pago;
+      }
+      if (this.selectedServiceType === "RQ"){
+        this.selectedPaymentMethod ="total";
+        this.formData.forma_pago = "total";
+      }
+
     }, error => {
       console.error(error);
     });
@@ -99,6 +116,7 @@ export class ServiceDataComponent implements OnInit {
     this.servicesService.createService(service).
       subscribe(createdService => {
         console.log('created service: ', createdService);
+        this.cod_servicio = createdService;
       },  error => {
         console.error(error);
       })
@@ -108,4 +126,32 @@ export class ServiceDataComponent implements OnInit {
     console.log(this.ServiceForm);
     this.createService(this.formData);
   }
+
+  loadExchangeRate() {
+    this.servicesService.getExchangeRate()
+    .subscribe(exchangeRateData => {
+      console.log('echange rate: ', exchangeRateData);
+      this.exchangeRate = exchangeRateData;
+      this.formData.tasa_cambio = parseFloat(this.exchangeRate.tasa_cambio)
+    }, error => {
+      console.error(error);
+    });
+  }
+
+  calculateSoles(data: string): number {
+    if (data === 'valor'){
+      return this.formData.tasa_cambio! * this.formData.valor_venta!;
+    }
+
+    return this.formData.tasa_cambio! * this.formData.costo_venta!;
+  }
+
+  calculateRate(){
+    setTimeout(() => {
+      this.formData.tarifa = this.formData.valor_venta! / this.formData.horas_venta!;
+    }, 0);
+    return this.formData.tarifa;
+  }
+
+
 }

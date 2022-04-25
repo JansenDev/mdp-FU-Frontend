@@ -1,0 +1,92 @@
+$page__width: 90%;
+.title {
+  margin-top: 25px !important;
+  margin-bottom: 30px !important;
+
+  & > h1 {
+    color: var(--black);
+    font-family: var(--font-family);
+    font-size: 30px;
+    font-weight: 600;
+
+    display: flex;
+    justify-content: center;
+    text-shadow: 2px 2px var(--gray);
+  }
+
+  & h1:last-child {
+    margin-top: 10px;
+  }
+}
+
+.main-container{
+  display: inline-block;
+  width: 100%;
+  &.active{
+    width: 80%;
+  }
+}
+
+.filters {
+  &--container {
+    width: $page__width;
+    margin: 5px auto;
+    display: flex;
+    justify-content: flex-start;
+
+  }
+  &--btns {
+    padding-bottom: 1.25em;
+
+    & > button {
+      max-height: 40px;
+      width: 100px;
+    }
+
+    & button {
+      background-color: var(--primary);
+      color: var(--white);
+      margin: 1rem;
+    }
+  }
+}
+
+.table--container {
+  width: $page__width;
+  margin: 0 auto;
+}
+
+table {
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 0px 0px 1px rgba(0, 0, 0, 0.12) !important;
+}
+
+.mat-header-cell {
+  background-color: var(--primary);
+  color: var(--white);
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.mat-row:hover .mat-cell {
+  cursor: pointer;
+  background-color: var(--gray);
+  color: var(--white);
+}
+
+.pagination--container {
+  width: $page__width;
+  margin: 20px auto 0 auto;
+}
+
+.box {
+  margin: 1rem;
+}
+
+#create_service {
+  justify-content: center;
+  width: 8rem;
+}

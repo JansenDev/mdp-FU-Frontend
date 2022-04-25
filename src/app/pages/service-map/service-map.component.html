@@ -1,0 +1,187 @@
+<!-- Service Map Start -->
+<div class="title">
+  <h1>Mapa de Servicios</h1>
+</div>
+
+<!-- Options -->
+<main>
+  <div class="main-container">
+    <div>
+    <form class="filters--container" [formGroup]="resourceForm">
+      <mat-form-field class="px-2 box">
+        <mat-label>Cliente</mat-label>
+        <mat-select formControlName="cboxClient">
+          <mat-option *ngFor="let client of clients" [value]="client.cod_cliente">
+            {{ client.nombre_corto | titlecase }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="px-2 box">
+        <mat-label>Linea de negocio</mat-label>
+        <mat-select formControlName="cboxLine">
+          <mat-option *ngFor="let line of lines" [value]="line.cod_linea_servicio">
+            {{ line.linea_servicio | titlecase }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="px-2 box">
+        <mat-label>Estado</mat-label>
+        <mat-select formControlName="cboxState">
+          <mat-option value="en proceso">En proceso</mat-option>
+          <mat-option value="finalizado">Finalizado</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="filters--btns">
+        <button 
+          type="submit"
+          mat-raised-button 
+          color="primary"
+          (click)="ngSubmit()"
+          [disabled]="resourceForm.invalid"
+        >
+        Buscar
+        </button>
+        
+        <button 
+          type="submit"
+          mat-raised-button 
+          color="primary"
+          id="create_service"
+          (click)="createService()"
+        >
+        Crear servicio
+        </button>
+      </div>
+    </form>
+
+    <div class="table--container">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="codigo">
+          <th mat-header-cell *matHeaderCellDef>Código</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.cod_servicio }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="nombre_servicio">
+          <th mat-header-cell *matHeaderCellDef>Nombre servicio</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.nombre_corto | titlecase }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="tipo_servicio">
+          <th mat-header-cell *matHeaderCellDef>Tipo de servicio</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.tipo_servicio }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="etapa">
+          <th mat-header-cell *matHeaderCellDef>Etapa</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.etapa }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="estado">
+          <th mat-header-cell *matHeaderCellDef>Estado</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.estado | titlecase }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="horas_venta">
+          <th mat-header-cell *matHeaderCellDef>Horas venta</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.horas_venta }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="valor_venta">
+          <th mat-header-cell *matHeaderCellDef>Valor de venta</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.valor_venta }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fecha_inicio_planificada">
+          <th mat-header-cell *matHeaderCellDef>Fecha Inicio Planificada</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.fecha_ini_planificada | date: "dd-MM-yyyy" }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fecha_fin_planificada">
+          <th mat-header-cell *matHeaderCellDef>Fecha Fin Planificada</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.fecha_fin_planificada | date: "dd-MM-yyyy" }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fecha_inicio_real">
+          <th mat-header-cell *matHeaderCellDef>Fecha Inicio Real</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.fecha_ini_real }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fecha_fin_real">
+          <th mat-header-cell *matHeaderCellDef>Fecha Fin Real</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.fecha_fin_real }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="horas_planificada">
+          <th mat-header-cell *matHeaderCellDef>Horas planificadas</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.horas_planificadas }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="valor_venta_planificada">
+          <th mat-header-cell *matHeaderCellDef>Valor de venta planificada</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.valor_venta_planificada }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="horas_ejecutadas">
+          <th mat-header-cell *matHeaderCellDef>Horas ejecutadas</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.horas_ejecutadas }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="produccion_ejecutada">
+          <th mat-header-cell *matHeaderCellDef>Producción ejecutada</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.produccion_ejecutadas }}
+          </td>
+        </ng-container>
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayedColumns"
+          class="mat-table--header"
+        ></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+        ></tr>
+
+      </table>
+    </div>
+    <div class="pagination--container">
+      <mat-paginator
+        [pageSizeOptions]="[5, 10, 15]"
+        aria-label="Select page of periodic elements"
+      >
+      </mat-paginator>
+      </div>
+  </div>
+
+  </div>
+</main>

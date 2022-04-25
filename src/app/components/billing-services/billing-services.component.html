@@ -34,6 +34,7 @@
         class="" placeholder="Monto" required>
       </mat-form-field>
       <button
+        [disabled]="resourceForm.invalid"
         type="submit"
         mat-raised-button
         class="save-button"

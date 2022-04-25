@@ -12,7 +12,7 @@ import { ServicesConfigurationComponent } from './services-configuration/service
 import { HiringRequestComponent } from './hiring-request/hiring-request.component';
 import { ContractImboxComponent } from './contract-imbox/contract-imbox.component';
 import { ApproveHiringRequestComponent } from './approve-hiring-request/approve-hiring-request.component';
-
+import { ServiceMapComponent } from './service-map/service-map.component';
 
 @NgModule({
   declarations: [
@@ -23,19 +23,16 @@ import { ApproveHiringRequestComponent } from './approve-hiring-request/approve-
     ContractImboxComponent,
     ServicesConfigurationComponent,
     ApproveHiringRequestComponent,
+    ServiceMapComponent,
   ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    ComponentModule,
-    PagesRoutingModule,
-  ],
+
+  imports: [CommonModule, SharedModule, ComponentModule, PagesRoutingModule],
   exports: [
     HomeComponent,
     ResourceMapComponent,
     PagesRoutingModule,
     HiringRequestComponent,
-    ServicesConfigurationComponent
+    ServicesConfigurationComponent,
   ],
 })
 export class PageModule {}
