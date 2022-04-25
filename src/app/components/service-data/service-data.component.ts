@@ -50,18 +50,11 @@ export class ServiceDataComponent implements OnInit {
     { value: 'dolar-1', viewValue: 'DOLAR' }
   ]
   exchangeRate!: IExchangeRateResponse;
-  date: string | Date | null = new Date();
   disableBtns = false;
 
-  constructor(
-    private servicesService: ServicesService,
-    private datePipe: DatePipe
-  ) {
-    this.date = this.datePipe.transform(this.date, 'yyyy-MM-dd') ;
-  }
+  constructor(private servicesService: ServicesService) {}
 
   ngOnInit(): void {
-    console.log(this.date);
     this.loadClients();
     this.loadServiceLines()
     console.log("selected client:", this.selectedClient);

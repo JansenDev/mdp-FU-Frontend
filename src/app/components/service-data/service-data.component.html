@@ -45,7 +45,7 @@
 
     <mat-form-field class="col3" appearance="outline">
       <mat-label class="start-date-label">Fecha de inicio</mat-label>
-    <input [(ngModel)]="formData.fecha_ini_planificada" #validStartDate="ngModel" min="{{this.date}}" required name="fecha_ini_planificada"
+    <input [(ngModel)]="formData.fecha_ini_planificada" #validStartDate="ngModel" required name="fecha_ini_planificada"
     matInput type="date" class="start-date-input">
     <mat-hint *ngIf="validStartDate.invalid && (validStartDate.dirty || validStartDate.touched)" class="error-hint">Campo requerido</mat-hint>
     </mat-form-field>
