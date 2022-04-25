@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ICreateServiceRequest, IExchangeRateResponse, IPaymentMethodResponse, IServiceLineResponse, IServiceTypeResponse, ICreateServiceResponse } from 'src/app/core/models/service.model';
 import { NgForm } from '@angular/forms';
 import { ServicesService } from 'src/app/core/services/services.service';
 import { IClientResponse } from 'src/app/core/models/client.model';
 import { DatePipe } from '@angular/common';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-service-data',
@@ -43,21 +44,25 @@ export class ServiceDataComponent implements OnInit {
     fecha_fin_real: null,
     forma_pago: ""
   }
-  cod_servicio : any;
-
   currencies = [
     { value: 'sol-0', viewValue: 'SOL' },
     { value: 'dolar-1', viewValue: 'DOLAR' }
   ]
   exchangeRate!: IExchangeRateResponse;
   disableBtns = false;
+  @Input() subject!: Subject<any>;
+  disableBilling = true;
+  cod_servicio: number = 0;
 
   constructor(private servicesService: ServicesService) {}
+
+  sendInfo = (): void => {
+    this.subject.next({cod_servicio: this.cod_servicio, disableBilling: this.disableBilling});
+  };
 
   ngOnInit(): void {
     this.loadClients();
     this.loadServiceLines()
-    console.log("selected client:", this.selectedClient);
     this.loadExchangeRate();
   }
 
@@ -119,8 +124,14 @@ export class ServiceDataComponent implements OnInit {
     this.servicesService.createService(service).
       subscribe(createdService => {
         console.log('created service: ', createdService);
-        this.cod_servicio = createdService;
         this.serviceResponse = createdService;
+        this.cod_servicio = this.serviceResponse.cod_servicio;
+        if (this.formData.forma_pago == 'consumo' || this.formData.forma_pago == 'total'){
+          this.disableBilling = true;
+        } else {
+          this.disableBilling = false;
+        }
+        this.sendInfo();
         console.log('response: ', this.serviceResponse);
       },  error => {
         console.error(error);

@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { Subject } from 'rxjs';
 import { BillingServicesService } from 'src/app/core/services/billing-services.service';
 @Component({
   selector: 'app-billing-services',
@@ -22,6 +23,8 @@ export class BillingServicesComponent implements OnInit {
   public numero_hito = null;
   private monto_total = 1000000;
   private suma_total = 0;
+  @Input() subject!: Subject<any>;
+  cod_servicio: number = 0;
   @ViewChild(MatPaginator)
   paginator: MatPaginator = {} as MatPaginator;
   dataSource: MatTableDataSource<any> =
@@ -36,7 +39,7 @@ export class BillingServicesComponent implements OnInit {
     'fecha_fin',
     'actions'
   ];
-  
+
 
   resourceForm: FormGroup;
   constructor(private service : BillingServicesService,
@@ -53,7 +56,9 @@ export class BillingServicesComponent implements OnInit {
 
   ngOnInit(): void {
     let hitos = this.getHitos(); // obtención de los hitos de la tabla
-    
+    this.subject.subscribe((data: any) => {
+      console.log("cod_servicio: ", data);
+    })
   }
 
   ngSubmit():void {
@@ -159,7 +164,7 @@ export class BillingServicesComponent implements OnInit {
     this.service.deleteHito(input).subscribe(data => {
       console.log("eliminando", data);
       this.getHitos();
-    });  
+    });
 
   }
 }
