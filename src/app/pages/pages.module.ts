@@ -11,9 +11,10 @@ import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ResourceMapComponent } from './resource-map/resource-map.component';
 import { ServicesConfigurationComponent } from './services-configuration/services-configuration.component';
+import { ServiceMapComponent } from './service-map/service-map.component';
 
 @NgModule({
-  declarations: [HomeComponent, ResourceMapComponent, ServicesConfigurationComponent, NotFoundComponent],
+  declarations: [HomeComponent, ResourceMapComponent, ServicesConfigurationComponent, NotFoundComponent, ServiceMapComponent],
   imports: [
     CommonModule,
     SharedModule,

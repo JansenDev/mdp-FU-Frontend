@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ResourceMapComponent } from './resource-map/resource-map.component';
+import { ServiceMapComponent } from './service-map/service-map.component';
 import { ServicesConfigurationComponent } from './services-configuration/services-configuration.component';
 
 const routes: Routes = [
@@ -13,6 +14,10 @@ const routes: Routes = [
   {
     path: 'resources',
     component: ResourceMapComponent,
+  },
+  {
+    path: 'services',
+    component: ServiceMapComponent,
   },
   {
     path: 'services-configuration',

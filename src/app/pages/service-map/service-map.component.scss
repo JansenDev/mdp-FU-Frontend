@@ -1,0 +1,55 @@
+$page__width: 90%;
+.title {
+  margin-top: 25px !important;
+  margin-bottom: 30px !important;
+
+  & > h1 {
+    color: var(--black);
+    font-family: var(--font-family);
+    font-size: 30px;
+    font-weight: 600;
+
+    display: flex;
+    justify-content: center;
+    text-shadow: 2px 2px var(--gray);
+  }
+
+  & h1:last-child {
+    margin-top: 10px;
+  }
+}
+
+.main-container{
+  display: inline-block;
+  width: 100%;
+  &.active{
+    width: 80%;
+  }
+}
+
+::ng-deep .px-2 {
+  margin: 0 30px;
+}
+
+.filters {
+  &--container {
+    width: $page__width;
+    margin: 5px auto;
+    display: flex;
+    justify-content: flex-start;
+
+  }
+  &--btns {
+    padding-bottom: 1.25em;
+
+    & > button {
+      max-height: 40px;
+      width: 100px;
+    }
+
+    & button:first-child {
+      background-color: var(--primary);
+      color: var(--white);
+    }
+  }
+}
