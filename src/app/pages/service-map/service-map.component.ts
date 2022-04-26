@@ -109,6 +109,6 @@ export class ServiceMapComponent implements OnInit {
 
   seeDetail(element : any) {
     console.log("element", element);
-    
+    localStorage.setItem("service", JSON.stringify(element));
   }
 }

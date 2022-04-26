@@ -27,6 +27,10 @@ const routes: Routes = [
     component: ServicesConfigurationComponent,
   },
   {
+    path: 'services-configuration/:cod_servicio',
+    component: ServicesConfigurationComponent,
+  },
+  {
     path: 'hiring-request',
     component: HiringRequestComponent,
   },
