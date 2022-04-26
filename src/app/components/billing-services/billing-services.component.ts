@@ -24,6 +24,7 @@ export class BillingServicesComponent implements OnInit {
   private monto_total = 1000000;
   private suma_total = 0;
   @Input() subject!: Subject<any>;
+  @Input() sentService: string | null = '';
   cod_servicio: number = 0;
   disableBilling: boolean = true;
   @ViewChild(MatPaginator)
@@ -85,6 +86,7 @@ export class BillingServicesComponent implements OnInit {
       console.log("cod_servicio y disableBilling: ", data);
       this.getHitos()
     })
+    console.log('servicio recibido: ',  this.sentService);
   }
 
   ngSubmit():void {

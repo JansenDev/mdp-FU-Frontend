@@ -10,6 +10,7 @@ import { Subject } from 'rxjs';
 })
 export class ServicesConfigurationComponent implements OnInit {
   subject = new Subject<number>();
+  sentService: string | null = '';
   constructor() { }
 
   ngOnInit(): void {
@@ -17,10 +18,10 @@ export class ServicesConfigurationComponent implements OnInit {
       let service = localStorage.getItem("service");
       service = JSON.parse(service!);
       console.log("service", service);
+      this.sentService = service;
     } catch (e) {
       console.log("Servicio no encontrado!");
     }
-    
   }
 
 }
