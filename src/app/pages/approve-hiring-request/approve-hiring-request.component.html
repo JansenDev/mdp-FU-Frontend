@@ -195,7 +195,7 @@
 
         <mat-radio-group class="contract--asig-family">
           <mat-checkbox
-            [disabled]="!isPendingHiringRequest(statusHiringRequest)"
+            [disabled]="!isPendingHiringRequestRRHH(statusHiringRequest)"
             formControlName="cboxAsig"
             >Asig. familiar</mat-checkbox
           >
@@ -205,7 +205,27 @@
 
     <div class="form--buttons">
       <button
-        *ngIf="isPendingHiringRequest(statusHiringRequest)"
+        *ngIf="isPendingHiringRequestGG(statusHiringRequest)"
+        (click)="onApproveGG(idHiringRequest)"
+        type="submit"
+        mat-raised-button
+        color="primary"
+      >
+        Aceptar
+      </button>
+
+      <button
+        *ngIf="isPendingHiringRequestGG(statusHiringRequest)"
+        (click)="onReject(idHiringRequest)"
+        type="submit"
+        mat-raised-button
+        color="accent"
+      >
+        Rechazar
+      </button>
+
+      <button
+        *ngIf="isPendingHiringRequestRRHH(statusHiringRequest)"
         (click)="onApprove(idHiringRequest)"
         type="submit"
         mat-raised-button
@@ -213,8 +233,9 @@
       >
         Aceptar
       </button>
+
       <button
-        *ngIf="isPendingHiringRequest(statusHiringRequest)"
+        *ngIf="isPendingHiringRequestRRHH(statusHiringRequest)"
         (click)="onReject(idHiringRequest)"
         type="submit"
         mat-raised-button

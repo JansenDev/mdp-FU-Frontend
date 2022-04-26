@@ -68,6 +68,44 @@ export class ApproveHiringRequestComponent implements OnInit {
   ngOnInit(): void {
     this.getHiringRequestDetail();
   }
+
+  onApproveGG(idHiringRequest: string | number): void {
+    Swal.fire({
+      title: 'Confirme Aprobación',
+      // text: "Aceptar Aprobacion",
+      icon: 'success',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirmar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.approveGGRequest(idHiringRequest);
+      }
+    });
+  }
+
+  private approveGGRequest(idHiringRequest: string | number) {
+    this.contractImboxService
+      .approveGGHiringRequest(idHiringRequest)
+      .subscribe({
+        next: (status) => {
+          this.notification.toast(
+            'success',
+            'Solicitud Aceptada ',
+            'SUCCESS',
+            5000
+          );
+
+          this.backPage();
+        },
+        error: (err: HttpErrorResponse) => {
+          console.log(err);
+          this.notification.toast('error', err.error.message, 'ERROR', 5000);
+        },
+      });
+  }
+
   // TODO: update status message
   onApprove(idHiringRequest: string | number): void {
     Swal.fire({
@@ -252,22 +290,33 @@ export class ApproveHiringRequestComponent implements OnInit {
     this.router.navigate(['contract-imbox']);
   }
 
-  isPendingHiringRequest(pendingStatus: string): boolean {
-    let status = false;
-
+  private get userProfile() {
     const { userProfile } = JSON.parse(getToken());
+    return userProfile;
+  }
+
+  isPendingHiringRequestRRHH(pendingStatus: string): boolean {
+    let status = false;
+    // RRHH
 
     if (
-      pendingStatus === 'Pendiente Aprobacion' ||
-      pendingStatus === 'Pendiente Aprobacion GG'
+      pendingStatus === 'Pendiente Aprobacion' &&
+      this.userProfile === 'RRHH'
     ) {
       status = true;
     }
 
-    // RRHH
+    return status;
+  }
 
-    if (pendingStatus === 'Pendiente Aprobacion GG' && userProfile === 'RRHH') {
-      status = false;
+  isPendingHiringRequestGG(pendingStatus: string): boolean {
+    let status = false;
+
+    if (
+      pendingStatus === 'Pendiente Aprobacion GG' &&
+      this.userProfile === 'GG'
+    ) {
+      status = true;
     }
 
     return status;
