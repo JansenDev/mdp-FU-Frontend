@@ -37,6 +37,7 @@ export class ServiceMapComponent implements OnInit {
     'valor_venta_planificada',
     'horas_ejecutadas',
     'produccion_ejecutada',
+    'actions',
   ];
   constructor(private service : ServicesService, private formBuilder : FormBuilder) {
     this.resourceForm = this.formBuilder.group({
@@ -104,5 +105,10 @@ export class ServiceMapComponent implements OnInit {
   
   createService() {
     console.log("CREAR SERVICIO");
+  }
+
+  seeDetail(element : any) {
+    console.log("element", element);
+    
   }
 }
