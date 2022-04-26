@@ -21,10 +21,13 @@ export class BillingServicesComponent implements OnInit {
   public isUpdate = false;
   public cod_hito = null;
   public numero_hito = null;
-  private monto_total = 1000000;
+  private monto_total = 0;
   private suma_total = 0;
+  private amountRow = 0
+  private lastRowSelected : any;
+
   @Input() subject!: Subject<any>;
-  @Input() sentService: string | null = '';
+  @Input() sentService: any | null = '';
   cod_servicio: number = 0;
   disableBilling: boolean = true;
   @ViewChild(MatPaginator)
@@ -32,8 +35,8 @@ export class BillingServicesComponent implements OnInit {
   dataSource: MatTableDataSource<any> =
     new MatTableDataSource<any>([]);
 
-  displayedColumns: string[] = [
-    'cod_hito',
+    displayedColumns: string[] = [
+    'numero_hito',
     'descripcion_hito',
     'horas',
     'monto',
@@ -57,36 +60,29 @@ export class BillingServicesComponent implements OnInit {
      }
 
   ngOnInit(): void {
-    let hitos = this.getHitos(); // obtención de los hitos de la tabla
-    this.resourceForm.controls['nameHito'].disable();
-    this.resourceForm.controls['start_date'].disable();
-    this.resourceForm.controls['end_date'].disable();
-    this.resourceForm.controls['hours'].disable();
-    this.resourceForm.controls['amount'].disable();
+    this.getHitos(); // obtención de los hitos de la tabla
+    this.disableForm();
+    console.log("this.subjectt", this.subject);
     this.subject.subscribe((data: any) => {
-      this.cod_servicio = data.cod_servicio;
+      this.cod_servicio = data.cod_servicio == null || data.cod_servicio == undefined ? this.sentService.cod_servicio : data.cod_servicio;
       this.disableBilling = data.disableBilling;
       //const buttonNameHito : any = document.getElementById('nameHito');
 
       if(this.disableBilling) {
-        this.resourceForm.controls['nameHito'].disable();
-        this.resourceForm.controls['start_date'].disable();
-        this.resourceForm.controls['end_date'].disable();
-        this.resourceForm.controls['hours'].disable();
-        this.resourceForm.controls['amount'].disable();
+        this.disableForm();
       } else {
-        this.resourceForm.controls['nameHito'].enable();
-        this.resourceForm.controls['start_date'].enable();
-        this.resourceForm.controls['end_date'].enable();
-        this.resourceForm.controls['hours'].enable();
-        this.resourceForm.controls['amount'].enable();
+        this.enableForm();
       }
-      // console.log("boton de nombre hito", buttonNameHito);
-      //buttonNameHito.setAttribute('disabled', ' ')
-      console.log("cod_servicio y disableBilling: ", data);
       this.getHitos()
     })
     console.log('servicio recibido: ',  this.sentService);
+    if(this.sentService != null) {
+      this.monto_total = this.sentService.valor_venta
+      this.disableBilling = false;
+      this.enableForm();
+      this.cod_servicio = this.sentService.cod_servicio;
+      this.getHitos();
+    }
   }
 
   ngSubmit():void {
@@ -103,11 +99,13 @@ export class BillingServicesComponent implements OnInit {
     console.log("this.resourceValue",this.resourceForm.value)
 
     this.registerHito()
+    console.log("last row en ngsubmit", this.lastRowSelected);
     this.getHitos()
   }
 
   registerHito() {
     if (this.isUpdate == false) { // Si es registrar
+      console.log("ES REGISTRAR")
       if(this.suma_total + this.resourceForm.value.amount >= this.monto_total) {
         alert("No debe exceder la suma");
         return;
@@ -127,7 +125,9 @@ export class BillingServicesComponent implements OnInit {
       });
     } else { // Si es actualizar
       this.isUpdate = false;
-      if(this.suma_total >= this.monto_total) {
+      console.log("ES ACTUALIZAR")
+      console.log("actualizar menos row", this.suma_total, this.lastRowSelected.monto, this.resourceForm.value.amount, this.monto_total);
+      if(this.suma_total - this.lastRowSelected.monto + this.resourceForm.value.amount >= this.monto_total) {
         alert("No debe exceder la suma");
         return;
       }
@@ -157,6 +157,7 @@ export class BillingServicesComponent implements OnInit {
     let input = {
       "cod_servicio" : this.cod_servicio
     }
+    console.log("impresion del input de cod_servicio", input);
     this.service.getHitos(input).subscribe(data => {
       console.log("GET HITOS", data);
       this.dataSource = new MatTableDataSource<any>(data);
@@ -181,6 +182,9 @@ export class BillingServicesComponent implements OnInit {
     this.isUpdate = true;
     this.cod_hito = element.cod_hito;
     this.numero_hito = element.numero_hito;
+    this.amountRow = element.amount;
+    this.lastRowSelected = element;
+    console.log("this.lastrow", this.lastRowSelected);
     console.log("editando", element);
 
   }
@@ -193,6 +197,21 @@ export class BillingServicesComponent implements OnInit {
       console.log("eliminando", data);
       this.getHitos();
     });
+  }
 
+  enableForm() {
+    this.resourceForm.controls['nameHito'].enable();
+    this.resourceForm.controls['start_date'].enable();
+    this.resourceForm.controls['end_date'].enable();
+    this.resourceForm.controls['hours'].enable();
+    this.resourceForm.controls['amount'].enable();
+  }
+
+  disableForm() {
+    this.resourceForm.controls['nameHito'].disable();
+    this.resourceForm.controls['start_date'].disable();
+    this.resourceForm.controls['end_date'].disable();
+    this.resourceForm.controls['hours'].disable();
+    this.resourceForm.controls['amount'].disable();
   }
 }
