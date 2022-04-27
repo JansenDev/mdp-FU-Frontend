@@ -56,7 +56,7 @@ export class ServicesService {
   }
 
   getClientsByCodUser(): Observable<IClientResponse[]> {
-    return this.http.get<IClientResponse[]>( `${ this._api }/clients/user`, { headers: {'api': '1'} } );
+    return this.http.get<IClientResponse[]>( `${ this._api }/clients/user`);
   }
 
   getServiceTypeByCodServiceLine(codServiceLine: string): Observable<IServiceTypeResponse[]> {
