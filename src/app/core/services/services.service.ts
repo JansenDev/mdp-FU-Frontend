@@ -7,6 +7,7 @@ import { environment } from '../../../environments/environment';
 import { ICreateServiceRequest,
          ICreateServiceResponse,
          IExchangeRateResponse,
+         IGetOneServiceMapResponse,
          IGetServiceResponse,
          IPaymentMethodResponse,
          IPostServiceRequest,
@@ -20,7 +21,8 @@ import { NotificationService } from './notification.service';
   providedIn: 'root'
 })
 export class ServicesService {
-    private _api: string = `${ environment.url_base }`;
+
+  private _api: string = `${ environment.url_base }`;
 
   constructor(
     private http: HttpClient,
@@ -73,6 +75,14 @@ export class ServicesService {
 
   findServices(filters: IPostServiceRequest): Observable<IGetServiceResponse[]> {
     return this.http.post<IGetServiceResponse[]>( `${ this._api }/services/get`, filters);
+  }
+
+  findOneServiceMap(codService: number): Observable<IGetOneServiceMapResponse[]> {
+    return this.http.get<IGetOneServiceMapResponse[]>( `${ this._api }/services/assignaments/payment-services/${ codService }`);
+  }
+
+  updateService(codService: number, body: ICreateServiceRequest): Observable<ICreateServiceResponse[]> {
+    return this.http.put<ICreateServiceResponse[]>( `${ this._api }/services/update/${ codService }`, body );
   }
 
 }
