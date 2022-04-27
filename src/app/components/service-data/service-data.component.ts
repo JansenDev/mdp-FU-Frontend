@@ -37,6 +37,7 @@ export class ServiceDataComponent implements OnInit {
     costo_venta_sol: null,
     valor_venta: null,
     valor_venta_sol: null,
+    prod_venta: null,
     tarifa: null,
     fecha_ini_planificada: "",
     fecha_fin_planificada: "",

@@ -8,9 +8,10 @@ export interface ICreateServiceRequest {
   moneda:                string;
   tasa_cambio:           number | null;
   costo_venta:           number | null;
-  costo_venta_sol:     number | null;
+  costo_venta_sol:       number | null;
   valor_venta:           number | null;
-  valor_venta_sol:     number | null;
+  valor_venta_sol:       number | null;
+  prod_venta:            number | null;
   tarifa:                number | null;
   fecha_ini_planificada: Date | string;
   fecha_fin_planificada: Date | string;
@@ -113,3 +114,42 @@ export interface IPostServiceRequest {
   estado:            string;
 }
 
+// Get One Service Map
+export interface IGetOneServiceMapResponse {
+  cod_servicio:          number;
+  cod_cliente:           number;
+  cod_linea_servicio:    string;
+  tipo_servicio:         string;
+  descripcion_servicio:  string;
+  horas_venta:           number;
+  moneda:                string;
+  tasa_cambio:           string;
+  costo_venta:           string;
+  costo_venta_sol:       string;
+  valor_venta:           string;
+  valor_venta_sol:       string;
+  tarifa:                string;
+  fecha_ini_planificada: Date;
+  fecha_fin_planificada: Date;
+  fecha_ini_real:        null;
+  fecha_fin_real:        null;
+  prod_venta:            null;
+  forma_pago:            string;
+  usuario_reg:           string;
+  estado:                string;
+  pagos_servicios:       NewPayment[];
+  asignaciones:          AssignmentService[];
+}
+
+export interface AssignmentService {
+  cod_asignacion:   number;
+  puesto:           number;
+  nivel:            string;
+  por_asignacion:   number;
+  fecha_inicio:     Date;
+  fecha_fin:        Date;
+  horas_asignacion: number;
+  nombres:          string;
+  apellido_pat:     string;
+  apellido_mat:     string;
+}
