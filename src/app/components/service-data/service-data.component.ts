@@ -49,10 +49,11 @@ export class ServiceDataComponent implements OnInit {
     { value: 'dolar-1', viewValue: 'DOLAR' }
   ]
   exchangeRate!: IExchangeRateResponse;
-  disableBtns = false;
+  disableAll: boolean = false;
   @Input() subject!: Subject<any>;
   disableBilling = true;
   cod_servicio: number = 0;
+  @Input() update: boolean = false;
 
   constructor(private servicesService: ServicesService) {}
 
@@ -133,6 +134,7 @@ export class ServiceDataComponent implements OnInit {
         }
         this.sendInfo();
         console.log('response: ', this.serviceResponse);
+        this.disableAll = true;
       },  error => {
         console.error(error);
       })
@@ -141,9 +143,6 @@ export class ServiceDataComponent implements OnInit {
   submitForm(){
     console.log(this.ServiceForm);
     this.createService(this.formData);
-    if (this.serviceResponse){
-      this.disableBtns = true;
-    }
   }
 
   loadExchangeRate() {
@@ -178,5 +177,9 @@ export class ServiceDataComponent implements OnInit {
       return parseFloat(this.formData.tarifa!.toFixed(2));
     }
     return
+  }
+
+  loadService(){
+
   }
 }
