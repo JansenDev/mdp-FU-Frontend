@@ -3,7 +3,7 @@
 .service-form{
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: repeat(4, 1fr);
+  grid-template-rows: repeat(6, 1fr);
   align-items: center;
   padding: 1.5rem;
   column-gap: 0.75rem;
@@ -61,14 +61,14 @@ input[type=number] { //Firefox
 .save-btn{
   background-color: var(--primary);
   grid-column-start: 3;
-  grid-row-start: 5;
+  grid-row-start: 6;
   justify-self: center;
 }
 
 .cancel-btn{
   background-color: var(--red);
   grid-column-start: 4;
-  grid-row-start: 5;
+  grid-row-start: 6;
   justify-self: center;
 }
 
@@ -134,7 +134,7 @@ input[type=number] { //Firefox
 }
 
 .col6{
-  grid-column-start: 5;
+  grid-column-start: 6;
   justify-self: end;
 }
 
@@ -157,3 +157,8 @@ input[type=number] { //Firefox
 .row5{
   grid-row-start: 5;
 }
+
+.row6{
+  grid-row-start: 6;
+}
+

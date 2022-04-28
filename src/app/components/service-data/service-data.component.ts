@@ -287,6 +287,21 @@ export class ServiceDataComponent implements OnInit {
     return
   }
 
+  calculateProductionSale(){
+    setTimeout(() => {
+      if (this.formData.moneda == 'DOLAR'){
+        this.formData.prod_venta = (this.formData.valor_venta!* this.formData.tasa_cambio!) / this.formData.costo_venta!;
+      } else {
+          this.formData.prod_venta = this.formData.valor_venta_sol! / this.formData.costo_venta_sol!;
+      }
+    }, 0);
+
+    if (this.formData.prod_venta){
+      return this.formData.prod_venta!;
+    }
+    return
+  }
+
   loadService(serviceId: number){
     this.servicesService.findOneServiceMap(serviceId)
       .subscribe(
