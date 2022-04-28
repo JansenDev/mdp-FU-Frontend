@@ -106,7 +106,6 @@ const ELEMENT_DATA: any = [
 })
 export class AssignedTeamComponent implements OnInit {
   @Input() subject!: Subject<any>;
-  @Input() sentService!: Partial<ICreateServiceRequest>;
   formAssignedTeam: FormGroup;
 
   constructor(
@@ -165,9 +164,7 @@ export class AssignedTeamComponent implements OnInit {
       this.notification.toast('info', value, 'DATA  ');
     });
 
-    // data service
-    console.warn('ASSIGNED-TEAM');
-    console.log('servicio recibido: ', this.sentService);
+
   }
 
 
@@ -178,7 +175,7 @@ export class AssignedTeamComponent implements OnInit {
 
         if (dateStart && dateEnd) {
           const x = this.isValidDatesStartToEnd(dateStart, dateEnd);
-          console.log(x);
+
         }
       }
     );
@@ -191,7 +188,7 @@ export class AssignedTeamComponent implements OnInit {
 
         if (dateStart && dateEnd) {
           const x = this.isValidDatesStartToEnd(dateStart, dateEnd, true);
-          console.log(x);
+
         }
       }
     );
