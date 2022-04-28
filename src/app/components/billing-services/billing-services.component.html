@@ -24,12 +24,10 @@
         <mat-label class="label">Fecha Fin</mat-label>
         <input formControlName="end_date" type="date" 
         matInput min="{{serviceForm.value.start_date}}"
-        matInput max="{{this.endDateService}}"
         class="end-date-input" placeholder="Fecha Fin" required>
         <mat-hint class="error-hint" *ngIf="isIncorrectEndDateService">Fecha fin del hito debe ser menor a la fecha fin del servicio</mat-hint>
         <mat-hint class="error-hint" *ngIf="isIncorrectEndDate">Fecha fin del hito debe ser mayor a la fecha inicio del hito</mat-hint>
         <mat-hint class="error-hint" *ngIf="isIncorrectEndDateStartDateService">Fecha fin del hito debe ser mayor a la fecha inicio del servicio</mat-hint>
-        <mat-hint class="error-hint">{{this.endDateService}}</mat-hint>
       </mat-form-field>  
 
       <mat-form-field class="row2" appearance="outline">

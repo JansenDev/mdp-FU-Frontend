@@ -14,14 +14,6 @@ export class ServicesConfigurationComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    try {
-      let service = localStorage.getItem("service");
-      service = JSON.parse(service!);
-      console.log("service", service);
-      this.sentService = service;
-    } catch (e) {
-      console.log("Servicio no encontrado!");
-    }
   }
 
 }

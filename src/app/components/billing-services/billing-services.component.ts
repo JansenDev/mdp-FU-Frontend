@@ -33,7 +33,7 @@ export class BillingServicesComponent implements OnInit {
   private lastRowSelected : any;
 
   @Input() subject!: Subject<any>;
-  @Input() sentService: any | null = '';
+  sentService: any | null = '';
   cod_servicio: number = 0;
   disableBilling: boolean = true;
   @ViewChild(MatPaginator)
@@ -82,33 +82,37 @@ export class BillingServicesComponent implements OnInit {
     this.disableForm();
     console.log("this.subjectt", this.subject);
     this.subject.subscribe((data: any) => {
-      this.cod_servicio = data.cod_servicio == null || data.cod_servicio == undefined ? this.sentService.cod_servicio : data.cod_servicio;
-      this.disableBilling = data.disableBilling;
+      this.sentService = data;
+      console.log("el servicio de subject", data);
+      this.cod_servicio = data.cod_servicio;
+      this.disableBilling = 
+        (data.disableBilling == null || data.disableBilling == undefined) 
+        ? this.disableBilling 
+        : data.disableBilling;
       //const buttonNameHito : any = document.getElementById('nameHito');
-      console.log("el servicio es ", data);
 
       if(this.disableBilling) {
         this.disableForm();
       } else {
         this.enableForm();
       }
+      if(this.sentService != null) {
+        this.startDateService = data.fecha_ini_real != null 
+          ? data.fecha_ini_real 
+          : data.fecha_ini_planificada;
+        this.endDateService = data.fecha_fin_real != null 
+        ? data.fecha_fin_real 
+        : data.fecha_fin_planificada;  
+        this.monto_total = data.valor_venta_sol != null ? data.valor_venta_sol : data.valor_venta 
+        this.horas_total = data.horas_venta
+        this.disableBilling = false;
+        this.enableForm();
+        this.cod_servicio = data.cod_servicio;
+        this.getHitos();
+      }
       this.getHitos()
     })
-    console.log('servicio recibido: ',  this.sentService);
-    if(this.sentService != null) {
-      this.startDateService = this.sentService.fecha_ini_real != null 
-        ? this.sentService.fecha_ini_real 
-        : this.sentService.fecha_ini_planificada;
-      this.endDateService = this.sentService.fecha_fin_real != null 
-      ? this.sentService.fecha_fin_real 
-      : this.sentService.fecha_fin_planificada;  
-      this.monto_total = this.sentService.valor_venta
-      this.horas_total = this.sentService.horas_venta
-      this.disableBilling = false;
-      this.enableForm();
-      this.cod_servicio = this.sentService.cod_servicio;
-      this.getHitos();
-    }
+    
     this.validateForm();
 
   }
