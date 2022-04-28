@@ -5,6 +5,7 @@ import { ServicesService } from 'src/app/core/services/services.service';
 import { IClientResponse } from 'src/app/core/models/client.model';
 import { DatePipe } from '@angular/common';
 import { Subject } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-service-data',
@@ -37,6 +38,7 @@ export class ServiceDataComponent implements OnInit {
     costo_venta_sol: null,
     valor_venta: null,
     valor_venta_sol: null,
+    prod_venta: null,
     tarifa: null,
     fecha_ini_planificada: "",
     fecha_fin_planificada: "",
@@ -49,21 +51,36 @@ export class ServiceDataComponent implements OnInit {
     { value: 'dolar-1', viewValue: 'DOLAR' }
   ]
   exchangeRate!: IExchangeRateResponse;
-  disableBtns = false;
+  disableAll: boolean = false;
   @Input() subject!: Subject<any>;
   disableBilling = true;
   cod_servicio: number = 0;
+  @Input() update: boolean = false;
 
-  constructor(private servicesService: ServicesService) {}
+  constructor(
+    private servicesService: ServicesService,
+    private activatedRoute: ActivatedRoute) {}
 
   sendInfo = (): void => {
-    this.subject.next({cod_servicio: this.cod_servicio, disableBilling: this.disableBilling});
+    this.subject.next(
+      {
+        cod_servicio: this.cod_servicio,
+        disableBilling: this.disableBilling
+      }
+    );
   };
 
   ngOnInit(): void {
     this.loadClients();
     this.loadServiceLines()
     this.loadExchangeRate();
+    const pathParams = this.activatedRoute.snapshot.paramMap;
+    let receivedServiceId = pathParams.get('cod_servicio')!;
+    const serviceId = parseInt(receivedServiceId);
+    console.warn('serviceID: ', serviceId);
+    if (receivedServiceId){
+      this.loadService(serviceId);
+    }
   }
 
   loadClients(){
@@ -87,10 +104,18 @@ export class ServiceDataComponent implements OnInit {
   }
 
   loadServiceTypes(serviceLineCode: string){
-    this.selectedPaymentMethod = '';
-    this.selectedServiceType = '';
-    this.formData.forma_pago = '';
-    this.formData.tipo_servicio = '';
+
+    const pathParams = this.activatedRoute.snapshot.paramMap;
+    let receivedServiceId = pathParams.get('cod_servicio')!;
+    const serviceId = parseInt(receivedServiceId);
+
+    if (!serviceId) {
+      this.selectedPaymentMethod = '';
+      this.selectedServiceType = '';
+      this.formData.forma_pago = '';
+      this.formData.tipo_servicio = '';
+    }
+
     this.servicesService.getServiceTypeByCodServiceLine(serviceLineCode).
     subscribe(serviceTypes => {
       console.log('service types: ', serviceTypes);
@@ -133,6 +158,7 @@ export class ServiceDataComponent implements OnInit {
         }
         this.sendInfo();
         console.log('response: ', this.serviceResponse);
+        this.disableAll = true;
       },  error => {
         console.error(error);
       })
@@ -141,9 +167,6 @@ export class ServiceDataComponent implements OnInit {
   submitForm(){
     console.log(this.ServiceForm);
     this.createService(this.formData);
-    if (this.serviceResponse){
-      this.disableBtns = true;
-    }
   }
 
   loadExchangeRate() {
@@ -175,8 +198,27 @@ export class ServiceDataComponent implements OnInit {
     }, 0);
 
     if (this.formData.tarifa){
-      return parseFloat(this.formData.tarifa!.toFixed(2));
+      return this.formData.tarifa!;
     }
     return
+  }
+
+  loadService(serviceId: number){
+    this.servicesService.findOneServiceMap(serviceId)
+      .subscribe(
+        {
+          next: (foundService) => {
+            this.subject.next(foundService);
+            console.log('servicio encontrado: ', foundService);
+            this.formData = foundService;
+            this.selectedServiceLine = foundService.cod_linea_servicio;
+            this.loadServiceTypes(this.selectedServiceLine);
+            this.selectedServiceType = foundService.tipo_servicio;
+            this.loadPaymentMethods(this.selectedServiceType);
+            this.selectedPaymentMethod = foundService.forma_pago;
+          },
+          error: (e) => console.error(e)
+        }
+      );
   }
 }
