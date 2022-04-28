@@ -80,7 +80,7 @@ export class ServiceDataComponent implements OnInit {
     const pathParams = this.activatedRoute.snapshot.paramMap;
     this.receivedServiceId = pathParams.get('cod_servicio')!;
     const serviceId = parseInt(this.receivedServiceId);
-    console.warn('serviceID: ', serviceId);
+    console.warn('serviceID: ', this.receivedServiceId);
     if (this.receivedServiceId){
       this.loadService(serviceId);
     }
