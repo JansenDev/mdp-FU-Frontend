@@ -16,9 +16,14 @@
 
     <mat-form-field class="col2-long" appearance="outline">
       <mat-label class="business-label">Línea de negocio</mat-label>
-      <mat-select class="business-input" #validServiceLine="ngModel" [(ngModel)]="formData.cod_linea_servicio" name="cod_linea_servicio"
-       (selectionChange)="loadServiceTypes($event.value)"
-       [(value)]="selectedServiceLine" required [disabled]="disableAll">
+      <mat-select class="business-input"
+                  #validServiceLine="ngModel"
+                  [(ngModel)]="formData.cod_linea_servicio"
+                  name="cod_linea_servicio"
+                  (selectionChange)="loadServiceTypes($event.value)"
+                  [(value)]="selectedServiceLine"
+                  required
+                  [disabled]="disableAll">
         <mat-option *ngFor="let serviceLine of serviceLines" [value]="serviceLine.cod_linea_servicio">
           {{ serviceLine.linea_servicio  | titlecase }} ({{ serviceLine.cod_linea_servicio | uppercase }})
         </mat-option>
@@ -30,9 +35,14 @@
 
     <mat-form-field class="col5-long" appearance="outline">
       <mat-label class="service-type">Tipo de servicio</mat-label>
-      <mat-select class="service-type-input" #validServiceType="ngModel" [(ngModel)]="formData.tipo_servicio" name="tipo_servicio"
-      (selectionChange)="loadPaymentMethods($event.value)"
-      [(value)]="selectedServiceType" required [disabled]="selectedServiceLine || disableAll ? false : true">
+      <mat-select class="service-type-input"
+                  #validServiceType="ngModel"
+                  [(ngModel)]="formData.tipo_servicio"
+                  name="tipo_servicio"
+                  (selectionChange)="loadPaymentMethods($event.value)"
+                  [(value)]="selectedServiceType"
+                  required
+                  [disabled]="selectedServiceLine || disableAll ? false : true">
         <mat-option *ngFor="let serviceType of serviceTypes" [value]="serviceType.cod_tipo_servicio">
           {{ serviceType.nombre_tipo_servicio  | titlecase }} ({{ serviceType.cod_tipo_servicio | uppercase }})
         </mat-option>

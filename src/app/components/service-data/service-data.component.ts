@@ -62,7 +62,12 @@ export class ServiceDataComponent implements OnInit {
     private activatedRoute: ActivatedRoute) {}
 
   sendInfo = (): void => {
-    this.subject.next({cod_servicio: this.cod_servicio, disableBilling: this.disableBilling});
+    this.subject.next(
+      {
+        cod_servicio: this.cod_servicio,
+        disableBilling: this.disableBilling
+      }
+    );
   };
 
   ngOnInit(): void {
@@ -99,10 +104,18 @@ export class ServiceDataComponent implements OnInit {
   }
 
   loadServiceTypes(serviceLineCode: string){
-    this.selectedPaymentMethod = '';
-    this.selectedServiceType = '';
-    this.formData.forma_pago = '';
-    this.formData.tipo_servicio = '';
+
+    const pathParams = this.activatedRoute.snapshot.paramMap;
+    let receivedServiceId = pathParams.get('cod_servicio')!;
+    const serviceId = parseInt(receivedServiceId);
+
+    if (!serviceId) {
+      this.selectedPaymentMethod = '';
+      this.selectedServiceType = '';
+      this.formData.forma_pago = '';
+      this.formData.tipo_servicio = '';
+    }
+
     this.servicesService.getServiceTypeByCodServiceLine(serviceLineCode).
     subscribe(serviceTypes => {
       console.log('service types: ', serviceTypes);
@@ -192,15 +205,20 @@ export class ServiceDataComponent implements OnInit {
 
   loadService(serviceId: number){
     this.servicesService.findOneServiceMap(serviceId)
-      .subscribe(foundService => {
-        console.log('servicio encontrado: ', foundService);
-        this.formData = foundService;
-        this.selectedServiceLine = foundService.cod_linea_servicio;
-        this.loadServiceTypes(this.selectedServiceLine);
-        this.selectedServiceType = foundService.tipo_servicio;
-        this.selectedPaymentMethod = foundService.forma_pago;
-      }, error => {
-        console.error(error);
-      })
+      .subscribe(
+        {
+          next: (foundService) => {
+            this.subject.next(foundService);
+            console.log('servicio encontrado: ', foundService);
+            this.formData = foundService;
+            this.selectedServiceLine = foundService.cod_linea_servicio;
+            this.loadServiceTypes(this.selectedServiceLine);
+            this.selectedServiceType = foundService.tipo_servicio;
+            this.loadPaymentMethods(this.selectedServiceType);
+            this.selectedPaymentMethod = foundService.forma_pago;
+          },
+          error: (e) => console.error(e)
+        }
+      );
   }
 }
