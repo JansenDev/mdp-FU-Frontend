@@ -19,7 +19,7 @@ export interface ICreateServiceRequest {
   fecha_fin_real:        null | Date | string;
   forma_pago:            string;
   etapa:                 string | null;
-  estado:                string | null;
+  estado_servicio:       string | null;
 }
 
 export interface ICreateServiceResponse {
@@ -44,7 +44,7 @@ export interface ICreateServiceResponse {
   usuario_reg:             string;
   fecha_act:               null | Date | string;
   usuario_act:             null | string;
-  estado_servicio:         string;
+  estado_config:           string;
   cod_cliente:             number;
   forma_pago:              string;
   moneda:                  string;
@@ -54,7 +54,7 @@ export interface ICreateServiceResponse {
   valor_venta_sol:         string;
   costo_venta_sol:         string;
   etapa:                   string | null;
-  estado:                  string | null;
+  estado_servicio:         string | null;
   newPayment:              NewPayment | null;
 }
 
@@ -120,7 +120,7 @@ export interface IPostServiceRequest {
 
 // Get One Service Map
 export interface IGetOneServiceMapResponse {
-  cod_servicio:          number;
+  cod_servicio?:          number;
   cod_cliente:           number;
   cod_linea_servicio:    string;
   tipo_servicio:         string;
@@ -139,12 +139,12 @@ export interface IGetOneServiceMapResponse {
   fecha_fin_real:        null;
   prod_venta:            null;
   forma_pago:            string;
-  usuario_reg:           string;
-  estado_servicio:       string;
+  usuario_reg?:          string;
+  estado_config?:        string;
   etapa:                 string | null;
-  estado:                string | null;
-  pagos_servicios:       NewPayment[];
-  asignaciones:          AssignmentService[];
+  estado_servicio:       string | null;
+  pagos_servicios?:      NewPayment[];
+  asignaciones?:         AssignmentService[];
 }
 
 export interface AssignmentService {
