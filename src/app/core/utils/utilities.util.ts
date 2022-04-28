@@ -31,12 +31,17 @@ export function timestampFormat(
 // Si fecha fin es mayor return true
 export function isHighDateEnd(
   inputDateStart: Date | string,
-  inputDateEnd: Date | string
+  inputDateEnd: Date | string,
+  orEquals = false
 ): boolean {
   const dateStart = moment(inputDateStart);
   const dateEnd = moment(inputDateEnd);
 
-  return dateEnd.diff(dateStart) > 0;
+  if (!orEquals) {
+    return dateEnd.diff(dateStart) > 0;
+  }
+
+  return dateEnd.diff(dateStart) >= 0;
 }
 
 // Capitalizar primera letra de una palabra

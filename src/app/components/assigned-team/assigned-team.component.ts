@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
+import { IProfileResponse } from 'src/app/core/models/profile.model';
 import { ICreateServiceRequest } from 'src/app/core/models/service.model';
+import { CboxService } from 'src/app/core/services/cbox.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import * as util from '../../core/utils/utilities.util';
 
@@ -108,10 +110,17 @@ export class AssignedTeamComponent implements OnInit {
   @Input() subject!: Subject<any>;
   formAssignedTeam: FormGroup;
   serviceResponse: any;
+  printErrors = {
+    name: 'null',
+    message: '',
+  };
+
+  profileList: IProfileResponse[] = [];
 
   constructor(
     private notification: NotificationService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private cboxService: CboxService
   ) {
     this.formAssignedTeam = this.formBuilder.group({
       inputDocumentNumber: [
@@ -124,7 +133,7 @@ export class AssignedTeamComponent implements OnInit {
         ],
       ],
       inputName: [{ value: null, disabled: true }],
-      inputProfile: [{ value: null, disabled: true }],
+      cboxProfile: [{ value: null, disabled: false }],
       cboxLevel: [{ value: null, disabled: false }],
       inputAssignament: [
         null,
@@ -157,13 +166,22 @@ export class AssignedTeamComponent implements OnInit {
   ngOnInit(): void {
     this.onChangeDateStart$();
     this.onChangeDateEnd$();
+    this.fillCboxProfile();
 
-    //  service created
+    //  service info  created
     this.subject.subscribe((serviceResponse) => {
-      console.warn('value PADRE:');
-      console.log(serviceResponse);
-      this.notification.toast('info', serviceResponse, 'DATA  ');
+
       this.serviceResponse = serviceResponse;
+    });
+  }
+
+  onchangeInputDocumentNumber(){
+
+  }
+
+  fillCboxProfile() {
+    this.cboxService.findAllProfiles().subscribe((profileList) => {
+      this.profileList = profileList;
     });
   }
 
@@ -171,11 +189,28 @@ export class AssignedTeamComponent implements OnInit {
     this.formAssignedTeam.controls['dpDateStart'].valueChanges.subscribe(
       (dateStart) => {
         const dateEnd = this.formAssignedTeam.controls['dpDateEnd'].value;
-        console.warn('this.serviceResponse');
-        console.log(this.serviceResponse);
+        const { fecha_ini_planificada, fecha_ini_real } = this.serviceResponse;
+        let date_initial_service = fecha_ini_real
+          ? fecha_ini_real
+          : fecha_ini_planificada;
 
-        if (dateStart && dateEnd) {
-          const x = this.isValidDatesStartToEnd(dateStart, dateEnd);
+        if (date_initial_service && dateStart) {
+          const isValidDatesInit_start = util.isHighDateEnd(
+            dateStart,
+            date_initial_service
+          );
+
+          if (isValidDatesInit_start) {
+            this.printErrors.message = 'Fecha incorrecta';
+
+            this.formAssignedTeam.controls['dpDateStart'].setErrors({
+              error: true,
+            });
+          } else {
+            if (dateStart && dateEnd) {
+              this.isValidDatesStartToEnd(dateStart, dateEnd);
+            }
+          }
         }
       }
     );
@@ -186,8 +221,29 @@ export class AssignedTeamComponent implements OnInit {
       (dateEnd) => {
         const dateStart = this.formAssignedTeam.controls['dpDateStart'].value;
 
-        if (dateStart && dateEnd) {
-          const x = this.isValidDatesStartToEnd(dateStart, dateEnd, true);
+        const { fecha_fin_planificada, fecha_fin_real } = this.serviceResponse;
+
+        let date_final_service = fecha_fin_real
+          ? fecha_fin_real
+          : fecha_fin_planificada;
+
+        if (date_final_service && dateEnd) {
+          const isValidDatesInit_fin = util.isHighDateEnd(
+            date_final_service,
+            dateEnd
+          );
+
+          if (isValidDatesInit_fin) {
+            this.printErrors.message = 'Fecha incorrecta';
+
+            this.formAssignedTeam.controls['dpDateEnd'].setErrors({
+              error: true,
+            });
+          } else {
+            if (dateStart && dateEnd) {
+              this.isValidDatesStartToEnd(dateStart, dateEnd, true);
+            }
+          }
         }
       }
     );
@@ -198,9 +254,16 @@ export class AssignedTeamComponent implements OnInit {
   private isValidDatesStartToEnd(
     dateStart: string | Date,
     dateEnd: string | Date,
-    reverse = false
+    reverse = false,
+    orEquals = false
   ): boolean {
-    let isDateValid = util.isHighDateEnd(dateStart, dateEnd);
+    let isDateValid = false;
+
+    if (orEquals) {
+      isDateValid = util.isHighDateEnd(dateStart, dateEnd, true);
+    } else {
+      isDateValid = util.isHighDateEnd(dateStart, dateEnd);
+    }
 
     if (isDateValid) {
       this.formAssignedTeam.controls['dpDateEnd'].setErrors(null);
