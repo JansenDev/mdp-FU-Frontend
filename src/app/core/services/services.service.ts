@@ -45,7 +45,7 @@ export class ServicesService {
             'success',
             'Servicio creado satisfactoriamente',
             'Servicio',
-            0
+            7000
           );
         }
         return res;

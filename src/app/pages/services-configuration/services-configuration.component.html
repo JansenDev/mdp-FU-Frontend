@@ -3,6 +3,12 @@
     <h1>Configuración de servicios</h1>
   </header>
   <app-service-data [subject]="subject"></app-service-data>
-  <app-billing-services [subject]="subject" [sentService]="sentService" ></app-billing-services>
-</section>
+  <app-billing-services
+    [subject]="subject"
+    [sentService]="sentService"
+  ></app-billing-services>
 
+  <app-assigned-team
+    [subject]="subject"
+  ></app-assigned-team>
+</section>

@@ -1,6 +1,7 @@
 import { IPeriodResponse } from '../models/period.model';
 import * as moment from 'moment';
 
+// Encontrar periodo activo
 export function findPeriodActive(periodlist: IPeriodResponse[]): string {
   let codState = '';
 
@@ -15,7 +16,7 @@ export function findPeriodActive(periodlist: IPeriodResponse[]): string {
 
   return codState;
 }
-
+// dar formato a fecha default = DD-MM-YY
 export function timestampFormat(
   timestamp: string,
   format: string = 'YYYY-MM-DD'
@@ -26,6 +27,8 @@ export function timestampFormat(
 
   return moment(timestamp).format(format);
 }
+
+// Si fecha fin es mayor return true
 export function isHighDateEnd(
   inputDateStart: Date | string,
   inputDateEnd: Date | string
@@ -36,12 +39,14 @@ export function isHighDateEnd(
   return dateEnd.diff(dateStart) > 0;
 }
 
+// Capitalizar primera letra de una palabra
 export function toCapitalizeFirstLetterCase(word: string): string {
   if (word.trim() === '') return '';
 
   return word.charAt(0).toUpperCase() + word.slice(1);
 }
 
+// Capitalizar primera letra de una palabra o  oracion
 export function toCapitalizeCase(words: string): string {
   if (words.trim() === '') return '';
 
@@ -54,6 +59,7 @@ export function toCapitalizeCase(words: string): string {
   return wordsCapitalized;
 }
 
+// Limpiar espacios demás en una oracion
 export function trimAllSpaces(words: string | null): string {
   if (!words) return '';
   return words!
