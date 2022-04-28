@@ -81,8 +81,8 @@ export class ServicesService {
     return this.http.get<IGetOneServiceMapResponse>( `${ this._api }/services/assignments/payment-services/${ codService }`);
   }
 
-  updateService(codService: number, body: ICreateServiceRequest): Observable<ICreateServiceResponse[]> {
-    return this.http.put<ICreateServiceResponse[]>( `${ this._api }/services/update/${ codService }`, body );
+  updateService(codService: number, body: ICreateServiceRequest): Observable<ICreateServiceResponse> {
+    return this.http.put<ICreateServiceResponse>( `${ this._api }/services/update/${ codService }`, body );
   }
 
 }

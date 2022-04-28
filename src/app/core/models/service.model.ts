@@ -120,7 +120,7 @@ export interface IPostServiceRequest {
 
 // Get One Service Map
 export interface IGetOneServiceMapResponse {
-  cod_servicio:          number;
+  cod_servicio?:          number;
   cod_cliente:           number;
   cod_linea_servicio:    string;
   tipo_servicio:         string;
@@ -139,12 +139,12 @@ export interface IGetOneServiceMapResponse {
   fecha_fin_real:        null;
   prod_venta:            null;
   forma_pago:            string;
-  usuario_reg:           string;
-  estado_servicio:       string;
+  usuario_reg?:           string;
+  estado_servicio?:       string;
   etapa:                 string | null;
   estado:                string | null;
-  pagos_servicios:       NewPayment[];
-  asignaciones:          AssignmentService[];
+  pagos_servicios?:       NewPayment[];
+  asignaciones?:          AssignmentService[];
 }
 
 export interface AssignmentService {
