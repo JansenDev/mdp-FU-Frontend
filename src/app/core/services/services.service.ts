@@ -77,8 +77,8 @@ export class ServicesService {
     return this.http.post<IGetServiceResponse[]>( `${ this._api }/services/get`, filters);
   }
 
-  findOneServiceMap(codService: number): Observable<IGetOneServiceMapResponse[]> {
-    return this.http.get<IGetOneServiceMapResponse[]>( `${ this._api }/services/assignaments/payment-services/${ codService }`);
+  findOneServiceMap(codService: number): Observable<IGetOneServiceMapResponse> {
+    return this.http.get<IGetOneServiceMapResponse>( `${ this._api }/services/assignments/payment-services/${ codService }`);
   }
 
   updateService(codService: number, body: ICreateServiceRequest): Observable<ICreateServiceResponse[]> {

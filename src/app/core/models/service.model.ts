@@ -123,12 +123,12 @@ export interface IGetOneServiceMapResponse {
   descripcion_servicio:  string;
   horas_venta:           number;
   moneda:                string;
-  tasa_cambio:           string;
-  costo_venta:           string;
-  costo_venta_sol:       string;
-  valor_venta:           string;
-  valor_venta_sol:       string;
-  tarifa:                string;
+  tasa_cambio:           any;
+  costo_venta:           any;
+  costo_venta_sol:       any;
+  valor_venta:           any;
+  valor_venta_sol:       any;
+  tarifa:                any;
   fecha_ini_planificada: Date;
   fecha_fin_planificada: Date;
   fecha_ini_real:        null;

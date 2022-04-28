@@ -5,6 +5,7 @@ import { ServicesService } from 'src/app/core/services/services.service';
 import { IClientResponse } from 'src/app/core/models/client.model';
 import { DatePipe } from '@angular/common';
 import { Subject } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-service-data',
@@ -56,7 +57,9 @@ export class ServiceDataComponent implements OnInit {
   cod_servicio: number = 0;
   @Input() update: boolean = false;
 
-  constructor(private servicesService: ServicesService) {}
+  constructor(
+    private servicesService: ServicesService,
+    private activatedRoute: ActivatedRoute) {}
 
   sendInfo = (): void => {
     this.subject.next({cod_servicio: this.cod_servicio, disableBilling: this.disableBilling});
@@ -66,6 +69,13 @@ export class ServiceDataComponent implements OnInit {
     this.loadClients();
     this.loadServiceLines()
     this.loadExchangeRate();
+    const pathParams = this.activatedRoute.snapshot.paramMap;
+    let receivedServiceId = pathParams.get('cod_servicio')!;
+    const serviceId = parseInt(receivedServiceId);
+    console.warn('serviceID: ', serviceId);
+    if (receivedServiceId){
+      this.loadService(serviceId);
+    }
   }
 
   loadClients(){
@@ -175,12 +185,22 @@ export class ServiceDataComponent implements OnInit {
     }, 0);
 
     if (this.formData.tarifa){
-      return parseFloat(this.formData.tarifa!.toFixed(2));
+      return this.formData.tarifa!;
     }
     return
   }
 
-  loadService(){
-
+  loadService(serviceId: number){
+    this.servicesService.findOneServiceMap(serviceId)
+      .subscribe(foundService => {
+        console.log('servicio encontrado: ', foundService);
+        this.formData = foundService;
+        this.selectedServiceLine = foundService.cod_linea_servicio;
+        this.loadServiceTypes(this.selectedServiceLine);
+        this.selectedServiceType = foundService.tipo_servicio;
+        this.selectedPaymentMethod = foundService.forma_pago;
+      }, error => {
+        console.error(error);
+      })
   }
 }
