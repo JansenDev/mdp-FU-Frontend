@@ -89,12 +89,12 @@
 
 .row1 {
     grid-row-start: 1;
-    height: 4rem;
+    height: 5rem;
 }
 
 .row2 {
     grid-row-start: 2;
-    height: 4rem;
+    height: 5rem;
 }
 
 .col1 {
@@ -127,3 +127,7 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+.error-hint{
+    color: var(--red);
+  }

@@ -5,6 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Subject } from 'rxjs';
 import { BillingServicesService } from 'src/app/core/services/billing-services.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
+import { IndividualConfig, ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-billing-services',
@@ -49,10 +51,22 @@ export class BillingServicesComponent implements OnInit {
     'actions'
   ];
 
+  isIncorrectDate = false;
+  startDateService = '';
+  endDateService = '';
+  isIncorrectStartDateService = false;
+  isIncorrectStartDateEndDateService = false;
+  isIncorrectEndDateService = false;
+  isIncorrectStartDate = false;
+  isIncorrectEndDate = false;
+  isIncorrectEndDateStartDateService = false;
+  
+  isIncorrectHour = false;
+  isIncorrectAmount = false;
 
   resourceForm: FormGroup;
   constructor(private service : BillingServicesService,
-    private formBuilder : FormBuilder, private notificationService: NotificationService) {
+    private formBuilder : FormBuilder, private notificationService: NotificationService, private toastrService: ToastrService) {
       this.resourceForm = this.formBuilder.group({
         cod_servicio: [''],
         nameHito: ['', Validators.required],
@@ -70,8 +84,6 @@ export class BillingServicesComponent implements OnInit {
     this.subject.subscribe((data: any) => {
       this.cod_servicio = data.cod_servicio == null || data.cod_servicio == undefined ? this.sentService.cod_servicio : data.cod_servicio;
       this.disableBilling = data.disableBilling;
-      //const buttonNameHito : any = document.getElementById('nameHito');
-
       if(this.disableBilling) {
         this.disableForm();
       } else {
@@ -81,18 +93,24 @@ export class BillingServicesComponent implements OnInit {
     })
     console.log('servicio recibido: ',  this.sentService);
     if(this.sentService != null) {
+      this.startDateService = this.sentService.fecha_ini_real != null 
+        ? this.sentService.fecha_ini_real 
+        : this.sentService.fecha_ini_planificada;
+      this.endDateService = this.sentService.fecha_fin_real != null 
+      ? this.sentService.fecha_fin_real 
+      : this.sentService.fecha_fin_planificada;  
       this.monto_total = this.sentService.valor_venta
-      this.horas_total = this.sentService.horas_venta // ! REVISAR
+      this.horas_total = this.sentService.horas_venta
       this.disableBilling = false;
       this.enableForm();
       this.cod_servicio = this.sentService.cod_servicio;
       this.getHitos();
     }
+    this.validateForm();
+
   }
 
   ngSubmit():void {
-    //this.registerHito();
-    console.log("enviando datos a Carlos...")
     let {
       nameHito,
       start_date,
@@ -108,18 +126,136 @@ export class BillingServicesComponent implements OnInit {
     this.getHitos()
   }
 
+  validateForm() {
+    this.validateDate()
+    this.validateHour()
+    this.validateAmount()
+  }
+
+  validateDate() {
+    this.resourceForm.controls['start_date'].valueChanges.subscribe(data => {
+      console.log("Fecha inicio", data)
+      if(!this.isIncorrectStartDate && !this.isIncorrectStartDateEndDateService) {
+        if(data != null && data != '') {
+          if(this.resourceForm.controls['start_date'].value < this.startDateService) {
+            this.resourceForm.controls['start_date'].setErrors({error: true});
+            this.isIncorrectStartDateService = true;
+          } else {
+            this.isIncorrectStartDateService = false;
+            this.resourceForm.controls['start_date'].setErrors(null);
+          }
+        }
+      }
+    });
+
+    this.resourceForm.controls['start_date'].valueChanges.subscribe(data => {
+      if(!this.isIncorrectStartDateService && !this.isIncorrectStartDateEndDateService) {
+        if(data != null && data != '') {
+          if(this.resourceForm.controls['start_date'].value < this.resourceForm.controls['end_date'].value) {
+            this.resourceForm.controls['start_date'].setErrors({error: true});
+            this.isIncorrectStartDate = true;
+          } else {
+            this.isIncorrectStartDate = false;
+            this.resourceForm.controls['start_date'].setErrors(null);
+          }
+        }
+      }
+    });
+
+    this.resourceForm.controls['start_date'].valueChanges.subscribe(data => {
+      if(!this.isIncorrectStartDateService && !this.isIncorrectStartDate) {
+        if(data != null && data != '') {
+          if(this.resourceForm.controls['start_date'].value >= this.endDateService) {
+            this.resourceForm.controls['start_date'].setErrors({error: true});
+            this.isIncorrectStartDateEndDateService = true;
+          } else {
+            this.isIncorrectStartDateEndDateService = false;
+            this.resourceForm.controls['start_date'].setErrors(null);
+          }
+        }
+      }
+    });
+
+    this.resourceForm.controls['end_date'].valueChanges.subscribe(data => {
+      console.log("Fecha fin", data)
+      console.log("Fecha fin servicio", this.endDateService)
+      console.log("this.isIncorrectEndDate", this.isIncorrectEndDate)
+      console.log("this.isIncorrectEndDateStartDateService", this.isIncorrectEndDateStartDateService)
+      if(!this.isIncorrectEndDate && !this.isIncorrectEndDateStartDateService) {
+        if(data != null && data != '') {
+          if(this.resourceForm.controls['end_date'].value > this.endDateService) {
+            this.resourceForm.controls['end_date'].setErrors({error: true});
+            this.isIncorrectEndDateService = true;
+          } else {
+            this.isIncorrectEndDateService = false;
+            this.resourceForm.controls['end_date'].setErrors(null);
+          }
+        }
+      }
+    });
+
+    this.resourceForm.controls['end_date'].valueChanges.subscribe(data => {
+      if(!this.isIncorrectEndDateService && !this.isIncorrectEndDateStartDateService) {
+        if(data != null && data != '') {
+          if(this.resourceForm.controls['end_date'].value <= this.resourceForm.controls['start_date'].value) {
+            this.resourceForm.controls['end_date'].setErrors({error: true});
+            this.isIncorrectEndDate = true;
+          } else {
+            this.isIncorrectEndDate = false;
+            this.resourceForm.controls['end_date'].setErrors(null);
+          }
+        }
+      }
+    });
+
+    this.resourceForm.controls['end_date'].valueChanges.subscribe(data => {
+      if(!this.isIncorrectEndDate && !this.isIncorrectEndDateService) {
+        if(data != null && data != '') {
+          if(this.resourceForm.controls['end_date'].value < this.startDateService) {
+            this.resourceForm.controls['end_date'].setErrors({error: true});
+            this.isIncorrectEndDateStartDateService = true;
+          } else {
+            this.isIncorrectEndDateStartDateService = false;
+            this.resourceForm.controls['end_date'].setErrors(null);
+          }
+        }
+      }
+    });
+  }
+
+  validateHour() {
+    this.resourceForm.controls['hours'].valueChanges.subscribe(data => {
+      if(this.resourceForm.controls['hours'].value > this.horas_total) {
+        this.resourceForm.controls['hours'].setErrors({error: true});
+        this.isIncorrectHour = true;
+        return;
+      } else {
+        this.isIncorrectHour = false;
+        this.resourceForm.controls['hours'].setErrors(null);
+      }
+    });
+  }
+
+  validateAmount() {
+    this.resourceForm.controls['amount'].valueChanges.subscribe(data => {
+      if(this.resourceForm.controls['amount'].value > this.monto_total) {
+        this.resourceForm.controls['amount'].setErrors({error: true});
+        this.isIncorrectAmount = true;
+        return;
+      } else {
+        this.isIncorrectAmount = false;
+        this.resourceForm.controls['amount'].setErrors(null);
+      }
+    });
+  }
+
   registerHito() {
+    
     if (this.isUpdate == false) { // Si es registrar
       console.log("**************ES REGISTRAR**************")
       console.log("registrar monto", this.suma_total, this.resourceForm.value.amount, this.monto_total);
       console.log("registrar horas", this.horas_total, this.resourceForm.value.hours, this.horas_total);
-      if(this.suma_total + this.resourceForm.value.amount >= this.monto_total) {
-        this.notificationService.toast(
-          'error',
-          'La suma de hitos no debe ser mayor al monto de venta',
-          'Error',
-          7000
-        );
+      if(this.suma_total + this.resourceForm.value.amount > this.monto_total) {
         return;
       }
       if(this.suma_horas + this.resourceForm.value.hours >= this.horas_total) {

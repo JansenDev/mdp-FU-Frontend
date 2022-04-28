@@ -13,15 +13,23 @@
       
       <mat-form-field class="row1" appearance="outline">
         <mat-label class="label">Fecha Inicio</mat-label>
-        <input formControlName="start_date" type="date" matInput 
+        <input formControlName="start_date" type="date" matInput
         class="start-date-input" placeholder="Fecha Inicio" required>
+        <mat-hint class="error-hint" *ngIf="isIncorrectStartDateService">Fecha inicio del hito debe ser mayor a la fecha inicio del servicio</mat-hint>
+        <mat-hint class="error-hint" *ngIf="isIncorrectStartDate">Fecha inicio del hito debe ser menor a la fecha fin del hito</mat-hint>
+        <mat-hint class="error-hint" *ngIf="isIncorrectStartDateEndDateService">Fecha inicio del hito debe ser menor a la fecha fin del servicio</mat-hint>
       </mat-form-field>  
 
       <mat-form-field class="row1" appearance="outline">
         <mat-label class="label">Fecha Fin</mat-label>
         <input formControlName="end_date" type="date" 
         matInput min="{{serviceForm.value.start_date}}"
+        matInput max="{{this.endDateService}}"
         class="end-date-input" placeholder="Fecha Fin" required>
+        <mat-hint class="error-hint" *ngIf="isIncorrectEndDateService">Fecha fin del hito debe ser menor a la fecha fin del servicio</mat-hint>
+        <mat-hint class="error-hint" *ngIf="isIncorrectEndDate">Fecha fin del hito debe ser mayor a la fecha inicio del hito</mat-hint>
+        <mat-hint class="error-hint" *ngIf="isIncorrectEndDateStartDateService">Fecha fin del hito debe ser mayor a la fecha inicio del servicio</mat-hint>
+        <mat-hint class="error-hint">{{this.endDateService}}</mat-hint>
       </mat-form-field>  
 
       <mat-form-field class="row2" appearance="outline">
@@ -29,6 +37,7 @@
         <input formControlName="hours" type="number" 
         matInput min="1"
         class="" placeholder="Horas" required>
+        <mat-hint class="error-hint" *ngIf="isIncorrectHour">La suma de horas de los hitos no pueden superar a las horas del servicio</mat-hint>
       </mat-form-field>
       
       <mat-form-field class="row2" appearance="outline">
@@ -36,6 +45,7 @@
         <input formControlName="amount" type="number" 
         matInput min="1"
         class="" placeholder="Monto" required>
+        <mat-hint class="error-hint" *ngIf="isIncorrectAmount">La suma de montos de los hitos no pueden superar al presupuesto del servicio</mat-hint>
       </mat-form-field>
       <button
         [disabled]="resourceForm.invalid || disableBilling"
