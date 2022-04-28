@@ -61,12 +61,14 @@ input[type=number] { //Firefox
 .save-btn{
   background-color: var(--primary);
   grid-column-start: 3;
+  grid-row-start: 5;
   justify-self: center;
 }
 
 .cancel-btn{
   background-color: var(--red);
   grid-column-start: 4;
+  grid-row-start: 5;
   justify-self: center;
 }
 

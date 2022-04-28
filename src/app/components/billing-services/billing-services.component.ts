@@ -84,6 +84,9 @@ export class BillingServicesComponent implements OnInit {
     this.subject.subscribe((data: any) => {
       this.cod_servicio = data.cod_servicio == null || data.cod_servicio == undefined ? this.sentService.cod_servicio : data.cod_servicio;
       this.disableBilling = data.disableBilling;
+      //const buttonNameHito : any = document.getElementById('nameHito');
+      console.log("el servicio es ", data);
+
       if(this.disableBilling) {
         this.disableForm();
       } else {

@@ -64,7 +64,10 @@
     <mat-form-field class="col3" appearance="outline">
       <mat-label class="start-date-label">Fecha de inicio</mat-label>
     <input [(ngModel)]="formData.fecha_ini_planificada" #validStartDate="ngModel" required name="fecha_ini_planificada"
-    max="{{formData.fecha_fin_planificada ? formData.fecha_fin_planificada : 0}}" matInput type="date" class="start-date-input" [disabled]="disableAll">
+    [max]="serviceForm.value.fecha_fin_planificada ? serviceForm.value.fecha_fin_planificada : 0"
+     matInput [matDatepicker]="startDatePicker" [matDatepickerFilter]="startDateFilter" class="start-date-input">
+     <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+     <mat-datepicker #startDatePicker></mat-datepicker>
     <mat-hint *ngIf="validStartDate.invalid && (validStartDate.dirty || validStartDate.touched)" class="error-hint">
       Campo requerido
     </mat-hint>
@@ -72,8 +75,12 @@
 
     <mat-form-field class="col4" appearance="outline">
       <mat-label class="end-date-label">Fecha de fin</mat-label>
-      <input [(ngModel)]="formData.fecha_fin_planificada" #validEndDate="ngModel" min="{{serviceForm.value.fecha_ini_planificada}}"
-      required name="fecha_fin_planificada" matInput type="date" class="end-date-input" [disabled]="disableAll">
+      <input [(ngModel)]="formData.fecha_fin_planificada" #validEndDate="ngModel"
+      [min]="serviceForm.value.fecha_ini_planificada ? serviceForm.value.fecha_ini_planificada : 0"
+      required name="fecha_fin_planificada" matInput [matDatepicker]="endDatePicker" [matDatepickerFilter]="endDateFilter"
+       class="end-date-input">
+      <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+     <mat-datepicker #endDatePicker></mat-datepicker>
       <mat-hint *ngIf="validEndDate.invalid && (validEndDate.dirty || validEndDate.touched)" class="error-hint">
         Campo requerido
       </mat-hint>
@@ -82,7 +89,33 @@
       </mat-hint>
     </mat-form-field>
 
-    <mat-form-field class="col1" appearance="outline">
+    <mat-form-field *ngIf="this.receivedServiceId" class="col3" appearance="outline">
+      <mat-label class="real-start-date-label">Fecha de inicio <b>real</b> </mat-label>
+    <input [(ngModel)]="formData.fecha_ini_real" #validRealStartDate="ngModel" required name="fecha_ini_real"
+    [max]="serviceForm.value.fecha_fin_real ? serviceForm.value.fecha_fin_real : 0" matInput [matDatepicker]="realStartDatePicker"
+    [matDatepickerFilter]="realStartDateFilter" class="start-date-input">
+    <mat-datepicker-toggle matSuffix [for]="realStartDatePicker"></mat-datepicker-toggle>
+    <mat-datepicker #realStartDatePicker></mat-datepicker>
+    <mat-hint *ngIf="validRealStartDate.invalid && (validRealStartDate.dirty || validRealStartDate.touched)" class="error-hint">
+      Campo requerido
+    </mat-hint>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="this.receivedServiceId" class="col4" appearance="outline">
+      <mat-label class="real-end-date-label">Fecha de fin <b>real</b> </mat-label>
+      <input [(ngModel)]="formData.fecha_fin_real" #validRealEndDate="ngModel" [min]="serviceForm.value.fecha_ini_real"
+      required name="fecha_fin_real" matInput [matDatepicker]="realEndDatePicker" class="end-date-input">
+      <mat-datepicker-toggle matSuffix [for]="realEndDatePicker"></mat-datepicker-toggle>
+    <mat-datepicker #realEndDatePicker></mat-datepicker>
+      <mat-hint *ngIf="validRealEndDate.invalid && (validRealEndDate.dirty || validRealEndDate.touched)" class="error-hint">
+        Campo requerido
+      </mat-hint>
+      <mat-hint *ngIf="(formData.fecha_ini_planificada && formData.fecha_fin_real) && (formData.fecha_fin_real <= formData.fecha_ini_planificada)" class="error-hint">
+        La fecha de fin debe ser mayor a la de inicio
+      </mat-hint>
+    </mat-form-field>
+
+    <mat-form-field class="col1 row3" appearance="outline">
       <mat-label class="sale-hours-label">Horas venta</mat-label>
       <input  [(ngModel)]="formData.horas_venta" #validSaleHours="ngModel" name="horas_venta" required matInput type="number"
       class="sale-hours-input" [disabled]="disableAll">
@@ -91,7 +124,7 @@
       </mat-hint>
     </mat-form-field>
 
-    <mat-form-field class="col2" appearance="outline">
+    <mat-form-field class="col2 row3" appearance="outline">
       <mat-label class="currency-label">Moneda</mat-label>
       <mat-select [(ngModel)]="formData.moneda" #validCurrency="ngModel" required name="moneda" class="currency-input" [disabled]="disableAll">
         <mat-option *ngFor="let currency of currencies" [value]="currency.viewValue">
@@ -103,7 +136,7 @@
       </mat-hint>
     </mat-form-field>
 
-    <mat-form-field *ngIf="selectedServiceLine == 'PRY' " class="col4" appearance="fill" floatLabel="always">
+    <mat-form-field *ngIf="selectedServiceLine == 'PRY' " class="col4 row4" appearance="fill" floatLabel="always">
       <mat-label class="sale-value-label">Costo de venta {{ formData.moneda === 'SOL' ? 'en soles' : 'en dolares' }}</mat-label>
       <input  [(ngModel)]="formData.costo_venta" #validCostValue="ngModel" name="costo_venta" required matInput type="number"
       class="sale-value-input" [disabled]="disableAll">
@@ -117,7 +150,7 @@
       </mat-hint>
     </mat-form-field>
 
-    <mat-form-field class="col3 row3" appearance="fill" floatLabel="always">
+    <mat-form-field class="col3 row4" appearance="fill" floatLabel="always">
       <mat-label class="sale-value-label">Valor de venta {{ formData.moneda === 'SOL' ? 'en soles' : 'en dolares' }}</mat-label>
       <input  [(ngModel)]="formData.valor_venta" #validSaleValue="ngModel" name="valor_venta" required matInput type="number"
       class="sale-value-input" [disabled]="disableAll">
@@ -142,7 +175,7 @@
       <mat-hint *ngIf="validPaymentMethod.invalid && (validPaymentMethod.dirty || validPaymentMethod.touched)" class="error-hint">Campo requerido</mat-hint>
     </mat-form-field>
 
-    <mat-form-field class="col5 rate" appearance="fill" floatLabel="always">
+    <mat-form-field class="col5 row4 rate" appearance="fill" floatLabel="always">
       <mat-label class="sale-value-label">Tarifa promedio en soles</mat-label>
       <input [(ngModel)]="formData.tarifa" [value]="formData.horas_venta && formData.valor_venta ? calculateRate() : 0 "
        #validRate="ngModel" name="tarifa" required matInput type="number" class="sale-value-input" disabled>
@@ -151,7 +184,7 @@
     </mat-form-field>
 
       <button type="submit" mat-raised-button class="save-btn" [disabled]="serviceForm.invalid || disableAll"> <mat-icon>save</mat-icon> Guardar</button>
-      <button mat-raised-button type="" class="cancel-btn" routerLink="/service-map"><mat-icon>close</mat-icon> Cancelar</button>
+      <button mat-raised-button type="button" class="cancel-btn" routerLink="/service-map"><mat-icon>close</mat-icon> Cancelar</button>
   </form>
   <div *ngIf="this.serviceResponse" class="status-container">
     <h3 class="status">
