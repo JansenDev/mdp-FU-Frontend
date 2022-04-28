@@ -46,7 +46,7 @@ export class ServiceDataComponent implements OnInit {
     fecha_fin_real: null,
     forma_pago: "",
     etapa: null,
-    estado: null,
+    estado_servicio: null,
   }
   currencies = [
     { value: 'sol-0', viewValue: 'SOL' },
@@ -54,11 +54,17 @@ export class ServiceDataComponent implements OnInit {
   ]
 
   stages = [
-    {value: 'analisis-diseno', viewValue: 'Análisis y Diseño'},
+    {value: 'analisis diseno', viewValue: 'Análisis y Diseño'},
     {value: 'desarrollo', viewValue: 'Desarrollo'},
     {value: 'calidad', viewValue: 'Calidad'},
-    {value: 'pase-produccion', viewValue: 'Pase a Producción'},
-    {value: 'no-aplica', viewValue: 'No Aplica'}
+    {value: 'pase produccion', viewValue: 'Pase a Producción'},
+    {value: 'no aplica', viewValue: 'No Aplica'}
+  ]
+
+  states = [
+    {value: 'por planificar', viewValue: 'Por Planificar'},
+    {value: 'en proceso', viewValue: 'En Proceso'},
+    {value: 'finalizar', viewValue: 'Finalizar'},
   ]
   exchangeRate!: IExchangeRateResponse;
   disableAll: boolean = false;
@@ -291,10 +297,9 @@ export class ServiceDataComponent implements OnInit {
             delete foundService.asignaciones;
             delete foundService.cod_servicio;
             delete foundService.pagos_servicios;
+            delete foundService.estado_config;
             delete foundService.usuario_reg;
-            delete foundService.estado_servicio;
             this.formData = foundService;
-
 
             this.selectedServiceLine = foundService.cod_linea_servicio;
             this.loadServiceTypes(this.selectedServiceLine);
