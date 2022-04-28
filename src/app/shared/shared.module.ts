@@ -17,6 +17,7 @@ import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatDividerModule } from '@angular/material/divider';
 import { StatePipe } from './pipes/state.pipe';
 import { FormsModule } from '@angular/forms';
 
@@ -49,6 +50,7 @@ import { FormsModule } from '@angular/forms';
     MatCheckboxModule,
     MatRadioModule,
     MatMomentDateModule,
+    MatDividerModule
   ],
 })
 export class SharedModule {}
