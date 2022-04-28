@@ -10,7 +10,7 @@ import { Subject } from 'rxjs';
 })
 export class ServicesConfigurationComponent implements OnInit {
   subject = new Subject<number>();
-  sentService: string | null = '';
+  sentService: any | null = '';
   constructor() { }
 
   ngOnInit(): void {

@@ -1,4 +1,4 @@
-import { Component, forwardRef, OnInit } from '@angular/core';
+import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import {
   ControlValueAccessor,
   FormBuilder,
@@ -7,6 +7,7 @@ import {
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
+import { Observable, Subject } from 'rxjs';
 import { IBusinessLine } from 'src/app/core/models/businessLine.model';
 import { IClientResponse } from 'src/app/core/models/client.model';
 import { CboxService } from 'src/app/core/services/cbox.service';
@@ -35,6 +36,7 @@ export class ImboxFilterComponent implements OnInit, ControlValueAccessor {
 
   businessLineList: IBusinessLine[] = [] as IBusinessLine[];
   clientList: IClientResponse[] = [] as IClientResponse[];
+  @Input() disableForm$!: Subject<any>;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -52,6 +54,17 @@ export class ImboxFilterComponent implements OnInit, ControlValueAccessor {
 
   ngOnInit(): void {
     this.fillAllFields();
+    this.onDisableForm$();
+  }
+
+  onDisableForm$() {
+    this.disableForm$.subscribe((idDisabled) => {
+      if (idDisabled) {
+        this.formImboxFilter.controls['cboxStatus'].disable();
+      } else {
+        this.formImboxFilter.controls['cboxStatus'].enable();
+      }
+    });
   }
 
   fillAllFields() {

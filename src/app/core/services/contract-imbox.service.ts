@@ -63,6 +63,14 @@ export class ContractImboxService {
 
     return this.httpClient.get<IStatusRequestSimple>(URL);
   }
+
+  approveGGHiringRequest(
+    idHiringRequest: string | number
+  ) {
+    const URL = `${url_base}/contractSolicitude/approvegg/${idHiringRequest}`;
+
+    return this.httpClient.get<IStatusRequestSimple>(URL);
+  }
 }
 
 export interface IFilterContractImboxRequest {

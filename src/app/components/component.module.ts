@@ -14,6 +14,7 @@ import { BillingServicesComponent } from './billing-services/billing-services.co
 import { ReactiveFormsModule } from '@angular/forms';
 import { ImboxFilterComponent } from './form/imbox-filter/imbox-filter.component';
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
+import { AssignedTeamComponent } from './assigned-team/assigned-team.component';
 
 
 @NgModule({
@@ -25,9 +26,9 @@ import { SidebarComponent } from './layout/sidebar/sidebar.component';
     ResourceMapDetailComponent,
     ServiceDataComponent,
     BillingServicesComponent,
-
     ImboxFilterComponent,
     SidebarComponent,
+    AssignedTeamComponent,
   ],
   imports: [CommonModule, SharedModule, RouterModule, ReactiveFormsModule],
   exports: [
@@ -42,7 +43,8 @@ import { SidebarComponent } from './layout/sidebar/sidebar.component';
     BillingServicesComponent,
     RouterModule,
     ImboxFilterComponent,
-    SidebarComponent
+    SidebarComponent,
+    AssignedTeamComponent
   ],
 })
 export class ComponentModule {}

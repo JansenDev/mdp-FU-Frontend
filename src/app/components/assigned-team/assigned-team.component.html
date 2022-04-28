@@ -1,0 +1,194 @@
+<div class="assigned-team">
+  <div class="box">
+    <mat-card class="mat-elevation-z6">
+      <mat-card-title class="assigned-team--title"
+        >Equipo asignado
+      </mat-card-title>
+      <div class="assigned-team--container">
+        <form [formGroup]="formAssignedTeam">
+          <div class="assigned-team--row1">
+            <mat-form-field>
+              <mat-label>Nro. Documento</mat-label>
+              <input
+                matInput
+                maxlength="15"
+                formControlName="inputDocumentNumber"
+              />
+              <mat-icon matSuffix>more_horiz</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Nombres</mat-label>
+              <input matInput formControlName="inputName" />
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Perfil</mat-label>
+              <input matInput formControlName="inputProfile" />
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Nivel</mat-label>
+              <mat-select formControlName="cboxLevel" required>
+                <mat-option value="junior">Junior</mat-option>
+                <mat-option value="semisenior">Semi Senior</mat-option>
+                <mat-option value="senior">Senior</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="assigned-team--row2">
+            <div class="row2--colspan">
+              <mat-form-field>
+                <mat-label>Asignación</mat-label>
+                <input
+                  matInput
+                  maxlength="3"
+                  formControlName="inputAssignament"
+                />
+                <mat-icon matSuffix>%</mat-icon>
+              </mat-form-field>
+              <mat-form-field>
+                <span matPrefix>S/ </span>
+                <mat-label>Tarifa</mat-label>
+                <input matInput formControlName="inputTariff" />
+              </mat-form-field>
+            </div>
+            <mat-form-field>
+              <mat-label>Fecha Inicio</mat-label>
+              <input
+                matInput
+                formControlName="dpDateStart"
+                [matDatepicker]="f_start"
+              />
+              <mat-hint>DD/MM/YYYY</mat-hint>
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="f_start"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #f_start></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Fecha Fin</mat-label>
+              <input
+                matInput
+                formControlName="dpDateEnd"
+                [matDatepicker]="f_end"
+              />
+              <mat-hint>DD/MM/YYYY</mat-hint>
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="f_end"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #f_end></mat-datepicker>
+            </mat-form-field>
+
+            <div class="row2--colspan">
+              <mat-form-field>
+                <mat-label>Horas Asignadas (H)</mat-label>
+                <input matInput formControlName="inputAssignament_hour" />
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-label>Producción Estimada</mat-label>
+                <input matInput formControlName="inputProductionEstimated" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="assigned-team--row3">
+            <button
+              mat-raised-button
+              [disabled]="formAssignedTeam.invalid"
+              type="submit"
+              color="primary"
+            >
+              <mat-icon>save</mat-icon> Guardar
+            </button>
+          </div>
+        </form>
+      </div>
+      {{ formAssignedTeam.value | json }} <br />
+      {{ formAssignedTeam.valid }}
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        class="mat-elevation-z8 assigned-team--table"
+      >
+        <ng-container matColumnDef="profile">
+          <th mat-header-cell *matHeaderCellDef>Perfil</th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            {{ i + 1 + "." + " CONSULTOR" | uppercase }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="level">
+          <th mat-header-cell *matHeaderCellDef>Nivel</th>
+          <td mat-cell *matCellDef="let element">
+            {{ "Inmortal" | titlecase }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="documentNumber">
+          <th mat-header-cell *matHeaderCellDef>Nro. Documento</th>
+          <td mat-cell *matCellDef="let element">{{ "77215870" }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="names">
+          <th mat-header-cell *matHeaderCellDef>Nombres y apellidos</th>
+          <td mat-cell *matCellDef="let element">
+            {{ "Janssen Segura" | titlecase }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="assignment">
+          <th mat-header-cell *matHeaderCellDef>Asignacion</th>
+          <td mat-cell *matCellDef="let element">{{ "100%" }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="d_start">
+          <th mat-header-cell *matHeaderCellDef>F. Inicio</th>
+          <td mat-cell *matCellDef="let element">
+            {{ "2022-04-27" | date: "dd/MM/YYYY" }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="d_end">
+          <th mat-header-cell *matHeaderCellDef>F. Fin</th>
+          <td mat-cell *matCellDef="let element">
+            {{ "2022-04-27" | date: "dd/MM/YYYY" }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action_edit">
+          <th mat-header-cell *matHeaderCellDef>Editar</th>
+          <td mat-cell *matCellDef="let element">
+            <mat-icon class="edit-icon">edit</mat-icon>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action_delete">
+          <th mat-header-cell *matHeaderCellDef>Eliminar</th>
+          <td mat-cell *matCellDef="let element">
+            <mat-icon class="edit-icon">delete</mat-icon>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns; let i = index"
+        ></tr>
+      </table>
+    </mat-card>
+  </div>
+</div>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
