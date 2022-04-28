@@ -89,7 +89,6 @@ export class BillingServicesComponent implements OnInit {
         (data.disableBilling == null || data.disableBilling == undefined) 
         ? this.disableBilling 
         : data.disableBilling;
-      //const buttonNameHito : any = document.getElementById('nameHito');
 
       if(this.disableBilling) {
         this.disableForm();
@@ -184,10 +183,6 @@ export class BillingServicesComponent implements OnInit {
     });
 
     this.resourceForm.controls['end_date'].valueChanges.subscribe(data => {
-      console.log("Fecha fin", data)
-      console.log("Fecha fin servicio", this.endDateService)
-      console.log("this.isIncorrectEndDate", this.isIncorrectEndDate)
-      console.log("this.isIncorrectEndDateStartDateService", this.isIncorrectEndDateStartDateService)
       if(!this.isIncorrectEndDate && !this.isIncorrectEndDateStartDateService) {
         if(data != null && data != '') {
           if(this.resourceForm.controls['end_date'].value > this.endDateService) {
@@ -262,17 +257,17 @@ export class BillingServicesComponent implements OnInit {
       console.log("**************ES REGISTRAR**************")
       console.log("registrar monto", this.suma_total, this.resourceForm.value.amount, this.monto_total);
       console.log("registrar horas", this.horas_total, this.resourceForm.value.hours, this.horas_total);
-      if(this.suma_total + this.resourceForm.value.amount > this.monto_total) {
-        return;
-      }
-      if(this.suma_horas + this.resourceForm.value.hours >= this.horas_total) {
-        alert("No debe exceder la hora");
-        return;
-      }
-      if(this.resourceForm.value.start_date >= this.resourceForm.value.end_date) {
-        alert("La fecha de inicio debe ser menor a la fecha de fin");
-        return;
-      }
+      // if(this.suma_total + this.resourceForm.value.amount > this.monto_total) {
+      //   return;
+      // }
+      // if(this.suma_horas + this.resourceForm.value.hours >= this.horas_total) {
+      //   alert("No debe exceder la hora");
+      //   return;
+      // }
+      // if(this.resourceForm.value.start_date >= this.resourceForm.value.end_date) {
+      //   alert("La fecha de inicio debe ser menor a la fecha de fin");
+      //   return;
+      // }
       let input = {
         "cod_servicio": this.cod_servicio,
         "descripcion_hito": this.resourceForm.value.nameHito,
@@ -290,18 +285,18 @@ export class BillingServicesComponent implements OnInit {
       console.log("ES ACTUALIZAR")
       console.log("actualizar monto menos row", this.suma_total, this.lastRowSelected.monto, this.resourceForm.value.amount, this.monto_total);
       console.log("actualizar horas menos row", this.horas_total, this.lastRowSelected.horas, this.resourceForm.value.hours, this.horas_total);
-      if(this.suma_total - this.lastRowSelected.monto + this.resourceForm.value.amount > this.monto_total) {
-        alert("No debe exceder el monto total");
-        return;
-      }
-      if(this.horas_total - this.lastRowSelected.horas + this.resourceForm.value.hours > this.horas_total) {
-        alert("No debe exceder las horas venta");
-        return;
-      }
-      if(this.resourceForm.value.start_date >= this.resourceForm.value.end_date) {
-        alert("La fecha de inicio debe ser menor a la fecha de fin");
-        return;
-      }
+      // if(this.suma_total - this.lastRowSelected.monto + this.resourceForm.value.amount > this.monto_total) {
+      //   alert("No debe exceder el monto total");
+      //   return;
+      // }
+      // if(this.horas_total - this.lastRowSelected.horas + this.resourceForm.value.hours > this.horas_total) {
+      //   alert("No debe exceder las horas venta");
+      //   return;
+      // }
+      // if(this.resourceForm.value.start_date >= this.resourceForm.value.end_date) {
+      //   alert("La fecha de inicio debe ser menor a la fecha de fin");
+      //   return;
+      // }
       this.isUpdate = false;
       let input = {
         "cod_hito": this.cod_hito,
