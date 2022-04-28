@@ -44,7 +44,9 @@ export class ServiceDataComponent implements OnInit {
     fecha_fin_planificada: "",
     fecha_ini_real: null,
     fecha_fin_real: null,
-    forma_pago: ""
+    forma_pago: "",
+    etapa: null,
+    estado: null,
   }
   currencies = [
     { value: 'sol-0', viewValue: 'SOL' },
