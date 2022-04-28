@@ -140,7 +140,6 @@ export class BillingServicesComponent implements OnInit {
 
   validateDate() {
     this.resourceForm.controls['start_date'].valueChanges.subscribe(data => {
-      console.log("Fecha inicio", data)
       if(!this.isIncorrectStartDate && !this.isIncorrectStartDateEndDateService) {
         if(data != null && data != '') {
           if(this.resourceForm.controls['start_date'].value < this.startDateService) {
@@ -227,7 +226,12 @@ export class BillingServicesComponent implements OnInit {
 
   validateHour() {
     this.resourceForm.controls['hours'].valueChanges.subscribe(data => {
-      if(this.resourceForm.controls['hours'].value > this.horas_total) {
+      let row_hours = 0
+      if(this.lastRowSelected && this.lastRowSelected.horas)
+        row_hours = this.lastRowSelected.horas;
+      console.log("validate sumatotal", this.horas_total)
+      console.log("row_hours", row_hours);
+      if(this.suma_horas + this.resourceForm.controls['hours'].value - row_hours > this.horas_total) {
         this.resourceForm.controls['hours'].setErrors({error: true});
         this.isIncorrectHour = true;
         return;
@@ -240,7 +244,10 @@ export class BillingServicesComponent implements OnInit {
 
   validateAmount() {
     this.resourceForm.controls['amount'].valueChanges.subscribe(data => {
-      if(this.resourceForm.controls['amount'].value > this.monto_total) {
+      let row_amount = 0;
+      if(this.lastRowSelected && this.lastRowSelected.monto)
+        row_amount = this.lastRowSelected.monto;
+      if(this.suma_total + this.resourceForm.controls['amount'].value - row_amount > this.monto_total) {
         this.resourceForm.controls['amount'].setErrors({error: true});
         this.isIncorrectAmount = true;
         return;
@@ -313,11 +320,11 @@ export class BillingServicesComponent implements OnInit {
         this.getHitos()
       });
     }
-    this.resourceForm.controls['nameHito'].setValue(" ");
-    this.resourceForm.controls['start_date'].setValue(new Date());
-    this.resourceForm.controls['end_date'].setValue(new Date());
+    this.resourceForm.controls['nameHito'].setErrors(null);
     this.resourceForm.controls['hours'].setValue(1);
     this.resourceForm.controls['amount'].setValue(1);
+    this.resourceForm.controls['start_date'].setErrors(null);
+    this.resourceForm.controls['end_date'].setErrors(null);
   }
 
    getHitos() {
