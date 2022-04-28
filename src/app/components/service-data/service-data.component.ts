@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { ICreateServiceRequest, IExchangeRateResponse, IPaymentMethodResponse, IServiceLineResponse, IServiceTypeResponse, ICreateServiceResponse } from 'src/app/core/models/service.model';
+import { ICreateServiceRequest, IExchangeRateResponse, IPaymentMethodResponse, IServiceLineResponse, IServiceTypeResponse, ICreateServiceResponse, IGetOneServiceMapResponse } from 'src/app/core/models/service.model';
 import { NgForm } from '@angular/forms';
 import { ServicesService } from 'src/app/core/services/services.service';
 import { IClientResponse } from 'src/app/core/models/client.model';
@@ -26,7 +26,7 @@ export class ServiceDataComponent implements OnInit {
   selectedServiceLine = '';
   selectedServiceType = '';
   selectedPaymentMethod = '';
-  formData: ICreateServiceRequest = {
+   formData: ICreateServiceRequest = {
     cod_cliente: null,
     cod_linea_servicio: "",
     tipo_servicio: "",
@@ -46,11 +46,25 @@ export class ServiceDataComponent implements OnInit {
     fecha_fin_real: null,
     forma_pago: "",
     etapa: null,
-    estado: null,
+    estado_servicio: null,
   }
   currencies = [
     { value: 'sol-0', viewValue: 'SOL' },
     { value: 'dolar-1', viewValue: 'DOLAR' }
+  ]
+
+  stages = [
+    {value: 'analisis diseno', viewValue: 'Análisis y Diseño'},
+    {value: 'desarrollo', viewValue: 'Desarrollo'},
+    {value: 'calidad', viewValue: 'Calidad'},
+    {value: 'pase produccion', viewValue: 'Pase a Producción'},
+    {value: 'no aplica', viewValue: 'No Aplica'}
+  ]
+
+  states = [
+    {value: 'por planificar', viewValue: 'Por Planificar'},
+    {value: 'en proceso', viewValue: 'En Proceso'},
+    {value: 'finalizar', viewValue: 'Finalizar'},
   ]
   exchangeRate!: IExchangeRateResponse;
   disableAll: boolean = false;
@@ -208,6 +222,7 @@ export class ServiceDataComponent implements OnInit {
       subscribe(createdService => {
         console.log('created service: ', createdService);
         this.serviceResponse = createdService;
+        this.receivedServiceId = createdService.cod_servicio.toString();
         this.cod_servicio = this.serviceResponse.cod_servicio;
         if (this.formData.forma_pago == 'consumo' || this.formData.forma_pago == 'total'){
           this.disableBilling = true;
@@ -216,15 +231,26 @@ export class ServiceDataComponent implements OnInit {
         }
         this.subject.next({...createdService, disableBilling: this.disableBilling});
         console.log('response: ', this.serviceResponse);
-        this.disableAll = true;
       },  error => {
         console.error(error);
       })
   }
 
+  updateService(service: ICreateServiceRequest){
+    this.servicesService.updateService(parseInt( this.receivedServiceId), service)
+      .subscribe(serviceToUpdate => {
+        console.log('service to update: ', serviceToUpdate);
+        this.subject.next({...serviceToUpdate, disableBilling: this.disableBilling});
+      })
+  }
+
   submitForm(){
     console.log(this.ServiceForm);
-    this.createService(this.formData);
+    if (this.receivedServiceId){
+      this.updateService(this.formData);
+    } else{
+      this.createService(this.formData);
+    }
   }
 
   loadExchangeRate() {
@@ -265,10 +291,16 @@ export class ServiceDataComponent implements OnInit {
     this.servicesService.findOneServiceMap(serviceId)
       .subscribe(
         {
-          next: (foundService) => {
+          next: (foundService: IGetOneServiceMapResponse ) => {
             this.subject.next(foundService);
             console.log('servicio encontrado: ', foundService);
+            delete foundService.asignaciones;
+            delete foundService.cod_servicio;
+            delete foundService.pagos_servicios;
+            delete foundService.estado_config;
+            delete foundService.usuario_reg;
             this.formData = foundService;
+
             this.selectedServiceLine = foundService.cod_linea_servicio;
             this.loadServiceTypes(this.selectedServiceLine);
             this.selectedServiceType = foundService.tipo_servicio;

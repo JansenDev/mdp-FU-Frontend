@@ -50,7 +50,7 @@ export class ServicesService {
         }
         return res;
       })
-    ); ;
+    );
   }
 
   getServiceLines(): Observable<IServiceLineResponse[]> {
@@ -81,8 +81,28 @@ export class ServicesService {
     return this.http.get<IGetOneServiceMapResponse>( `${ this._api }/services/assignments/payment-services/${ codService }`);
   }
 
-  updateService(codService: number, body: ICreateServiceRequest): Observable<ICreateServiceResponse[]> {
-    return this.http.put<ICreateServiceResponse[]>( `${ this._api }/services/update/${ codService }`, body );
+  updateService(codService: number, body: ICreateServiceRequest): Observable<ICreateServiceResponse> {
+    if (body.moneda == "DOLAR"){
+      body.valor_venta_sol = body.valor_venta! * body.tasa_cambio!;
+      body.costo_venta_sol = body.costo_venta! * body.tasa_cambio!;
+    }
+    if (body.moneda == 'SOL') {
+      body.valor_venta_sol = body.valor_venta!;
+      body.costo_venta_sol = body.costo_venta!;
+    }
+    return this.http.put<ICreateServiceResponse>( `${ this._api }/services/update/${ codService }`, body ).pipe(
+      map((res: ICreateServiceResponse) => {
+        if (res) {
+          this.notificationService.toast(
+            'success',
+            'Servicio actualizado!',
+            'Servicio',
+            7000
+          );
+        }
+        return res;
+      })
+    );
   }
 
 }
