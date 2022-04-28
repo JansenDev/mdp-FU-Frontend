@@ -4,6 +4,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subject } from 'rxjs';
 import { BillingServicesService } from 'src/app/core/services/billing-services.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
+
 @Component({
   selector: 'app-billing-services',
   templateUrl: './billing-services.component.html',
@@ -22,7 +24,9 @@ export class BillingServicesComponent implements OnInit {
   public cod_hito = null;
   public numero_hito = null;
   private monto_total = 0;
+  private horas_total = 0;
   private suma_total = 0;
+  private suma_horas = 0;
   private amountRow = 0
   private lastRowSelected : any;
 
@@ -48,7 +52,7 @@ export class BillingServicesComponent implements OnInit {
 
   resourceForm: FormGroup;
   constructor(private service : BillingServicesService,
-    private formBuilder : FormBuilder) {
+    private formBuilder : FormBuilder, private notificationService: NotificationService) {
       this.resourceForm = this.formBuilder.group({
         cod_servicio: [''],
         nameHito: ['', Validators.required],
@@ -78,6 +82,7 @@ export class BillingServicesComponent implements OnInit {
     console.log('servicio recibido: ',  this.sentService);
     if(this.sentService != null) {
       this.monto_total = this.sentService.valor_venta
+      this.horas_total = this.sentService.horas_venta // ! REVISAR
       this.disableBilling = false;
       this.enableForm();
       this.cod_servicio = this.sentService.cod_servicio;
@@ -105,9 +110,24 @@ export class BillingServicesComponent implements OnInit {
 
   registerHito() {
     if (this.isUpdate == false) { // Si es registrar
-      console.log("ES REGISTRAR")
+      console.log("**************ES REGISTRAR**************")
+      console.log("registrar monto", this.suma_total, this.resourceForm.value.amount, this.monto_total);
+      console.log("registrar horas", this.horas_total, this.resourceForm.value.hours, this.horas_total);
       if(this.suma_total + this.resourceForm.value.amount >= this.monto_total) {
-        alert("No debe exceder la suma");
+        this.notificationService.toast(
+          'error',
+          'La suma de hitos no debe ser mayor al monto de venta',
+          'Error',
+          7000
+        );
+        return;
+      }
+      if(this.suma_horas + this.resourceForm.value.hours >= this.horas_total) {
+        alert("No debe exceder la hora");
+        return;
+      }
+      if(this.resourceForm.value.start_date >= this.resourceForm.value.end_date) {
+        alert("La fecha de inicio debe ser menor a la fecha de fin");
         return;
       }
       let input = {
@@ -124,13 +144,22 @@ export class BillingServicesComponent implements OnInit {
         this.getHitos();
       });
     } else { // Si es actualizar
-      this.isUpdate = false;
       console.log("ES ACTUALIZAR")
-      console.log("actualizar menos row", this.suma_total, this.lastRowSelected.monto, this.resourceForm.value.amount, this.monto_total);
-      if(this.suma_total - this.lastRowSelected.monto + this.resourceForm.value.amount >= this.monto_total) {
-        alert("No debe exceder la suma");
+      console.log("actualizar monto menos row", this.suma_total, this.lastRowSelected.monto, this.resourceForm.value.amount, this.monto_total);
+      console.log("actualizar horas menos row", this.horas_total, this.lastRowSelected.horas, this.resourceForm.value.hours, this.horas_total);
+      if(this.suma_total - this.lastRowSelected.monto + this.resourceForm.value.amount > this.monto_total) {
+        alert("No debe exceder el monto total");
         return;
       }
+      if(this.horas_total - this.lastRowSelected.horas + this.resourceForm.value.hours > this.horas_total) {
+        alert("No debe exceder las horas venta");
+        return;
+      }
+      if(this.resourceForm.value.start_date >= this.resourceForm.value.end_date) {
+        alert("La fecha de inicio debe ser menor a la fecha de fin");
+        return;
+      }
+      this.isUpdate = false;
       let input = {
         "cod_hito": this.cod_hito,
         "numero_hito": this.numero_hito,
@@ -163,8 +192,10 @@ export class BillingServicesComponent implements OnInit {
       this.dataSource = new MatTableDataSource<any>(data);
       this.hitos = data;
       this.suma_total = this.sumMontos(data);
+      this.suma_horas = this.sumHoras(data);
       this.dataSource.paginator = this.paginator;
       console.log("SUMA TOTAL DE LOS HITOS = ", this.suma_total);
+      console.log("SUMA TOTAL DE LAS HORAS = ", this.suma_horas);
     });
   }
   sumMontos(data : any) {
@@ -173,6 +204,14 @@ export class BillingServicesComponent implements OnInit {
       suma += parseInt(data[i].monto);
     return suma;
   }
+
+  sumHoras(data : any) {
+    let horas = 0;
+    for(let i = 0; i < data.length; i++)
+      horas += parseInt(data[i].horas);
+    return horas;
+  }
+
   updateHito(element : any) {
     this.resourceForm.controls['nameHito'].setValue(element.descripcion_hito);
     this.resourceForm.controls['start_date'].setValue(element.fecha_inicio);
