@@ -107,6 +107,7 @@ const ELEMENT_DATA: any = [
 export class AssignedTeamComponent implements OnInit {
   @Input() subject!: Subject<any>;
   formAssignedTeam: FormGroup;
+  serviceResponse: any;
 
   constructor(
     private notification: NotificationService,
@@ -158,24 +159,23 @@ export class AssignedTeamComponent implements OnInit {
     this.onChangeDateEnd$();
 
     //  service created
-    this.subject.subscribe((value) => {
+    this.subject.subscribe((serviceResponse) => {
       console.warn('value PADRE:');
-      console.log(value);
-      this.notification.toast('info', value, 'DATA  ');
+      console.log(serviceResponse);
+      this.notification.toast('info', serviceResponse, 'DATA  ');
+      this.serviceResponse = serviceResponse;
     });
-
-
   }
-
 
   onChangeDateStart$() {
     this.formAssignedTeam.controls['dpDateStart'].valueChanges.subscribe(
       (dateStart) => {
         const dateEnd = this.formAssignedTeam.controls['dpDateEnd'].value;
+        console.warn('this.serviceResponse');
+        console.log(this.serviceResponse);
 
         if (dateStart && dateEnd) {
           const x = this.isValidDatesStartToEnd(dateStart, dateEnd);
-
         }
       }
     );
@@ -188,7 +188,6 @@ export class AssignedTeamComponent implements OnInit {
 
         if (dateStart && dateEnd) {
           const x = this.isValidDatesStartToEnd(dateStart, dateEnd, true);
-
         }
       }
     );
