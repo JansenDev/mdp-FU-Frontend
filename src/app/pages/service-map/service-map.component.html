@@ -66,111 +66,111 @@
     <div class="table--container">
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
         <ng-container matColumnDef="codigo">
-          <th mat-header-cell *matHeaderCellDef>Código</th>
-          <td mat-cell *matCellDef="let element">
+          <th mat-header-cell *matHeaderCellDef class="centre">Código</th>
+          <td mat-cell *matCellDef="let element" class="centre">
             {{ element.cod_servicio }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="nombre_servicio">
-          <th mat-header-cell *matHeaderCellDef>Nombre servicio</th>
+          <th mat-header-cell *matHeaderCellDef class="centre">Nombre<br>del servicio</th>
           <td mat-cell *matCellDef="let element">
             {{ element.descripcion_servicio | titlecase }}
           </td>
         </ng-container>
         <ng-container matColumnDef="tipo_servicio">
-          <th mat-header-cell *matHeaderCellDef>Tipo</th>
+          <th mat-header-cell *matHeaderCellDef class="centre">Tipo</th>
           <td mat-cell *matCellDef="let element">
-            {{ element.tipo_servicio }}
+            {{ element.tipo_servicio | uppercase}}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="etapa">
-          <th mat-header-cell *matHeaderCellDef>Etapa</th>
-          <td mat-cell *matCellDef="let element">
-            {{ element.etapa }}
+          <th mat-header-cell *matHeaderCellDef class="centre">Etapa</th>
+          <td mat-cell *matCellDef="let element" class="centre">
+            {{ element.etapa | titlecase }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="estado">
-          <th mat-header-cell *matHeaderCellDef>Estado</th>
+          <th mat-header-cell *matHeaderCellDef class="centre">Estado</th>
           <td mat-cell *matCellDef="let element">
             {{ element.estado_config | titlecase }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="horas_venta">
-          <th mat-header-cell *matHeaderCellDef>Horas venta</th>
-          <td mat-cell *matCellDef="let element">
-            {{ element.horas_venta }}
+          <th mat-header-cell *matHeaderCellDef class="centre">Horas<br>venta</th>
+          <td mat-cell *matCellDef="let element" class="right">
+            {{ element.horas_venta | number }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="valor_venta">
-          <th mat-header-cell *matHeaderCellDef>Valor de venta</th>
-          <td mat-cell *matCellDef="let element">
-            {{ element.valor_venta }}
+          <th mat-header-cell *matHeaderCellDef class="centre">Valor<br>de venta</th>
+          <td mat-cell *matCellDef="let element" class="right">
+            {{ element.valor_venta | number:'.2' }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="fecha_inicio_planificada">
-          <th mat-header-cell *matHeaderCellDef>Fecha Inicio Planificada</th>
-          <td mat-cell *matCellDef="let element">
+          <th mat-header-cell *matHeaderCellDef class="centre">Fecha Inicio<br>Planificada</th>
+          <td mat-cell *matCellDef="let element" class="centre">
             {{ element.fecha_ini_planificada | date: "dd-MM-yyyy" }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="fecha_fin_planificada">
-          <th mat-header-cell *matHeaderCellDef>Fecha Fin Planificada</th>
-          <td mat-cell *matCellDef="let element">
+          <th mat-header-cell *matHeaderCellDef class="centre">Fecha Fin<br>Planificada</th>
+          <td mat-cell *matCellDef="let element" class="centre">
             {{ element.fecha_fin_planificada | date: "dd-MM-yyyy" }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="fecha_inicio_real">
-          <th mat-header-cell *matHeaderCellDef>Fecha Inicio Real</th>
-          <td mat-cell *matCellDef="let element">
-            {{ element.fecha_ini_real }}
+          <th mat-header-cell *matHeaderCellDef class="centre">Fecha Inicio<br>Real</th>
+          <td mat-cell *matCellDef="let element" class="centre">
+            {{ element.fecha_ini_real | date: "dd-MM-yyyy" }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="fecha_fin_real">
-          <th mat-header-cell *matHeaderCellDef>Fecha Fin Real</th>
-          <td mat-cell *matCellDef="let element">
-            {{ element.fecha_fin_real }}
+          <th mat-header-cell *matHeaderCellDef class="centre">Fecha Fin<br>Real</th>
+          <td mat-cell *matCellDef="let element" class="centre">
+            {{ element.fecha_fin_real | date: "dd-MM-yyyy" }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="horas_planificada">
-          <th mat-header-cell *matHeaderCellDef>Horas planificadas</th>
-          <td mat-cell *matCellDef="let element">
+          <th mat-header-cell *matHeaderCellDef class="centre">Horas<br>planificadas</th>
+          <td mat-cell *matCellDef="let element" class="right">
             {{ element.horas_planificadas }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="valor_venta_planificada">
-          <th mat-header-cell *matHeaderCellDef>Valor de venta planificada</th>
-          <td mat-cell *matCellDef="let element">
-            {{ element.valor_venta_planificada }}
+          <th mat-header-cell *matHeaderCellDef class="centre">Valor de venta<br>planificada</th>
+          <td mat-cell *matCellDef="let element" class="right">
+            {{ element.valor_venta_planificada | number:'.2' }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="horas_ejecutadas">
-          <th mat-header-cell *matHeaderCellDef>Horas ejecutadas</th>
-          <td mat-cell *matCellDef="let element">
-            {{ element.horas_ejecutadas }}
+          <th mat-header-cell *matHeaderCellDef class="centre">Horas<br>ejecutadas</th>
+          <td mat-cell *matCellDef="let element" class="right">
+            {{ element.horas_ejecutadas | number }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="produccion_ejecutada">
-          <th mat-header-cell *matHeaderCellDef>Producción ejecutada</th>
-          <td mat-cell *matCellDef="let element">
-            {{ element.produccion_ejecutadas }}
+          <th mat-header-cell *matHeaderCellDef class="centre">Producción<br>ejecutada</th>
+          <td mat-cell *matCellDef="let element" class="right">
+            {{ element.produccion_ejecutadas | number:'.2'}}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="actions">
-          <th class="table-headers" mat-header-cell *matHeaderCellDef>Ver Detalle</th>
+          <th class="table-headers" mat-header-cell *matHeaderCellDef class="centre">Ver<br>Detalle</th>
           <td class="table-values" style="padding: 0;" mat-cell *matCellDef="let element">
             <button class="edit-button" 
             (click)="seeDetail(element)" 

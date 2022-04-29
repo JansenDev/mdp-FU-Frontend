@@ -73,14 +73,14 @@
               <ng-container matColumnDef="horas">
                 <th class="table-headers" mat-header-cell *matHeaderCellDef>Horas</th>
                 <td class="table-values" mat-cell *matCellDef="let element">
-                  {{ element.horas }}
+                  {{ element.horas | number }}
                 </td>
               </ng-container>
               
               <ng-container matColumnDef="monto">
                 <th class="table-headers" mat-header-cell *matHeaderCellDef>Monto</th>
                 <td class="table-values" mat-cell *matCellDef="let element">
-                  {{ element.monto }}
+                  {{ element.monto | number:'.2'}}
                 </td>
               </ng-container>
 

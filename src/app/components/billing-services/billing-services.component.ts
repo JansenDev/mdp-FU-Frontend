@@ -320,9 +320,15 @@ export class BillingServicesComponent implements OnInit {
         this.getHitos()
       });
     }
+    this.resourceForm.controls['nameHito'].setValue(null)
+    this.resourceForm.controls['hours'].setValue(null)
+    this.resourceForm.controls['amount'].setValue(null)
+    this.resourceForm.controls['start_date'].setValue(null)
+    this.resourceForm.controls['end_date'].setValue(null)
+    
     this.resourceForm.controls['nameHito'].setErrors(null);
-    this.resourceForm.controls['hours'].setValue(1);
-    this.resourceForm.controls['amount'].setValue(1);
+    // this.resourceForm.controls['hours'].setErrors(null);
+    // this.resourceForm.controls['amount'].setErrors(null);
     this.resourceForm.controls['start_date'].setErrors(null);
     this.resourceForm.controls['end_date'].setErrors(null);
   }
@@ -361,8 +367,8 @@ export class BillingServicesComponent implements OnInit {
     this.resourceForm.controls['nameHito'].setValue(element.descripcion_hito);
     this.resourceForm.controls['start_date'].setValue(element.fecha_inicio);
     this.resourceForm.controls['end_date'].setValue(element.fecha_fin);
-    this.resourceForm.controls['hours'].setValue(element.horas);
-    this.resourceForm.controls['amount'].setValue(element.monto);
+    this.resourceForm.controls['hours'].setValue(Number(element.horas));
+    this.resourceForm.controls['amount'].setValue(Number(element.monto));
     this.isUpdate = true;
     this.cod_hito = element.cod_hito;
     this.numero_hito = element.numero_hito;
@@ -370,7 +376,19 @@ export class BillingServicesComponent implements OnInit {
     this.lastRowSelected = element;
     console.log("this.lastrow", this.lastRowSelected);
     console.log("editando", element);
-
+    this.isIncorrectDate = false;
+    this.isIncorrectStartDateService = false;
+    this.isIncorrectStartDateEndDateService = false;
+    this.isIncorrectEndDateService = false;
+    this.isIncorrectStartDate = false;
+    this.isIncorrectEndDate = false;
+    this.isIncorrectEndDateStartDateService = false;
+    let row_hours = this.lastRowSelected.horas;
+    if(this.suma_horas + this.resourceForm.controls['hours'].value - row_hours > this.horas_total) {
+      this.isIncorrectHour = true;
+    } else {
+      this.isIncorrectHour = false;
+    }
   }
 
   deleteHito(element : any) {
