@@ -41,6 +41,16 @@ input[type=number] { //Firefox
 
 /* ------------------------------------------------------- */
 
+//Desactivar color gris de etiquetas en disabled
+::ng-deep .mat-form-field-appearance-fill.mat-form-field-disabled .mat-form-field-label {
+  color: rgba(0,0,0);
+}
+
+::ng-deep .mat-input-element:disabled,
+ .mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after {
+  color: rgba(0,0,0);
+}
+
 .circle{
   border-radius: 50%;
   width: 20px;
@@ -115,7 +125,7 @@ input[type=number] { //Firefox
 
 .col4 {
   grid-column-start: 4;
-  justify-self: end;
+  justify-self: start;
 }
 
 .col4-long{

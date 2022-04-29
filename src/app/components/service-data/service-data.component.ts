@@ -289,17 +289,19 @@ export class ServiceDataComponent implements OnInit {
 
   calculateProductionSale(){
     setTimeout(() => {
-      if (this.formData.moneda == 'DOLAR'){
-        this.formData.prod_venta = (this.formData.valor_venta!* this.formData.tasa_cambio!) / this.formData.costo_venta!;
+      if (this.formData.moneda == 'SOL'){
+        if (this.formData.valor_venta && this.formData.costo_venta! > 0){
+          this.formData.prod_venta = this.formData.valor_venta! / this.formData.costo_venta!;
+        }
+
       } else {
-          this.formData.prod_venta = this.formData.valor_venta_sol! / this.formData.costo_venta_sol!;
+        if (this.formData.valor_venta && this.formData.costo_venta! > 0) {
+          this.formData.prod_venta = this.formData.valor_venta_sol! / this.formData.costo_venta!;
+        }
       }
     }, 0);
 
-    if (this.formData.prod_venta){
-      return this.formData.prod_venta!;
-    }
-    return
+    return this.formData.prod_venta!;
   }
 
   loadService(serviceId: number){
