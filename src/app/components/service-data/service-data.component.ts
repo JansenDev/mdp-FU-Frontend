@@ -275,7 +275,7 @@ export class ServiceDataComponent implements OnInit {
   calculateRate(){
     setTimeout(() => {
       if (this.formData.moneda == 'DOLAR'){
-        this.formData.tarifa = (this.formData.valor_venta! * this.formData.tasa_cambio!) / this.formData.horas_venta!;
+        this.formData.tarifa = (this.formData.valor_venta_sol! * this.formData.tasa_cambio!) / this.formData.horas_venta!;
       } else {
           this.formData.tarifa = this.formData.valor_venta! / this.formData.horas_venta!;
       }
@@ -283,8 +283,9 @@ export class ServiceDataComponent implements OnInit {
 
     if (this.formData.tarifa){
       return this.formData.tarifa!;
+    } else{
+      return 0;
     }
-    return
   }
 
   calculateProductionSale(){

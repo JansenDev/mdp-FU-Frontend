@@ -101,7 +101,7 @@
       <mat-label class="sale-value-label">Costo de venta</mat-label>
       <input [(ngModel)]="formData.costo_venta" #validCostValue="ngModel" name="costo_venta"
        required matInput type="number" [disabled]="disableAll">
-      <span matPrefix>{{ formData.moneda === 'SOL' ? 'S/.' : '$' }}&nbsp;</span>
+      <span matPrefix>{{'S/.'}}&nbsp;</span>
       <span matSuffix>.00</span>
       <mat-hint *ngIf="validCostValue.invalid && (validCostValue.dirty || validCostValue.touched)" class="error-hint">
         Campo requerido
@@ -115,7 +115,7 @@
     <mat-form-field class="col3 row3 rate" appearance="fill" floatLabel="always">
       <mat-label>Productividad venta</mat-label>
       <input [(ngModel)]="formData.prod_venta"
-      [value]="formData.valor_venta_sol && formData.costo_venta_sol? calculateProductionSale() : 0 "
+      [value]="calculateProductionSale()"
        #validRate="ngModel" name="prod_venta" matInput type="number" class="sale-value-input" disabled>
       <mat-hint *ngIf="validRate.invalid && (validRate.dirty || validRate.touched)" class="error-hint">Campo requerido</mat-hint>
     </mat-form-field>
