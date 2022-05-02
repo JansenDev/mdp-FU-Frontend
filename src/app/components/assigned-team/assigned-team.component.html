@@ -5,7 +5,7 @@
         >Equipo asignado
       </mat-card-title>
       <div class="assigned-team--container">
-        <form [formGroup]="formAssignedTeam">
+        <form [formGroup]="formAssignedTeam" (submit)="ngSubmit()">
           <div class="assigned-team--row1">
             <mat-form-field>
               <mat-label>Nro. Documento</mat-label>
@@ -15,6 +15,7 @@
                 formControlName="inputDocumentNumber"
               />
               <mat-icon matSuffix>more_horiz</mat-icon>
+              <mat-error>{{ printErrors.message }}</mat-error>
             </mat-form-field>
 
             <mat-form-field>
@@ -23,7 +24,14 @@
             </mat-form-field>
             <mat-form-field>
               <mat-label>Perfil</mat-label>
-              <input matInput formControlName="inputProfile" />
+
+              <mat-select formControlName="cboxProfile" required>
+                <mat-option
+                  *ngFor="let profile of profileList"
+                  [value]="profile.cod_perfil"
+                  >{{ profile.nombre_perfil | uppercase }}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
             <mat-form-field>
               <mat-label>Nivel</mat-label>
@@ -35,8 +43,40 @@
             </mat-form-field>
           </div>
           <div class="assigned-team--row2">
+            <mat-form-field>
+              <mat-label>Fecha Inicio</mat-label>
+              <input
+                matInput
+                formControlName="dpDateStart"
+                [matDatepicker]="dpF_start"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="dpF_start"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #dpF_start></mat-datepicker>
+              <mat-error>{{ printErrors.message }}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Fecha Fin</mat-label>
+              <input
+                matInput
+                formControlName="dpDateEnd"
+                [matDatepicker]="dpF_end"
+              />
+
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="dpF_end"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #dpF_end></mat-datepicker>
+              <mat-error>{{ printErrors.message }}</mat-error>
+            </mat-form-field>
+
             <div class="row2--colspan">
               <mat-form-field>
+                <mat-hint>{{ printErrors.hint }}</mat-hint>
                 <mat-label>Asignación</mat-label>
                 <input
                   matInput
@@ -45,50 +85,33 @@
                 />
                 <mat-icon matSuffix>%</mat-icon>
               </mat-form-field>
+
               <mat-form-field>
                 <span matPrefix>S/ </span>
                 <mat-label>Tarifa</mat-label>
                 <input matInput formControlName="inputTariff" />
               </mat-form-field>
             </div>
-            <mat-form-field>
-              <mat-label>Fecha Inicio</mat-label>
-              <input
-                matInput
-                formControlName="dpDateStart"
-                [matDatepicker]="f_start"
-              />
-              <mat-hint>DD/MM/YYYY</mat-hint>
-              <mat-datepicker-toggle
-                matSuffix
-                [for]="f_start"
-              ></mat-datepicker-toggle>
-              <mat-datepicker #f_start></mat-datepicker>
-            </mat-form-field>
-            <mat-form-field>
-              <mat-label>Fecha Fin</mat-label>
-              <input
-                matInput
-                formControlName="dpDateEnd"
-                [matDatepicker]="f_end"
-              />
-              <mat-hint>DD/MM/YYYY</mat-hint>
-              <mat-datepicker-toggle
-                matSuffix
-                [for]="f_end"
-              ></mat-datepicker-toggle>
-              <mat-datepicker #f_end></mat-datepicker>
-            </mat-form-field>
 
             <div class="row2--colspan">
               <mat-form-field>
                 <mat-label>Horas Asignadas (H)</mat-label>
-                <input matInput formControlName="inputAssignament_hour" />
+                <input
+                  matInput
+                  formControlName="inputHourAssignment"
+                  [value]="
+                    assignmentHourTotal | currency: ' ':'symbol-narrow':'1.0'
+                  "
+                />
               </mat-form-field>
 
               <mat-form-field>
-                <mat-label>Producción Estimada</mat-label>
-                <input matInput formControlName="inputProductionEstimated" />
+                <mat-label>Producción Planificada</mat-label>
+                <input
+                  matInput
+                  disabled
+                  [value]="productionPlanned | currency: 'S/'"
+                />
               </mat-form-field>
             </div>
           </div>
@@ -101,11 +124,18 @@
             >
               <mat-icon>save</mat-icon> Guardar
             </button>
+            <button
+              mat-raised-button
+              type="button"
+              color="accent"
+              (click)="onCancel()"
+            >
+              <mat-icon>close</mat-icon> Cancelar
+            </button>
           </div>
         </form>
       </div>
-      {{ formAssignedTeam.value | json }} <br />
-      {{ formAssignedTeam.valid }}
+
       <table
         mat-table
         [dataSource]="dataSource"
@@ -114,59 +144,74 @@
         <ng-container matColumnDef="profile">
           <th mat-header-cell *matHeaderCellDef>Perfil</th>
           <td mat-cell *matCellDef="let element; let i = index">
-            {{ i + 1 + "." + " CONSULTOR" | uppercase }}
+            {{ i + 1 + ". " + element.puesto | uppercase }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="level">
           <th mat-header-cell *matHeaderCellDef>Nivel</th>
           <td mat-cell *matCellDef="let element">
-            {{ "Inmortal" | titlecase }}
+            {{ element.nivel | titlecase }}
           </td>
-        </ng-container>
-
-        <ng-container matColumnDef="documentNumber">
-          <th mat-header-cell *matHeaderCellDef>Nro. Documento</th>
-          <td mat-cell *matCellDef="let element">{{ "77215870" }}</td>
         </ng-container>
 
         <ng-container matColumnDef="names">
           <th mat-header-cell *matHeaderCellDef>Nombres y apellidos</th>
           <td mat-cell *matCellDef="let element">
-            {{ "Janssen Segura" | titlecase }}
+            {{ element.nombres_apellidos | titlecase }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="assignment">
           <th mat-header-cell *matHeaderCellDef>Asignacion</th>
-          <td mat-cell *matCellDef="let element">{{ "100%" }}</td>
+          <td mat-cell *matCellDef="let element">
+            {{ element.por_asignacion + "%" }}
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="d_start">
           <th mat-header-cell *matHeaderCellDef>F. Inicio</th>
           <td mat-cell *matCellDef="let element">
-            {{ "2022-04-27" | date: "dd/MM/YYYY" }}
+            {{ element.fecha_inicio | date: "dd-MM-YYYY" }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="d_end">
           <th mat-header-cell *matHeaderCellDef>F. Fin</th>
           <td mat-cell *matCellDef="let element">
-            {{ "2022-04-27" | date: "dd/MM/YYYY" }}
+            {{ element.fecha_fin | date: "dd-MM-YYYY" }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="hour_assigned">
+          <th mat-header-cell *matHeaderCellDef>Horas Asignadas</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.horas_asignacion | currency: " ":"symbol":"1.0" }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="prod_planned">
+          <th mat-header-cell *matHeaderCellDef>prod_planificadas</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.prod_planificada | currency: "S/":"symbol":"1.2" }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="action_edit">
           <th mat-header-cell *matHeaderCellDef>Editar</th>
           <td mat-cell *matCellDef="let element">
-            <mat-icon class="edit-icon">edit</mat-icon>
+            <mat-icon (click)="editAssignment(element)" class="edit-icon"
+              >edit</mat-icon
+            >
           </td>
         </ng-container>
 
         <ng-container matColumnDef="action_delete">
           <th mat-header-cell *matHeaderCellDef>Eliminar</th>
           <td mat-cell *matCellDef="let element">
-            <mat-icon class="edit-icon">delete</mat-icon>
+            <mat-icon (click)="deleteAssignment(element)" class="edit-icon"
+              >delete</mat-icon
+            >
           </td>
         </ng-container>
 

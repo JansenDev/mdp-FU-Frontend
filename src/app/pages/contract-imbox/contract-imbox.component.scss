@@ -186,7 +186,6 @@ $width_page: 90%;
         }
       }
 
-      // // TODO: mejorar color  al pasar el mouse en la fila
       .mat-row:hover .mat-cell {
         cursor: pointer;
         background-color: var(--gray);

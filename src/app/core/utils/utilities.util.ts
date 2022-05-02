@@ -18,11 +18,15 @@ export function findPeriodActive(periodlist: IPeriodResponse[]): string {
 }
 // dar formato a fecha default = DD-MM-YY
 export function timestampFormat(
-  timestamp: string,
+  timestamp: string | moment.Moment,
   format: string = 'YYYY-MM-DD'
 ) {
   if (!timestamp) {
     return null;
+  }
+
+  if (!(typeof timestamp === 'string')) {
+    return timestamp.format(format);
   }
 
   return moment(timestamp).format(format);
@@ -31,12 +35,17 @@ export function timestampFormat(
 // Si fecha fin es mayor return true
 export function isHighDateEnd(
   inputDateStart: Date | string,
-  inputDateEnd: Date | string
+  inputDateEnd: Date | string,
+  orEquals = false
 ): boolean {
   const dateStart = moment(inputDateStart);
   const dateEnd = moment(inputDateEnd);
 
-  return dateEnd.diff(dateStart) > 0;
+  if (!orEquals) {
+    return dateEnd.diff(dateStart) > 0;
+  }
+
+  return dateEnd.diff(dateStart) >= 0;
 }
 
 // Capitalizar primera letra de una palabra
@@ -53,7 +62,7 @@ export function toCapitalizeCase(words: string): string {
   let wordsCapitalized = words
     .split(' ')
     .filter((name: string) => name !== '')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(' ');
 
   return wordsCapitalized;
