@@ -37,6 +37,8 @@ export class ServicesService {
       service.valor_venta_sol = service.valor_venta!;
       service.costo_venta_sol = service.costo_venta!;
     }
+    service.prod_venta = service.valor_venta_sol! / service.costo_venta_sol! ;
+    service.tarifa = service.valor_venta_sol! / service.horas_venta!;
     return this.http.post<ICreateServiceResponse>( `${ this._api }/services/create`, service )
     .pipe(
       map((res: ICreateServiceResponse) => {
@@ -90,6 +92,8 @@ export class ServicesService {
       body.valor_venta_sol = body.valor_venta!;
       body.costo_venta_sol = body.costo_venta!;
     }
+    body.prod_venta = body.valor_venta_sol! / body.costo_venta_sol! ;
+    body.tarifa = body.valor_venta_sol! / body.horas_venta!;
     return this.http.put<ICreateServiceResponse>( `${ this._api }/services/update/${ codService }`, body ).pipe(
       map((res: ICreateServiceResponse) => {
         if (res) {

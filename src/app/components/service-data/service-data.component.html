@@ -115,7 +115,7 @@
     <mat-form-field class="col3 row3 rate" appearance="fill" floatLabel="always">
       <mat-label>Productividad venta</mat-label>
       <input [(ngModel)]="formData.prod_venta"
-      [value]="calculateProductionSale()"
+      [value]="this.formData.valor_venta && this.formData.costo_venta ? calculateProductionSale() : 0"
        #validRate="ngModel" name="prod_venta" matInput type="number" class="sale-value-input" disabled>
       <mat-hint *ngIf="validRate.invalid && (validRate.dirty || validRate.touched)" class="error-hint">Campo requerido</mat-hint>
     </mat-form-field>
@@ -126,7 +126,6 @@
       <input [(ngModel)]="formData.tarifa" [value]="formData.horas_venta && formData.valor_venta ? calculateRate() : 0 "
        #validRate="ngModel" name="tarifa" required matInput type="number" class="sale-value-input" disabled>
        <span matPrefix>{{'S/.'}}&nbsp;</span>
-       <span matSuffix>.00</span>
     </mat-form-field>
 
     <!-- Solo aparece si la moneda seleccionada es dolar -->
@@ -241,7 +240,7 @@
 
   </form>
   <!-- para debugging: -->
-  <!-- <pre>{{this.formData | json}}</pre> -->
+  <pre>{{this.formData | json}}</pre>
 
   <!-- ------------------------Semáforo para mostrar el estado del servicio----------------------------------------- -->
   <div *ngIf="this.serviceResponse" class="status-container">

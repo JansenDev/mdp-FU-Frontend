@@ -273,36 +273,19 @@ export class ServiceDataComponent implements OnInit {
   }
 
   calculateRate(){
-    setTimeout(() => {
-      if (this.formData.moneda == 'DOLAR'){
-        this.formData.tarifa = (this.formData.valor_venta_sol! * this.formData.tasa_cambio!) / this.formData.horas_venta!;
-      } else {
-          this.formData.tarifa = this.formData.valor_venta! / this.formData.horas_venta!;
-      }
-    }, 0);
-
-    if (this.formData.tarifa){
-      return this.formData.tarifa!;
-    } else{
-      return 0;
+    if (this.formData.moneda == 'DOLAR'){
+      return (this.formData.valor_venta! * this.formData.tasa_cambio!) / this.formData.horas_venta!;
     }
+
+    return this.formData.valor_venta! / this.formData.horas_venta!;
   }
 
   calculateProductionSale(){
-    setTimeout(() => {
-      if (this.formData.moneda == 'SOL'){
-        if (this.formData.valor_venta && this.formData.costo_venta! > 0){
-          this.formData.prod_venta = this.formData.valor_venta! / this.formData.costo_venta!;
-        }
+    if (this.formData.moneda == 'SOL'){
+      return this.formData.valor_venta! / this.formData.costo_venta!;
+    }
 
-      } else {
-        if (this.formData.valor_venta && this.formData.costo_venta! > 0) {
-          this.formData.prod_venta = this.formData.valor_venta_sol! / this.formData.costo_venta!;
-        }
-      }
-    }, 0);
-
-    return this.formData.prod_venta!;
+    return (this.formData.valor_venta! * this.formData.tasa_cambio!)  / this.formData.costo_venta!;
   }
 
   loadService(serviceId: number){
