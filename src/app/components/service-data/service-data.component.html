@@ -111,7 +111,6 @@
       </mat-hint> -->
     </mat-form-field>
 
-    <!-- TODO: SOLO EN SOLES -->
     <mat-form-field class="col3 row3 rate" appearance="fill" floatLabel="always">
       <mat-label>Productividad venta</mat-label>
       <input [(ngModel)]="formData.prod_venta"
@@ -120,7 +119,6 @@
       <mat-hint *ngIf="validRate.invalid && (validRate.dirty || validRate.touched)" class="error-hint">Campo requerido</mat-hint>
     </mat-form-field>
 
-    <!-- TODO: SOLO EN SOLES -->
     <mat-form-field class="col5 row3 rate" appearance="fill" floatLabel="always">
       <mat-label class="sale-value-label">Tarifa promedio</mat-label>
       <input [(ngModel)]="formData.tarifa" [value]="formData.horas_venta && formData.valor_venta ? calculateRate() : 0 "
@@ -166,7 +164,6 @@
     </mat-form-field>
 
     <!-- ----------------------- Solo aparecen si se está editando el servicio ------------------------------------->
-    <!-- TODO:col -->
     <mat-form-field class="col3 row4" *ngIf="this.receivedServiceId" appearance="fill">
       <mat-label class="real-start-date-label">Fecha de inicio <b>real</b> </mat-label>
     <input [(ngModel)]="formData.fecha_ini_real" #validRealStartDate="ngModel" name="fecha_ini_real"
@@ -204,7 +201,7 @@
     </mat-form-field>
 
     <!-- ----------------------------Solo aparecen si se está editando el servicio ----------------------------------------->
-    <!-- TODO: Generar con valor "por planificar" por default -->
+
     <mat-form-field class="col3 row5" *ngIf="receivedServiceId" appearance="fill">
       <mat-label class="currency-label">Estado del servicio</mat-label>
       <mat-select [(ngModel)]="formData.estado_servicio" #validState="ngModel" name="estado_servicio" class="estado_servicio-input" [disabled]="disableAll">
@@ -240,12 +237,12 @@
 
   </form>
   <!-- para debugging: -->
-  <pre>{{this.formData | json}}</pre>
+  <!-- <pre>{{this.formData | json}}</pre> -->
 
   <!-- ------------------------Semáforo para mostrar el estado del servicio----------------------------------------- -->
   <div *ngIf="this.serviceResponse" class="status-container">
     <h3 class="status">
-      <b>Estado: {{ this.serviceResponse.estado | titlecase }}</b>
+      <b>Estado: {{ this.serviceResponse.estado_config | titlecase }}</b>
     </h3>
     <span
       [ngClass]="{

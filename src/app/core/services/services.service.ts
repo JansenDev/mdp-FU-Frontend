@@ -39,6 +39,7 @@ export class ServicesService {
     }
     service.prod_venta = service.valor_venta_sol! / service.costo_venta_sol! ;
     service.tarifa = service.valor_venta_sol! / service.horas_venta!;
+    service.estado_servicio = 'por planificar';
     return this.http.post<ICreateServiceResponse>( `${ this._api }/services/create`, service )
     .pipe(
       map((res: ICreateServiceResponse) => {

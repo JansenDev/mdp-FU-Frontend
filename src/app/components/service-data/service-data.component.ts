@@ -224,6 +224,7 @@ export class ServiceDataComponent implements OnInit {
         this.serviceResponse = createdService;
         this.receivedServiceId = createdService.cod_servicio.toString();
         this.cod_servicio = this.serviceResponse.cod_servicio;
+        this.formData.estado_servicio = createdService.estado_servicio;
         if (this.formData.forma_pago == 'consumo' || this.formData.forma_pago == 'total'){
           this.disableBilling = true;
         } else {
@@ -240,6 +241,7 @@ export class ServiceDataComponent implements OnInit {
     this.servicesService.updateService(parseInt( this.receivedServiceId), service)
       .subscribe(serviceToUpdate => {
         console.log('service to update: ', serviceToUpdate);
+        this.serviceResponse = serviceToUpdate;
         this.subject.next({...serviceToUpdate, disableBilling: this.disableBilling});
       })
   }
@@ -295,12 +297,15 @@ export class ServiceDataComponent implements OnInit {
           next: (foundService: IGetOneServiceMapResponse ) => {
             this.subject.next(foundService);
             console.log('servicio encontrado: ', foundService);
+
+            this.serviceResponse = {...foundService};
             delete foundService.asignaciones;
             delete foundService.cod_servicio;
             delete foundService.pagos_servicios;
             delete foundService.estado_config;
             delete foundService.usuario_reg;
             this.formData = foundService;
+
 
             this.selectedServiceLine = foundService.cod_linea_servicio;
             this.loadServiceTypes(this.selectedServiceLine);
