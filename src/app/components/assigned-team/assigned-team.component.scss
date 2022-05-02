@@ -90,6 +90,13 @@
       border-bottom: 1px solid var(--gray);
       border-top: 1px solid transparent;
 
+      & .assigned-team--button {
+        // background-color: aqua;
+        cursor: pointer;
+        border: none;
+        background-color: unset;
+      }
+
       // &:nth-child(8) {
       //   text-align: center;
       // }
@@ -113,23 +120,10 @@
     }
 
     .mat-row:hover .mat-cell {
-      cursor: pointer;
+      // cursor: pointer;
       background-color: var(--gray);
       color: var(--white);
     }
-
-    // tr.active {
-    //   font-weight: 100;
-    //   background: rgba(238, 238, 238, 0.966);
-
-    //   & > td {
-    //     color: rgb(0, 0, 0) !important;
-    //   }
-    // }
-
-    // & tbody tr td.mat-cell:last-child {
-    //   padding-right: 10px !important;
-    // }
   }
 
   & .assigned-team--table {
@@ -143,6 +137,32 @@
   min-width: 150px;
 }
 
+.edit-icon {
+  color: rgba(255, 221, 0, 0.85);
+  padding: 0;
+  margin: 0;
+
+  &:hover {
+    color: var(--white);
+  }
+}
+
+.delete-icon {
+  color: rgba(255, 0, 0, 0.862);
+  padding: 0;
+  margin: 0;
+
+  &:hover {
+    color: var(--white);
+  }
+}
+
+.btn-disabled {
+  opacity: .5;
+  color: var(--gray);
+}
+
+// media
 @media (max-width: 960px) {
   .assigned-team {
     .assigned-team--container {

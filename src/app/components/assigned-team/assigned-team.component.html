@@ -200,18 +200,34 @@
         <ng-container matColumnDef="action_edit">
           <th mat-header-cell *matHeaderCellDef>Editar</th>
           <td mat-cell *matCellDef="let element">
-            <mat-icon (click)="editAssignment(element)" class="edit-icon"
-              >edit</mat-icon
+            <button
+              class="assigned-team--button edit-icon"
+              type="button"
+              [disabled]="serviceResponse.cod_asignacion"
+              (click)="editAssignment(element)"
+              [ngClass]="{
+                'btn-disabled': serviceResponse.cod_asignacion
+              }"
             >
+              <mat-icon>edit</mat-icon>
+            </button>
           </td>
         </ng-container>
 
         <ng-container matColumnDef="action_delete">
           <th mat-header-cell *matHeaderCellDef>Eliminar</th>
           <td mat-cell *matCellDef="let element">
-            <mat-icon (click)="deleteAssignment(element)" class="edit-icon"
-              >delete</mat-icon
+            <button
+              class="assigned-team--button delete-icon"
+              type="button"
+              (click)="deleteAssignment(element)"
+              [disabled]="serviceResponse.cod_asignacion"
+              [ngClass]="{
+                'btn-disabled': serviceResponse.cod_asignacion
+              }"
             >
+              <mat-icon>delete</mat-icon>
+            </button>
           </td>
         </ng-container>
 
