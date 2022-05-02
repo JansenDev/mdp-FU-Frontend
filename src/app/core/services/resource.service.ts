@@ -8,7 +8,10 @@ import { IClientResponse } from '../models/client.model';
 import { IProfileResponse } from '../models/profile.model';
 import { IResourceRequest } from '../models/resource.model';
 import { IResourceResponse } from '../models/resource.model';
-import { ICollaboratorResponse } from '../models/collaborator.model';
+import {
+  ICollaboratorAssigned,
+  ICollaboratorResponse,
+} from '../models/collaborator.model';
 import { NotificationService } from './notification.service';
 
 const { url_base } = environment;
@@ -112,5 +115,20 @@ export class ResourceService {
     const URL = `${url_base}/resources/${idUser}/clients`;
 
     return this.httpClient.get<IClientResponse[]>(URL);
+  }
+
+  findCollaboratorsByidClient(
+    idClient: string,
+    documentNumber?: string,
+    names?: string
+  ) {
+    const URL = `${url_base}/resources/${idClient}/collaboratorsActives`;
+
+    const dataBodyRequest = {
+      nombres: names,
+      nro_documento: documentNumber,
+    };
+
+    return this.httpClient.post<ICollaboratorAssigned[]>(URL, dataBodyRequest);
   }
 }
