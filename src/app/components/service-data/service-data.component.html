@@ -52,7 +52,9 @@
       </mat-hint>
     </mat-form-field>
 
-    <mat-form-field class="col1-long" appearance="fill">
+
+    <!-- -----------------------------------------Inicio de fila 2 ------------------------------------------------------ -->
+    <mat-form-field class="col1" appearance="fill">
       <mat-label class="service-label">Nombre de Servicio</mat-label>
       <input name="descripcion_servicio" #validServiceDescription="ngModel" [(ngModel)]="formData.descripcion_servicio" required
       name="descripcion_servicio" matInput type="text" class="service-input" [disabled]="disableAll">
@@ -61,18 +63,92 @@
       </mat-hint>
     </mat-form-field>
 
-    <mat-form-field class="col3" appearance="fill">
+    <mat-form-field class="col3 row2" appearance="fill">
+      <mat-label class="sale-hours-label">Horas venta</mat-label>
+      <input  [(ngModel)]="formData.horas_venta" #validSaleHours="ngModel" name="horas_venta" required matInput type="number"
+      class="sale-hours-input" [disabled]="disableAll">
+      <mat-hint *ngIf="validSaleHours.invalid && (validSaleHours.dirty || validSaleHours.touched)" class="error-hint">
+        Campo requerido
+      </mat-hint>
+    </mat-form-field>
+
+    <mat-form-field class="col5 row2" appearance="fill">
+      <mat-label class="currency-label">Moneda</mat-label>
+      <mat-select [(ngModel)]="formData.moneda" #validCurrency="ngModel" required name="moneda" class="currency-input" [disabled]="disableAll">
+        <mat-option *ngFor="let currency of currencies" [value]="currency.viewValue">
+          {{ currency.viewValue }}
+        </mat-option>
+      </mat-select>
+      <mat-hint *ngIf="validCurrency.invalid && (validCurrency.dirty || validCurrency.touched)" class="error-hint">
+        Campo requerido
+      </mat-hint>
+    </mat-form-field>
+
+    <mat-form-field class="col6 row2" appearance="fill" floatLabel="always">
+      <mat-label class="sale-value-label">Valor de venta</mat-label>
+      <input  [(ngModel)]="formData.valor_venta" #validSaleValue="ngModel" name="valor_venta" required matInput type="number"
+      class="sale-value-input" [disabled]="disableAll">
+      <span matPrefix>{{ formData.moneda === 'SOL' ? 'S/.' : '$' }}&nbsp;</span>
+      <span matSuffix>.00</span>
+      <mat-hint *ngIf="validSaleValue.invalid && (validSaleValue.dirty || validSaleValue.touched)" class="error-hint">
+        Campo requerido
+      </mat-hint>
+    </mat-form-field>
+
+    <!-- -----------------------------------Inicio de fila 3--------------------------------------------------------- -->
+
+    <mat-form-field class="col1 row3" *ngIf="selectedServiceLine == 'PRY'" appearance="fill" floatLabel="always">
+      <mat-label class="sale-value-label">Costo de venta</mat-label>
+      <input [(ngModel)]="formData.costo_venta" #validCostValue="ngModel" name="costo_venta"
+       required matInput type="number" [disabled]="disableAll">
+      <span matPrefix>{{'S/.'}}&nbsp;</span>
+      <span matSuffix>.00</span>
+      <mat-hint *ngIf="validCostValue.invalid && (validCostValue.dirty || validCostValue.touched)" class="error-hint">
+        Campo requerido
+      </mat-hint>
+      <!-- <mat-hint *ngIf="formData.moneda === 'DOLAR' && formData.costo_venta ">
+        Tipo de cambio: {{ formData.tasa_cambio }} <br>En soles: S/.{{ calculateSoles('costo') | number : '1.2-2' }}
+      </mat-hint> -->
+    </mat-form-field>
+
+    <mat-form-field class="col3 row3 rate" appearance="fill" floatLabel="always">
+      <mat-label>Productividad venta</mat-label>
+      <input [(ngModel)]="formData.prod_venta"
+      [value]="this.formData.valor_venta && this.formData.costo_venta ? calculateProductionSale() : 0"
+       #validRate="ngModel" name="prod_venta" matInput type="number" class="sale-value-input" disabled>
+      <mat-hint *ngIf="validRate.invalid && (validRate.dirty || validRate.touched)" class="error-hint">Campo requerido</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field class="col5 row3 rate" appearance="fill" floatLabel="always">
+      <mat-label class="sale-value-label">Tarifa promedio</mat-label>
+      <input [(ngModel)]="formData.tarifa" [value]="formData.horas_venta && formData.valor_venta ? calculateRate() : 0 "
+       #validRate="ngModel" name="tarifa" required matInput type="number" class="sale-value-input" disabled>
+       <span matPrefix>{{'S/.'}}&nbsp;</span>
+    </mat-form-field>
+
+    <!-- Solo aparece si la moneda seleccionada es dolar -->
+    <mat-form-field class="col6 row3" *ngIf="formData.moneda === 'DOLAR'" appearance="fill">
+      <mat-label>Valor de venta en soles: </mat-label>
+      <input type="number" disabled [(ngModel)]="formData.valor_venta_sol" name="valor_venta_sol"
+       matInput [value]="calculateSoles('valor')">
+       <mat-hint *ngIf="formData.moneda === 'DOLAR'">
+        <mat-label>Tasa de cambio: {{formData.tasa_cambio}}</mat-label>
+       </mat-hint>
+    </mat-form-field>
+
+    <!-- ---------------------------------- Inicio de fila 4 ----------------------------------- -->
+
+        <mat-form-field class="col1 row4" appearance="fill">
       <mat-label class="start-date-label">Fecha de inicio</mat-label>
     <input [(ngModel)]="formData.fecha_ini_planificada" #validStartDate="ngModel" required name="fecha_ini_planificada"
     max="{{formData.fecha_fin_planificada ? formData.fecha_fin_planificada : 0}}"
      matInput type="date" class="start-date-input">
-
     <mat-hint *ngIf="validStartDate.invalid && (validStartDate.dirty || validStartDate.touched)" class="error-hint">
       Campo requerido
     </mat-hint>
     </mat-form-field>
 
-    <mat-form-field class="col4" appearance="fill">
+    <mat-form-field class="col2 row4" appearance="fill">
       <mat-label class="end-date-label">Fecha de fin</mat-label>
       <input [(ngModel)]="formData.fecha_fin_planificada" min="{{formData.fecha_ini_planificada}}" #validEndDate="ngModel"
       matInput type="date"
@@ -87,21 +163,20 @@
       </mat-hint>
     </mat-form-field>
 
-    <mat-form-field *ngIf="this.receivedServiceId" class="col3" appearance="fill">
+    <!-- ----------------------- Solo aparecen si se está editando el servicio ------------------------------------->
+    <mat-form-field class="col3 row4" *ngIf="this.receivedServiceId" appearance="fill">
       <mat-label class="real-start-date-label">Fecha de inicio <b>real</b> </mat-label>
     <input [(ngModel)]="formData.fecha_ini_real" #validRealStartDate="ngModel" name="fecha_ini_real"
-    matInput type="date"
-    class="start-date-input">
-
+    matInput type="date">
     <mat-hint *ngIf="validRealStartDate.invalid && (validRealStartDate.dirty || validRealStartDate.touched)" class="error-hint">
       Campo requerido
     </mat-hint>
     </mat-form-field>
 
-    <mat-form-field *ngIf="this.receivedServiceId" class="col4" appearance="fill">
+    <mat-form-field class="col4 row4" *ngIf="this.receivedServiceId"  appearance="fill">
       <mat-label class="real-end-date-label">Fecha de fin <b>real</b> </mat-label>
       <input [(ngModel)]="formData.fecha_fin_real" #validRealEndDate="ngModel"
-       name="fecha_fin_real" matInput type="date" class="end-date-input">
+       name="fecha_fin_real" matInput type="date">
       <mat-hint *ngIf="validRealEndDate.invalid && (validRealEndDate.dirty || validRealEndDate.touched)" class="error-hint">
         Campo requerido
       </mat-hint>
@@ -110,68 +185,11 @@
       </mat-hint>
     </mat-form-field>
 
-    <mat-form-field class="col1 row3" appearance="fill">
-      <mat-label class="sale-hours-label">Horas venta</mat-label>
-      <input  [(ngModel)]="formData.horas_venta" #validSaleHours="ngModel" name="horas_venta" required matInput type="number"
-      class="sale-hours-input" [disabled]="disableAll">
-      <mat-hint *ngIf="validSaleHours.invalid && (validSaleHours.dirty || validSaleHours.touched)" class="error-hint">
-        Campo requerido
-      </mat-hint>
-    </mat-form-field>
+    <!-- ---------------------------------------------------------------------------------------- -->
 
-    <mat-form-field class="col2 row3" appearance="fill">
-      <mat-label class="currency-label">Moneda</mat-label>
-      <mat-select [(ngModel)]="formData.moneda" #validCurrency="ngModel" required name="moneda" class="currency-input" [disabled]="disableAll">
-        <mat-option *ngFor="let currency of currencies" [value]="currency.viewValue">
-          {{ currency.viewValue }}
-        </mat-option>
-      </mat-select>
-      <mat-hint *ngIf="validCurrency.invalid && (validCurrency.dirty || validCurrency.touched)" class="error-hint">
-        Campo requerido
-      </mat-hint>
-    </mat-form-field>
+    <!-- ---------------------------------Inicio de fila 5---------------------------------------- -->
 
-    <mat-form-field *ngIf="selectedServiceLine == 'PRY'" class="col3 row4" appearance="fill" floatLabel="always">
-      <mat-label class="sale-value-label">Costo de venta</mat-label>
-      <input  [(ngModel)]="formData.costo_venta" #validCostValue="ngModel" name="costo_venta" required matInput type="number"
-      class="sale-value-input" [disabled]="disableAll">
-      <span matPrefix>{{ formData.moneda === 'SOL' ? 'S/.' : '$' }}&nbsp;</span>
-      <span matSuffix>.00</span>
-      <mat-hint *ngIf="validCostValue.invalid && (validCostValue.dirty || validCostValue.touched)" class="error-hint">
-        Campo requerido
-      </mat-hint>
-      <!-- <mat-hint *ngIf="formData.moneda === 'DOLAR' && formData.costo_venta ">
-        Tipo de cambio: {{ formData.tasa_cambio }} <br>En soles: S/.{{ calculateSoles('costo') | number : '1.2-2' }}
-      </mat-hint> -->
-    </mat-form-field>
-
-    <mat-form-field class="col3 row5" *ngIf="selectedServiceLine == 'PRY' && formData.moneda === 'DOLAR'" appearance="fill">
-      <mat-label>Costo de venta en soles: </mat-label>
-      <input type="number" disabled [(ngModel)]="formData.costo_venta_sol" name="costo_venta_sol" matInput [value]="calculateSoles('costo')">
-    </mat-form-field>
-
-    <mat-form-field class="col2 row4" appearance="fill" floatLabel="always">
-      <mat-label class="sale-value-label">Valor de venta</mat-label>
-      <input  [(ngModel)]="formData.valor_venta" #validSaleValue="ngModel" name="valor_venta" required matInput type="number"
-      class="sale-value-input" [disabled]="disableAll">
-      <span matPrefix>{{ formData.moneda === 'SOL' ? 'S/.' : '$' }}&nbsp;</span>
-      <span matSuffix>.00</span>
-      <mat-hint *ngIf="validSaleValue.invalid && (validSaleValue.dirty || validSaleValue.touched)" class="error-hint">
-        Campo requerido
-      </mat-hint>
-    </mat-form-field>
-
-    <mat-form-field class="col1" *ngIf="formData.moneda === 'DOLAR'" appearance="fill">
-      <mat-label>Tipo de cambio: </mat-label>
-      <input disabled type="text" matInput [value]="formData.tasa_cambio">
-    </mat-form-field>
-
-    <mat-form-field class="col2 row5" *ngIf="formData.moneda === 'DOLAR'" appearance="fill">
-      <mat-label>Valor de venta en soles: </mat-label>
-      <input type="number" disabled [(ngModel)]="formData.valor_venta_sol" name="valor_venta_sol" matInput [value]="calculateSoles('valor')">
-    </mat-form-field>
-
-    <mat-form-field class="col5-long row2" appearance="fill">
+    <mat-form-field class="col1 row5" appearance="fill">
       <mat-label class="payment-method-label">Forma de pago</mat-label>
       <mat-select class="payment-method-input" #validPaymentMethod="ngModel" [(ngModel)]="formData.forma_pago" required
       name="forma_pago" [(value)]="selectedPaymentMethod" [disabled]="selectedServiceType || !disableAll ? false : true">
@@ -182,26 +200,9 @@
       <mat-hint *ngIf="validPaymentMethod.invalid && (validPaymentMethod.dirty || validPaymentMethod.touched)" class="error-hint">Campo requerido</mat-hint>
     </mat-form-field>
 
-    <mat-form-field class="col4 row4 rate" appearance="fill" floatLabel="always">
-      <mat-label class="sale-value-label">Tarifa promedio</mat-label>
-      <input [(ngModel)]="formData.tarifa" [value]="formData.horas_venta && formData.valor_venta ? calculateRate() : 0 "
-       #validRate="ngModel" name="tarifa" required matInput type="number" class="sale-value-input" disabled>
-       <span matPrefix>{{ formData.moneda === 'SOL' ? 'S/.' : '$' }}&nbsp;</span>
-    </mat-form-field>
+    <!-- ----------------------------Solo aparecen si se está editando el servicio ----------------------------------------->
 
-    <mat-form-field *ngIf="receivedServiceId" class="col5 row3" appearance="fill">
-      <mat-label class="currency-label">Etapa</mat-label>
-      <mat-select [(ngModel)]="formData.etapa" #validStage="ngModel" name="etapa" class="etapa-input" [disabled]="disableAll">
-        <mat-option *ngFor="let stage of stages" [value]="stage.value">
-          {{ stage.viewValue }}
-        </mat-option>
-      </mat-select>
-      <mat-hint *ngIf="validStage.invalid && (validStage.dirty || validStage.touched)" class="error-hint">
-        Campo requerido
-      </mat-hint>
-    </mat-form-field>
-
-    <mat-form-field *ngIf="receivedServiceId" class="col6 row3" appearance="fill">
+    <mat-form-field class="col3 row5" *ngIf="receivedServiceId" appearance="fill">
       <mat-label class="currency-label">Estado del servicio</mat-label>
       <mat-select [(ngModel)]="formData.estado_servicio" #validState="ngModel" name="estado_servicio" class="estado_servicio-input" [disabled]="disableAll">
         <mat-option *ngFor="let state of states" [value]="state.value">
@@ -213,22 +214,35 @@
       </mat-hint>
     </mat-form-field>
 
-    <mat-form-field class="col5 row4 rate" appearance="fill" floatLabel="always">
-      <mat-label>Productividad venta</mat-label>
-      <input [(ngModel)]="formData.prod_venta" [value]="formData.valor_venta_sol && formData.costo_venta_sol? calculateProductionSale() : 0 "
-       #validRate="ngModel" name="prod_venta" matInput type="number" class="sale-value-input" disabled>
-       <span matPrefix>{{ formData.moneda === 'SOL' ? 'S/.' : '$' }}&nbsp;</span>
-      <mat-hint *ngIf="validRate.invalid && (validRate.dirty || validRate.touched)" class="error-hint">Campo requerido</mat-hint>
+    <mat-form-field class="col4 row5" *ngIf="receivedServiceId" appearance="fill">
+      <mat-label class="currency-label">Etapa</mat-label>
+      <mat-select [(ngModel)]="formData.etapa" #validStage="ngModel" name="etapa" class="etapa-input" [disabled]="disableAll">
+        <mat-option *ngFor="let stage of stages" [value]="stage.value">
+          {{ stage.viewValue }}
+        </mat-option>
+      </mat-select>
+      <mat-hint *ngIf="validStage.invalid && (validStage.dirty || validStage.touched)" class="error-hint">
+        Campo requerido
+      </mat-hint>
     </mat-form-field>
 
-      <button type="submit" mat-raised-button class="save-btn" [disabled]="serviceForm.invalid || disableAll"> <mat-icon>save</mat-icon> Guardar</button>
-      <button mat-raised-button type="button" class="cancel-btn" routerLink="/service-map"><mat-icon>close</mat-icon> Cancelar</button>
+    <!-- ---------------------------------------------------------------------------------------------------------------- -->
+
+    <!-- -----------------------------------------Inicio de fila 6 -------------------------------- -->
+    <!-- solo se usa para ubicar los botones -->
+
+    <button type="submit" mat-raised-button class="save-btn" [disabled]="serviceForm.invalid || disableAll"> <mat-icon>save</mat-icon> Guardar</button>
+    <button mat-raised-button type="button" class="cancel-btn" routerLink="/service-map"><mat-icon>close</mat-icon> Cancelar</button>
+    <!-- ------------------------------------------------------------------------------------------- -->
+
   </form>
-  <!-- para debugging -->
+  <!-- para debugging: -->
   <!-- <pre>{{this.formData | json}}</pre> -->
+
+  <!-- ------------------------Semáforo para mostrar el estado del servicio----------------------------------------- -->
   <div *ngIf="this.serviceResponse" class="status-container">
     <h3 class="status">
-      <b>Estado: {{ this.serviceResponse.estado | titlecase }}</b>
+      <b>Estado: {{ this.serviceResponse.estado_config | titlecase }}</b>
     </h3>
     <span
       [ngClass]="{
@@ -240,4 +254,5 @@
       class="circle"
     ></span>
   </div>
+  <!-- ----------------------------------------------------------------------------------------------- -->
 </mat-card>

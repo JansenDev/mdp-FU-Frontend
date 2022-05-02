@@ -9,7 +9,7 @@ import { setToken } from 'src/app/core/utils/token.storage';
 export class HomeComponent implements OnInit {
   constructor() {
     //* ['DELIVERY_MANAGER', 'PROJECT_MANAGER', 'RRHH', 'ANALYST', 'GG']
-    setToken({ id_sesion: 40, userProfile: 'GG' });
+    setToken({ id_sesion: 40, userProfile: 'RRHH' });
   }
 
   ngOnInit(): void {}

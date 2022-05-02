@@ -106,7 +106,6 @@ export class ApproveHiringRequestComponent implements OnInit {
       });
   }
 
-  // TODO: update status message
   onApprove(idHiringRequest: string | number): void {
     Swal.fire({
       title: 'Confirme Aprobación',
@@ -146,8 +145,6 @@ export class ApproveHiringRequestComponent implements OnInit {
         },
       });
   }
-
-  // TODO: update status message
 
   onReject(idHiringRequest: string | number): void {
     Swal.fire({
