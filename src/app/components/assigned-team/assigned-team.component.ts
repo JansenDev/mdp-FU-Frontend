@@ -62,7 +62,7 @@ export class AssignedTeamComponent implements OnInit {
       cboxProfile: [{ value: null, disabled: false }],
       cboxLevel: [{ value: null, disabled: false }],
       inputAssignament: [
-        { value: null, disabled: false },
+        null,
         [Validators.required, Validators.pattern(/^[1-9][0-9]?0?$/)],
       ],
       inputTariff: [
@@ -180,27 +180,6 @@ export class AssignedTeamComponent implements OnInit {
     });
   }
 
-  // protected onChangeInputTariffNext() {
-  //   // const isValidInputTariff =
-  //   //   this.formAssignedTeam.controls['inputTariff'].valid;
-  //   const inputTariff = this.formAssignedTeam.controls['inputTariff'].value;
-
-  //   if (inputTariff) {
-  //     const tariffFloat = parseFloat(inputTariff);
-
-  //     this.productionPlanned = this.assignmentHourTotal * tariffFloat;
-  //   } else {
-  //     this.productionPlanned = 0;
-  //   }
-  //   // if (isValidInputTariff) {
-  //   //   const tariffFloat = parseFloat(inputTariff);
-
-  //   //   this.productionPlanned = this.assignmentHourTotal * tariffFloat;
-  //   // } else {
-  //   //   this.productionPlanned = 0;
-  //   // }
-  // }
-
   ngSubmit() {
     this.saveAssignedCollaborator();
   }
@@ -269,7 +248,7 @@ export class AssignedTeamComponent implements OnInit {
     this.setEditData(assignedCollaborator);
   }
 
-  setEditData(assignedCollaborator: IAssignedCollaboratorTable) {
+  protected setEditData(assignedCollaborator: IAssignedCollaboratorTable) {
     this.formAssignedTeam.controls['inputDocumentNumber'].disable();
     // this.formAssignedTeam.reset();
     this.formAssignedTeam.patchValue({
@@ -281,6 +260,9 @@ export class AssignedTeamComponent implements OnInit {
       inputAssignament: assignedCollaborator.por_asignacion,
       inputTariff: assignedCollaborator.tarifa,
     });
+
+    // setTimeout(() => this.getAssignedActualOfCollaborator.bind(this), 1000);
+    this.getAssignedActualOfCollaborator();
   }
 
   // Use subject next
@@ -499,10 +481,14 @@ export class AssignedTeamComponent implements OnInit {
   }
 
   protected getAssignedActualOfCollaborator() {
-    if (this.isValidAssignedFields) {
-      const dpDateStart = this.formAssignedTeam.controls['dpDateStart'].value;
-      const dpDateEnd = this.formAssignedTeam.controls['dpDateEnd'].value;
-
+    const dpDateStart = this.formAssignedTeam.controls['dpDateStart'].value;
+    const dpDateEnd = this.formAssignedTeam.controls['dpDateEnd'].value;
+    // if (this.isValidAssignedFields) {
+    if (
+      dpDateStart &&
+      dpDateEnd &&
+      this.collaboratorCurrentForm?.cod_colaborador
+    ) {
       const dateStartFormatted = util.timestampFormat(dpDateStart)!;
       const dateEndFormatted = util.timestampFormat(dpDateEnd)!;
 
@@ -513,6 +499,8 @@ export class AssignedTeamComponent implements OnInit {
           this.collaboratorCurrentForm.cod_colaborador
         )
         .subscribe((assignamentActual) => {
+          console.log('ASIGACION ACTUAL');
+
           const { maximo_porcentaje_acumulado } = assignamentActual;
           this.printErrors.hint = `Disponible: ${
             100 - maximo_porcentaje_acumulado
@@ -524,6 +512,8 @@ export class AssignedTeamComponent implements OnInit {
         });
     }
   }
+
+  // Utils
 
   // reverse false:valida fecha_inicio menor a fecha_fin
   // reverse true: valida fecha_fin mayor a fecha inicio
@@ -574,16 +564,6 @@ export class AssignedTeamComponent implements OnInit {
     }
     return false;
   }
-
-  // private disabledInputAssignament() {
-  //   if (this.isValidAssignedFields) {
-  //     this.formAssignedTeam.controls['inputAssignament'].enable();
-  //   } else {
-  //     this.formAssignedTeam.controls['inputAssignament'].disable();
-  //   }
-  // }
-
-  // Utils
   private cleanFields() {
     this.cleanInfoCollaborator();
     this.printErrors.hint = '';
