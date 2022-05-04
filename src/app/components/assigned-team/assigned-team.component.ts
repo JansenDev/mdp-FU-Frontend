@@ -120,7 +120,7 @@ export class AssignedTeamComponent implements OnInit {
       const dateStartString = util.timestampFormat(dateStart);
       const dateEndString = util.timestampFormat(dateEnd);
 
-      // TODO:
+
       this.getAssignedHours(dateStartString!, dateEndString!);
     }
   }
@@ -475,7 +475,7 @@ export class AssignedTeamComponent implements OnInit {
         // this.onChangeInputAsignmentNext();
         this.assignmentHour = hoursTotal.horas_asignadas_asignacion_total;
         this.onChangeInputAsignmentNext();
-        // TODO
+
         this.getAssignedActualOfCollaborator();
       });
   }

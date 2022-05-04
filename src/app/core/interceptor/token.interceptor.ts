@@ -27,8 +27,10 @@ export class TokenInterceptor implements HttpInterceptor {
     if (token) {
       const auth = request.clone({
         headers: request.headers
-          .set('Authorization', token)
-          .set('Content-Type', 'application/json'),
+          .append('Authorization', token)
+          .append('Content-Type', 'multipart/form-data'),
+
+        // .set('Content-Type', 'multipart/form-data'),
       });
 
       return auth;

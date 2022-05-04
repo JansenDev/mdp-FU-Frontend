@@ -5,15 +5,18 @@ import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 // model
 import { IBusinessLine } from 'src/app/core/models/businessLine.model';
 import { IClientResponse } from 'src/app/core/models/client.model';
-import { IEPS } from 'src/app/core/models/EPS.model';
 import { IHiringRequest } from 'src/app/core/models/hiring-request.model';
 import { IProfileResponse } from 'src/app/core/models/profile.model';
 import { ISalaryBandReponse } from 'src/app/core/models/salaryBand.model';
+import { IStatusRequestSimple } from 'src/app/core/models/status-request-simple.model';
 // service
 import { CboxService } from 'src/app/core/services/cbox.service';
 import { ClientService } from 'src/app/core/services/client.service';
 import { ContractService } from 'src/app/core/services/contract.service';
-import { HiringRequestService } from 'src/app/core/services/hiring-request.service';
+import {
+  HiringRequestService,
+  IParameters,
+} from 'src/app/core/services/hiring-request.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 // utils
 import { getToken } from 'src/app/core/utils/token.storage';
@@ -30,7 +33,7 @@ export class HiringRequestComponent implements OnInit {
   clientList: IClientResponse[] = [] as IClientResponse[];
   businessLineList: IBusinessLine[] = [] as IBusinessLine[];
   profileList: IProfileResponse[] = [] as IProfileResponse[];
-  EPSList: IEPS[] = [] as IEPS[];
+  // EPSList: IEPS[] = [] as IEPS[];
   salaryBandObj: ISalaryBandReponse = {
     cod_banda_salarial: null,
     maximo: 0,
@@ -38,8 +41,9 @@ export class HiringRequestComponent implements OnInit {
   };
   documentMaxLength: number = DOCUMENT_TYPY_LENGTH['DNI'];
   isvalidDocumentNumber = true;
+  fileCv: any = undefined;
 
-  amountCurrent: IEPS = {} as IEPS;
+  // amountCurrent: IEPS = {} as IEPS;
   constructor(
     private _adapter: DateAdapter<any>,
     @Inject(MAT_DATE_LOCALE) private _locale: string,
@@ -48,7 +52,7 @@ export class HiringRequestComponent implements OnInit {
     private cboxService: CboxService,
     private contractService: ContractService,
     private clientService: ClientService,
-    private hiringRequest: HiringRequestService
+    private hiringRequestService: HiringRequestService
   ) {
     this.formHiringRequest = this.formBuilder.group({
       cBoxDocumentType: ['DNI'],
@@ -71,25 +75,40 @@ export class HiringRequestComponent implements OnInit {
       inputRemuneration: [null, Validators.pattern(/^[1-9]\d{2,4}$/)],
       //optionals
       inputMonthlyBonus: [null, Validators.pattern(/^\d{3,5}$/)],
-      cBoxEPS: [null],
-      cBoxBearCost: ['parcial'],
-      rbSCTR: [false],
+      // cBoxEPS: [null],
+      // cBoxBearCost: ['parcial'],
+      // rbSCTR: [false],
       inputDateStart: [null, Validators.required],
       inputDateEnd: [null, Validators.required],
       inputCondition: [null],
+      // Ajustes
+      cboxCompany: [null, [Validators.required]],
+      cboxSex: [null, Validators.required],
+      cboxArea: [null],
+      inputWorkingHours: [null],
+      inputTarifa: [
+        null,
+        [
+          Validators.required,
+          Validators.pattern(/^[1-9][0-9]*(\.[0-9]{0,2})?$/),
+        ],
+      ],
+      inputProductivity: [{ value: null, disabled: true }],
+      cboxTeamAsignment: [null],
+      inputJefeResponsable: [null],
     });
   }
 
   ngOnInit(): void {
     this.fillAllCBoxInit();
-    this.setSpanishDateFormat()
+    this.setSpanishDateFormat();
   }
 
   fillAllCBoxInit() {
     this.fillCboxClient();
     this.fillCboxBusinessLine();
     this.fillCboxProfile();
-    this.fillCboxEPS();
+    // this.fillCboxEPS();
 
     this.onChangeCboxDocumentType();
     this.onChangeInputDocumentNumber();
@@ -97,9 +116,15 @@ export class HiringRequestComponent implements OnInit {
     this.onChangeCboxProfile();
     this.onChangeInputDateStart();
     this.onChangeInputDateEnd();
+    this.onchageTariff$();
+
+    this.onChangeModality$();
+    this.onChangeRemuneration$();
+    this.onChangeBonus$();
+    this.onChangeTariff$();
   }
 
-  setSpanishDateFormat(){
+  setSpanishDateFormat() {
     this._locale = 'es';
     this._adapter.setLocale(this._locale);
   }
@@ -151,9 +176,9 @@ export class HiringRequestComponent implements OnInit {
     );
   }
 
-  setAmountCurrent(EPSSelected: IEPS) {
-    this.amountCurrent = EPSSelected;
-  }
+  // setAmountCurrent(EPSSelected: IEPS) {
+  //   this.amountCurrent = EPSSelected;
+  // }
 
   onChangeCboxLevel() {
     this.formHiringRequest.controls['cBoxLevel'].valueChanges.subscribe(
@@ -244,6 +269,34 @@ export class HiringRequestComponent implements OnInit {
     });
   }
 
+  onChangeModality$() {
+    this.formHiringRequest.controls['cBoxmodality'].valueChanges.subscribe({
+      next: this.calcProductivity.bind(this),
+    });
+  }
+
+  onChangeRemuneration$() {
+    this.formHiringRequest.controls['inputRemuneration'].valueChanges.subscribe(
+      {
+        next: this.calcProductivity.bind(this),
+      }
+    );
+  }
+
+  onChangeBonus$() {
+    this.formHiringRequest.controls['inputMonthlyBonus'].valueChanges.subscribe(
+      {
+        next: this.calcProductivity.bind(this),
+      }
+    );
+  }
+
+  onChangeTariff$() {
+    this.formHiringRequest.controls['inputTarifa'].valueChanges.subscribe({
+      next: this.calcProductivity.bind(this),
+    });
+  }
+
   fillCboxClient() {
     const { id_sesion } = JSON.parse(getToken());
 
@@ -271,12 +324,32 @@ export class HiringRequestComponent implements OnInit {
     });
   }
 
-  fillCboxEPS() {
-    this.cboxService.findAllEPS().subscribe({
-      next: (EPSList) => {
-        this.EPSList = EPSList;
-      },
-    });
+  test() {
+    if (this.fileCv) {
+      this.hiringRequestService
+        .uploadCv(this.fileCv)
+        .subscribe((uploadResponse) => {
+          console.log(uploadResponse);
+        });
+    }
+
+    // this.calcProductivity();
+  }
+
+  upload($event: any) {
+    if ($event.target.files.length > 0) {
+      const [file] = $event.target.files;
+
+      this.fileCv = {
+        file: file,
+        filename: file.name,
+      };
+
+      return;
+    }
+    this.fileCv = undefined;
+
+    console.log(this.fileCv);
   }
 
   onSubmitHiringRquest() {
@@ -301,11 +374,16 @@ export class HiringRequestComponent implements OnInit {
     if (this.formHiringRequest.valid && this.isvalidDocumentNumber) {
       const formValues: IHiringRequest = this.hiringContractBody;
 
-      this.hiringRequest.registerHiringRequest(formValues).subscribe({
-        next: (status) => {
-          this.notification.toast('success', status.message, ' SUCCESS', 5000);
-          this.cleanForm();
-        },
+      if (this.fileCv) {
+        this.hiringRequestService
+          .uploadCv(this.fileCv)
+          .subscribe((uploadResponse) => {
+            console.log(uploadResponse);
+          });
+      }
+
+      this.hiringRequestService.registerHiringRequest(formValues).subscribe({
+        next: this.registerHiringRequestNext.bind(this),
         error: (errorResponse: HttpErrorResponse) => {
           console.log(errorResponse);
 
@@ -316,6 +394,74 @@ export class HiringRequestComponent implements OnInit {
     }
   }
 
+  onchageTariff$() {
+    this.formHiringRequest.controls['inputTarifa'].valueChanges.subscribe({
+      next: this.calcProductivity.bind(this),
+      error: (err) => console.log(err),
+    });
+  }
+
+  private calcProductivity() {
+    const inputTariff = this.formHiringRequest.controls['inputTarifa'].value;
+    const inputRemuneration =
+      this.formHiringRequest.controls['inputRemuneration'].value;
+    const inputBonus =
+      this.formHiringRequest.controls['inputMonthlyBonus'].value;
+
+    const modality = this.formHiringRequest.controls['cBoxmodality'].value;
+
+    if (inputRemuneration && inputTariff && modality) {
+      let typeParameter: 'factor_planilla' | 'factor_rxh_practicas';
+
+      if (modality === 'planilla') {
+        typeParameter = 'factor_planilla';
+      } else {
+        typeParameter = 'factor_rxh_practicas';
+      }
+
+      this.hiringRequestService
+        .getParameters(typeParameter)
+        .subscribe((parameterResponse) => {
+          const [parameterObj] = parameterResponse;
+
+          const parameter = parseFloat(parameterObj.valor_num_1);
+          const remuneration = parseFloat(inputRemuneration);
+          let bonus = 0;
+          const tariff = parseFloat(inputTariff);
+
+          if (inputBonus || inputBonus !== null) {
+            console.log('BONUS');
+
+            bonus = parseFloat(inputBonus);
+            console.log(bonus);
+          }
+
+          console.log('bonus');
+          console.log(bonus);
+
+          const clm = remuneration * parameter + bonus;
+          console.log('clm');
+          console.log(clm);
+
+          let resultProductity = tariff / clm;
+
+          this.formHiringRequest.controls['inputProductivity'].setValue(
+            resultProductity.toFixed(2)
+          );
+        });
+    }
+  }
+
+  protected registerHiringRequestNext(registerResponse: IStatusRequestSimple) {
+    console.log(registerResponse);
+    const isError = registerResponse.error;
+
+    if (!isError) {
+      this.notification.toast('success', registerResponse.message, 'SUCCESS');
+      return;
+    }
+    this.notification.toast('error', registerResponse.message, 'ERROR');
+  }
   onCancel() {
     this.cleanForm();
   }
@@ -347,6 +493,14 @@ export class HiringRequestComponent implements OnInit {
       rbSCTR,
       inputMonthlyBonus,
       inputCondition,
+      cboxCompany,
+      cboxSex,
+      cboxArea,
+      inputWorkingHours,
+      inputTarifa,
+      inputProductivity,
+      cboxTeamAsignment,
+      inputJefeResponsable,
     } = this.formHiringRequest.value;
 
     let hiringRequestBody: IHiringRequest = {
@@ -356,7 +510,7 @@ export class HiringRequestComponent implements OnInit {
       ape_paterno: inputLastname,
       ape_materno: inputLastnameMt,
       fecha_nacimiento: util.timestampFormat(inputBithDate)!,
-      nro_celular: inputPhone,
+      nro_celular: parseInt(inputPhone),
       correo: inputEmail,
       direccion: inputAddress,
       distrito: inputDistrict,
@@ -370,11 +524,20 @@ export class HiringRequestComponent implements OnInit {
       fecha_inicio: util.timestampFormat(inputDateStart)!,
       fecha_fin: util.timestampFormat(inputDateEnd)!,
 
-      cod_eps: cBoxEPS,
-      eps_parcial_total: cBoxBearCost,
-      ind_sctr: rbSCTR,
+      // cod_eps: cBoxEPS,
+      // eps_parcial_total: cBoxBearCost,
+      // ind_sctr: rbSCTR,
       bono_men: inputMonthlyBonus ? parseInt(inputMonthlyBonus) : null,
       condicional_adicional: inputCondition,
+      // ajustes
+      empresa: cboxCompany,
+      sexo: cboxSex,
+      condicion_proyecto_area: cboxArea,
+      horario_laboral: inputWorkingHours,
+      tarifa_mensual: inputTarifa,
+      // inputProductivity,
+      asignacion_equipo: cboxTeamAsignment,
+      jefe_responsable_directo: inputJefeResponsable,
     };
 
     return hiringRequestBody;
@@ -385,6 +548,10 @@ export class HiringRequestComponent implements OnInit {
   }
   get cBoxEPSValue() {
     return this.formHiringRequest.controls['cBoxEPS'].value;
+  }
+
+  get cboxBusinessLine() {
+    return this.formHiringRequest.controls['cBoxBusinessLine'].value;
   }
 
   //* utilities

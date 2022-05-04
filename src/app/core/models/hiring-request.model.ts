@@ -12,7 +12,7 @@ export interface IHiringRequest {
   distrito: string;
   provincia: string;
   cod_cliente: number;
-  cod_linea_negocio: number;
+  cod_linea_negocio: string;
   cod_puesto: number;
   nivel: string;
   modalidad: string;
@@ -28,6 +28,16 @@ export interface IHiringRequest {
   puesto?: string;
   plan_eps?: string;
   nombre_corto?: string;
-  estado?:string
-  ind_asign_familiar?:string
+  estado?: string;
+  ind_asign_familiar?: string;
+  // ajustes
+  empresa?: string;
+  sexo?: string;
+  condicion_proyecto_area?: string;
+  horario_laboral?: string;
+  tarifa_mensual?: string;
+  // inputProductivity?: string;
+  asignacion_equipo?: string;
+  jefe_responsable_directo?: string;
+  cv?: string;
 }
