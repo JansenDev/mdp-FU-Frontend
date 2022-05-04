@@ -70,7 +70,8 @@ export class HiringRequestService {
     let body = new FormData();
     body.append('myFile', fileCv.file);
 
-    console.log('myFile', fileCv.file, fileCv.filename);
+    console.log('myFile', fileCv.file);
+    console.log('myFile name',  fileCv.filename);
 
     return this.httpClient.post<any>(URL, body);
   }

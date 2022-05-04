@@ -430,18 +430,10 @@ export class HiringRequestComponent implements OnInit {
           const tariff = parseFloat(inputTariff);
 
           if (inputBonus || inputBonus !== null) {
-            console.log('BONUS');
-
             bonus = parseFloat(inputBonus);
-            console.log(bonus);
           }
 
-          console.log('bonus');
-          console.log(bonus);
-
           const clm = remuneration * parameter + bonus;
-          console.log('clm');
-          console.log(clm);
 
           let resultProductity = tariff / clm;
 
