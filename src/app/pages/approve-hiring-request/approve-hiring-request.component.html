@@ -12,21 +12,34 @@
         <div class="collaborator--row1">
           <mat-form-field>
             <mat-label>Tipo documento</mat-label>
-            <input matInput formControlName="cBoxDocumentType" />
+            <mat-select formControlName="cBoxDocumentType" required>
+              <mat-option value="DNI">DNI</mat-option>
+              <mat-option value="RUC">RUC</mat-option>
+              <mat-option value="CE">Carné de extranjería</mat-option>
+              <mat-option value="PA">Pasaporte</mat-option>
+              <mat-option value="PN">Part. Nacimiento</mat-option>
+            </mat-select>
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>N° documento</mat-label>
-            <input matInput formControlName="inputDocumentNumber" />
+            <input
+              matInput
+              [maxlength]="documentMaxLength"
+              [minlength]="documentMaxLength"
+              formControlName="inputDocumentNumber"
+              required
+            />
           </mat-form-field>
-          <!-- Start id hiring Request  -->
-          <mat-form-field class="invisible">
-            <mat-label>ID</mat-label>
-            <input formControlName="inputIdHiringRequest" matInput required />
-          </mat-form-field>
-          <!-- End id hiring Request  -->
 
-          <!-- <div class="offset"></div> -->
+          <mat-form-field>
+            <mat-label>Empresa</mat-label>
+            <mat-select formControlName="cboxCompany" required>
+              <mat-option value="MDP">MDP</mat-option>
+              <mat-option value="CEOL">CEOL</mat-option>
+              <mat-option value="BRACING">BRACING</mat-option>
+            </mat-select>
+          </mat-form-field>
 
           <div class="offset"></div>
 
@@ -50,25 +63,48 @@
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>F. Nacimiento</mat-label>
-            <input matInput formControlName="inputBithDate" />
-            <mat-hint>DD/MM/YYYY</mat-hint>
-            <mat-datepicker-toggle matSuffix></mat-datepicker-toggle>
-            <mat-datepicker #picker_f_fin></mat-datepicker>
+            <mat-label>Sexo</mat-label>
+            <mat-select formControlName="cboxSex" required>
+              <mat-option value="M">M</mat-option>
+              <mat-option value="F">F</mat-option>
+            </mat-select>
           </mat-form-field>
 
-          <div class="offset"></div>
+          <mat-form-field>
+            <mat-label>F. Nacimiento</mat-label>
+            <input
+              matInput
+              formControlName="inputBithDate"
+              [matDatepicker]="picker_nacimiento"
+            />
+            <mat-hint>DD/MM/YYYY</mat-hint>
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker_nacimiento"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker_nacimiento></mat-datepicker>
+          </mat-form-field>
         </div>
 
         <div class="collaborator--row3">
           <mat-form-field>
             <mat-label>N° Celular</mat-label>
-            <input formControlName="inputPhone" matInput required />
+            <input
+              formControlName="inputPhone"
+              matInput
+              required
+              maxlength="11"
+            />
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>Correo</mat-label>
-            <input formControlName="inputEmail" matInput type="email" required />
+            <input
+              formControlName="inputEmail"
+              matInput
+              type="email"
+              required
+            />
           </mat-form-field>
 
           <mat-form-field>
@@ -104,6 +140,22 @@
             <input formControlName="cBoxBusinessLine" matInput required />
           </mat-form-field>
 
+          <mat-form-field *ngIf="businessLineValue !== 'ATIS'; else offset">
+            <mat-label>Proyecto area</mat-label>
+            <input formControlName="inputArea" matInput />
+          </mat-form-field>
+
+          <ng-template #offset>
+            <div class="offset"></div>
+          </ng-template>
+
+          <mat-form-field>
+            <mat-label>Horario Laboral</mat-label>
+            <input formControlName="inputWorkingHours" matInput />
+          </mat-form-field>
+        </div>
+
+        <div class="contract--row2">
           <mat-form-field>
             <mat-label>Puesto</mat-label>
 
@@ -115,9 +167,6 @@
 
             <input formControlName="cBoxLevel" matInput required />
           </mat-form-field>
-        </div>
-
-        <div class="contract--row2">
           <mat-form-field>
             <mat-label>Banda Salarial </mat-label>
             <input
@@ -136,7 +185,9 @@
 
             <input formControlName="cBoxmodality" matInput required />
           </mat-form-field>
+        </div>
 
+        <div class="contract--row3">
           <mat-form-field>
             <mat-label>Remuneración</mat-label>
             <input
@@ -151,25 +202,19 @@
             <mat-label>Bono</mat-label>
             <input maxlength="5" formControlName="inputMonthlyBonus" matInput />
           </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Tarifa</mat-label>
+            <input maxlength="5" formControlName="inputTarifa" matInput />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Productividad</mat-label>
+            <input maxlength="5" formControlName="inputProductivity" matInput />
+          </mat-form-field>
         </div>
 
         <div class="contract--row3">
-          <mat-form-field>
-            <mat-label>EPS</mat-label>
-
-            <input maxlength="5" formControlName="cBoxEPS" matInput />
-          </mat-form-field>
-
-          <mat-radio-group>
-            <mat-form-field>
-              <mat-label>Asumo del costo (MDP)</mat-label>
-
-              <input formControlName="cBoxBearCost" matInput />
-            </mat-form-field>
-
-            <mat-checkbox formControlName="rbSCTR">SCTR</mat-checkbox>
-          </mat-radio-group>
-
           <mat-form-field>
             <mat-label>F. Inicio</mat-label>
             <input matInput formControlName="inputDateStart" required />
@@ -185,13 +230,38 @@
             <mat-datepicker-toggle matSuffix></mat-datepicker-toggle>
             <mat-datepicker #picker_f_fin></mat-datepicker>
           </mat-form-field>
-          <!-- <div class="offset"></div> -->
+
+          <mat-form-field>
+            <mat-label>Asignacion de equipo</mat-label>
+            <input formControlName="inputTeamAsignment" matInput />
+          </mat-form-field>
+
+          <mat-form-field *ngIf="!cvHas; else cv_url">
+            <mat-label>Adjuntar CV</mat-label>
+            <ngx-mat-file-input (change)="upload($event)"></ngx-mat-file-input>
+            <mat-hint> Máximo 10mb (pdf /doc /docx)</mat-hint>
+          </mat-form-field>
+
+          <ng-template #cv_url>
+            <div class="cv">
+              <a (click)="goToLink(cvHas)" target="_blank">{{ cvHas }}</a>
+            </div>
+          </ng-template>
         </div>
 
         <div class="contract--row4">
           <mat-form-field>
+            <mat-label>Jefe Responsable</mat-label>
+            <input formControlName="inputJefeResponsable" matInput />
+          </mat-form-field>
+          <mat-form-field>
             <mat-label>Condición</mat-label>
-            <input formControlName="inputCondition" matInput />
+            <textarea formControlName="inputCondition" matInput></textarea>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Motivo de rechazo</mat-label>
+            <textarea formControlName="inputReasonReject" matInput></textarea>
           </mat-form-field>
 
           <mat-radio-group class="contract--asig-family">
@@ -228,6 +298,7 @@
         <button
           *ngIf="isPendingHiringRequestRRHH(statusHiringRequest)"
           (click)="onApprove(idHiringRequest)"
+          [disabled]="formApproveHiringRequest.invalid"
           type="submit"
           mat-raised-button
           color="primary"

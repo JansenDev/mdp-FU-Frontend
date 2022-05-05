@@ -3,7 +3,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IHiringRequest } from '../models/hiring-request.model';
-import { IStatusRequestSimple } from '../models/status-request-simple.model';
+import {
+  IStatusRequestSimple,
+  IStatusResponseFile,
+} from '../models/status-request-simple.model';
 
 const { url_base } = environment;
 
@@ -20,28 +23,8 @@ export class HiringRequestService {
       ...hiringContractBody,
     };
 
-    const {
-      cod_eps,
-      eps_parcial_total,
-      ind_sctr,
-      bono_men,
-      condicional_adicional,
-      cod_linea_negocio,
-    } = hiringContractBody;
-
-    if (cod_eps) {
-      hiringRequest['cod_eps'] = cod_eps;
-      hiringRequest['eps_parcial_total'] = eps_parcial_total;
-    } else {
-      hiringRequest['cod_eps'] = undefined;
-      hiringRequest['eps_parcial_total'] = undefined;
-    }
-
-    if (ind_sctr) {
-      hiringRequest['ind_sctr'] = 'S';
-    } else {
-      hiringRequest['ind_sctr'] = 'N';
-    }
+    const { bono_men, condicional_adicional, cod_linea_negocio } =
+      hiringContractBody;
 
     if (bono_men && bono_men) {
       hiringRequest['bono_men'] = bono_men;
@@ -59,8 +42,6 @@ export class HiringRequestService {
       hiringRequest['condicion_proyecto_area'] = undefined;
     }
 
-    console.log('SERVICIO');
-    console.log(hiringRequest);
     return this.httpClient.post<IStatusRequestSimple>(URL, hiringRequest);
   }
 
@@ -70,10 +51,7 @@ export class HiringRequestService {
     let body = new FormData();
     body.append('myFile', fileCv.file);
 
-    console.log('myFile', fileCv.file);
-    console.log('myFile name',  fileCv.filename);
-
-    return this.httpClient.post<any>(URL, body);
+    return this.httpClient.post<IStatusResponseFile>(URL, body);
   }
 
   getParameters(type: keyof IParameters = 'factor_planilla') {

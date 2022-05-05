@@ -36,8 +36,10 @@ export interface IHiringRequest {
   condicion_proyecto_area?: string;
   horario_laboral?: string;
   tarifa_mensual?: string;
-  // inputProductivity?: string;
   asignacion_equipo?: string;
   jefe_responsable_directo?: string;
   cv?: string;
+  //
+  motivo_rechazo?: string;
+  productividad?: string;
 }

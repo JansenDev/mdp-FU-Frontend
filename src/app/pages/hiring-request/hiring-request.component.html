@@ -5,7 +5,8 @@
     </h1>
 
     <!-- Form Start -->
-    <form enctype="multipart/form-data"
+    <form
+      enctype="multipart/form-data"
       [formGroup]="formHiringRequest"
       (submit)="onSubmitHiringRquest()"
       class="hiring--form"
@@ -287,12 +288,6 @@
             <mat-datepicker #picker_f_fin></mat-datepicker>
           </mat-form-field>
 
-          <!-- <mat-form-field> -->
-            <!-- <mat-label>Upload CV</mat-label> -->
-            <!-- <ngx-mat-file-input (change)="upload($event)"></ngx-mat-file-input> -->
-          <!-- </mat-form-field> -->
-          <input type="file" (change)="upload($event)" />
-
           <mat-form-field>
             <mat-label>Asignación de equipo</mat-label>
             <mat-select formControlName="cboxTeamAsignment">
@@ -301,22 +296,30 @@
               <mat-option value="Equipo Personal">Equipo Personal</mat-option>
             </mat-select>
           </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Adjuntar CV</mat-label>
+            <ngx-mat-file-input
+              #fileUpload
+              (change)="upload($event)"
+            ></ngx-mat-file-input>
+            <mat-hint> Máximo 10mb (pdf /doc /docx)</mat-hint>
+          </mat-form-field>
+          <!-- <input type="file" (change)="upload($event)" /> -->
         </div>
 
         <div class="contract--row3">
           <mat-form-field>
             <mat-label>Jefe Responsable Directo</mat-label>
-            <textarea
-              formControlName="inputJefeResponsable"
-              matInput
-            ></textarea>
+            <input formControlName="inputJefeResponsable" matInput />
           </mat-form-field>
-        </div>
 
-        <div class="contract--row4">
+          <div class="offset"></div>
+          <div class="offset"></div>
+
           <mat-form-field>
             <mat-label>Condición</mat-label>
-            <input formControlName="inputCondition" matInput />
+            <textarea formControlName="inputCondition" matInput></textarea>
           </mat-form-field>
         </div>
       </div>
@@ -338,14 +341,9 @@
         >
           Cancelar
         </button>
-        <button type="button" mat-raised-button color="basic" (click)="test()">
-          test
-        </button>
       </div>
     </form>
-    <pre>
-      {{ formHiringRequest.value | json }}
-    </pre>
+
     <!-- Form End -->
   </div>
 </div>

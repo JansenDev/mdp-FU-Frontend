@@ -9,6 +9,9 @@ import { IContractImbox } from 'src/app/core/models/contract-imbox-model';
 import { ContractImboxService } from 'src/app/core/services/contract-imbox.service';
 import { getToken } from 'src/app/core/utils/token.storage';
 import * as util from '../../core/utils/utilities.util';
+
+const GG = `GG`;
+
 @Component({
   selector: 'app-contract-imbox',
   templateUrl: './contract-imbox.component.html',
@@ -74,12 +77,10 @@ export class ContractImboxComponent implements OnInit {
       'modality',
       'amount',
       'bonus',
-      'eps',
-      'sctr',
       'status',
     ];
 
-    if (this.userProfile === 'GG') {
+    if (this.userProfile === GG) {
       this.displayedColumns = [...displayedColumns, 'action'];
     } else {
       this.displayedColumns = [
@@ -94,7 +95,7 @@ export class ContractImboxComponent implements OnInit {
   fillTableHiiringRequestByProfile() {
     const { userProfile } = JSON.parse(getToken());
 
-    if (userProfile == 'GG') {
+    if (userProfile == GG) {
       this.setEstadoDefaultGG();
       this.contractImboxService
         .filterHiringRequesBy(
@@ -156,7 +157,7 @@ export class ContractImboxComponent implements OnInit {
 
     const inputNamesTrim = util.trimAllSpaces(inputNames);
 
-    if (this.userProfile === 'GG') {
+    if (this.userProfile === GG) {
       cboxStatus = 'Pendiente Aprobacion GG';
     }
 

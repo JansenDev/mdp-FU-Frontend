@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ISalaryBandReponse } from 'src/app/core/models/salaryBand.model';
 import { CboxService } from 'src/app/core/services/cbox.service';
@@ -9,6 +9,13 @@ import { NotificationService } from 'src/app/core/services/notification.service'
 import { getToken } from 'src/app/core/utils/token.storage';
 import * as util from '../../core/utils/utilities.util';
 import Swal from 'sweetalert2';
+import { IHiringRequest } from 'src/app/core/models/hiring-request.model';
+import { HiringRequestService } from 'src/app/core/services/hiring-request.service';
+import { environment } from 'src/environments/environment';
+import { DOCUMENT_TYPY_LENGTH } from 'src/app/core/constants/resource.constants';
+
+const { base } = environment;
+const GG = 'GG';
 
 @Component({
   selector: 'app-approve-hiring-request',
@@ -27,27 +34,47 @@ export class ApproveHiringRequestComponent implements OnInit {
 
   statusHiringRequest = '';
 
+  fileCv: any = undefined;
+  cvHas: string | null = null;
+  documentMaxLength: number = DOCUMENT_TYPY_LENGTH['DNI'];
+
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private contractImboxService: ContractImboxService,
     private activatedRoute: ActivatedRoute,
     private cboxService: CboxService,
-    private notification: NotificationService
+    private notification: NotificationService,
+    private hiringRequestService: HiringRequestService
   ) {
     this.formApproveHiringRequest = this.formBuilder.group({
       inputIdHiringRequest: [{ value: null, disabled: true }],
-      cBoxDocumentType: [{ value: null, disabled: true }],
-      inputDocumentNumber: [{ value: null, disabled: true }],
-      inputNameColl: [{ value: null, disabled: true }],
-      inputLastname: [{ value: null, disabled: true }],
-      inputLastnameMt: [{ value: null, disabled: true }],
-      inputBithDate: [{ value: null, disabled: true }],
-      inputPhone: [{ value: null, disabled: true }],
-      inputEmail: [{ value: null, disabled: true }],
-      inputAddress: [{ value: null, disabled: true }],
-      inputDistrict: [{ value: null, disabled: true }],
-      inputProvince: [{ value: null, disabled: true }],
+      cBoxDocumentType: [{ value: null, disabled: false }],
+      inputDocumentNumber: [
+        { value: null, disabled: false },
+        [Validators.pattern(/^\d{8,15}$/)],
+      ],
+      inputNameColl: [
+        { value: null, disabled: false },
+        [Validators.pattern(/^[a-zA-ZÑñ\s]{3,}$/)],
+      ],
+      inputLastname: [
+        { value: null, disabled: false },
+        [Validators.pattern(/^[a-zA-ZÑñ\s]{3,}$/)],
+      ],
+      inputLastnameMt: [
+        { value: null, disabled: false },
+        [Validators.pattern(/^[a-zA-ZÑñ\s]{3,}$/)],
+      ],
+      inputBithDate: [{ value: null, disabled: false }, Validators.required],
+      inputPhone: [
+        { value: null, disabled: false },
+        [Validators.pattern(/^\d{9,11}$/)],
+      ],
+      inputEmail: [{ value: null, disabled: false }, Validators.email],
+      inputAddress: [{ value: null, disabled: false }, Validators.required],
+      inputDistrict: [{ value: null, disabled: false }, Validators.required],
+      inputProvince: [{ value: null, disabled: false }, Validators.required],
       // contract
       cBoxClient: [{ value: null, disabled: true }],
       cBoxBusinessLine: [{ value: null, disabled: true }],
@@ -63,10 +90,103 @@ export class ApproveHiringRequestComponent implements OnInit {
       inputDateEnd: [{ value: null, disabled: true }],
       inputCondition: [{ value: null, disabled: true }],
       cboxAsig: [false],
+
+      // ajustes
+
+      cboxCompany: [null, [Validators.required]],
+      cboxSex: [null, Validators.required],
+      inputArea: [{ value: null, disabled: true }],
+      inputWorkingHours: [{ value: null, disabled: true }],
+      inputTarifa: [{ value: null, disabled: true }],
+      inputProductivity: [{ value: null, disabled: true }],
+      inputTeamAsignment: [{ value: null, disabled: true }],
+      inputJefeResponsable: [{ value: null, disabled: true }],
+      inputReasonReject: [null],
     });
   }
   ngOnInit(): void {
     this.getHiringRequestDetail();
+    this.onChangeCboxDocumentType$();
+    this.setDefaultDIsableRRHH();
+  }
+
+  test() {
+    console.log('test');
+    // this.disabledFields();
+    const x = this.getFormBody();
+    console.log(x);
+  }
+
+  onChangeCboxDocumentType$() {
+    this.formApproveHiringRequest.controls[
+      'cBoxDocumentType'
+    ].valueChanges.subscribe({
+      next: (documentType) => {
+        const type = documentType as keyof typeof DOCUMENT_TYPY_LENGTH;
+
+        this.documentMaxLength = DOCUMENT_TYPY_LENGTH[type];
+      },
+    });
+  }
+
+  getFormBody(): Partial<IHiringRequest> {
+    const pathParams = this.activatedRoute.snapshot.paramMap;
+    const idHiringRequest = pathParams.get('idHiringRequest')!;
+    const {
+      cboxAsig,
+      cboxCompany,
+      cboxSex,
+      inputAddress,
+      inputBithDate,
+      inputDistrict,
+      inputDocumentNumber,
+      inputEmail,
+      inputLastname,
+      inputLastnameMt,
+      inputNameColl,
+      inputPhone,
+      inputProvince,
+      cBoxDocumentType,
+    } = this.formApproveHiringRequest.value;
+
+    const formData: Partial<IHiringRequest> = {
+      ind_asign_familiar: cboxAsig,
+      empresa: cboxCompany,
+      sexo: cboxSex,
+      direccion: inputAddress,
+      fecha_nacimiento: util.timestampFormat(inputBithDate)!,
+      distrito: inputDistrict,
+      nro_documento: inputDocumentNumber,
+      correo: inputEmail,
+      ape_paterno: inputLastname,
+      ape_materno: inputLastnameMt,
+      nombre: inputNameColl,
+      nro_celular: inputPhone,
+      provincia: inputProvince,
+      tipo_documento: cBoxDocumentType,
+      cod_solicitud_contratacion: parseInt(idHiringRequest),
+    };
+    return formData;
+  }
+
+  disabledFields() {
+    this.formApproveHiringRequest.disable();
+  }
+
+  upload($event: any) {
+    if ($event.target.files.length > 0) {
+      const [file] = $event.target.files;
+
+      this.fileCv = {
+        file: file,
+        filename: file.name,
+      };
+
+      console.log(this.fileCv);
+      return;
+    }
+    this.fileCv = undefined;
+    console.log(this.fileCv);
   }
 
   onApproveGG(idHiringRequest: string | number): void {
@@ -117,9 +237,47 @@ export class ApproveHiringRequestComponent implements OnInit {
       confirmButtonText: 'Confirmar',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.approveRequest(idHiringRequest);
+        this.uploadChangesAndCv(idHiringRequest);
       }
     });
+  }
+
+  private uploadChangesAndCv(idHiringRequest: string | number) {
+    if (this.fileCv) {
+      this.hiringRequestService
+        .uploadCv(this.fileCv)
+        .subscribe((uploadResponse) => {
+          console.log(uploadResponse);
+          if (uploadResponse.error) {
+            this.notification.toast(
+              'error',
+              uploadResponse.message,
+              'ERROR',
+              7000
+            );
+            return;
+          }
+          this.editRequest(idHiringRequest);
+        });
+    }
+
+    this.editRequest(idHiringRequest);
+  }
+
+  private editRequest(idHiringRequest: string | number) {
+    const formData = this.getFormBody();
+
+    this.contractImboxService
+      .editHiringRequest(idHiringRequest, formData)
+      .subscribe((response) => {
+        console.log(response);
+
+        if (response.error) {
+          this.notification.toast('error', response.message, 'ERROR', 5000);
+          return;
+        }
+        this.approveRequest(idHiringRequest);
+      });
   }
 
   private approveRequest(idHiringRequest: string | number) {
@@ -163,15 +321,29 @@ export class ApproveHiringRequestComponent implements OnInit {
   }
 
   private rejectRequest(idHiringRequest: string | number) {
-    this.contractImboxService.rejectHiringRequest(idHiringRequest).subscribe({
-      next: (status) => {
-        this.notification.toast('info', 'Solicitud Rechazada', 'SUCCESS', 5000);
-        this.backPage();
-      },
-      error: (err: HttpErrorResponse) => {
-        this.notification.toast('error', err.error.message, 'ERROR', 5000);
-      },
-    });
+    const reasonReject: string =
+      this.formApproveHiringRequest.controls['inputReasonReject'].value;
+
+    if (reasonReject || reasonReject !== null) {
+      this.contractImboxService
+        .rejectHiringRequest(idHiringRequest, reasonReject)
+        .subscribe({
+          next: (status) => {
+            this.notification.toast(
+              'info',
+              'Solicitud Rechazada',
+              'SUCCESS',
+              5000
+            );
+            this.backPage();
+          },
+          error: (err: HttpErrorResponse) => {
+            this.notification.toast('error', err.error.message, 'ERROR', 5000);
+          },
+        });
+    } else {
+      this.notification.toast('info', 'Indique motivo de Rechazo', 'INFO');
+    }
   }
 
   onCancel(): void {
@@ -201,18 +373,9 @@ export class ApproveHiringRequestComponent implements OnInit {
           ? hiringRequestSelected.bono_men
           : nulo;
 
-        let plan_eps = hiringRequestSelected.plan_eps
-          ? hiringRequestSelected.plan_eps
-          : nulo;
-
         let condicional_adicional = hiringRequestSelected.condicional_adicional
           ? hiringRequestSelected.condicional_adicional
           : nulo;
-
-        let eps_parcial_total = hiringRequestSelected.eps_parcial_total
-          ? hiringRequestSelected.eps_parcial_total
-          : nulo;
-        let ind_sctr = hiringRequestSelected.ind_sctr == 'N' ? false : true;
 
         let ape_paterno = util.toCapitalizeFirstLetterCase(
           hiringRequestSelected.ape_paterno
@@ -237,19 +400,16 @@ export class ApproveHiringRequestComponent implements OnInit {
         );
 
         let fecha_nacimiento = util.timestampFormat(
-          hiringRequestSelected.fecha_nacimiento,
-          'DD-MM-YYYY'
+          hiringRequestSelected.fecha_nacimiento
         );
 
         let ind_asign_familiar: boolean =
           hiringRequestSelected.ind_asign_familiar == 'S' ? true : false;
 
         this.formApproveHiringRequest.patchValue({
-          cBoxBearCost: eps_parcial_total.toUpperCase(), //
           cBoxBusinessLine: hiringRequestSelected.cod_linea_negocio,
           cBoxClient: hiringRequestSelected.nombre_corto!.toUpperCase(),
           cBoxDocumentType: hiringRequestSelected.tipo_documento,
-          cBoxEPS: plan_eps.toUpperCase(),
           cBoxLevel: hiringRequestSelected.nivel.toUpperCase(),
           cBoxProfile: hiringRequestSelected.puesto!.toUpperCase(),
           cBoxmodality: hiringRequestSelected.modalidad.toUpperCase(),
@@ -271,16 +431,36 @@ export class ApproveHiringRequestComponent implements OnInit {
           inputPhone: hiringRequestSelected.nro_celular,
           inputProvince: hiringRequestSelected.provincia.toUpperCase(),
           inputRemuneration: hiringRequestSelected.remuneracion,
-          rbSCTR: ind_sctr,
           cboxAsig: ind_asign_familiar,
-        });
 
+          // ajustes
+
+          cboxCompany: hiringRequestSelected.empresa,
+          cboxSex: hiringRequestSelected.sexo,
+          inputArea: hiringRequestSelected.condicion_proyecto_area,
+          inputWorkingHours: hiringRequestSelected.horario_laboral,
+          inputTarifa: hiringRequestSelected.tarifa_mensual,
+          inputProductivity: hiringRequestSelected.productividad,
+          inputTeamAsignment: hiringRequestSelected.asignacion_equipo,
+          inputJefeResponsable: hiringRequestSelected.jefe_responsable_directo,
+
+          inputReasonReject: hiringRequestSelected.motivo_rechazo,
+        });
         this.statusHiringRequest = hiringRequestSelected.estado!;
+
+        this.cvHas = hiringRequestSelected.cv!;
+        this.disableFieldsByStatus(this.statusHiringRequest);
       });
   }
 
+  // utils
+
   get idHiringRequest() {
     return this.formApproveHiringRequest.controls['inputIdHiringRequest'].value;
+  }
+
+  get businessLineValue() {
+    return this.formApproveHiringRequest.controls['cBoxBusinessLine'].value;
   }
 
   private backPage() {
@@ -311,11 +491,37 @@ export class ApproveHiringRequestComponent implements OnInit {
 
     if (
       pendingStatus === 'Pendiente Aprobacion GG' &&
-      this.userProfile === 'GG'
+      this.userProfile === GG
     ) {
       status = true;
     }
 
     return status;
+  }
+
+  disableFieldsByStatus(status: string) {
+    if (
+      status === 'Aprobado' ||
+      status === 'Rechazado' ||
+      status === 'Pendiente Aprobacion GG'
+    ) {
+      this.disabledFields();
+      this.formApproveHiringRequest.controls['inputReasonReject'].enable();
+    }
+  }
+
+  goToLink(url: string | null) {
+    window.open(base + '/' + url, '_blank');
+  }
+
+  setDefaultDIsableRRHH() {
+    // if (this.userProfile !== GG) {
+    //   this.formApproveHiringRequest.controls['inputReasonReject'].disable();
+    // }
+
+    if (this.userProfile === GG) {
+      this.disabledFields();
+      this.formApproveHiringRequest.controls['inputReasonReject'].enable();
+    }
   }
 }
