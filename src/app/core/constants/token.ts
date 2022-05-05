@@ -1,2 +1,2 @@
 
-export const TOKEN='SESION_TOKEN'
+export const TOKEN='jwt'

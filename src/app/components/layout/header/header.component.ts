@@ -12,13 +12,14 @@ export class HeaderComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    if(localStorage.getItem("token"))
+    if(localStorage.getItem("jwt"))
       this.already_logued = true;
     else this.already_logued = false;
   }
   logout() {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
+    localStorage.removeItem("jwt");
     localStorage.removeItem("already_logued");
     localStorage.setItem("already_logued", "false");
     this.already_logued = localStorage.getItem("already_logued") == "false";

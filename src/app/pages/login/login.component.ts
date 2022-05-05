@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoginService } from 'src/app/core/services/login.service';
 import { Router } from '@angular/router';
+import jwtDecode from 'jwt-decode';
 
 @Component({
   selector: 'app-login',
@@ -34,8 +35,12 @@ export class LoginComponent implements OnInit {
     console.log("input:", input);
     this.service.login(input).subscribe(data => {
       console.log(data)
-      localStorage.setItem("user", JSON.stringify(data.user));
-      localStorage.setItem("token", data.token);
+      localStorage.setItem("jwt", data.token);
+      // localStorage.setItem("user", JSON.stringify(data.user));
+      let jwt_decoded : any = jwtDecode(data.token)
+      jwt_decoded = {...jwt_decoded, id_sesion : 40}
+      console.log("jwt_decoded", jwt_decoded);
+      localStorage.setItem("token", JSON.stringify(jwt_decoded));
       localStorage.setItem("already_logued", "true");
       this.router.navigate(['/home']);
     })
