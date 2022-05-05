@@ -58,18 +58,28 @@ export class ContractImboxService {
     return this.httpClient.get<IStatusRequestSimple>(URL);
   }
 
-  rejectHiringRequest(idHiringRequest: string | number) {
+  rejectHiringRequest(idHiringRequest: string | number, reasonReject: string) {
     const URL = `${url_base}/contractSolicitude/reject/${idHiringRequest}`;
+
+    const body = { motivo_rechazo: reasonReject };
+
+    return this.httpClient.post<IStatusRequestSimple>(URL, body);
+  }
+
+  approveGGHiringRequest(idHiringRequest: string | number) {
+    const URL = `${url_base}/contractSolicitude/approvegg/${idHiringRequest}`;
 
     return this.httpClient.get<IStatusRequestSimple>(URL);
   }
 
-  approveGGHiringRequest(
-    idHiringRequest: string | number
+  editHiringRequest(
+    idHiringRequest: string | number,
+    hiringRequestBody: Partial<IHiringRequest>
   ) {
-    const URL = `${url_base}/contractSolicitude/approvegg/${idHiringRequest}`;
+    const URL = `${url_base}/contractSolicitude/edit/${idHiringRequest}`;
 
-    return this.httpClient.get<IStatusRequestSimple>(URL);
+    const body = hiringRequestBody;
+    return this.httpClient.post<IStatusRequestSimple>(URL, body);
   }
 }
 

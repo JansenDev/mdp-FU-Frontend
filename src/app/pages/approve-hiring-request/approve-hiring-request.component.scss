@@ -1,7 +1,7 @@
 $width_content_page: 90%;
 
-.approve-hiring{
-margin-left: 60px;
+.approve-hiring {
+  margin-left: 60px;
 }
 
 .approve-hiring--container {
@@ -76,24 +76,6 @@ margin-left: 60px;
             margin-left: 8px;
           }
         }
-
-        // & .row3--cboxEPS {
-        //   width: 300px;
-        //   display: flex;
-        //   align-items: center;
-        //   justify-content: space-evenly;
-        //   min-width: 100px;
-        //   gap: 10px;
-
-        //   & mat-form-field {
-        //     min-width: 100px;
-        //   }
-
-        //   & .cboxEPS--amount{
-        //     width: 40px;
-        //     text-align: right;
-        //   }
-        // }
       }
 
       & .contract--row4 {
@@ -130,6 +112,14 @@ margin-left: 60px;
   min-width: 180px;
 }
 
+.cv {
+  width: 300px;
+  min-width: 180px;
+  & a {
+    cursor: pointer;
+  }
+}
+
 // medias
 @media (max-width: 930px) {
   .basic-flex {
@@ -152,20 +142,11 @@ margin-left: 60px;
   width: 0;
 }
 
+// quitar color de desabilitado
 .mat-input-element:disabled {
   color: unset;
 }
 
-.mat-checkbox-disabled .mat-checkbox-label span {
-  // color: red !important;
-}
-
-mat-checkbox.mat-checkbox-disabled {
-  // color: red !important;
-  // background-color: red !important;
-}
-
-input:disabled {
-  //   color: red !important;
-  // background-color: red !important;
+.mat-select-disabled .mat-select-value {
+  color: unset;
 }

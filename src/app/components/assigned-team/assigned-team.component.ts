@@ -8,107 +8,13 @@ import {
 } from 'src/app/core/models/assignment.model';
 import { ICollaboratorAssigned } from 'src/app/core/models/collaborator.model';
 import { IProfileResponse } from 'src/app/core/models/profile.model';
-import { ICreateServiceRequest } from 'src/app/core/models/service.model';
+import { IAssignmentServiceMain } from 'src/app/core/models/service.model';
 import { AssignedTeamService } from 'src/app/core/services/assigned-team.service';
 import { CboxService } from 'src/app/core/services/cbox.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { ResourceService } from 'src/app/core/services/resource.service';
 import * as util from '../../core/utils/utilities.util';
 import Swal from 'sweetalert2';
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-const ELEMENT_DATA: any = [
-  {
-    position: 1,
-    name: 'Hydrogen',
-    weight: 1.0079,
-    symbol: 'H',
-    position1: 1,
-    name1: 'Hydrogen',
-    weight1: 1.0079,
-    symbol1: 'H',
-    position2: 1,
-    name2: 'Hydrogen',
-  },
-  {
-    position: 1,
-    name: 'Hydrogen',
-    weight: 1.0079,
-    symbol: 'H',
-    position1: 1,
-    name1: 'Hydrogen',
-    weight1: 1.0079,
-    symbol1: 'H',
-    position2: 1,
-    name2: 'Hydrogen',
-  },
-  {
-    position: 1,
-    name: 'Hydrogen',
-    weight: 1.0079,
-    symbol: 'H',
-    position1: 1,
-    name1: 'Hydrogen',
-    weight1: 1.0079,
-    symbol1: 'H',
-    position2: 1,
-    name2: 'Hydrogen',
-  },
-  {
-    position: 1,
-    name: 'Hydrogen',
-    weight: 1.0079,
-    symbol: 'H',
-    position1: 1,
-    name1: 'Hydrogen',
-    weight1: 1.0079,
-    symbol1: 'H',
-    position2: 1,
-    name2: 'Hydrogen',
-  },
-  {
-    position: 1,
-    name: 'Hydrogen',
-    weight: 1.0079,
-    symbol: 'H',
-    position1: 1,
-    name1: 'Hydrogen',
-    weight1: 1.0079,
-    symbol1: 'H',
-    position2: 1,
-    name2: 'Hydrogen',
-  },
-  {
-    position: 1,
-    name: 'Hydrogen',
-    weight: 1.0079,
-    symbol: 'H',
-    position1: 1,
-    name1: 'Hydrogen',
-    weight1: 1.0079,
-    symbol1: 'H',
-    position2: 1,
-    name2: 'Hydrogen',
-  },
-  {
-    position: 1,
-    name: 'Hydrogen',
-    weight: 1.0079,
-    symbol: 'H',
-    position1: 1,
-    name1: 'Hydrogen',
-    weight1: 1.0079,
-    symbol1: 'H',
-    position2: 1,
-    name2: 'Hydrogen',
-  },
-];
 
 @Component({
   selector: 'app-assigned-team',
@@ -118,7 +24,7 @@ const ELEMENT_DATA: any = [
 export class AssignedTeamComponent implements OnInit {
   @Input() subject!: Subject<any>;
   formAssignedTeam: FormGroup;
-  serviceResponse: any;
+  serviceResponse!: IAssignmentServiceMain;
   printErrors = {
     name: '',
     message: '',
@@ -156,7 +62,7 @@ export class AssignedTeamComponent implements OnInit {
       cboxProfile: [{ value: null, disabled: false }],
       cboxLevel: [{ value: null, disabled: false }],
       inputAssignament: [
-        { value: null, disabled: false },
+        null,
         [Validators.required, Validators.pattern(/^[1-9][0-9]?0?$/)],
       ],
       inputTariff: [
@@ -214,7 +120,7 @@ export class AssignedTeamComponent implements OnInit {
       const dateStartString = util.timestampFormat(dateStart);
       const dateEndString = util.timestampFormat(dateEnd);
 
-      // TODO:
+
       this.getAssignedHours(dateStartString!, dateEndString!);
     }
   }
@@ -274,27 +180,6 @@ export class AssignedTeamComponent implements OnInit {
     });
   }
 
-  // protected onChangeInputTariffNext() {
-  //   // const isValidInputTariff =
-  //   //   this.formAssignedTeam.controls['inputTariff'].valid;
-  //   const inputTariff = this.formAssignedTeam.controls['inputTariff'].value;
-
-  //   if (inputTariff) {
-  //     const tariffFloat = parseFloat(inputTariff);
-
-  //     this.productionPlanned = this.assignmentHourTotal * tariffFloat;
-  //   } else {
-  //     this.productionPlanned = 0;
-  //   }
-  //   // if (isValidInputTariff) {
-  //   //   const tariffFloat = parseFloat(inputTariff);
-
-  //   //   this.productionPlanned = this.assignmentHourTotal * tariffFloat;
-  //   // } else {
-  //   //   this.productionPlanned = 0;
-  //   // }
-  // }
-
   ngSubmit() {
     this.saveAssignedCollaborator();
   }
@@ -311,6 +196,7 @@ export class AssignedTeamComponent implements OnInit {
       cod_puesto,
       nivel,
       tarifa,
+      cod_asignacion,
     }: IAssignedCollaboratorBody = this.getFormAssignedTeam();
 
     this.assignedTeamService
@@ -323,7 +209,8 @@ export class AssignedTeamComponent implements OnInit {
         horas_asignadas,
         nivel,
         percent,
-        tarifa
+        tarifa,
+        cod_asignacion
       )
       .subscribe((data) => {
         if (data.error) {
@@ -331,9 +218,9 @@ export class AssignedTeamComponent implements OnInit {
           this.notification.toast('error', data.message, 'ERROR');
           return;
         }
-        this.formAssignedTeam.controls['inputDocumentNumber'].enable();
+        this.serviceResponse.cod_asignacion = undefined;
         this.fillAssignedTeamTable();
-        this.cleanAllFields();
+        this.onCancel();
       });
   }
 
@@ -353,14 +240,17 @@ export class AssignedTeamComponent implements OnInit {
   }
 
   editAssignment(assignedCollaborator: IAssignedCollaboratorTable) {
+    this.formAssignedTeam.reset();
     const { cod_asignacion } = assignedCollaborator;
+    this.serviceResponse.cod_asignacion = cod_asignacion;
+
     console.log(cod_asignacion);
     this.setEditData(assignedCollaborator);
   }
 
-  setEditData(assignedCollaborator: IAssignedCollaboratorTable) {
-    // this.formAssignedTeam.reset();
+  protected setEditData(assignedCollaborator: IAssignedCollaboratorTable) {
     this.formAssignedTeam.controls['inputDocumentNumber'].disable();
+    // this.formAssignedTeam.reset();
     this.formAssignedTeam.patchValue({
       inputDocumentNumber: assignedCollaborator.nro_documento,
       cboxLevel: assignedCollaborator.nivel,
@@ -370,6 +260,9 @@ export class AssignedTeamComponent implements OnInit {
       inputAssignament: assignedCollaborator.por_asignacion,
       inputTariff: assignedCollaborator.tarifa,
     });
+
+    // setTimeout(() => this.getAssignedActualOfCollaborator.bind(this), 1000);
+    this.getAssignedActualOfCollaborator();
   }
 
   // Use subject next
@@ -528,6 +421,8 @@ export class AssignedTeamComponent implements OnInit {
 
   onCancel() {
     this.cleanAllFields();
+    this.formAssignedTeam.controls['inputDocumentNumber'].enable();
+    this.serviceResponse.cod_asignacion = undefined;
   }
 
   private getFormAssignedTeam(): IAssignedCollaboratorBody {
@@ -550,7 +445,7 @@ export class AssignedTeamComponent implements OnInit {
       cod_servicio = this.serviceResponse.cod_servicio;
     }
 
-    const dataFormBody = {
+    const dataFormBody: IAssignedCollaboratorBody = {
       cod_servicio: parseInt(cod_servicio!),
       cod_colaborador,
       percent: inputAssignament,
@@ -561,6 +456,11 @@ export class AssignedTeamComponent implements OnInit {
       nivel: cboxLevel,
       tarifa: inputTariff,
     };
+
+    if (this.serviceResponse?.cod_asignacion) {
+      dataFormBody['cod_asignacion'] = this.serviceResponse.cod_asignacion;
+    }
+
     console.log(dataFormBody);
 
     return dataFormBody;
@@ -575,16 +475,20 @@ export class AssignedTeamComponent implements OnInit {
         // this.onChangeInputAsignmentNext();
         this.assignmentHour = hoursTotal.horas_asignadas_asignacion_total;
         this.onChangeInputAsignmentNext();
-        // TODO
+
         this.getAssignedActualOfCollaborator();
       });
   }
 
   protected getAssignedActualOfCollaborator() {
-    if (this.isValidAssignedFields) {
-      const dpDateStart = this.formAssignedTeam.controls['dpDateStart'].value;
-      const dpDateEnd = this.formAssignedTeam.controls['dpDateEnd'].value;
-
+    const dpDateStart = this.formAssignedTeam.controls['dpDateStart'].value;
+    const dpDateEnd = this.formAssignedTeam.controls['dpDateEnd'].value;
+    // if (this.isValidAssignedFields) {
+    if (
+      dpDateStart &&
+      dpDateEnd &&
+      this.collaboratorCurrentForm?.cod_colaborador
+    ) {
       const dateStartFormatted = util.timestampFormat(dpDateStart)!;
       const dateEndFormatted = util.timestampFormat(dpDateEnd)!;
 
@@ -595,6 +499,8 @@ export class AssignedTeamComponent implements OnInit {
           this.collaboratorCurrentForm.cod_colaborador
         )
         .subscribe((assignamentActual) => {
+          console.log('ASIGACION ACTUAL');
+
           const { maximo_porcentaje_acumulado } = assignamentActual;
           this.printErrors.hint = `Disponible: ${
             100 - maximo_porcentaje_acumulado
@@ -606,6 +512,8 @@ export class AssignedTeamComponent implements OnInit {
         });
     }
   }
+
+  // Utils
 
   // reverse false:valida fecha_inicio menor a fecha_fin
   // reverse true: valida fecha_fin mayor a fecha inicio
@@ -656,16 +564,6 @@ export class AssignedTeamComponent implements OnInit {
     }
     return false;
   }
-
-  // private disabledInputAssignament() {
-  //   if (this.isValidAssignedFields) {
-  //     this.formAssignedTeam.controls['inputAssignament'].enable();
-  //   } else {
-  //     this.formAssignedTeam.controls['inputAssignament'].disable();
-  //   }
-  // }
-
-  // Utils
   private cleanFields() {
     this.cleanInfoCollaborator();
     this.printErrors.hint = '';

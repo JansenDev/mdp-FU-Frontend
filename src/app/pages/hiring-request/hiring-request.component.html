@@ -6,6 +6,7 @@
 
     <!-- Form Start -->
     <form
+      enctype="multipart/form-data"
       [formGroup]="formHiringRequest"
       (submit)="onSubmitHiringRquest()"
       class="hiring--form"
@@ -39,7 +40,14 @@
             >
           </mat-form-field>
 
-          <div class="offset"></div>
+          <mat-form-field>
+            <mat-label>Empresa</mat-label>
+            <mat-select formControlName="cboxCompany" required>
+              <mat-option value="MDP">MDP</mat-option>
+              <mat-option value="CEOL">CEOL</mat-option>
+              <mat-option value="BRACING">BRACING</mat-option>
+            </mat-select>
+          </mat-form-field>
 
           <div class="offset"></div>
 
@@ -63,6 +71,14 @@
           </mat-form-field>
 
           <mat-form-field>
+            <mat-label>Sexo</mat-label>
+            <mat-select formControlName="cboxSex" required>
+              <mat-option value="M">M</mat-option>
+              <mat-option value="F">F</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
             <mat-label>F. Nacimiento</mat-label>
             <input
               matInput
@@ -76,8 +92,6 @@
             ></mat-datepicker-toggle>
             <mat-datepicker #picker_nacimiento></mat-datepicker>
           </mat-form-field>
-
-          <div class="offset"></div>
         </div>
 
         <div class="collaborator--row3">
@@ -145,6 +159,33 @@
             </mat-select>
           </mat-form-field>
 
+          <mat-form-field *ngIf="cboxBusinessLine !== 'ATIS'; else offset">
+            <mat-label>Proyecto/area</mat-label>
+            <mat-select formControlName="cboxArea">
+              <mat-option value="Nuevo Proyecto">Nuevo Proyecto</mat-option>
+              <mat-option value="Nuevo Alcance">Nuevo Alcance</mat-option>
+              <mat-option value="Remplazo Definitivo"
+                >Remplazo Definitivo</mat-option
+              >
+              <mat-option value="Remplazo Temporal"
+                >Remplazo Temporal</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+
+          <ng-template #offset> <div class="offset"></div></ng-template>
+          <mat-form-field>
+            <mat-label>Horario Laboral</mat-label>
+            <input
+              placeholder="Ejm: Lunes a Viernes 9am a 7 pm"
+              formControlName="inputWorkingHours"
+              matInput
+              required
+            />
+          </mat-form-field>
+        </div>
+
+        <div class="contract--row2">
           <mat-form-field>
             <mat-label>Puesto</mat-label>
             <mat-select formControlName="cBoxProfile" required>
@@ -164,9 +205,7 @@
               <mat-option value="senior">Senior</mat-option>
             </mat-select>
           </mat-form-field>
-        </div>
 
-        <div class="contract--row2">
           <mat-form-field>
             <mat-label>Banda Salarial </mat-label>
             <input
@@ -187,7 +226,9 @@
               <mat-option value="RXH">RXH</mat-option>
             </mat-select>
           </mat-form-field>
+        </div>
 
+        <div class="contract--row2">
           <mat-form-field>
             <mat-label>Remuneración</mat-label>
             <input
@@ -202,55 +243,19 @@
             <mat-label>Bono</mat-label>
             <input maxlength="5" formControlName="inputMonthlyBonus" matInput />
           </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Tarifa Mensual</mat-label>
+            <input formControlName="inputTarifa" matInput required />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Productividad</mat-label>
+            <input formControlName="inputProductivity" matInput />
+          </mat-form-field>
         </div>
 
         <div class="contract--row3">
-          <!-- <div class="row3--cboxEPS"> -->
-          <mat-form-field>
-            <mat-label>EPS</mat-label>
-            <mat-hint
-              *ngIf="cBoxBearCostValue === 'parcial' && cBoxEPSValue !== null"
-              >{{ amountCurrent.parcial | currency: "S/" }}</mat-hint
-            >
-
-            <mat-hint
-              *ngIf="cBoxBearCostValue !== 'parcial' && cBoxEPSValue !== null"
-              >{{ amountCurrent.total | currency: "S/" }}</mat-hint
-            >
-
-            <mat-hint *ngIf="cBoxEPSValue === null">{{
-              0 | currency: "S/"
-            }}</mat-hint>
-
-            <mat-select formControlName="cBoxEPS">
-              <!-- log setAmountCurrent('0') -->
-              <mat-option [value]="null">Ninguno</mat-option>
-              <mat-option
-                *ngFor="let eps of EPSList"
-                [value]="eps.cod_eps"
-                (click)="setAmountCurrent(eps)"
-                >{{ eps.plan_eps }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <!-- <span class="cboxEPS--amount">{{ amountCurrent|currency:'S/' }}</span>
-          </div> -->
-
-          <mat-radio-group>
-            <mat-form-field>
-              <mat-label>Asumo del costo (MDP)</mat-label>
-              <mat-select
-                formControlName="cBoxBearCost"
-                [disabled]="cBoxEPSValue === '' || cBoxEPSValue === null"
-              >
-                <mat-option value="parcial">Parcial</mat-option>
-                <mat-option value="total">Total</mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <mat-checkbox formControlName="rbSCTR">SCTR</mat-checkbox>
-          </mat-radio-group>
-
           <mat-form-field>
             <mat-label>F. Inicio</mat-label>
             <input
@@ -282,13 +287,39 @@
             ></mat-datepicker-toggle>
             <mat-datepicker #picker_f_fin></mat-datepicker>
           </mat-form-field>
-          <!-- <div class="offset"></div> -->
+
+          <mat-form-field>
+            <mat-label>Asignación de equipo</mat-label>
+            <mat-select formControlName="cboxTeamAsignment">
+              <mat-option value="Planilla">Planilla</mat-option>
+              <mat-option value="Excepcion">Excepción</mat-option>
+              <mat-option value="Equipo Personal">Equipo Personal</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Adjuntar CV</mat-label>
+            <ngx-mat-file-input
+              #fileUpload
+              (change)="upload($event)"
+            ></ngx-mat-file-input>
+            <mat-hint> Máximo 10mb (pdf /doc /docx)</mat-hint>
+          </mat-form-field>
+          <!-- <input type="file" (change)="upload($event)" /> -->
         </div>
 
-        <div class="contract--row4">
+        <div class="contract--row3">
+          <mat-form-field>
+            <mat-label>Jefe Responsable Directo</mat-label>
+            <input formControlName="inputJefeResponsable" matInput />
+          </mat-form-field>
+
+          <div class="offset"></div>
+          <div class="offset"></div>
+
           <mat-form-field>
             <mat-label>Condición</mat-label>
-            <input formControlName="inputCondition" matInput />
+            <textarea formControlName="inputCondition" matInput></textarea>
           </mat-form-field>
         </div>
       </div>
@@ -312,6 +343,7 @@
         </button>
       </div>
     </form>
+
     <!-- Form End -->
   </div>
 </div>

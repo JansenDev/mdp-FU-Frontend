@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  url_base:"https://futurov01.herokuapp.com/api/v1"
+  url_base:"http://localhost:3000/api/v1",
+  base:"http://localhost:3000"
 };
 
 /*

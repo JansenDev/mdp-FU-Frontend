@@ -30,7 +30,12 @@ export class TokenInterceptor implements HttpInterceptor {
       const auth = request.clone({
         headers: request.headers
           .set('Authorization', 'Bearer ' + jwt)
-          .set('Content-Type', 'application/json'),
+          .append('enctype', 'multipart/form-data')
+          // .append('Authorization', token)
+          // .set('Content-Type', 'application/json')
+
+          // .append('encType', 'multipart/form-data'),
+        // .set('Content-Type', 'multipart/form-data'),
       });
       let decoded : any = jwt_decode(jwt)
       if(decoded) {

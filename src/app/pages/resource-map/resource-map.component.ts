@@ -82,7 +82,7 @@ export class ResourceMapComponent implements OnInit {
       cboxClient: ['', Validators.required],
       cboxProfile: [''],
       inNames: [''],
-      inputIdUser: ['1'],
+      inputIdUser: ['40'],
     });
   }
 
