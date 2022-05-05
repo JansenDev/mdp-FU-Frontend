@@ -1,0 +1,78 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    background-color: #ecf0f3;
+}
+
+h1 {
+    margin: 2rem;
+    padding: 0;
+    text-align:center;
+    text-shadow: 1px 1px;
+    font-weight: bold;
+    font-size: 2.2rem;
+}
+
+mat-card {
+    width: 600px;
+    margin: 0px auto;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 2rem 3rem;
+    margin: auto;
+    border-radius: 2.5rem;
+    background-color: #ecf0f3;
+    box-shadow: 13px 13px 20px #cbced1, -13px -13px 20px #ffffff;
+    color: black;
+    margin-top: 10rem;
+}
+
+mat-icon {
+    margin: 1rem 2rem;
+    transform: scale(2);
+    color: var(--primary);
+}
+
+mat-form-field {
+    width: 80%;
+}
+
+.user .password{
+    display: inline;
+}
+
+button {
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    border: none;
+    font-size: 1rem;
+    color: #ffffff;
+    font-weight: bold;
+    background-color: var(--primary);
+    width: 100%;
+    display: block;
+    padding: 0.5rem 0.5rem;
+    border-radius: 1.5rem;
+    box-shadow: 3px 3px 8px #b1b1b1, -3px -3px 8px #ffffff;
+    cursor: pointer;
+}
+
+.app {
+    width: 100%;
+    font-weight: bold;
+    text-shadow: 1px 1px;
+    text-align: right;
+    position: fixed;
+    bottom: 0;
+    font-size: 2.5rem;
+    margin: 1rem;
+    padding-right: 2rem;
+    color: var(--primary);
+}
+
+.body {
+    background: "login.jpg";
+}

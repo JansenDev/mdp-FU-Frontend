@@ -1,0 +1,50 @@
+<div class="body" src="/login.jpg">
+<mat-card class="mat-elevation-z6">
+    <h1>INICIAR SESIÓN</h1>
+    <form #serviceForm="ngForm" class="login-form" [formGroup]="resourceForm" (submit)="login()">
+        <div class="user">
+            <mat-icon>person</mat-icon>
+            <mat-form-field class="row1" appearance="fill">
+                <mat-label class="label">Usuario</mat-label>
+                <input 
+                    id="user" 
+                    formControlName="user" class="user-input" 
+                    matInput 
+                    type="email" 
+                    placeholder="Correo" 
+                    required
+                >
+            </mat-form-field>  
+        </div>
+        <div class="password">
+            <mat-icon>lock</mat-icon>
+            <mat-form-field class="row1" appearance="fill">
+                <mat-label class="label">Contraseña</mat-label>
+                <input 
+                    id="password" 
+                    formControlName="password" 
+                    class="password-input" 
+                    matInput 
+                    type="password" 
+                    placeholder="Contraseña" 
+                    required
+                >
+    
+            </mat-form-field> 
+        </div>
+         
+
+      <button
+        [disabled]="resourceForm.invalid"
+        type="submit"
+        mat-raised-button
+        class="save-button"
+      >
+      INGRESAR
+    </button>
+    </form>
+</mat-card>
+</div>
+<div class="app">
+    <p>APLICACIÓN FUTURO</p>
+</div>

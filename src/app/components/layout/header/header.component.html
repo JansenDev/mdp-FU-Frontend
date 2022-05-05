@@ -1,3 +1,9 @@
-<div class="header--container">
-  <h1><a routerLink="/">MDP</a></h1>
+<div *ngIf="already_logued" class="header">
+    <a 
+    *ngIf="already_logued" 
+    href="/login"
+    (click)="logout()"
+    >
+      <mat-icon>exit_to_app</mat-icon><span>Cerrar Sesión</span>
+    </a>
 </div>

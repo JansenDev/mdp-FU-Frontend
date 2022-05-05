@@ -13,6 +13,7 @@ import { HiringRequestComponent } from './hiring-request/hiring-request.componen
 import { ContractImboxComponent } from './contract-imbox/contract-imbox.component';
 import { ApproveHiringRequestComponent } from './approve-hiring-request/approve-hiring-request.component';
 import { ServiceMapComponent } from './service-map/service-map.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ServiceMapComponent } from './service-map/service-map.component';
     ServicesConfigurationComponent,
     ApproveHiringRequestComponent,
     ServiceMapComponent,
+    LoginComponent,
   ],
 
   imports: [CommonModule, SharedModule, ComponentModule, PagesRoutingModule],
