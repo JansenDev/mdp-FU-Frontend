@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
   
-  already_logued : boolean = false;
+  already_logued : boolean = true;
   
   constructor() { }
 
@@ -22,5 +22,6 @@ export class HeaderComponent implements OnInit {
     localStorage.removeItem("already_logued");
     localStorage.setItem("already_logued", "false");
     this.already_logued = localStorage.getItem("already_logued") == "false";
+    location.reload()
   }
 }

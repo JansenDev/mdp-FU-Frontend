@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
       localStorage.setItem("user", JSON.stringify(data.user));
       localStorage.setItem("token", data.token);
       localStorage.setItem("already_logued", "true");
-      this.router.navigate(['/'])
+      this.router.navigate(['/home']);
     })
   }
 }
