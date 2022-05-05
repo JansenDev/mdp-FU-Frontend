@@ -34,7 +34,6 @@ export class TokenInterceptor implements HttpInterceptor {
       });
       let decoded : any = jwt_decode(jwt)
       if(decoded) {
-        console.log("ramon", decoded)
         localStorage.setItem("userProfile", decoded.userProfile)
         localStorage.setItem("id_sesion", decoded.userProfile)
       }
