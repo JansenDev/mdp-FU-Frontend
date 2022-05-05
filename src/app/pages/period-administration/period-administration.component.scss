@@ -1,0 +1,42 @@
+@import "../../../assets/scss/variables.scss";
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+h2{
+  font-size: 1.2rem;
+}
+
+.content{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 65%;
+}
+
+.main-container{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.btn-area{
+  display: flex;
+  justify-content: flex-end;
+}
+
+table{
+  width: 100%;
+  border-radius: 10px;
+}
+
+th.mat-header-cell{
+  background-color: var(--primary);
+  color: var(--white);
+}
+
+.mat-tab-group.mat-background-primary>.mat-tab-header{
+  background-color: var(--primary);
+}

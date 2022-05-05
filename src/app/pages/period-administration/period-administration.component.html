@@ -1,0 +1,35 @@
+<h2>Administración de Periodos</h2>
+<section class="main-container">
+  <div class="content">
+    <div class="btn-area">
+      <button mat-raised-button>Crear</button>
+      <button mat-raised-button>Actualizar</button>
+    </div>
+
+      <table mat-table [dataSource]="periods" class="period-table">
+        <ng-container matColumnDef="period">
+          <th mat-header-cell *matHeaderCellDef>Periodo</th>
+          <td mat-cell *matCellDef="let period" >{{period.periodo}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="rate">
+          <th mat-header-cell *matHeaderCellDef>TC</th>
+          <td mat-cell *matCellDef="let period">{{period.tasa_cambio}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="open-date">
+          <th mat-header-cell *matHeaderCellDef>Fecha de apertura</th>
+          <td mat-cell *matCellDef="let period">{{period.fecha_apertura}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Estado</th>
+          <td mat-cell *matCellDef="let period">{{period.estado}}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <table mat-row *matRowDef="let row; columns: columnsToDisplay"></table>
+      </table>
+
+  </div>
+</section>
+
