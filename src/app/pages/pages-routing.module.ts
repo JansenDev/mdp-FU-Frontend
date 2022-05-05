@@ -6,6 +6,7 @@ import { HiringRequestComponent } from './hiring-request/hiring-request.componen
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { PeriodAdministrationComponent } from './period-administration/period-administration.component';
 import { ResourceMapComponent } from './resource-map/resource-map.component';
 import { ServiceMapComponent } from './service-map/service-map.component';
 import { ServicesConfigurationComponent } from './services-configuration/services-configuration.component';
@@ -50,6 +51,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'period-administration',
+    component: PeriodAdministrationComponent,
   },
   {
     path: '**',
