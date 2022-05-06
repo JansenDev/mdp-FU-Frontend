@@ -10,7 +10,7 @@ export interface IPeriodResponse extends IGetLastPeriodRequest {
 
 export interface ICreatePeriodRequest {
   periodo: string,
-  tasa_cambio: number
+  tasa_cambio: number | null
 }
 
 export interface IUpdatePeriodRequest {

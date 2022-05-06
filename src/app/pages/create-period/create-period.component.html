@@ -1,1 +1,48 @@
-<p>create-period works!</p>
+<h1>Crear Periodo</h1>
+<div class="main-container">
+  <section class="content">
+      <form #createForm = "ngForm">
+        <mat-form-field appearance="fill">
+          <mat-label>Periodo</mat-label>
+          <input name="period" #validPeriod="ngModel" [(ngModel)]="formData.periodo"
+            type="text" matInput disabled>
+           <mat-hint *ngIf="validPeriod.invalid &&
+            (validPeriod.dirty || validPeriod.touched) && formData.periodo == '' " class="error-hint">
+            Campo requerido
+          </mat-hint>
+          <mat-hint *ngIf="validPeriod.invalid && formData.periodo">
+            Formato inválido
+          </mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Tasa de cambio</mat-label>
+          <input name="rate" #validRate="ngModel" min="1" [(ngModel)]="formData.tasa_cambio"
+            type="number" required matInput
+            placeholder="Ej: 3.39" >
+          <mat-hint *ngIf="validRate.invalid &&
+            (validRate.dirty || validRate.touched) && formData.tasa_cambio == null" class="error-hint">
+            Campo requerido
+          </mat-hint>
+
+        </mat-form-field>
+      </form>
+      <pre> <!-- TODO: -->
+        {{formData | json}}
+      </pre>
+
+      <div class="btn-area">
+        <button mat-raised-button type="submit" class="create-btn" [disabled]="createForm.invalid"
+        (click)="createPeriod()">
+          <mat-icon>check_circle_outline</mat-icon>
+          Crear
+        </button>
+        <button mat-raised-button type="button" class="cancel-btn" routerLink="/period-administration">
+          <mat-icon>close</mat-icon>
+          Cancelar
+        </button>
+      </div>
+
+</section>
+</div>
+

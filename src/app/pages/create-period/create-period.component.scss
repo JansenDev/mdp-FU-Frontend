@@ -1,0 +1,82 @@
+@import "../../../assets/scss/variables.scss";
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+h1{
+  color: var(--black);
+  font-family: var(--font-family);
+  font-size: 30px;
+  font-weight: 600;
+  text-shadow: 2px 2px var(--gray);
+  padding: 0.8rem;
+}
+
+form{
+  display: flex;
+  flex-direction: column;
+}
+
+.error-hint{
+  color: var(--red);
+}
+
+.content{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 45%;
+}
+
+.form-container{
+  display: flex;
+  align-content: center;
+  flex-direction: column;
+}
+
+.btn-area{
+  display: flex;
+  justify-content: center;
+  padding-top: 1rem;
+  gap: 5%;
+  width: 100%;
+}
+
+button{
+  color: var(--white);
+}
+
+.create-btn{
+  background-color: var(--primary);
+}
+
+.cancel-btn{
+  background-color: var(--red);
+}
+
+/* Eliminar fondo gris de inputs con aspecto fill */
+
+::ng-deep.mat-form-field-appearance-fill.mat-form-field-disabled .mat-form-field-flex {
+  background-color: transparent;
+}
+
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+  background-color: transparent;
+}
+
+/* ------------------------------------------------------- */
+
+/* Eliminar flechas de number inputs */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] { //Firefox
+  -moz-appearance: textfield;
+}
+/* ----------------------------------- */
