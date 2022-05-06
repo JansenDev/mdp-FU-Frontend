@@ -39,7 +39,7 @@
          
 
       <button
-        [disabled]="resourceForm.invalid"
+        [disabled]="resourceForm.invalid || !isValidEmail"
         type="submit"
         mat-raised-button
         class="save-button"
