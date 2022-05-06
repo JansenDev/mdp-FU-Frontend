@@ -19,37 +19,33 @@ h1{
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 45%;
+  width: 85%;
 }
 
 .main-container{
   display: flex;
+  width: 100%;
+  justify-content: center;
 }
 
 .table-container{
   display: flex;
   align-content: center;
   flex-direction: column;
+  width: 100%;
 }
 
 .btn-area{
   display: flex;
-  align-self: flex-end;
-  justify-content: space-between;
-  width: 50%;
+  justify-content: flex-end;
   padding-bottom: 1rem;
-}
-
-button{
-  color: var(--white);
+  width: 100%;
+  gap: 5%;
 }
 
 .create-btn{
   background-color: var(--primary);
-}
-
-.update-btn{
-  background-color: var(--bright-green);
+  color: var(--white);
 }
 
 span{
@@ -65,7 +61,7 @@ span{
 }
 
 table{
-  width: 500px;
+  width: 100%;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2),
@@ -126,24 +122,5 @@ th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:la
 }
 
 .mat-column-indicator{
-  width: 10%;
+  text-align: right;
 }
-
-.mat-column-rate{
-  width: 20%;
-}
-
-.mat-column-period{
-  width: 20%;
-}
-
-.mat-column-open-date{
-  width: 25%;
-}
-
-.mat-column-status{
-  width: 25%;
-}
-
-
-
