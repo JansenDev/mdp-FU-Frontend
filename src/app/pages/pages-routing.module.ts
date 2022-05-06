@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthorizationGuard } from '../auth/authorization.guard';
 import { ApproveHiringRequestComponent } from './approve-hiring-request/approve-hiring-request.component';
 import { ContractImboxComponent } from './contract-imbox/contract-imbox.component';
 import { HiringRequestComponent } from './hiring-request/hiring-request.component';
@@ -14,34 +15,42 @@ const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
+    canActivate: [AuthorizationGuard],
     children: [
       {
         path: 'resources',
         component: ResourceMapComponent,
+        canActivate: [AuthorizationGuard],
       },
       {
         path: 'service-map',
         component: ServiceMapComponent,
+        canActivate: [AuthorizationGuard],
       },
       {
         path: 'services-configuration',
         component: ServicesConfigurationComponent,
+        canActivate: [AuthorizationGuard],
       },
       {
         path: 'services-configuration/:cod_servicio',
         component: ServicesConfigurationComponent,
+        canActivate: [AuthorizationGuard],
       },
       {
         path: 'hiring-request',
         component: HiringRequestComponent,
+        canActivate: [AuthorizationGuard],
       },
       {
         path: 'contract-imbox',
         component: ContractImboxComponent,
+        canActivate: [AuthorizationGuard],
       },
       {
         path: 'contract-imbox/approveHiringRequestComponent/:idHiringRequest',
         component: ApproveHiringRequestComponent,
+        canActivate: [AuthorizationGuard],
       },
     ],
   },
