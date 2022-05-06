@@ -15,6 +15,9 @@ import { ApproveHiringRequestComponent } from './approve-hiring-request/approve-
 import { ServiceMapComponent } from './service-map/service-map.component';
 import { LoginComponent } from './login/login.component';
 import { InitPageComponent } from './init-page/init-page.component';
+import { PeriodAdministrationComponent } from './period-administration/period-administration.component';
+import { CreatePeriodComponent } from './create-period/create-period.component';
+import { UpdatePeriodComponent } from './update-period/update-period.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +31,9 @@ import { InitPageComponent } from './init-page/init-page.component';
     ServiceMapComponent,
     LoginComponent,
     InitPageComponent,
+    PeriodAdministrationComponent,
+    CreatePeriodComponent,
+    UpdatePeriodComponent
   ],
 
   imports: [CommonModule, SharedModule, ComponentModule, PagesRoutingModule],

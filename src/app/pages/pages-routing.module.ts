@@ -3,14 +3,17 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthorizationGuard } from '../auth/authorization.guard';
 import { ApproveHiringRequestComponent } from './approve-hiring-request/approve-hiring-request.component';
 import { ContractImboxComponent } from './contract-imbox/contract-imbox.component';
+import { CreatePeriodComponent } from './create-period/create-period.component';
 import { HiringRequestComponent } from './hiring-request/hiring-request.component';
 import { HomeComponent } from './home/home.component';
 import { InitPageComponent } from './init-page/init-page.component';
 import { LoginComponent } from './login/login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { PeriodAdministrationComponent } from './period-administration/period-administration.component';
 import { ResourceMapComponent } from './resource-map/resource-map.component';
 import { ServiceMapComponent } from './service-map/service-map.component';
 import { ServicesConfigurationComponent } from './services-configuration/services-configuration.component';
+import { UpdatePeriodComponent } from './update-period/update-period.component';
 
 const routes: Routes = [
   {
@@ -65,6 +68,18 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'period-administration',
+    component: PeriodAdministrationComponent,
+  },
+  {
+    path: 'create-period',
+    component: CreatePeriodComponent,
+  },
+  {
+    path: 'update-period',
+    component: UpdatePeriodComponent,
   },
   {
     path: '**',

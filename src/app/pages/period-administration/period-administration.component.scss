@@ -1,0 +1,149 @@
+@import "../../../assets/scss/variables.scss";
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+h1{
+  color: var(--black);
+  font-family: var(--font-family);
+  font-size: 30px;
+  font-weight: 600;
+  text-shadow: 2px 2px var(--gray);
+  padding: 0.8rem;
+}
+
+.content{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 45%;
+}
+
+.main-container{
+  display: flex;
+}
+
+.table-container{
+  display: flex;
+  align-content: center;
+  flex-direction: column;
+}
+
+.btn-area{
+  display: flex;
+  align-self: flex-end;
+  justify-content: space-between;
+  width: 50%;
+  padding-bottom: 1rem;
+}
+
+button{
+  color: var(--white);
+}
+
+.create-btn{
+  background-color: var(--primary);
+}
+
+.update-btn{
+  background-color: var(--bright-green);
+}
+
+span{
+  margin: 0;
+}
+
+.circle{
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: block;
+  border: 1px solid var(--gray);
+}
+
+table{
+  width: 500px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 0px 0px 1px rgba(0, 0, 0, 0.12) !important;
+
+  & .mat-table--header {
+    & .mat-header-cell {
+      color: var(--white);
+      font-weight: bold;
+      font-size: 14px;
+
+    }
+  }
+
+  .mat-row .mat-cell {
+    border-bottom: 1px solid var(--gray);
+    border-top: 1px solid transparent;
+
+  }
+
+  & tr.mat-row {
+    height: 33px;
+  }
+
+  & tr.mat-header-row {
+    height: 38px;
+  }
+
+  .mat-row:hover .mat-cell {
+    cursor: pointer;
+    background-color: var(--gray);
+    color: var(--white);
+  }
+
+  tr.active {
+    font-weight: 100;
+    background: rgba(238, 238, 238, 0.966);
+
+    & > td {
+      color: rgb(0, 0, 0) !important;
+    }
+  }
+}
+
+th.mat-header-cell{
+  background-color: var(--primary);
+  color: var(--white);
+}
+
+th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+  padding-left: 16px;
+}
+
+th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type {
+  padding-left: 8px;
+  padding-right: 0;
+  width: 100px;
+}
+
+.mat-column-indicator{
+  width: 10%;
+}
+
+.mat-column-rate{
+  width: 20%;
+}
+
+.mat-column-period{
+  width: 20%;
+}
+
+.mat-column-open-date{
+  width: 25%;
+}
+
+.mat-column-status{
+  width: 25%;
+}
+
+
+
