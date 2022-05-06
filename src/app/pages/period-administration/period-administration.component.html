@@ -1,12 +1,24 @@
-<h2>Administración de Periodos</h2>
+<h1>Administración de Periodos</h1>
 <section class="main-container">
   <div class="content">
-    <div class="btn-area">
-      <button mat-raised-button>Crear</button>
-      <button mat-raised-button>Actualizar</button>
-    </div>
+    <div class="table-container">
+      <div class="btn-area">
+        <button mat-raised-button class="create-btn"><mat-icon>save</mat-icon>Crear</button>
+        <button mat-raised-button class="update-btn"><mat-icon>refresh</mat-icon>Actualizar</button>
+      </div>
 
       <table mat-table [dataSource]="periods" class="period-table">
+        <ng-container matColumnDef="indicator">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let period">
+            <span [ngClass]="{'
+              productivity--danger': period.estado == 'I',
+              'productivity--success': period.estado == 'A'
+            }" class="circle">
+            </span>
+          </td>
+        </ng-container>
+
         <ng-container matColumnDef="period">
           <th mat-header-cell *matHeaderCellDef>Periodo</th>
           <td mat-cell *matCellDef="let period" >{{period.periodo}}</td>
@@ -24,11 +36,12 @@
 
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef>Estado</th>
-          <td mat-cell *matCellDef="let period">{{period.estado}}</td>
+          <td mat-cell *matCellDef="let period">{{period.estado == 'I' ? 'Cerrado' : 'Activo'}}</td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-        <table mat-row *matRowDef="let row; columns: columnsToDisplay"></table>
+        <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
       </table>
+    </div>
 
   </div>
 </section>
