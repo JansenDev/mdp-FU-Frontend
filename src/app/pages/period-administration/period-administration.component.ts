@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { IPeriodResponse } from 'src/app/core/models/period.model';
 import { PeriodsService } from 'src/app/core/services/periods.service';
 
@@ -7,9 +9,10 @@ import { PeriodsService } from 'src/app/core/services/periods.service';
   templateUrl: './period-administration.component.html',
   styleUrls: ['./period-administration.component.scss']
 })
-export class PeriodAdministrationComponent implements OnInit {
+export class PeriodAdministrationComponent implements OnInit, AfterViewInit {
 
   constructor(private periodsService: PeriodsService) { }
+
   last_period: IPeriodResponse = {
     periodo: '',
     tasa_cambio: 0,
@@ -17,10 +20,18 @@ export class PeriodAdministrationComponent implements OnInit {
     estado: ''
   }
   periods: IPeriodResponse[] = [];
-  columnsToDisplay = ['indicator', 'period', 'rate', 'open-date', 'status'];
+  dataSource: MatTableDataSource<IPeriodResponse> = new MatTableDataSource<IPeriodResponse>();
+  @ViewChild(MatPaginator)
+  paginator: MatPaginator = {} as MatPaginator;;
+
+  columnsToDisplay = ['period', 'rate', 'open-date', 'status', 'indicator'];
 
   ngOnInit(): void {
     this.loadPeriods();
+  }
+
+  ngAfterViewInit(): void {
+
   }
 
   loadPeriods(){
@@ -28,6 +39,8 @@ export class PeriodAdministrationComponent implements OnInit {
       .subscribe(fetchedPeriods => {
         console.log('fetched periods: ', fetchedPeriods);
         this.periods = fetchedPeriods;
+        this.dataSource = new MatTableDataSource<IPeriodResponse>(this.periods);
+        this.dataSource.paginator = this.paginator;
       })
   }
 
