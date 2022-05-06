@@ -17,7 +17,7 @@ export class PeriodAdministrationComponent implements OnInit {
     estado: ''
   }
   periods: IPeriodResponse[] = [];
-  columnsToDisplay = ['period', 'rate', 'open-date', 'status'];
+  columnsToDisplay = ['indicator', 'period', 'rate', 'open-date', 'status'];
 
   ngOnInit(): void {
     this.loadPeriods();
