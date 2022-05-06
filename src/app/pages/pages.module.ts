@@ -16,6 +16,7 @@ import { ServiceMapComponent } from './service-map/service-map.component';
 import { LoginComponent } from './login/login.component';
 import { PeriodAdministrationComponent } from './period-administration/period-administration.component';
 import { CreatePeriodComponent } from './create-period/create-period.component';
+import { UpdatePeriodComponent } from './update-period/update-period.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { CreatePeriodComponent } from './create-period/create-period.component';
     ServiceMapComponent,
     LoginComponent,
     PeriodAdministrationComponent,
-    CreatePeriodComponent
+    CreatePeriodComponent,
+    UpdatePeriodComponent
   ],
 
   imports: [CommonModule, SharedModule, ComponentModule, PagesRoutingModule],

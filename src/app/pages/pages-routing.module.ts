@@ -11,6 +11,7 @@ import { PeriodAdministrationComponent } from './period-administration/period-ad
 import { ResourceMapComponent } from './resource-map/resource-map.component';
 import { ServiceMapComponent } from './service-map/service-map.component';
 import { ServicesConfigurationComponent } from './services-configuration/services-configuration.component';
+import { UpdatePeriodComponent } from './update-period/update-period.component';
 
 const routes: Routes = [
   {
@@ -60,6 +61,10 @@ const routes: Routes = [
   {
     path: 'create-period',
     component: CreatePeriodComponent,
+  },
+  {
+    path: 'update-period',
+    component: UpdatePeriodComponent,
   },
   {
     path: '**',
