@@ -15,8 +15,6 @@ export class CreatePeriodComponent implements OnInit {
   }
   periodo_actual = '';
   prox_periodo = '';
-  //TODO: Agregar toast de confirmación
-
   constructor(private periodsService: PeriodsService,
               private notificationService: NotificationService) { }
 

@@ -16,7 +16,6 @@ export class UpdatePeriodComponent implements OnInit {
     periodo: '',
     tasa_cambio: null
   };
-  //TODO: Agregar toast de confirmación!
 
   constructor(private periodsService: PeriodsService,
               private notificationService: NotificationService) { }
