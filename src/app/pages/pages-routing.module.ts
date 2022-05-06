@@ -62,24 +62,24 @@ const routes: Routes = [
         component: ApproveHiringRequestComponent,
         // canActivate: [AuthorizationGuard],
       },
+      {
+        path: 'period-administration',
+        component: PeriodAdministrationComponent,
+      },
+      {
+        path: 'create-period',
+        component: CreatePeriodComponent,
+      },
+      {
+        path: 'update-period',
+        component: UpdatePeriodComponent,
+      },
     ],
   },
 
   {
     path: 'login',
     component: LoginComponent,
-  },
-  {
-    path: 'period-administration',
-    component: PeriodAdministrationComponent,
-  },
-  {
-    path: 'create-period',
-    component: CreatePeriodComponent,
-  },
-  {
-    path: 'update-period',
-    component: UpdatePeriodComponent,
   },
   {
     path: '**',
