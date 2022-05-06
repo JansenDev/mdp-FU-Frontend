@@ -9,7 +9,7 @@ import { PeriodsService } from 'src/app/core/services/periods.service';
 })
 export class PeriodAdministrationComponent implements OnInit {
 
-  constructor(private periodService: PeriodsService) { }
+  constructor(private periodsService: PeriodsService) { }
   last_period: IPeriodResponse = {
     periodo: '',
     tasa_cambio: 0,
@@ -24,7 +24,7 @@ export class PeriodAdministrationComponent implements OnInit {
   }
 
   loadPeriods(){
-    this.periodService.getAllPeriods()
+    this.periodsService.getAllPeriods()
       .subscribe(fetchedPeriods => {
         console.log('fetched periods: ', fetchedPeriods);
         this.periods = fetchedPeriods;
