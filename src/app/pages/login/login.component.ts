@@ -9,6 +9,7 @@ import { LoginService } from 'src/app/core/services/login.service';
 import { Router } from '@angular/router';
 import jwtDecode from 'jwt-decode';
 import { setToken } from 'src/app/core/utils/token.storage';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -17,10 +18,12 @@ import { setToken } from 'src/app/core/utils/token.storage';
 })
 export class LoginComponent implements OnInit {
   resourceForm: FormGroup;
+  isValidEmail : boolean = true;
   constructor(
     private service: LoginService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private notification: NotificationService,
   ) {
     this.resourceForm = this.formBuilder.group({
       user: ['', [Validators.email, Validators.required]],
@@ -28,7 +31,13 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.resourceForm.controls['user'].valueChanges.subscribe(data => {
+      if(data.includes("@mdp.com.pe"))
+        this.isValidEmail = true;
+      else this.isValidEmail = false;
+    })
+  }
 
   login() {
     let user = this.resourceForm.controls['user'].value;
@@ -40,6 +49,8 @@ export class LoginComponent implements OnInit {
     // console.log('input:', input);
     this.service.login(input).subscribe((data) => {
       setToken(data.token);
+      console.log("data login", data);
+      this.notification.toast('success', 'Ingreso correcto', 'Ingreso Correcto');
       // console.log(data)
       // localStorage.setItem("jwt", data.token);
       // let jwt_decoded : any = jwtDecode(data.token)
@@ -48,6 +59,9 @@ export class LoginComponent implements OnInit {
       // localStorage.setItem("token", JSON.stringify(jwt_decoded));
       // localStorage.setItem("already_logued", "true");
       this.router.navigate(['/home']);
+    }
+    , error => {
+      this.notification.toast('error', "Usuario o contraseña incorrecta", 'ERROR');
     });
   }
 }
