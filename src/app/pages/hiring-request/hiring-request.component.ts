@@ -384,7 +384,7 @@ export class HiringRequestComponent implements OnInit {
             'SUCCESS'
           );
           formValues['cv'] = undefined;
-          this.onCancel()
+          this.onCancel();
           return;
         }
         this.notification.toast('error', registerResponse.message, 'ERROR');
@@ -436,6 +436,10 @@ export class HiringRequestComponent implements OnInit {
 
           if (inputBonus || inputBonus !== null) {
             bonus = parseFloat(inputBonus);
+
+            if (inputBonus === '') {
+              bonus = 0;
+            }
           }
 
           const clm = remuneration * parameter + bonus;

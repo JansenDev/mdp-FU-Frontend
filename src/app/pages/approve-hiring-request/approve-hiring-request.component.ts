@@ -111,7 +111,6 @@ export class ApproveHiringRequestComponent implements OnInit {
     this.setDefaultDisableRRHH();
   }
 
-
   onChangeCboxDocumentType$() {
     this.formApproveHiringRequest.controls[
       'cBoxDocumentType'
@@ -300,6 +299,9 @@ export class ApproveHiringRequestComponent implements OnInit {
   }
 
   onReject(idHiringRequest: string | number): void {
+    this.formApproveHiringRequest.controls['inputReasonReject'].setErrors({
+      error: true,
+    });
     Swal.fire({
       title: 'Confirmar "Rechazo" de Solicitud',
       // text: "Aceptar Aprobacion",
@@ -330,6 +332,9 @@ export class ApproveHiringRequestComponent implements OnInit {
               'SUCCESS',
               5000
             );
+            this.formApproveHiringRequest.controls[
+              'inputReasonReject'
+            ].setErrors(null);
             this.backPage();
           },
           error: (err: HttpErrorResponse) => {

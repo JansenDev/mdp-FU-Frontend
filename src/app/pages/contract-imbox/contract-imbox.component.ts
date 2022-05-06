@@ -180,6 +180,21 @@ export class ContractImboxComponent implements OnInit {
   }
 
   onClean() {
+    const { userProfile } = getToken();
+
+    if (userProfile === GG) {
+      this.formFilter.reset({
+        filterForm: {
+          cboxClient: '',
+          cboxLN: '',
+          inputDocNumber: null,
+          inputNames: null,
+          cboxStatus: 'Pendiente Aprobacion GG',
+        },
+      });
+
+      return;
+    }
     this.formFilter.reset({
       filterForm: {
         cboxClient: '',

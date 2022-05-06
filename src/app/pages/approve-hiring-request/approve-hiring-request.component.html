@@ -239,7 +239,7 @@
           <mat-form-field *ngIf="!cvHas; else cv_url">
             <mat-label>Adjuntar CV</mat-label>
             <ngx-mat-file-input (change)="upload($event)"></ngx-mat-file-input>
-            <mat-hint> Máximo 10mb (pdf /doc /docx)</mat-hint>
+            <mat-hint> Máximo 2mb (pdf /doc /docx)</mat-hint>
           </mat-form-field>
 
           <ng-template #cv_url>
@@ -252,7 +252,7 @@
         <div class="contract--row4">
           <mat-form-field>
             <mat-label>Jefe Responsable</mat-label>
-            <input formControlName="inputJefeResponsable" matInput />
+            <textarea formControlName="inputJefeResponsable" matInput></textarea>
           </mat-form-field>
           <mat-form-field>
             <mat-label>Condición</mat-label>
