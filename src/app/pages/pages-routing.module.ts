@@ -17,7 +17,7 @@ const routes: Routes = [
     path: '',
     component: InitPageComponent,
 
-    canActivate: [AuthorizationGuard],
+    // canActivate: [AuthorizationGuard],
     children: [
       {
         path: 'home',
@@ -42,7 +42,7 @@ const routes: Routes = [
       {
         path: 'services-configuration/:cod_servicio',
         component: ServicesConfigurationComponent,
-        canActivate: [AuthorizationGuard],
+        // canActivate: [AuthorizationGuard],
       },
       {
         path: 'hiring-request',
@@ -57,7 +57,7 @@ const routes: Routes = [
       {
         path: 'contract-imbox/approveHiringRequestComponent/:idHiringRequest',
         component: ApproveHiringRequestComponent,
-        canActivate: [AuthorizationGuard],
+        // canActivate: [AuthorizationGuard],
       },
     ],
   },

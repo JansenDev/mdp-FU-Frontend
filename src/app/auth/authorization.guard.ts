@@ -60,8 +60,6 @@ export class AuthorizationGuard implements CanActivate, CanActivateChild {
         this.router.navigate(['/home']);
         return false;
       }
-
-      return true;
     }
     this.router.navigate(['/', 'login']);
     return false;
