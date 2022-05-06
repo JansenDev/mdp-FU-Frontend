@@ -15,6 +15,7 @@ import { ApproveHiringRequestComponent } from './approve-hiring-request/approve-
 import { ServiceMapComponent } from './service-map/service-map.component';
 import { LoginComponent } from './login/login.component';
 import { PeriodAdministrationComponent } from './period-administration/period-administration.component';
+import { CreatePeriodComponent } from './create-period/create-period.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { PeriodAdministrationComponent } from './period-administration/period-ad
     ServiceMapComponent,
     LoginComponent,
     PeriodAdministrationComponent,
+    CreatePeriodComponent
   ],
 
   imports: [CommonModule, SharedModule, ComponentModule, PagesRoutingModule],
