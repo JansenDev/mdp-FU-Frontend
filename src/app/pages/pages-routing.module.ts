@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ApproveHiringRequestComponent } from './approve-hiring-request/approve-hiring-request.component';
 import { ContractImboxComponent } from './contract-imbox/contract-imbox.component';
+import { CreatePeriodComponent } from './create-period/create-period.component';
 import { HiringRequestComponent } from './hiring-request/hiring-request.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
@@ -55,6 +56,10 @@ const routes: Routes = [
   {
     path: 'period-administration',
     component: PeriodAdministrationComponent,
+  },
+  {
+    path: 'create-period',
+    component: CreatePeriodComponent,
   },
   {
     path: '**',
