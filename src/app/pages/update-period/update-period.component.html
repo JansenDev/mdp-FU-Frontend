@@ -1,1 +1,38 @@
-<p>update-period works!</p>
+<h1>Actualizar Periodo</h1>
+<div class="main-container">
+  <section class="content">
+      <form #updateForm = "ngForm">
+        <mat-form-field appearance="fill">
+          <mat-label>Periodo</mat-label>
+          <input name="period" [(ngModel)]="periodo_actual.periodo"
+            type="text" matInput disabled>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Tasa de cambio</mat-label>
+          <input name="rate" #validRate="ngModel" min="1" [(ngModel)]="formData.tasa_cambio"
+            type="number" required matInput
+            placeholder="Ej: 3.39" >
+          <mat-hint *ngIf="validRate.invalid &&
+            (validRate.dirty || validRate.touched) && formData.tasa_cambio == null" class="error-hint">
+            Campo requerido
+          </mat-hint>
+
+        </mat-form-field>
+      </form>
+
+      <div class="btn-area">
+        <button mat-raised-button type="submit" class="save-btn" [disabled]="updateForm.invalid"
+        (click)="updatePeriod()">
+          <mat-icon>save</mat-icon>
+          Guardar
+        </button>
+        <button mat-raised-button type="button" class="cancel-btn" routerLink="/period-administration">
+          <mat-icon>close</mat-icon>
+          Cancelar
+        </button>
+      </div>
+
+</section>
+</div>
+
