@@ -3,22 +3,11 @@
   <div class="content">
     <div class="table-container">
       <div class="btn-area">
-        <button mat-raised-button class="create-btn" routerLink="/create-period" ><mat-icon>save</mat-icon>Crear</button>
-        <button mat-raised-button class="update-btn" routerLink="/update-period" ><mat-icon>refresh</mat-icon>Actualizar</button>
+        <button mat-raised-button class="create-btn" routerLink="/create-period">Crear</button>
+        <button mat-raised-button color="basic" class="update-btn" routerLink="/update-period">Actualizar</button>
       </div>
 
-      <table mat-table [dataSource]="periods" class="period-table">
-        <ng-container matColumnDef="indicator">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let period">
-            <span [ngClass]="{'
-              productivity--danger': period.estado == 'I',
-              'productivity--success': period.estado == 'A'
-            }" class="circle">
-            </span>
-          </td>
-        </ng-container>
-
+      <table mat-table [dataSource]="dataSource" class="period-table">
         <ng-container matColumnDef="period">
           <th mat-header-cell *matHeaderCellDef>Periodo</th>
           <td mat-cell *matCellDef="let period" >{{period.periodo}}</td>
@@ -38,9 +27,36 @@
           <th mat-header-cell *matHeaderCellDef>Estado</th>
           <td mat-cell *matCellDef="let period">{{period.estado == 'I' ? 'Cerrado' : 'Activo'}}</td>
         </ng-container>
+
+        <ng-container matColumnDef="indicator">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let period">
+            <span [ngClass]="{'
+              productivity--danger': period.estado == 'I',
+              'productivity--success': period.estado == 'A'
+            }" class="circle">
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="weight">
+          <th mat-header-cell *matHeaderCellDef> Weight </th>
+          <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="symbol">
+          <th mat-header-cell *matHeaderCellDef> Symbol </th>
+          <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+        </ng-container>
+
         <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
         <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
       </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 15]"
+              aria-label="Select page">
+      </mat-paginator>
     </div>
 
   </div>
