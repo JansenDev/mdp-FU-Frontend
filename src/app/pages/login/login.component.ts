@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
       // console.log("jwt_decoded", jwt_decoded);
       // localStorage.setItem("token", JSON.stringify(jwt_decoded));
       // localStorage.setItem("already_logued", "true");
-      this.router.navigate(['/']);
+      this.router.navigate(['/home']);
     });
   }
 }

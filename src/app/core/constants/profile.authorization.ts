@@ -1,36 +1,33 @@
-export const REG_USUARIO = 'REG_USER';
-export const REG_SOLICITUD_CONTRATO = 'REG_HIRING_CONTRACT';
-export const CONF_SERVICIOS = 'CONF_SERVICES';
-export const CONSULTAR_MAPA_RECURSOS = 'QUERY_RESOURCES_MAP';
-export const CONSULTAR_MAPA_SERVICIO = 'QUERY_SERVICES_MAP';
-export const BANDEJA_APROBACION_CONTRATO = 'CONTRACT_APPROVAL_INBOX';
+const BASIC_ROUTES = ['/', 'login', '', 'home'];
 
 export const authorizations: IAuthorizations = {
   DELIVERY_MANAGER: [
-    REG_USUARIO,
-    REG_SOLICITUD_CONTRATO,
-    CONF_SERVICIOS,
-    CONSULTAR_MAPA_RECURSOS,
-    CONSULTAR_MAPA_SERVICIO,
+    ...BASIC_ROUTES,
+    'resources',
+    'hiring-request',
+    'service-map',
+    'services-configuration',
   ],
-  PROJECT_MANAGER: [
-    REG_SOLICITUD_CONTRATO,
-    CONF_SERVICIOS,
-    CONSULTAR_MAPA_SERVICIO,
+  JEFE_DE_PROYECTO: [...BASIC_ROUTES, 'service-map', 'services-configuration'],
+  JEFE_DE_RECURSOS_HUMANOS: [
+    ...BASIC_ROUTES,
+    'resources',
+    'contract-imbox',
+    'contract-imbox/approveHiringRequestComponent',
   ],
-  RRHH: [
-    REG_SOLICITUD_CONTRATO,
-    BANDEJA_APROBACION_CONTRATO,
-    CONSULTAR_MAPA_RECURSOS,
+  GERENTE_GENERAL: [
+    ...BASIC_ROUTES,
+    'resources',
+    'contract-imbox',
+    'contract-imbox/approveHiringRequestComponent',
   ],
-  ANALYST: [REG_SOLICITUD_CONTRATO],
-  GG: [BANDEJA_APROBACION_CONTRATO],
+  ANALYST: [],
 };
 
 export interface IAuthorizations {
   DELIVERY_MANAGER: string[];
-  PROJECT_MANAGER: string[];
-  RRHH: string[];
+  JEFE_DE_PROYECTO: string[];
+  JEFE_DE_RECURSOS_HUMANOS: string[];
+  GERENTE_GENERAL: string[];
   ANALYST: string[];
-  GG: string[];
 }

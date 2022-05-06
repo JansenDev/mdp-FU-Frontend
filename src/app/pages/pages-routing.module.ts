@@ -5,6 +5,7 @@ import { ApproveHiringRequestComponent } from './approve-hiring-request/approve-
 import { ContractImboxComponent } from './contract-imbox/contract-imbox.component';
 import { HiringRequestComponent } from './hiring-request/hiring-request.component';
 import { HomeComponent } from './home/home.component';
+import { InitPageComponent } from './init-page/init-page.component';
 import { LoginComponent } from './login/login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ResourceMapComponent } from './resource-map/resource-map.component';
@@ -14,9 +15,15 @@ import { ServicesConfigurationComponent } from './services-configuration/service
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
+    component: InitPageComponent,
+
     canActivate: [AuthorizationGuard],
     children: [
+      {
+        path: 'home',
+        component: HomeComponent,
+        canActivate: [AuthorizationGuard],
+      },
       {
         path: 'resources',
         component: ResourceMapComponent,
