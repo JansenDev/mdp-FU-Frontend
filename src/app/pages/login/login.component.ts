@@ -50,7 +50,6 @@ export class LoginComponent implements OnInit {
     this.service.login(input).subscribe((data) => {
       setToken(data.token);
       console.log("data login", data);
-      this.notification.toast('success', 'Ingreso correcto', 'Ingreso Correcto');
       // console.log(data)
       // localStorage.setItem("jwt", data.token);
       // let jwt_decoded : any = jwtDecode(data.token)
