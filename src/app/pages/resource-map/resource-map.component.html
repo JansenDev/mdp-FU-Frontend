@@ -1,4 +1,3 @@
-
 <div class="resource-map">
   <div class="resource-map--container">
     <!-- Resource Map Start -->
@@ -13,19 +12,6 @@
         class="filters--container"
         (submit)="ngSubmit()"
       >
-        <!--TEMPORAL: Sesion Start -->
-
-        <mat-form-field>
-          <mat-label>Sesion ID</mat-label>
-          <input
-            matInput
-            placeholder="Sesion ID"
-            autocomplete="off"
-            formControlName="inputIdUser"
-          />
-        </mat-form-field>
-        <!-- TEMPORAL: Sesion End -->
-
         <mat-form-field>
           <mat-label>Periodo</mat-label>
           <mat-select formControlName="cboxPeriod">
@@ -119,7 +105,9 @@
 
           <ng-container matColumnDef="perfil">
             <th mat-header-cell *matHeaderCellDef>Perfil</th>
-            <td mat-cell *matCellDef="let element">{{ element.nombre_perfil }}</td>
+            <td mat-cell *matCellDef="let element">
+              {{ element.nombre_perfil }}
+            </td>
           </ng-container>
 
           <!-- Symbol Column -->

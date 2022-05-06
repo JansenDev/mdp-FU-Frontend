@@ -10,7 +10,7 @@ import { ContractImboxService } from 'src/app/core/services/contract-imbox.servi
 import { getToken } from 'src/app/core/utils/token.storage';
 import * as util from '../../core/utils/utilities.util';
 
-const GG = `GG`;
+const GG = `GERENTE_GENERAL`;
 
 @Component({
   selector: 'app-contract-imbox',
@@ -57,7 +57,7 @@ export class ContractImboxComponent implements OnInit {
 
   // ^TEMP Start
   setNombrePerfil() {
-    const { userProfile } = JSON.parse(getToken());
+    const { userProfile } = getToken();
     this.nombrePerfil = userProfile || null;
   }
   // ^TEMP END
@@ -93,7 +93,7 @@ export class ContractImboxComponent implements OnInit {
   }
 
   fillTableHiiringRequestByProfile() {
-    const { userProfile } = JSON.parse(getToken());
+    const { userProfile } = getToken();
 
     if (userProfile == GG) {
       this.setEstadoDefaultGG();
@@ -147,7 +147,7 @@ export class ContractImboxComponent implements OnInit {
   }
 
   private get userProfile() {
-    const { userProfile } = JSON.parse(getToken());
+    const { userProfile } = getToken();
     return userProfile;
   }
 

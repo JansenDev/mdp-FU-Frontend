@@ -12,9 +12,7 @@ import { ISalaryBandReponse } from 'src/app/core/models/salaryBand.model';
 import { CboxService } from 'src/app/core/services/cbox.service';
 import { ClientService } from 'src/app/core/services/client.service';
 import { ContractService } from 'src/app/core/services/contract.service';
-import {
-  HiringRequestService
-} from 'src/app/core/services/hiring-request.service';
+import { HiringRequestService } from 'src/app/core/services/hiring-request.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 // utils
 import { getToken } from 'src/app/core/utils/token.storage';
@@ -289,7 +287,7 @@ export class HiringRequestComponent implements OnInit {
   }
 
   fillCboxClient() {
-    const { id_sesion } = JSON.parse(getToken());
+    const { id_sesion } = getToken();
 
     this.clientService.findClientByUser(id_sesion).subscribe({
       next: (clientList) => {
@@ -327,7 +325,6 @@ export class HiringRequestComponent implements OnInit {
       return;
     }
     this.fileCv = undefined;
-
   }
 
   onSubmitHiringRquest() {
@@ -387,7 +384,7 @@ export class HiringRequestComponent implements OnInit {
             'SUCCESS'
           );
           formValues['cv'] = undefined;
-          // this.onCancel()
+          this.onCancel()
           return;
         }
         this.notification.toast('error', registerResponse.message, 'ERROR');

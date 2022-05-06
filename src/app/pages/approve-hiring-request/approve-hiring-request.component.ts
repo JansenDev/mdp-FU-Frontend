@@ -15,7 +15,8 @@ import { environment } from 'src/environments/environment';
 import { DOCUMENT_TYPY_LENGTH } from 'src/app/core/constants/resource.constants';
 
 const { base } = environment;
-const GG = 'GG';
+const GG = 'GERENTE_GENERAL';
+const RRHH = 'JEFE_DE_RECURSOS_HUMANOS';
 
 @Component({
   selector: 'app-approve-hiring-request',
@@ -107,15 +108,9 @@ export class ApproveHiringRequestComponent implements OnInit {
   ngOnInit(): void {
     this.getHiringRequestDetail();
     this.onChangeCboxDocumentType$();
-    this.setDefaultDIsableRRHH();
+    this.setDefaultDisableRRHH();
   }
 
-  test() {
-    console.log('test');
-    // this.disabledFields();
-    const x = this.getFormBody();
-    console.log(x);
-  }
 
   onChangeCboxDocumentType$() {
     this.formApproveHiringRequest.controls[
@@ -468,7 +463,7 @@ export class ApproveHiringRequestComponent implements OnInit {
   }
 
   private get userProfile() {
-    const { userProfile } = JSON.parse(getToken());
+    const { userProfile } = getToken();
     return userProfile;
   }
 
@@ -476,10 +471,7 @@ export class ApproveHiringRequestComponent implements OnInit {
     let status = false;
     // RRHH
 
-    if (
-      pendingStatus === 'Pendiente Aprobacion' &&
-      this.userProfile === 'RRHH'
-    ) {
+    if (pendingStatus === 'Pendiente Aprobacion' && this.userProfile === RRHH) {
       status = true;
     }
 
@@ -514,7 +506,7 @@ export class ApproveHiringRequestComponent implements OnInit {
     window.open(base + '/' + url, '_blank');
   }
 
-  setDefaultDIsableRRHH() {
+  setDefaultDisableRRHH() {
     // if (this.userProfile !== GG) {
     //   this.formApproveHiringRequest.controls['inputReasonReject'].disable();
     // }

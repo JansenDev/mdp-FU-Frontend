@@ -19,6 +19,7 @@ import { ResourceService } from '../../core/services/resource.service';
 import { findPeriodActive } from '../../core/utils/utilities.util';
 import { ResourceMapDetailComponent } from 'src/app/components/resource-map-detail/resource-map-detail.component';
 import { SummaryComponent } from 'src/app/components/summary/summary.component';
+import { getToken } from 'src/app/core/utils/token.storage';
 
 @Component({
   selector: 'app-resource-map',
@@ -27,14 +28,14 @@ import { SummaryComponent } from 'src/app/components/summary/summary.component';
   encapsulation: ViewEncapsulation.None,
 })
 export class ResourceMapComponent implements OnInit {
-  @ViewChild(ResourceMapDetailComponent, {static: false}) //permite llamar a los métodos del componente hijo desde este padre
+  @ViewChild(ResourceMapDetailComponent, { static: false }) //permite llamar a los métodos del componente hijo desde este padre
   private resourceDetailComponent!: ResourceMapDetailComponent;
   @ViewChild(MatPaginator)
   paginator: MatPaginator = {} as MatPaginator;
   dataSource: MatTableDataSource<IResourceResponse> =
     new MatTableDataSource<IResourceResponse>([]);
 
-  @ViewChild(SummaryComponent, {static: false}) summary !: SummaryComponent;
+  @ViewChild(SummaryComponent, { static: false }) summary!: SummaryComponent;
 
   displayedColumns: string[] = [
     'ln',
@@ -82,24 +83,23 @@ export class ResourceMapComponent implements OnInit {
       cboxClient: ['', Validators.required],
       cboxProfile: [''],
       inNames: [''],
-      inputIdUser: ['40'],
     });
   }
 
   ngOnInit(): void {
     this.fillAllCBoxInit();
     // TEMPORAL
-    this.onSesionTemp();
+    // this.onSesionTemp();
   }
   // TEMPORAL
-  onSesionTemp() {
-    this.resourceForm.controls['inputIdUser'].valueChanges.subscribe(
-      (id_sesion) => {
-        this.inputIdSesion = parseInt(id_sesion);
-        this.fillCBoxClient();
-      }
-    );
-  }
+  // onSesionTemp() {
+  //   this.resourceForm.controls['inputIdUser'].valueChanges.subscribe(
+  //     (id_sesion) => {
+  //       this.inputIdSesion = parseInt(id_sesion);
+  //       this.fillCBoxClient();
+  //     }
+  //   );
+  // }
 
   fillAllCBoxInit(): void {
     this.fillCBoxProfile();
@@ -125,9 +125,9 @@ export class ResourceMapComponent implements OnInit {
 
     this.nameClient = clientfound[0].nombre_corto;
 
-    this.periodoToSummary=cboxPeriod
-    this.idClient = cboxClient
-    this.namePerfil = cboxProfile
+    this.periodoToSummary = cboxPeriod;
+    this.idClient = cboxClient;
+    this.namePerfil = cboxProfile;
     let inputNameWithoutExtraSpaces = inNames
       .split(' ')
       .filter((name: string) => name !== '')
@@ -148,11 +148,18 @@ export class ResourceMapComponent implements OnInit {
     this.cod_colaborador = parseInt(resourceMapItem.cod_colaborador);
     this.cod_mapa_recurso = parseInt(resourceMapItem.cod_mapa_recurso);
     this.resourceDetailComponent.loadProductivity(this.cod_mapa_recurso);
-    this.resourceDetailComponent.loadContract(this.cod_colaborador, this.periodSelected);
-    this.resourceDetailComponent.loadAssignments(this.cod_colaborador, this.periodSelected, this.idClient);
+    this.resourceDetailComponent.loadContract(
+      this.cod_colaborador,
+      this.periodSelected
+    );
+    this.resourceDetailComponent.loadAssignments(
+      this.cod_colaborador,
+      this.periodSelected,
+      this.idClient
+    );
     console.log(this.periodSelected);
 
-    if (this.showDetail){
+    if (this.showDetail) {
       this.showDetail = false;
     } else {
       this.showDetail = true;
@@ -160,7 +167,7 @@ export class ResourceMapComponent implements OnInit {
     console.log(this.showDetail);
   }
 
-  onClose(){
+  onClose() {
     this.showDetail = false;
   }
 
@@ -182,7 +189,7 @@ export class ResourceMapComponent implements OnInit {
           resourceResponse
         );
         this.dataSource.paginator = this.paginator;
-        if(resourceResponse.length == 0) this.summary.show = false;
+        if (resourceResponse.length == 0) this.summary.show = false;
         else this.summary.show = true;
       });
   }
@@ -217,17 +224,18 @@ export class ResourceMapComponent implements OnInit {
       .findCollaboratorsByClientAndPeriod(idClient, period)
       .subscribe((collaboratorResponse) => {
         this.collaboratorList = collaboratorResponse;
-        console.log("collaboratorList", this.collaboratorList);
+        console.log('collaboratorList', this.collaboratorList);
       });
   }
 
   fillCBoxClient(): void {
-    // TEMPORAL
-    const idUser = this.inputIdSesion || this.resourceForm.value.inputIdUser;
+    const { id_sesion } = getToken();
 
-    this.resourceService.findClientByUser(idUser).subscribe((clientsData) => {
-      this.clientList = clientsData;
-    });
+    this.resourceService
+      .findClientByUser(id_sesion)
+      .subscribe((clientsData) => {
+        this.clientList = clientsData;
+      });
   }
 
   onChangeCBoxPeriodFillCBoxClient() {
@@ -249,8 +257,21 @@ export class ResourceMapComponent implements OnInit {
   }
 
   showSummary() {
-    console.log("muestrame summary: ",this.summary);
-    console.log("parametros", this.nameClient, this.periodoToSummary, this.namePerfil, this.idClient, this.nombre);
-    this.summary.getSummary(this.nameClient, this.periodoToSummary, this.namePerfil, this.idClient, this.nombre);
+    console.log('muestrame summary: ', this.summary);
+    console.log(
+      'parametros',
+      this.nameClient,
+      this.periodoToSummary,
+      this.namePerfil,
+      this.idClient,
+      this.nombre
+    );
+    this.summary.getSummary(
+      this.nameClient,
+      this.periodoToSummary,
+      this.namePerfil,
+      this.idClient,
+      this.nombre
+    );
   }
 }
