@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ICreatePeriodRequest } from 'src/app/core/models/period.model';
+import { NotificationService } from 'src/app/core/services/notification.service';
 import { PeriodsService } from 'src/app/core/services/periods.service';
 
 @Component({
@@ -16,7 +17,8 @@ export class CreatePeriodComponent implements OnInit {
   prox_periodo = '';
   //TODO: Agregar toast de confirmación
 
-  constructor(private periodsService: PeriodsService) { }
+  constructor(private periodsService: PeriodsService,
+              private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.getLastPeriod();
@@ -26,6 +28,12 @@ export class CreatePeriodComponent implements OnInit {
     this.periodsService.createPeriod(this.formData)
       .subscribe(createdPeriod => {
         console.log('created period: ', createdPeriod);
+        this.notificationService.toast(
+          'success',
+          'Se creó el periodo con éxito',
+          'OK',
+          5000
+        );
       }, error => {
         console.error(error);
       })
