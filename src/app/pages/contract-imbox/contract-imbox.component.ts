@@ -52,14 +52,14 @@ export class ContractImboxComponent implements OnInit {
     this.setDisplayedColumns();
 
     // ^TEMP TITLE PROFILE
-    this.setNombrePerfil();
+    // this.setNombrePerfil();
   }
 
   // ^TEMP Start
-  setNombrePerfil() {
-    const { userProfile } = getToken();
-    this.nombrePerfil = userProfile || null;
-  }
+  // setNombrePerfil() {
+  //   const { userProfile } = getToken();
+  //   this.nombrePerfil = userProfile || null;
+  // }
   // ^TEMP END
 
   ngOnInit(): void {

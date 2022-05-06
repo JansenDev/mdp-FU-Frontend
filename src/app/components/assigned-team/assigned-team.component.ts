@@ -120,7 +120,6 @@ export class AssignedTeamComponent implements OnInit {
       const dateStartString = util.timestampFormat(dateStart);
       const dateEndString = util.timestampFormat(dateEnd);
 
-
       this.getAssignedHours(dateStartString!, dateEndString!);
     }
   }
@@ -302,7 +301,7 @@ export class AssignedTeamComponent implements OnInit {
             error: true,
           });
           this.printErrors.message = 'No existe cliente en el servicio';
-          this.notification.toast('error', 'error p prro');
+          this.notification.toast('error', 'No existe cliente en el servicio');
         }
       }
     });
