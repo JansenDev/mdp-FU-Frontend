@@ -13,40 +13,39 @@ import { ServicesConfigurationComponent } from './services-configuration/service
 const routes: Routes = [
   {
     path: '',
-    component: LoginComponent,
-  },
-  {
-    path: 'home',
     component: HomeComponent,
+    children: [
+      {
+        path: 'resources',
+        component: ResourceMapComponent,
+      },
+      {
+        path: 'service-map',
+        component: ServiceMapComponent,
+      },
+      {
+        path: 'services-configuration',
+        component: ServicesConfigurationComponent,
+      },
+      {
+        path: 'services-configuration/:cod_servicio',
+        component: ServicesConfigurationComponent,
+      },
+      {
+        path: 'hiring-request',
+        component: HiringRequestComponent,
+      },
+      {
+        path: 'contract-imbox',
+        component: ContractImboxComponent,
+      },
+      {
+        path: 'contract-imbox/approveHiringRequestComponent/:idHiringRequest',
+        component: ApproveHiringRequestComponent,
+      },
+    ],
   },
-  {
-    path: 'resources',
-    component: ResourceMapComponent,
-  },
-  {
-    path: 'service-map',
-    component: ServiceMapComponent,
-  },
-  {
-    path: 'services-configuration',
-    component: ServicesConfigurationComponent,
-  },
-  {
-    path: 'services-configuration/:cod_servicio',
-    component: ServicesConfigurationComponent,
-  },
-  {
-    path: 'hiring-request',
-    component: HiringRequestComponent,
-  },
-  {
-    path: 'contract-imbox',
-    component: ContractImboxComponent,
-  },
-  {
-    path: 'contract-imbox/approveHiringRequestComponent/:idHiringRequest',
-    component: ApproveHiringRequestComponent,
-  },
+
   {
     path: 'login',
     component: LoginComponent,

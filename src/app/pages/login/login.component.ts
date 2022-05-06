@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
       email: user,
       password: password,
     };
-    console.log('input:', input);
+    // console.log('input:', input);
     this.service.login(input).subscribe((data) => {
       setToken(data.token);
       // console.log(data)
@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
       // console.log("jwt_decoded", jwt_decoded);
       // localStorage.setItem("token", JSON.stringify(jwt_decoded));
       // localStorage.setItem("already_logued", "true");
-      this.router.navigate(['/home']);
+      this.router.navigate(['/']);
     });
   }
 }

@@ -6,23 +6,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  
+
   already_logued : boolean = true;
-  
+
   constructor() { }
 
   ngOnInit(): void {
-    if(localStorage.getItem("jwt"))
-      this.already_logued = true;
-    else this.already_logued = false;
+    // if(localStorage.getItem("jwt"))
+    //   this.already_logued = true;
+    // else this.already_logued = false;
   }
   logout() {
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
+    // localStorage.removeItem("user");
+    // localStorage.removeItem("token");
     localStorage.removeItem("jwt");
-    localStorage.removeItem("already_logued");
-    localStorage.setItem("already_logued", "false");
-    this.already_logued = localStorage.getItem("already_logued") == "false";
-    location.reload()
+    // localStorage.removeItem("already_logued");
+    // localStorage.setItem("already_logued", "false");
+    // this.already_logued = localStorage.getItem("already_logued") == "false";
+    // location.reload()
   }
 }
