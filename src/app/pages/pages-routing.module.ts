@@ -65,14 +65,17 @@ const routes: Routes = [
       {
         path: 'period-administration',
         component: PeriodAdministrationComponent,
+        canActivate: [AuthorizationGuard],
       },
       {
         path: 'create-period',
         component: CreatePeriodComponent,
+        canActivate: [AuthorizationGuard],
       },
       {
         path: 'update-period',
         component: UpdatePeriodComponent,
+        canActivate: [AuthorizationGuard],
       },
     ],
   },

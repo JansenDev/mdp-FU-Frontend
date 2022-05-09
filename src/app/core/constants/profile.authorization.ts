@@ -14,6 +14,9 @@ export const authorizations: IAuthorizations = {
     'resources',
     'contract-imbox',
     'contract-imbox/approveHiringRequestComponent',
+    'period-administration',
+    'create-period',
+    'update-period',
   ],
   GERENTE_GENERAL: [
     ...BASIC_ROUTES,
