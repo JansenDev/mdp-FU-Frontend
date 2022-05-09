@@ -367,6 +367,8 @@ export class HiringRequestComponent implements OnInit {
 
             this.registerHiringRequestNext(formValues);
           });
+      } else {
+        this.registerHiringRequestNext(formValues);
       }
     }
   }

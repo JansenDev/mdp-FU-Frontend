@@ -253,9 +253,9 @@ export class ApproveHiringRequestComponent implements OnInit {
           }
           this.editRequest(idHiringRequest);
         });
+    } else {
+      this.editRequest(idHiringRequest);
     }
-
-    this.editRequest(idHiringRequest);
   }
 
   private editRequest(idHiringRequest: string | number) {
