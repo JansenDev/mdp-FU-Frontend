@@ -115,14 +115,14 @@
         <ng-container matColumnDef="dateApproval">
           <th mat-header-cell *matHeaderCellDef>F. Aprobación</th>
           <td mat-cell *matCellDef="let element">
-            {{ element.fecha_aprob || "-" }}
+            {{ element.fecha_aprob || "-" | date: "dd/MM/YYYY" }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="dateGGApproval">
-          <th mat-header-cell *matHeaderCellDef>F. Aprovacion GG</th>
+          <th mat-header-cell *matHeaderCellDef>F. Aprobación GG</th>
           <td mat-cell *matCellDef="let element">
-            {{ element.fecha_aprob_gg || "-" }}
+            {{ element.fecha_aprob_gg || "-" | date: "dd/MM/YYYY" }}
           </td>
         </ng-container>
 
