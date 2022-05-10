@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
+import { Router } from '@angular/router';
 // model
 import { IBusinessLine } from 'src/app/core/models/businessLine.model';
 import { IClientResponse } from 'src/app/core/models/client.model';
@@ -48,7 +49,8 @@ export class HiringRequestComponent implements OnInit {
     private cboxService: CboxService,
     private contractService: ContractService,
     private clientService: ClientService,
-    private hiringRequestService: HiringRequestService
+    private hiringRequestService: HiringRequestService,
+    private router: Router
   ) {
     this.formHiringRequest = this.formBuilder.group({
       cBoxDocumentType: ['DNI'],
@@ -563,5 +565,13 @@ export class HiringRequestComponent implements OnInit {
     (
       document.getElementById('ngx-mat-file-input-0') as HTMLInputElement
     ).value = '';
+    (
+      document.getElementById('ngx-mat-file-input-1') as HTMLInputElement
+    ).value = '';
+    (
+      document.getElementById('ngx-mat-file-input-2') as HTMLInputElement
+    ).value = '';
+
+    // this.router.navigate(['/home']);
   }
 }
