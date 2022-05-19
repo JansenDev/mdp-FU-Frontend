@@ -9,4 +9,5 @@ export interface Productivity{
   total_horas_asignaciones: number,
   total_horas_facturables: number,
   capacity: number,
+  estado: string,
 }

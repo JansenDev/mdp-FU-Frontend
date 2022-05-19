@@ -44,7 +44,6 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-
         <mat-form-field class="filters--search">
           <mat-label>Buscar</mat-label>
           <input
@@ -54,6 +53,18 @@
             formControlName="inNames"
             list="data"
           />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Contrato x Vencer</mat-label>
+          <mat-select formControlName="cboxCxV">
+            <mat-option value="">Ninguno</mat-option>
+            <mat-option
+              *ngFor="let expire of contractExpire"
+              [value]="expire"
+            >
+              {{ expire | uppercase }} sem
+            </mat-option>
+          </mat-select>
         </mat-form-field>
 
         <datalist id="data">
@@ -129,6 +140,13 @@
             <th mat-header-cell *matHeaderCellDef>Fecha fin</th>
             <td mat-cell *matCellDef="let element">
               {{ element.fecha_fin | date: "dd/MM/YYYY" }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="f_fin_cont">
+            <th mat-header-cell *matHeaderCellDef>Fin contrato</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.fecha_fin_contrato | date: "dd/MM/YYYY" }}
             </td>
           </ng-container>
 

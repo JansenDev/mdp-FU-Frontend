@@ -28,7 +28,8 @@ export class ResourceService {
     period: string,
     codClient: string,
     codProfile?: string,
-    collaborator?: string
+    collaborator?: string,
+    contractexpire?: string
   ) {
     const URL = `${url_base}/resources/resourcesmap`;
 
@@ -43,6 +44,10 @@ export class ResourceService {
 
     if (collaborator) {
       bodyRequest['nombres'] = collaborator;
+    }
+
+    if (contractexpire) {
+      bodyRequest['contrato_vencer'] = contractexpire;
     }
 
     return this.httpClient.post<IResourceResponse[]>(URL, bodyRequest).pipe(

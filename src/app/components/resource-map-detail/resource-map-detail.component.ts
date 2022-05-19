@@ -29,7 +29,8 @@ export class ResourceMapDetailComponent implements OnInit {
     horas_extras: 0,
     total_horas_asignaciones: 0,
     total_horas_facturables: 0,
-    capacity: 0
+    capacity: 0,
+    estado: ""
   }
 
   contract: Contract = {
