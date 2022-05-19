@@ -63,7 +63,7 @@
 
     <div class="content-around">
       <button
-            [disabled]="productivity.estado != 'A'"
+            [disabled]="productivity.estado != 'A' || periodStatusSelected != 'A'"
             type="submit"
             mat-raised-button
             color="primary"
@@ -72,7 +72,7 @@
             Renovar
       </button>
       <button
-            [disabled]="productivity.estado != 'A'"
+            [disabled]="productivity.estado != 'A' || periodStatusSelected != 'A'"
             type="submit"
             mat-raised-button
             color="primary"
@@ -81,7 +81,7 @@
             Cese
       </button>
       <button
-            [disabled]="productivity.estado != 'A'"
+            [disabled]="productivity.estado != 'A' || periodStatusSelected != 'A'"
             type="submit"
             mat-raised-button
             color="primary"
@@ -92,7 +92,7 @@
     </div>
     <div class="content-around">
       <button
-            [disabled]="productivity.estado != 'A'"
+            [disabled]="productivity.estado != 'A' || periodStatusSelected != 'A'"
             type="submit"
             mat-raised-button
             color="primary"
@@ -101,7 +101,7 @@
             Vacaciones
       </button>
       <button
-            [disabled]="productivity.estado != 'A'"
+            [disabled]="productivity.estado != 'A' || periodStatusSelected != 'A'"
             type="submit"
             mat-raised-button
             color="primary"

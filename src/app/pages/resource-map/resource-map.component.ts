@@ -65,6 +65,7 @@ export class ResourceMapComponent implements OnInit {
   collaboratorList: ICollaboratorResponse[] = [];
   clientList: IClientResponse[] = [];
   periodSelected = '';
+  periodStatusSelected = '';
   productivityIndicator: IProductivityIndicator = PRODUCTIVITY_INDICATOR;
   // inputs resource-detail component
   showDetail = false;
@@ -130,6 +131,12 @@ export class ResourceMapComponent implements OnInit {
 
     this.periodSelected = cboxPeriod;
 
+    for (let period of this.periodsList) {
+      if (this.periodSelected == period.periodo) {
+        this.periodStatusSelected = period.estado
+      }
+    }
+
     let clientfound = this.clientList.filter(
       (client) => client.cod_cliente == parseInt(cboxClient)
     );
@@ -163,14 +170,14 @@ export class ResourceMapComponent implements OnInit {
     this.resourceDetailComponent.loadProductivity(this.cod_mapa_recurso);
     this.resourceDetailComponent.loadContract(
       this.cod_colaborador,
-      this.periodSelected
+      this.periodSelected,
+      this.periodStatusSelected
     );
     this.resourceDetailComponent.loadAssignments(
       this.cod_colaborador,
       this.periodSelected,
       this.idClient
     );
-    console.log(this.periodSelected);
 
     if (this.showDetail) {
       this.showDetail = false;
@@ -239,7 +246,6 @@ export class ResourceMapComponent implements OnInit {
       .findCollaboratorsByClientAndPeriod(idClient, period)
       .subscribe((collaboratorResponse) => {
         this.collaboratorList = collaboratorResponse;
-        console.log('collaboratorList', this.collaboratorList);
       });
   }
 
