@@ -44,16 +44,7 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field class="filters--search">
-          <mat-label>Buscar</mat-label>
-          <input
-            matInput
-            placeholder="Nombres y apellidos"
-            autocomplete="off"
-            formControlName="inNames"
-            list="data"
-          />
-        </mat-form-field>
+
         <mat-form-field>
           <mat-label>Contrato x Vencer</mat-label>
           <mat-select formControlName="cboxCxV">
@@ -66,6 +57,18 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
+
+        <mat-form-field class="filters--search">
+          <mat-label>Buscar</mat-label>
+          <input
+            matInput
+            placeholder="Nombres y apellidos"
+            autocomplete="off"
+            formControlName="inNames"
+            list="data"
+          />
+        </mat-form-field>
+
 
         <datalist id="data">
           <option

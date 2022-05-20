@@ -20,7 +20,7 @@ export class ContractImboxService {
     names?: string,
     status?: string
   ) {
-    const URL = `${url_base}/contractSolicitude`;
+    const URL = `${url_base}/solicitude`;
 
     let options: IFilterContractImboxRequest = {};
 
