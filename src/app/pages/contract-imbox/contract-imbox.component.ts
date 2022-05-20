@@ -7,6 +7,7 @@ import { BehaviorSubject, distinctUntilChanged, map, Subject } from 'rxjs';
 import { ImboxFilterComponent } from 'src/app/components/form/imbox-filter/imbox-filter.component';
 import { IContractImbox } from 'src/app/core/models/contract-imbox-model';
 import { ContractImboxService } from 'src/app/core/services/contract-imbox.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 import { getToken } from 'src/app/core/utils/token.storage';
 import * as util from '../../core/utils/utilities.util';
 
@@ -35,13 +36,15 @@ export class ContractImboxComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private contractImboxService: ContractImboxService,
-    private router: Router
+    private router: Router,
+    private notification : NotificationService
   ) {
     this.formFilter = this.formBuilder.group({
       filterForm: [
         {
           cboxClient: '',
           cboxLN: '',
+          cboxType: '',
           inputDocNumber: null,
           inputNames: null,
           cboxStatus: '',
@@ -178,12 +181,23 @@ export class ContractImboxComponent implements OnInit {
       )
       .subscribe({
         next: (contractImboxList) => {
-          console.log("contractImboxList", contractImboxList);
-          this.dataSource = new MatTableDataSource<IContractImbox>(
-            contractImboxList
-          );
-          this.dataSource.paginator = this.paginator;
-        },
+          let data : any = contractImboxList;
+          if(data.error) {
+            this.notification.toast('error', data.message);
+            return;
+          }
+          if(contractImboxList.length == 0) {
+            this.notification.toast('warning', 'No se encontró resultados de ' + cboxType);
+          } else {
+            console.log("contractImboxList", contractImboxList);
+            this.dataSource = new MatTableDataSource<IContractImbox>(
+              contractImboxList
+            );
+            this.dataSource.paginator = this.paginator;
+          }    
+        }, error: (err : Error) => {
+          console.log(err);
+        }
       });
   }
 

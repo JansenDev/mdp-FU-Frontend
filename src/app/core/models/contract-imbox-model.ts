@@ -17,4 +17,7 @@ export interface IContractImbox {
   cod_eps?: number;
   ind_sctr?: string;
   tipo_solicitud?: string;
+  // Manejo de errores
+  error?:string;
+  message?:string;
 }
