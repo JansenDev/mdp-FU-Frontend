@@ -46,6 +46,7 @@ export class ImboxFilterComponent implements OnInit, ControlValueAccessor {
     this.formImboxFilter = this.formBuilder.group({
       cboxClient: [''],
       cboxLN: [''],
+      cboxType: [''],
       inputDocNumber: [''],
       inputNames: [''],
       cboxStatus: [''],

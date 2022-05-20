@@ -32,6 +32,13 @@
 
     <div class="imbox-contract--table">
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="tipo_solicitud">
+          <th mat-header-cell *matHeaderCellDef>Tipo</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.tipo_solicitud | titlecase }}
+          </td>
+        </ng-container>
+        
         <ng-container matColumnDef="dateReg">
           <th mat-header-cell *matHeaderCellDef>F. Reg</th>
           <td mat-cell *matCellDef="let element">

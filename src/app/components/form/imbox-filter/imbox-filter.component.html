@@ -25,6 +25,16 @@
     </mat-form-field>
 
     <mat-form-field>
+      <mat-label>Tipo</mat-label>
+      <mat-select formControlName="cboxType">
+        <mat-option value="contratacion">Contratación</mat-option>
+        <mat-option value="renovacion">Renovación</mat-option>
+        <mat-option value="cese">Ceses</mat-option>
+        <mat-option value="transferencia">Transferencias</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
       <mat-label>N° documento</mat-label>
       <input
         formControlName="inputDocNumber"

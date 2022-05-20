@@ -79,6 +79,7 @@ export class ApproveHiringRequestComponent implements OnInit {
       // contract
       cBoxClient: [{ value: null, disabled: true }],
       cBoxBusinessLine: [{ value: null, disabled: true }],
+      cBoxType: [{ value: null, disabled: true }],
       cBoxProfile: [{ value: null, disabled: true }],
       cBoxLevel: [{ value: null, disabled: true }],
       cBoxmodality: [{ value: null, disabled: true }],
@@ -354,16 +355,21 @@ export class ApproveHiringRequestComponent implements OnInit {
     const pathParams = this.activatedRoute.snapshot.paramMap;
 
     const idHiringRequest = pathParams.get('idHiringRequest')!;
-
+    const type = pathParams.get('cBoxType')!;
+    console.log("type", type)
+    
     this.contractImboxService
-      .getHiringRequestById(idHiringRequest)
+      .getHiringRequestById(idHiringRequest, 'contratacion')
       .subscribe((hiringRequestSelected) => {
+        console.log("hiringRequestSelected", hiringRequestSelected)
+        
         this.cboxService
           .findSalaryBandByIdProfileAndLevel(
             hiringRequestSelected.cod_puesto,
             hiringRequestSelected.nivel
           )
           .subscribe((salaryBandFound) => {
+            console.log("salaryBandFound", salaryBandFound)
             this.salaryBandObj = salaryBandFound[0];
           });
 
@@ -457,6 +463,10 @@ export class ApproveHiringRequestComponent implements OnInit {
 
   get idHiringRequest() {
     return this.formApproveHiringRequest.controls['inputIdHiringRequest'].value;
+  }
+
+  get type() {
+    return this.formApproveHiringRequest.controls['cBoxType'].value;
   }
 
   get businessLineValue() {

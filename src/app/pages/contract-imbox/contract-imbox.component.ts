@@ -68,6 +68,7 @@ export class ContractImboxComponent implements OnInit {
 
   setDisplayedColumns() {
     const displayedColumns = [
+      'tipo_solicitud',
       'dateReg',
       'client',
       'businessLine',
@@ -103,9 +104,11 @@ export class ContractImboxComponent implements OnInit {
           undefined,
           undefined,
           undefined,
+          undefined,
           'Pendiente Aprobacion GG'
         )
         .subscribe((contractImboxList) => {
+          console.log("contractImboxList fill", contractImboxList);
           this.dataSource = new MatTableDataSource<IContractImbox>(
             contractImboxList
           );
@@ -120,6 +123,7 @@ export class ContractImboxComponent implements OnInit {
     this.formFilter.controls['filterForm'].patchValue({
       cboxClient: '',
       cboxLN: '',
+      cboxType: '',
       inputDocNumber: null,
       inputNames: null,
       cboxStatus: 'Pendiente Aprobacion GG',
@@ -152,10 +156,12 @@ export class ContractImboxComponent implements OnInit {
   }
 
   ngSubmit() {
-    let { cboxClient, cboxLN, inputDocNumber, inputNames, cboxStatus } =
+    let { cboxClient, cboxLN, cboxType, inputDocNumber, inputNames, cboxStatus } =
       this.formFilter.value.filterForm;
-
+    console.log("this.formFilter.value.filterForm", this.formFilter.value.filterForm);
     const inputNamesTrim = util.trimAllSpaces(inputNames);
+    console.log("inputNamesTrim", inputNamesTrim);
+    console.log("cboxType", cboxType);
 
     if (this.userProfile === GG) {
       cboxStatus = 'Pendiente Aprobacion GG';
@@ -165,12 +171,14 @@ export class ContractImboxComponent implements OnInit {
       .filterHiringRequesBy(
         cboxClient,
         cboxLN,
+        cboxType,
         inputDocNumber,
         inputNamesTrim,
         cboxStatus
       )
       .subscribe({
         next: (contractImboxList) => {
+          console.log("contractImboxList", contractImboxList);
           this.dataSource = new MatTableDataSource<IContractImbox>(
             contractImboxList
           );
@@ -187,6 +195,7 @@ export class ContractImboxComponent implements OnInit {
         filterForm: {
           cboxClient: '',
           cboxLN: '',
+          cboxType: '',
           inputDocNumber: null,
           inputNames: null,
           cboxStatus: 'Pendiente Aprobacion GG',
@@ -199,6 +208,7 @@ export class ContractImboxComponent implements OnInit {
       filterForm: {
         cboxClient: '',
         cboxLN: '',
+        cboxType: '',
         inputDocNumber: null,
         inputNames: null,
         cboxStatus: '',

@@ -16,4 +16,5 @@ export interface IContractImbox {
   bono_men?: string;
   cod_eps?: number;
   ind_sctr?: string;
+  tipo_solicitud?: string;
 }

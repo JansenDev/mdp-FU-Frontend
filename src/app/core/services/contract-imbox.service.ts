@@ -16,11 +16,12 @@ export class ContractImboxService {
   filterHiringRequesBy(
     idClient?: number,
     businessLine?: string,
+    type?: string,
     docNumber?: string,
     names?: string,
     status?: string
   ) {
-    const URL = `${url_base}/contractSolicitude`;
+    const URL = `${url_base}/solicitude`;
 
     let options: IFilterContractImboxRequest = {};
 
@@ -29,6 +30,10 @@ export class ContractImboxService {
     }
     if (businessLine) {
       options['cod_linea_negocio'] = businessLine;
+    }
+
+    if (type) {
+      options['tipo_solicitud'] = type;
     }
 
     if (docNumber) {
@@ -42,12 +47,12 @@ export class ContractImboxService {
     if (names) {
       options['nombre'] = names;
     }
-
+    console.log("options", options)
     return this.httpClient.post<IContractImbox[]>(URL, options).pipe();
   }
 
-  getHiringRequestById(idHiringRequest: string | number) {
-    const URL = `${url_base}/contractSolicitude/${idHiringRequest}`;
+  getHiringRequestById(idHiringRequest: string | number, type : string) {
+    const URL = `${url_base}/solicitude/${idHiringRequest}/${type}`;
 
     return this.httpClient.get<IHiringRequest>(URL);
   }
@@ -86,6 +91,7 @@ export class ContractImboxService {
 export interface IFilterContractImboxRequest {
   cod_cliente?: number;
   cod_linea_negocio?: string;
+  tipo_solicitud?: string;
   estado?: string;
   nro_documento?: string;
   nombre?: string;
