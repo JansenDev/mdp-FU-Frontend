@@ -75,7 +75,7 @@ export class ContractImboxComponent implements OnInit {
       'dateReg',
       'client',
       'businessLine',
-      'profile',
+      // 'profile',
       'docNumber',
       'names',
       'modality',
