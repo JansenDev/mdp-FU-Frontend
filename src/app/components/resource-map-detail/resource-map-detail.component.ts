@@ -3,6 +3,7 @@ import { ResourceDetailService } from 'src/app/core/services/resource-detail.ser
 import { Assignment } from 'src/app/core/models/assignment.model';
 import { Contract } from 'src/app/core/models/contract.model';
 import { Productivity } from 'src/app/core/models/productivity.model';
+import { IPeriodResponse } from 'src/app/core/models/period.model';
 
 @Component({
   selector: 'app-resource-map-detail',
@@ -29,7 +30,8 @@ export class ResourceMapDetailComponent implements OnInit {
     horas_extras: 0,
     total_horas_asignaciones: 0,
     total_horas_facturables: 0,
-    capacity: 0
+    capacity: 0,
+    estado: ""
   }
 
   contract: Contract = {
@@ -47,6 +49,8 @@ export class ResourceMapDetailComponent implements OnInit {
     fecha_fin: new Date()
   };
 
+  periodStatusSelected = '';
+
   assignments: Assignment[] = [];
   tableData: Assignment[] = [];
   columnsToDisplay = ['service', 'name', 'percentage', 'start', 'end'];
@@ -55,7 +59,6 @@ export class ResourceMapDetailComponent implements OnInit {
 
   toggleDetail() {
     this.showDetail = !this.showDetail;
-    console.log(this.showDetail);
   }
 
   closeDetail() {
@@ -66,28 +69,26 @@ export class ResourceMapDetailComponent implements OnInit {
   loadProductivity(id: number){
     this.resourceDetailService.getResourceProductivityByCode(id)
       .subscribe(productivityData => {
-        console.log('productivity: ', productivityData);
         this.productivity = productivityData;
       }, error => {
         console.error(error);
       })
   }
 
-  loadContract(id: number, period: string){
+  loadContract(id: number, period: string, estatus: string){
     this.resourceDetailService.getContractByCollaboratorIdAndPeriod(id, period)
       .subscribe(contractData => {
-        console.log('contract: ', contractData);
         this.contract = contractData;
       }, error => {
         console.error(error);
       })
+    this.periodStatusSelected = estatus;
   }
 
   loadAssignments(id: number, period: string, clientId: number){
     this.resourceDetailService.getAssigmentsByCollabCodePeriodAndClientCode(id, period,
       clientId)
         .subscribe(assignmentData => {
-          console.log('assignments: ', assignmentData);
           this.assignments = assignmentData;
           this.tableData = this.assignments;
         }, error => {

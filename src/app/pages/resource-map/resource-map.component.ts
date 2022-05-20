@@ -45,6 +45,7 @@ export class ResourceMapComponent implements OnInit {
     'nivel',
     'f_inicio',
     'f_fin',
+    'f_fin_cont',
     'asignacion',
     'clm_efectivo',
     'produccion',
@@ -54,9 +55,17 @@ export class ResourceMapComponent implements OnInit {
   resourceForm: FormGroup;
   periodsList: IPeriodResponse[] = [] as IPeriodResponse[];
   profileList: IProfileResponse[] = [];
+  contractExpire: string[] = [
+    '1',
+    '2',
+    '3',
+    '4'
+  ];
+
   collaboratorList: ICollaboratorResponse[] = [];
   clientList: IClientResponse[] = [];
   periodSelected = '';
+  periodStatusSelected = '';
   productivityIndicator: IProductivityIndicator = PRODUCTIVITY_INDICATOR;
   // inputs resource-detail component
   showDetail = false;
@@ -74,6 +83,7 @@ export class ResourceMapComponent implements OnInit {
   cod_cliente: number = 0;
   periodo: string = '';
   nombre: string = '';
+  contractExpireSelect: string = '';
   constructor(
     private resourceService: ResourceService,
     private formBuilder: FormBuilder
@@ -82,6 +92,7 @@ export class ResourceMapComponent implements OnInit {
       cboxPeriod: ['', Validators.required],
       cboxClient: ['', Validators.required],
       cboxProfile: [''],
+      cboxCxV: [''],
       inNames: [''],
     });
   }
@@ -113,11 +124,18 @@ export class ResourceMapComponent implements OnInit {
       cboxPeriod,
       cboxClient,
       cboxProfile,
+      cboxCxV,
       inNames,
       inputIdUser,
     }: IResourceMapFilters = this.resourceForm.value;
 
     this.periodSelected = cboxPeriod;
+
+    for (let period of this.periodsList) {
+      if (this.periodSelected == period.periodo) {
+        this.periodStatusSelected = period.estado
+      }
+    }
 
     let clientfound = this.clientList.filter(
       (client) => client.cod_cliente == parseInt(cboxClient)
@@ -128,6 +146,7 @@ export class ResourceMapComponent implements OnInit {
     this.periodoToSummary = cboxPeriod;
     this.idClient = cboxClient;
     this.namePerfil = cboxProfile;
+    this.contractExpireSelect = cboxCxV;
     let inputNameWithoutExtraSpaces = inNames
       .split(' ')
       .filter((name: string) => name !== '')
@@ -137,7 +156,8 @@ export class ResourceMapComponent implements OnInit {
       cboxPeriod,
       cboxClient,
       cboxProfile,
-      inputNameWithoutExtraSpaces
+      inputNameWithoutExtraSpaces,
+      cboxCxV
     );
 
     this.showSummary();
@@ -150,14 +170,14 @@ export class ResourceMapComponent implements OnInit {
     this.resourceDetailComponent.loadProductivity(this.cod_mapa_recurso);
     this.resourceDetailComponent.loadContract(
       this.cod_colaborador,
-      this.periodSelected
+      this.periodSelected,
+      this.periodStatusSelected
     );
     this.resourceDetailComponent.loadAssignments(
       this.cod_colaborador,
       this.periodSelected,
       this.idClient
     );
-    console.log(this.periodSelected);
 
     if (this.showDetail) {
       this.showDetail = false;
@@ -175,14 +195,16 @@ export class ResourceMapComponent implements OnInit {
     period: string,
     idclient: string,
     idProfile?: string,
-    collaborator?: string
+    collaborator?: string,
+    contractexpire?: string
   ): void {
     this.resourceService
       .findResourceByPeriodClientProfileNames(
         period,
         idclient,
         idProfile,
-        collaborator
+        collaborator,
+        contractexpire
       )
       .subscribe((resourceResponse) => {
         this.dataSource = new MatTableDataSource<IResourceResponse>(
@@ -224,7 +246,6 @@ export class ResourceMapComponent implements OnInit {
       .findCollaboratorsByClientAndPeriod(idClient, period)
       .subscribe((collaboratorResponse) => {
         this.collaboratorList = collaboratorResponse;
-        console.log('collaboratorList', this.collaboratorList);
       });
   }
 

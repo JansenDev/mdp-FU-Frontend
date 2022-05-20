@@ -20,6 +20,7 @@ export interface IResourceRequest {
   cod_perfil?: string | number;
   cod_colaborador?: number;
   nombres?: string;
+  contrato_vencer?: string | number;
 }
 
 export interface IProductivityIndicator {
@@ -32,6 +33,7 @@ export interface IResourceMapFilters {
   cboxPeriod: string;
   cboxClient: string;
   cboxProfile: string;
+  cboxCxV: string;
   inNames: string;
   // TEMPORAL SESION
   inputIdUser?:any

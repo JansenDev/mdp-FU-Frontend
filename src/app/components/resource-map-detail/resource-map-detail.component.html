@@ -61,6 +61,56 @@
       </ul>
     </div>
 
+    <div class="content-around">
+      <button
+            [disabled]="productivity.estado != 'A' || periodStatusSelected != 'A'"
+            type="submit"
+            mat-raised-button
+            color="primary"
+            class="button-base"
+          >
+            Renovar
+      </button>
+      <button
+            [disabled]="productivity.estado != 'A' || periodStatusSelected != 'A'"
+            type="submit"
+            mat-raised-button
+            color="primary"
+            class="button-base"
+          >
+            Cese
+      </button>
+      <button
+            [disabled]="productivity.estado != 'A' || periodStatusSelected != 'A'"
+            type="submit"
+            mat-raised-button
+            color="primary"
+            class="button-base"
+          >
+            Transferencia
+      </button>
+    </div>
+    <div class="content-around">
+      <button
+            [disabled]="productivity.estado != 'A' || periodStatusSelected != 'A'"
+            type="submit"
+            mat-raised-button
+            color="primary"
+            class="button-base"
+          >
+            Vacaciones
+      </button>
+      <button
+            [disabled]="productivity.estado != 'A' || periodStatusSelected != 'A'"
+            type="submit"
+            mat-raised-button
+            color="primary"
+            class="button-base"
+          >
+            Faltas/Permisos
+      </button>
+    </div>
+
     <h2>Servicios asignados</h2>
     <div class="detail-content">
       <table mat-table [dataSource]="tableData" class="service-table">
