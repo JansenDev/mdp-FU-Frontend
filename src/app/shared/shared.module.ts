@@ -18,6 +18,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 
@@ -54,7 +55,8 @@ import { FormsModule } from '@angular/forms';
     MatRadioModule,
     MatMomentDateModule,
     MatDividerModule,
-    MaterialFileInputModule
+    MaterialFileInputModule,
+    MatDialogModule
   ],
 })
 export class SharedModule {}

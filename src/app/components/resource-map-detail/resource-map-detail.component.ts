@@ -1,9 +1,11 @@
-import { Component, Input, OnInit, Output, ViewEncapsulation, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, ViewEncapsulation, EventEmitter, Inject } from '@angular/core';
 import { ResourceDetailService } from 'src/app/core/services/resource-detail.service';
 import { Assignment } from 'src/app/core/models/assignment.model';
 import { Contract } from 'src/app/core/models/contract.model';
 import { Productivity } from 'src/app/core/models/productivity.model';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { IPeriodResponse } from 'src/app/core/models/period.model';
+import { ContractRenovationRequestComponent } from '../contract-renovation-request/contract-renovation-request.component';
 
 @Component({
   selector: 'app-resource-map-detail',
@@ -13,7 +15,8 @@ import { IPeriodResponse } from 'src/app/core/models/period.model';
 })
 export class ResourceMapDetailComponent implements OnInit {
 
-  constructor(private resourceDetailService: ResourceDetailService) {  }
+  constructor(private resourceDetailService: ResourceDetailService,
+              private dialog: MatDialog) {  }
   @Input() showDetail = false;
   @Input() cod_colaborador = 0;
   @Input() cod_mapa_recurso = null;
@@ -96,20 +99,8 @@ export class ResourceMapDetailComponent implements OnInit {
         })
   }
 
-  //obtener el detalle
-  /* loadDetail(id: number){
-    this.resourceDetailService.getMockDetail(id)
-    .subscribe(data => {
-      // console.log('fetched data: ', data);
-      this.productivity = data["productividad"];
-      this.contract = data["contrato"];
-      this.assignments = data["asignaciones"];
-      this.tableData = this.assignments;
-      // console.log('fetched prod: ', this.productivity);
-      // console.log('fetched contract: ', this.contract);
-      // console.log('fetched assignments: ', this.assignments);
-    }, error => {
-      console.error(error);
-    })
-  } */
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ContractRenovationRequestComponent,  ) //config opcional
+
+  }
 }
