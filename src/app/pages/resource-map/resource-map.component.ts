@@ -147,6 +147,7 @@ export class ResourceMapComponent implements OnInit {
     this.idClient = cboxClient;
     this.namePerfil = cboxProfile;
     this.contractExpireSelect = cboxCxV;
+    console.log("cboxCxV", cboxCxV);
     let inputNameWithoutExtraSpaces = inNames
       .split(' ')
       .filter((name: string) => name !== '')

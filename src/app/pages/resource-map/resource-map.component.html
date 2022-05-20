@@ -49,12 +49,10 @@
           <mat-label>Contrato x Vencer</mat-label>
           <mat-select formControlName="cboxCxV">
             <mat-option value="">Ninguno</mat-option>
-            <mat-option
-              *ngFor="let expire of contractExpire"
-              [value]="expire"
-            >
-              {{ expire }} sem
-            </mat-option>
+            <mat-option value="1">1 semana</mat-option>
+            <mat-option value="2">2 semanas</mat-option>
+            <mat-option value="3">3 semanas</mat-option>
+            <mat-option value="4">4 semanas</mat-option>
           </mat-select>
         </mat-form-field>
 
