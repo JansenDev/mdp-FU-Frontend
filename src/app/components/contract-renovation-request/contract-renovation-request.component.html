@@ -1,0 +1,146 @@
+<h1 mat-dialog-title>Registro de solicitud de renovación de contrato</h1>
+
+<section mat-dialog-content>
+  <h2>Datos del colaborador</h2>
+  <div class="collaborator-data">
+    <mat-form-field>
+      <mat-label>Cliente</mat-label>
+      <input type="text" matInput disabled [(ngModel)]="this.formData.nombre_corto">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Línea de negocio</mat-label>
+      <input type="text" matInput disabled>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Número de documento</mat-label>
+      <input type="text" matInput disabled [(ngModel)]="this.formData.nro_documento">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Nombre</mat-label>
+      <input type="text" matInput disabled [(ngModel)]="this.formData.nombres">
+    </mat-form-field>
+  </div>
+
+    <h2>Datos de renovación</h2>
+    <div class="renovation-data">
+
+      <div class="conditions">
+        <mat-radio-group>
+          <mat-radio-button #mismasCondiciones value="mismasCondiciones">
+            Mismas condiciones
+          </mat-radio-button>
+
+          <mat-radio-button #cambioContractual value="cambioContractual">
+            Cambio contractual
+          </mat-radio-button>
+        </mat-radio-group>
+
+        <mat-form-field>
+          <mat-label>Empresa</mat-label>
+          <input type="text" matInput disabled [(ngModel)]="this.formData.empresa">
+        </mat-form-field>
+      </div>
+
+      <div class="checkboxes" *ngIf="this.mismasCondRadio &&
+      this.mismasCondRadio.checked == false">
+        <mat-checkbox [(ngModel)]="this.nvaModalidad">
+          Nueva modalidad
+        </mat-checkbox>
+
+        <mat-checkbox [(ngModel)]="this.nvoSueldo">
+          Nuevo sueldo
+        </mat-checkbox>
+
+        <mat-checkbox  [(ngModel)]="this.nvoBono">
+          Nuevo bono
+        </mat-checkbox>
+
+        <mat-checkbox  [(ngModel)]="this.nvoPuesto">
+          Nuevo puesto
+        </mat-checkbox>
+
+        <mat-checkbox  [(ngModel)]="this.nvoNivel">
+          Nuevo nivel de puesto
+        </mat-checkbox>
+      </div>
+
+      <div class="renovation-details">
+        <mat-form-field>
+          <mat-label>Modalidad</mat-label>
+          <input type="text" matInput [disabled]="!this.nvaModalidad"
+           [(ngModel)]="this.formData.modalidad" >
+        </mat-form-field>
+
+        <!-- <mat-form-field>
+          <mat-label>Modalidad</mat-label>
+          <mat-select [disabled]="!this.nvaModalidad">
+            <mat-option *ngFor="let mode of modes" [value]="mode">
+              {{ mode }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field> -->
+
+        <mat-form-field>
+          <mat-label>Remuneración</mat-label>
+          <input type="number" matInput [disabled]="!this.nvoSueldo"
+          [(ngModel)]="this.formData.remuneracion">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Bono</mat-label>
+          <input type="number" matInput [disabled]="!this.nvoBono" max="600"
+          [(ngModel)]="this.formData.bono_men">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Modalidad Bono</mat-label>
+          <input type="text" matInput disabled [(ngModel)]="this.formData.modalidad_bono">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Puesto</mat-label>
+          <input type="text" matInput [disabled]="!this.nvoPuesto"
+          [(ngModel)]="this.formData.puesto">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Nivel</mat-label>
+          <input type="text" matInput [disabled]="!this.nvoNivel"
+          [(ngModel)]="this.formData.nivel">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Fecha de fin <b>(contrato anterior)</b></mat-label>
+          <input type="text" matInput disabled [(ngModel)]="this.formData.fecha_fin_ant">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Fecha de inicio <b>(contrato nuevo)</b></mat-label>
+          <input type="text" matInput disabled [(ngModel)]="this.formData.fecha_inicio_nuevo">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Fecha de fin <b>(contrato nuevo)</b></mat-label>
+          <input type="text" matInput #contratoNuevo>
+        </mat-form-field>
+
+        <!-- <mat-form-field>
+          <mat-label>Fecha de fin <b>(contrato nuevo)</b></mat-label>
+          <input matInput [matDatepicker]="contratoNuevo" required>
+          <mat-datepicker-toggle mat-suffix [for]="contratoNuevo"></mat-datepicker-toggle>
+          <mat-datepicker #contratoNuevo></mat-datepicker>
+        </mat-form-field> --> <!-- TODO: Foco en este campo da error cuando se trabaja como material datepicker -->
+      </div>
+
+    </div>
+
+    <div class="btn-area">
+      <button type="submit" class="register-btn" mat-raised-button>Registrar</button>
+      <button type="button" class="cancel-btn" mat-raised-button>Cancelar</button>
+    </div>
+
+
+</section>

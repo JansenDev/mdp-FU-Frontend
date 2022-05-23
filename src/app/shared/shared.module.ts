@@ -16,8 +16,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatRadioModule } from '@angular/material/radio';
+import { MatRadioModule, MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 
@@ -32,6 +33,10 @@ import { FormsModule } from '@angular/forms';
       provide: MAT_DATE_LOCALE,
       useValue: 'es',
     },
+    {
+      provide: MAT_RADIO_DEFAULT_OPTIONS,
+      useValue: { color: 'primary' }
+    }
   ],
   exports: [
     TestpPipe,
@@ -54,7 +59,8 @@ import { FormsModule } from '@angular/forms';
     MatRadioModule,
     MatMomentDateModule,
     MatDividerModule,
-    MaterialFileInputModule
+    MaterialFileInputModule,
+    MatDialogModule
   ],
 })
 export class SharedModule {}

@@ -13,7 +13,6 @@ import { ComponentModule } from './components/component.module';
 import { ToastContainerModule, ToastrModule } from 'ngx-toastr';
 import { TokenInterceptor } from './core/interceptor/token.interceptor';
 
-
 @NgModule({
   declarations: [AppComponent],
   imports: [
