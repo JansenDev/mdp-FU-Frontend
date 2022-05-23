@@ -100,7 +100,14 @@ export class ResourceMapDetailComponent implements OnInit {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(ContractRenovationRequestComponent,  ) //config opcional
+    const dialogRef = this.dialog.open(ContractRenovationRequestComponent,
+      {
+        autoFocus: false, //Desactiva el foco auto. en el 1er input
+        width: '80%',
+        data: {
+          codigo: this.cod_colaborador
+        }
+      })
 
   }
 }
