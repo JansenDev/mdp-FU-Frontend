@@ -105,7 +105,7 @@ export class ResourceMapDetailComponent implements OnInit {
         autoFocus: false, //Desactiva el foco auto. en el 1er input
         width: '80%',
         data: {
-          codigo: this.cod_colaborador
+          codigo: this.cod_mapa_recurso
         }
       })
 

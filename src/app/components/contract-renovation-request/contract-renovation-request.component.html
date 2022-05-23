@@ -5,7 +5,7 @@
   <div class="collaborator-data">
     <mat-form-field>
       <mat-label>Cliente</mat-label>
-      <input type="text" matInput disabled>
+      <input type="text" matInput disabled [(ngModel)]="this.formData.nombre_corto">
     </mat-form-field>
 
     <mat-form-field>
@@ -15,12 +15,12 @@
 
     <mat-form-field>
       <mat-label>Número de documento</mat-label>
-      <input type="text" matInput disabled>
+      <input type="text" matInput disabled [(ngModel)]="this.formData.nro_documento">
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Nombre</mat-label>
-      <input type="text" matInput disabled>
+      <input type="text" matInput disabled [(ngModel)]="this.formData.nombres">
     </mat-form-field>
   </div>
 
@@ -40,7 +40,7 @@
 
         <mat-form-field>
           <mat-label>Empresa</mat-label>
-          <input type="text" matInput disabled>
+          <input type="text" matInput disabled [(ngModel)]="this.formData.empresa">
         </mat-form-field>
       </div>
 
@@ -68,53 +68,58 @@
       </div>
 
       <div class="renovation-details">
-        <!-- <mat-form-field>
-          <mat-label>Modalidad</mat-label>
-          <input type="text" matInput [disabled]="this.cambioContractRadio && this.cambioContractRadio.checked" >
-        </mat-form-field> -->
-
         <mat-form-field>
+          <mat-label>Modalidad</mat-label>
+          <input type="text" matInput [disabled]="!this.nvaModalidad"
+           [(ngModel)]="this.formData.modalidad" >
+        </mat-form-field>
+
+        <!-- <mat-form-field>
           <mat-label>Modalidad</mat-label>
           <mat-select [disabled]="!this.nvaModalidad">
             <mat-option *ngFor="let mode of modes" [value]="mode">
               {{ mode }}
             </mat-option>
           </mat-select>
-        </mat-form-field>
+        </mat-form-field> -->
 
         <mat-form-field>
           <mat-label>Remuneración</mat-label>
-          <input type="number" matInput [disabled]="!this.nvoSueldo">
+          <input type="number" matInput [disabled]="!this.nvoSueldo"
+          [(ngModel)]="this.formData.remuneracion">
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Bono</mat-label>
-          <input type="number" matInput [disabled]="!this.nvoBono" max="600">
+          <input type="number" matInput [disabled]="!this.nvoBono" max="600"
+          [(ngModel)]="this.formData.bono_men">
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Modalidad Bono</mat-label>
-          <input type="text" matInput disabled>
+          <input type="text" matInput disabled [(ngModel)]="this.formData.modalidad_bono">
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Puesto</mat-label>
-          <input type="text" matInput [disabled]="!this.nvoPuesto">
+          <input type="text" matInput [disabled]="!this.nvoPuesto"
+          [(ngModel)]="this.formData.puesto">
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Nivel</mat-label>
-          <input type="text" matInput [disabled]="!this.nvoNivel">
+          <input type="text" matInput [disabled]="!this.nvoNivel"
+          [(ngModel)]="this.formData.nivel">
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Fecha de fin <b>(contrato anterior)</b></mat-label>
-          <input type="text" matInput disabled>
+          <input type="text" matInput disabled [(ngModel)]="this.formData.fecha_fin_ant">
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Fecha de inicio <b>(contrato nuevo)</b></mat-label>
-          <input type="text" matInput disabled>
+          <input type="text" matInput disabled [(ngModel)]="this.formData.fecha_inicio_nuevo">
         </mat-form-field>
 
         <mat-form-field>

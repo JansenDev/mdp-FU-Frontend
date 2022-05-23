@@ -2,6 +2,8 @@ import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewCh
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatRadioButton } from '@angular/material/radio';
+import { IGetRenovationData } from 'src/app/core/models/contract-renovation.model';
+import { ContractRenovationService } from 'src/app/core/services/contract-renovation.service';
 
 @Component({
   selector: 'app-contract-renovation-request',
@@ -26,11 +28,29 @@ export class ContractRenovationRequestComponent implements OnInit, AfterViewInit
     'Practicante'
   ]
 
+  formData: IGetRenovationData = {
+    nro_documento: 0,
+    nombres: "",
+    nombre_corto: "",
+    empresa: "",
+    modalidad: "",
+    remuneracion: "",
+    bono_men: "",
+    fecha_fin_ant: "",
+    fecha_inicio_nuevo: "",
+    puesto: "",
+    nivel: "",
+    modalidad_bono: "",
+    linea_negocio: ""
+  }
+
   constructor(private cd: ChangeDetectorRef,
-              @Inject(MAT_DIALOG_DATA) public data: any) { }
+              @Inject(MAT_DIALOG_DATA) public data: any,
+              private contractRenovationService: ContractRenovationService) { }
 
   ngOnInit(): void {
     console.log('dialog data: ', this.data);
+    this.getRenovationData(this.data.codigo);
   }
 
   ngAfterViewInit(): void {
@@ -53,10 +73,15 @@ export class ContractRenovationRequestComponent implements OnInit, AfterViewInit
     }
   }
 
-  /* initCheckboxes(): void {
-    if (this.nvaModalidad){
-      this.nvaModalidad.checked = false;
-    }
-  } */
+
+  getRenovationData(collaboratorId: number){
+    this.contractRenovationService.autocompleteFields(collaboratorId)
+      .subscribe(renovationData => {
+        console.log('autocomp. datos: ', renovationData);
+        this.formData = renovationData;
+      }, error => {
+        console.error(error);
+      })
+  }
 
 }
