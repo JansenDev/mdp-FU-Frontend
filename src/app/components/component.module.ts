@@ -15,6 +15,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ImboxFilterComponent } from './form/imbox-filter/imbox-filter.component';
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { AssignedTeamComponent } from './assigned-team/assigned-team.component';
+import { ContractRenovationRequestComponent } from './contract-renovation-request/contract-renovation-request.component';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { AssignedTeamComponent } from './assigned-team/assigned-team.component';
     ImboxFilterComponent,
     SidebarComponent,
     AssignedTeamComponent,
+    ContractRenovationRequestComponent
   ],
   imports: [CommonModule, SharedModule, RouterModule, ReactiveFormsModule],
   exports: [
@@ -44,7 +46,8 @@ import { AssignedTeamComponent } from './assigned-team/assigned-team.component';
     RouterModule,
     ImboxFilterComponent,
     SidebarComponent,
-    AssignedTeamComponent
+    AssignedTeamComponent,
+    ContractRenovationRequestComponent
   ],
 })
 export class ComponentModule {}
