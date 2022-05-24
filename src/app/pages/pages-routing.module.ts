@@ -14,6 +14,7 @@ import { ResourceMapComponent } from './resource-map/resource-map.component';
 import { ServiceMapComponent } from './service-map/service-map.component';
 import { ServicesConfigurationComponent } from './services-configuration/services-configuration.component';
 import { UpdatePeriodComponent } from './update-period/update-period.component';
+import { RenovationRequestComponent } from './renovation-request/renovation-request.component';
 
 const routes: Routes = [
   {
@@ -76,6 +77,10 @@ const routes: Routes = [
         path: 'update-period',
         component: UpdatePeriodComponent,
         canActivate: [AuthorizationGuard],
+      },
+      {
+        path: 'renovation-request',
+        component: RenovationRequestComponent,
       },
     ],
   },

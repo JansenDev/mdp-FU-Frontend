@@ -1,0 +1,22 @@
+$width_page: 90%;
+
+
+.renovation-request {
+  width: calc(100% - 60px);
+  display: inline-block;
+  margin-left: 60px;
+}
+
+.renovation-request--container {
+    width: $width_page;
+    margin: 20px auto 0 auto;
+  
+    & .renovation-request--title {
+      // padding-top: 10px;
+      font-weight: 600;
+      text-shadow: 2px 2px var(--gray);
+      color: var(--black);
+      font-family: var(--font-family);
+      font-size: 30px;
+    }
+}  

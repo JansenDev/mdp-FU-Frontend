@@ -18,6 +18,7 @@ import { InitPageComponent } from './init-page/init-page.component';
 import { PeriodAdministrationComponent } from './period-administration/period-administration.component';
 import { CreatePeriodComponent } from './create-period/create-period.component';
 import { UpdatePeriodComponent } from './update-period/update-period.component';
+import { RenovationRequestComponent } from './renovation-request/renovation-request.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { UpdatePeriodComponent } from './update-period/update-period.component';
     InitPageComponent,
     PeriodAdministrationComponent,
     CreatePeriodComponent,
-    UpdatePeriodComponent
+    UpdatePeriodComponent,
+    RenovationRequestComponent,
   ],
 
   imports: [CommonModule, SharedModule, ComponentModule, PagesRoutingModule],
