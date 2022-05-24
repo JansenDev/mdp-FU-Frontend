@@ -2,6 +2,7 @@ export interface IGetRenovationData {
   nro_documento: number,
   nombres: string,
   nombre_corto: string,
+  cod_linea_negocio: string,
   empresa: string,
   modalidad: string,
   remuneracion: string,
@@ -10,6 +11,5 @@ export interface IGetRenovationData {
   fecha_inicio_nuevo: string,
   puesto: string,
   nivel: string,
-  modalidad_bono: string,
-  linea_negocio: string
+  modalidad_bono: string
 }

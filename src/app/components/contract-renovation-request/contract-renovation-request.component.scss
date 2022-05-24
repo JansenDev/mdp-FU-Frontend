@@ -38,6 +38,12 @@ section{
   flex-wrap: wrap;
 }
 
+.dates-area{
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 1rem;
+}
+
 .mat-radio-group{
   display: flex;
   flex-wrap: wrap;
@@ -81,4 +87,16 @@ input[type=number] { //Firefox
 .cancel-btn{
   background-color: var(--red);
   color: var(--white);
+}
+
+.short{
+  width: 7.5%;
+}
+
+.date{
+  width: 10%;
+}
+
+.currency{
+  text-align: right;
 }

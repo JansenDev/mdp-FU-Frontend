@@ -4,6 +4,7 @@ import { MatCheckbox } from '@angular/material/checkbox';
 import { MatRadioButton } from '@angular/material/radio';
 import { IGetRenovationData } from 'src/app/core/models/contract-renovation.model';
 import { ContractRenovationService } from 'src/app/core/services/contract-renovation.service';
+import { MatDatepicker, MatDatepickerInput } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-contract-renovation-request',
@@ -11,7 +12,8 @@ import { ContractRenovationService } from 'src/app/core/services/contract-renova
   styleUrls: ['./contract-renovation-request.component.scss']
 })
 export class ContractRenovationRequestComponent implements OnInit, AfterViewInit {
-  @ViewChild('contratoNuevo') contratoNuevo!: ElementRef;
+  //@ViewChild('contratoNuevo') contratoNuevo!: ElementRef;
+  @ViewChild('nvaFechaFinInput') nvaFechaFinInput!: ElementRef;
   @ViewChild('mismasCondiciones') mismasCondRadio!: MatRadioButton;
   @ViewChild('cambioContractual') cambioContractRadio!: MatRadioButton;
 
@@ -32,6 +34,7 @@ export class ContractRenovationRequestComponent implements OnInit, AfterViewInit
     nro_documento: 0,
     nombres: "",
     nombre_corto: "",
+    cod_linea_negocio: "",
     empresa: "",
     modalidad: "",
     remuneracion: "",
@@ -41,8 +44,9 @@ export class ContractRenovationRequestComponent implements OnInit, AfterViewInit
     puesto: "",
     nivel: "",
     modalidad_bono: "",
-    linea_negocio: ""
   }
+
+  minDate!: Date;
 
   constructor(private cd: ChangeDetectorRef,
               @Inject(MAT_DIALOG_DATA) public data: any,
@@ -64,7 +68,7 @@ export class ContractRenovationRequestComponent implements OnInit, AfterViewInit
   }
 
   focusNewContract(): void {
-      this.contratoNuevo.nativeElement.focus(); //Hacer foco en el input de fecha de contrato nuevo.
+      this.nvaFechaFinInput.nativeElement.focus(); //Hacer foco en el input de fecha de contrato nuevo.
   }
 
   checkSameConditions(): void {
@@ -73,15 +77,19 @@ export class ContractRenovationRequestComponent implements OnInit, AfterViewInit
     }
   }
 
-
-  getRenovationData(collaboratorId: number){
-    this.contractRenovationService.autocompleteFields(collaboratorId)
+  //TODO: revisar
+  getRenovationData(resourceMapId: number){
+    this.contractRenovationService.autocompleteFields(resourceMapId)
       .subscribe(renovationData => {
         console.log('autocomp. datos: ', renovationData);
         this.formData = renovationData;
+        let fechaIni = renovationData.fecha_inicio_nuevo;
+        console.log('fecha ini:', fechaIni);
+        this.minDate = new Date(fechaIni);
+        this.minDate.setDate(this.minDate.getDate()+1);
+        console.log(this.minDate);
       }, error => {
         console.error(error);
       })
   }
-
 }

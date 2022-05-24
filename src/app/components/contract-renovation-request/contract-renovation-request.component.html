@@ -10,7 +10,7 @@
 
     <mat-form-field>
       <mat-label>Línea de negocio</mat-label>
-      <input type="text" matInput disabled>
+      <input type="text" matInput disabled [(ngModel)]="this.formData.cod_linea_negocio">
     </mat-form-field>
 
     <mat-form-field>
@@ -71,7 +71,10 @@
         <mat-form-field>
           <mat-label>Modalidad</mat-label>
           <input type="text" matInput [disabled]="!this.nvaModalidad"
-           [(ngModel)]="this.formData.modalidad" >
+           [ngModel]="this.formData.modalidad | titlecase"
+           (ngModelChange)="this.formData.modalidad=$event">
+           <!-- Se está separando [(ngModel)] en [ngModel] y (ngModelChange) para
+          poder usar un pipe. Esto se repite en otros inputs más adelante también -->
         </mat-form-field>
 
         <!-- <mat-form-field>
@@ -83,63 +86,69 @@
           </mat-select>
         </mat-form-field> -->
 
-        <mat-form-field>
+        <mat-form-field class="short">
           <mat-label>Remuneración</mat-label>
-          <input type="number" matInput [disabled]="!this.nvoSueldo"
-          [(ngModel)]="this.formData.remuneracion">
+          <input class="currency" type="text" matInput [disabled]="!this.nvoSueldo"
+          [ngModel]="this.formData.remuneracion | currency: 'S/ ':'symbol':'1.2'"
+          (ngModelChange)="this.formData.remuneracion=$event">
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field class="short">
           <mat-label>Bono</mat-label>
-          <input type="number" matInput [disabled]="!this.nvoBono" max="600"
-          [(ngModel)]="this.formData.bono_men">
+          <input class="currency" type="text" matInput [disabled]="!this.nvoBono" max="600"
+          [ngModel]="this.formData.bono_men | currency: 'S/ ':'symbol':'1.2'">
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Modalidad Bono</mat-label>
-          <input type="text" matInput disabled [(ngModel)]="this.formData.modalidad_bono">
+          <input type="text" matInput [disabled]="!this.nvoBono"
+          [ngModel]="this.formData.modalidad_bono | titlecase"
+          (ngModelChange)="this.formData.modalidad_bono=$event">
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Puesto</mat-label>
           <input type="text" matInput [disabled]="!this.nvoPuesto"
-          [(ngModel)]="this.formData.puesto">
+          [ngModel]="this.formData.puesto | titlecase" (ngModelChange)="this.formData.puesto=$event">
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field class="short">
           <mat-label>Nivel</mat-label>
           <input type="text" matInput [disabled]="!this.nvoNivel"
-          [(ngModel)]="this.formData.nivel">
+          [ngModel]="this.formData.nivel | titlecase" (ngModelChange)="this.formData.nivel=$event">
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Fecha de fin <b>(contrato anterior)</b></mat-label>
-          <input type="text" matInput disabled [(ngModel)]="this.formData.fecha_fin_ant">
+          <input type="text" matInput disabled [ngModel]="this.formData.fecha_fin_ant | date:'dd/M/yyyy'"
+          (ngModelChange)="this.formData.fecha_fin_ant=$event">
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Fecha de inicio <b>(contrato nuevo)</b></mat-label>
-          <input type="text" matInput disabled [(ngModel)]="this.formData.fecha_inicio_nuevo">
+          <input type="text" matInput disabled [ngModel]="this.formData.fecha_inicio_nuevo | date:'dd/M/yyyy'"
+          (ngModelChange)="this.formData.fecha_inicio_nuevo=$event">
         </mat-form-field>
 
-        <mat-form-field>
+        <!-- <mat-form-field  floatLabel="always">
           <mat-label>Fecha de fin <b>(contrato nuevo)</b></mat-label>
           <input type="text" matInput #contratoNuevo>
+        </mat-form-field> -->
+
+        <mat-form-field floatLabel="always">
+          <mat-label>Fecha de fin <b>(contrato nuevo)</b></mat-label>
+          <input matInput [matDatepicker]="nvaFechaFin" [min]="this.minDate" required #nvaFechaFinInput>
+          <mat-datepicker-toggle matSuffix [for]="nvaFechaFin"></mat-datepicker-toggle>
+          <mat-datepicker #nvaFechaFin></mat-datepicker>
         </mat-form-field>
 
-        <!-- <mat-form-field>
-          <mat-label>Fecha de fin <b>(contrato nuevo)</b></mat-label>
-          <input matInput [matDatepicker]="contratoNuevo" required>
-          <mat-datepicker-toggle mat-suffix [for]="contratoNuevo"></mat-datepicker-toggle>
-          <mat-datepicker #contratoNuevo></mat-datepicker>
-        </mat-form-field> --> <!-- TODO: Foco en este campo da error cuando se trabaja como material datepicker -->
       </div>
 
     </div>
 
     <div class="btn-area">
       <button type="submit" class="register-btn" mat-raised-button>Registrar</button>
-      <button type="button" class="cancel-btn" mat-raised-button>Cancelar</button>
+      <button type="button" class="cancel-btn" mat-raised-button mat-dialog-close>Cancelar</button>
     </div>
 
 
