@@ -6,6 +6,7 @@ import { ICreateRenovationRequest, IGetRenovationData } from 'src/app/core/model
 import { ContractRenovationService } from 'src/app/core/services/contract-renovation.service';
 import { MatDatepicker, MatDatepickerInput } from '@angular/material/datepicker';
 import { DatePipe } from '@angular/common';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-contract-renovation-request',
@@ -58,7 +59,8 @@ export class ContractRenovationRequestComponent implements OnInit, AfterViewInit
   constructor(private cd: ChangeDetectorRef,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private contractRenovationService: ContractRenovationService,
-              public datePipe: DatePipe) { }
+              public datePipe: DatePipe,
+              private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     console.log('dialog data: ', this.data);
@@ -109,8 +111,20 @@ export class ContractRenovationRequestComponent implements OnInit, AfterViewInit
       this.contractRenovationService.createRenovationRequest(this.postData)
         .subscribe(createdRequest => {
           console.log(createdRequest);
+          this.notificationService.toast(
+            'success',
+            'Se creó la solicitud con éxito',
+            'OK',
+            5000
+          )
+        }, error => {
+          console.log(error);
+          this.notificationService.toast(
+            'error',
+            error.error.message,
+            'ERROR',
+            5000);
         })
     }
-
   }
 }

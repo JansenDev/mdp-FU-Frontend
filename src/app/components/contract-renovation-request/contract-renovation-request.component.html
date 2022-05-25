@@ -138,9 +138,13 @@
         <mat-form-field floatLabel="always">
           <mat-label>Fecha de fin <b>(contrato nuevo)</b></mat-label>
           <input matInput [matDatepicker]="nvaFechaFin" [min]="this.minDate" required
-          #nvaFechaFinInput [(ngModel)]="this.postData.fecha_fin_nuevo">
+          #nvaFechaFinInput #nvaFechaValida="ngModel" [(ngModel)]="this.postData.fecha_fin_nuevo">
           <mat-datepicker-toggle matSuffix [for]="nvaFechaFin"></mat-datepicker-toggle>
           <mat-datepicker #nvaFechaFin></mat-datepicker>
+          <mat-hint class="error" *ngIf="nvaFechaValida.invalid &&
+          (nvaFechaValida.dirty || nvaFechaValida.touched)">
+            Ingrese una fecha válida
+          </mat-hint>
         </mat-form-field>
 
       </div>
@@ -149,7 +153,7 @@
 
     <div class="btn-area">
       <button type="submit" (click)="createRenovationRequest()"
-      class="register-btn" mat-raised-button>Registrar</button>
+      class="register-btn" mat-raised-button [disabled]="nvaFechaValida.invalid" >Registrar</button>
       <button type="button" class="cancel-btn" mat-raised-button
        mat-dialog-close>Cancelar</button>
     </div>
