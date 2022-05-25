@@ -24,7 +24,7 @@ export class RenovationRequestComponent implements OnInit {
   
   formRenovationRequest: FormGroup;
 
-  formData: IGetRenovationData = {
+  formData: any = {
     nro_documento: 0,
     nombres: "",
     nombre_corto: "",
