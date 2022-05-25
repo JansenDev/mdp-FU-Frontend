@@ -2,9 +2,10 @@ import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewCh
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatRadioButton } from '@angular/material/radio';
-import { IGetRenovationData } from 'src/app/core/models/contract-renovation.model';
+import { ICreateRenovationRequest, IGetRenovationData } from 'src/app/core/models/contract-renovation.model';
 import { ContractRenovationService } from 'src/app/core/services/contract-renovation.service';
 import { MatDatepicker, MatDatepickerInput } from '@angular/material/datepicker';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-contract-renovation-request',
@@ -46,14 +47,22 @@ export class ContractRenovationRequestComponent implements OnInit, AfterViewInit
     modalidad_bono: "",
   }
 
-  minDate!: Date;
+  postData: ICreateRenovationRequest = {
+    cod_mapa_recurso: 0,
+    opcion_renovacion: "mismas condiciones",
+    fecha_fin_nuevo: ""
+  }
+
+  minDate!: Date; //TODO: para validar fecha minima en el datepicker
 
   constructor(private cd: ChangeDetectorRef,
               @Inject(MAT_DIALOG_DATA) public data: any,
-              private contractRenovationService: ContractRenovationService) { }
+              private contractRenovationService: ContractRenovationService,
+              public datePipe: DatePipe) { }
 
   ngOnInit(): void {
     console.log('dialog data: ', this.data);
+    this.postData.cod_mapa_recurso = this.data.codigo;
     this.getRenovationData(this.data.codigo);
   }
 
@@ -86,10 +95,22 @@ export class ContractRenovationRequestComponent implements OnInit, AfterViewInit
         let fechaIni = renovationData.fecha_inicio_nuevo;
         console.log('fecha ini:', fechaIni);
         this.minDate = new Date(fechaIni);
-        this.minDate.setDate(this.minDate.getDate()+1);
+        this.minDate.setDate(this.minDate.getDate()+1); //TODO: Zona horaria? Retorna 1 día menos del esperado
         console.log(this.minDate);
       }, error => {
         console.error(error);
       })
+  }
+
+  createRenovationRequest(){
+    if (this.postData.fecha_fin_nuevo){
+      let formatted = this.datePipe.transform(this.postData.fecha_fin_nuevo, 'yyyy-MM-dd');
+      this.postData.fecha_fin_nuevo = formatted;
+      this.contractRenovationService.createRenovationRequest(this.postData)
+        .subscribe(createdRequest => {
+          console.log(createdRequest);
+        })
+    }
+
   }
 }

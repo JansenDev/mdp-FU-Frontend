@@ -28,12 +28,12 @@
     <div class="renovation-data">
 
       <div class="conditions">
-        <mat-radio-group>
-          <mat-radio-button #mismasCondiciones value="mismasCondiciones">
+        <mat-radio-group [(ngModel)]="this.postData.opcion_renovacion">
+          <mat-radio-button #mismasCondiciones value="mismas condiciones">
             Mismas condiciones
           </mat-radio-button>
 
-          <mat-radio-button #cambioContractual value="cambioContractual">
+          <mat-radio-button #cambioContractual value="cambio contractual">
             Cambio contractual
           </mat-radio-button>
         </mat-radio-group>
@@ -137,7 +137,8 @@
 
         <mat-form-field floatLabel="always">
           <mat-label>Fecha de fin <b>(contrato nuevo)</b></mat-label>
-          <input matInput [matDatepicker]="nvaFechaFin" [min]="this.minDate" required #nvaFechaFinInput>
+          <input matInput [matDatepicker]="nvaFechaFin" [min]="this.minDate" required
+          #nvaFechaFinInput [(ngModel)]="this.postData.fecha_fin_nuevo">
           <mat-datepicker-toggle matSuffix [for]="nvaFechaFin"></mat-datepicker-toggle>
           <mat-datepicker #nvaFechaFin></mat-datepicker>
         </mat-form-field>
@@ -147,8 +148,10 @@
     </div>
 
     <div class="btn-area">
-      <button type="submit" class="register-btn" mat-raised-button>Registrar</button>
-      <button type="button" class="cancel-btn" mat-raised-button mat-dialog-close>Cancelar</button>
+      <button type="submit" (click)="createRenovationRequest()"
+      class="register-btn" mat-raised-button>Registrar</button>
+      <button type="button" class="cancel-btn" mat-raised-button
+       mat-dialog-close>Cancelar</button>
     </div>
 
 
