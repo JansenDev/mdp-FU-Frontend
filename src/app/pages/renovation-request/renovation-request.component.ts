@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatRadioButton } from '@angular/material/radio';
 import { IGetRenovationData } from 'src/app/core/models/contract-renovation.model';
+import { ContractRenovationService } from 'src/app/core/services/contract-renovation.service';
 
 @Component({
   selector: 'app-renovation-request',
@@ -21,7 +22,7 @@ export class RenovationRequestComponent implements OnInit {
   nvoBono: boolean = false;
   nvoPuesto: boolean = false;
   nvoNivel: boolean = false;
-  
+  idContract: number = 0;
   formRenovationRequest: FormGroup;
 
   formData: any = {
@@ -41,7 +42,11 @@ export class RenovationRequestComponent implements OnInit {
     motivo_rechazo: ""
   }
 
-  constructor(private formBuilder: FormBuilder,) {
+  constructor(private formBuilder: FormBuilder, 
+    private router: Router,
+    private contractRenovationService:ContractRenovationService) {
+      let route = this.router.getCurrentNavigation();
+      this.idContract = route?.extras.state != undefined ? route.extras.state['id'] : undefined;
       this.formRenovationRequest = this.formBuilder.group({
           inputClient: ['', null],
           
@@ -49,9 +54,21 @@ export class RenovationRequestComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getFields()
   }
 
   acceptRenovation() {
     console.log("Se acepta la renovación", this.formData)
+  }
+
+  refuseRenovation() {
+    
+  }
+  
+  getFields() {
+    this.contractRenovationService.autocompleteFields(this.idContract)
+    .subscribe(data => {
+      console.log("datos de renovación", data);
+    })
   }
 }

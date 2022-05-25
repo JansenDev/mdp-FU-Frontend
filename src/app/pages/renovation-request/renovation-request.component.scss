@@ -81,16 +81,22 @@ input[type=number] { //Firefox
   align-items: center;
   justify-content: center;
   gap: 1.5rem;
+  margin-top: 1rem;
 }
 
-.accept-btn{
+.accept-btn {
   background-color: var(--primary);
   color: var(--white);
 }
 
-.cancel-btn{
+.refuse-btn {
   background-color: var(--red);
   color: var(--white);
+}
+
+.cancel-btn {
+  background-color: var(--white);
+  color: var(--primary);
 }
 
 

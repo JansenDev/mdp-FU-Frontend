@@ -154,11 +154,12 @@ export class ContractImboxComponent implements OnInit {
         hiringRequestSelected.cod_solicitud_contratacion,
       ]);
     } else if(hiringRequestSelected.tipo_solicitud == "renovacion") {
-      this.router.navigate([
-        'contract-imbox',
+      this.router.navigate(
+        ['contract-imbox',
         'renovation-request',
-        hiringRequestSelected.cod_solicitud_contratacion,
-      ]);
+        hiringRequestSelected.cod_solicitud_contratacion],
+        { state: { id: hiringRequestSelected.cod_solicitud_contratacion } }
+      );
     }
     
   }
