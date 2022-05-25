@@ -101,14 +101,17 @@ export class ServiceDataComponent implements OnInit {
   }
 
 
-  //Filtros de fechas: validan que una fecha de inicio no sea igual a una fecha de fin, etc.
+  //Filtros de fechas: Se usaban para los datepickers de material, pero al final se optó por dejar
+  //los inputs de fecha nativos de HTML por un conflicto.
+  //Validan que una fecha de inicio no sea igual a una fecha de fin, etc.
   /* Son los filtros propios del Datepicker de Material, pero NO permiten mandar
   más parámetros además de la fecha recibida, entonces no pueden reusarse */
 
-  //TODO: Buscar una forma de hacer un filtro reusable, esto obviamente no es ideal pq se tiene 1 por cada campo 🙃
+  //Buscar una forma de hacer un filtro reusable, esto obviamente no es ideal pq se tiene 1 por cada campo 🙃
+
 
   //Filtro para que la fecha de fin planificada no pueda ser igual a la fecha de inicio planificada
-  endDateFilter = (d: Date | null): boolean => {
+  /* endDateFilter = (d: Date | null): boolean => {
     if (d) {
       d = new Date(d);
       const dateNum = (d || new Date()).getDate();
@@ -117,10 +120,10 @@ export class ServiceDataComponent implements OnInit {
       }
     }
     return true;
-  }
+  } */
 
   //Filtro para que la fecha de inicio planificada no pueda ser igual a la fecha de fin planificada
-  startDateFilter = (d: Date | null): boolean => {
+  /* startDateFilter = (d: Date | null): boolean => {
     if (d) {
       d = new Date(d);
       const dateNum = (d || new Date()).getDate();
@@ -129,10 +132,10 @@ export class ServiceDataComponent implements OnInit {
       }
     }
     return true;
-  }
+  } */
 
   //Filtro para que la fecha de fin real no pueda ser igual a la fecha de inicio real
-  realEndDateFilter = (d: Date | null): boolean => {
+  /* realEndDateFilter = (d: Date | null): boolean => {
     if (d) {
       d = new Date(d);
       const dateNum = (d || new Date()).getDate();
@@ -141,10 +144,10 @@ export class ServiceDataComponent implements OnInit {
       }
     }
     return true;
-  }
+  } */
 
     //Filtro para que la fecha de inicio real no pueda ser igual a la fecha de fin real
-    realStartDateFilter = (d: Date | null): boolean => {
+    /* realStartDateFilter = (d: Date | null): boolean => {
       if (d) {
         d = new Date(d);
         const dateNum = (d || new Date()).getDate();
@@ -153,7 +156,7 @@ export class ServiceDataComponent implements OnInit {
         }
       }
       return true;
-    }
+    } */
 
   loadClients(){
     this.servicesService.getClientsByCodUser().

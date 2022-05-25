@@ -19,6 +19,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule, MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatDialogModule } from '@angular/material/dialog';
+import { DatePipe } from '@angular/common';
 
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 
@@ -36,7 +37,9 @@ import { FormsModule } from '@angular/forms';
     {
       provide: MAT_RADIO_DEFAULT_OPTIONS,
       useValue: { color: 'primary' }
-    }
+    },
+    DatePipe
+
   ],
   exports: [
     TestpPipe,
@@ -60,7 +63,7 @@ import { FormsModule } from '@angular/forms';
     MatMomentDateModule,
     MatDividerModule,
     MaterialFileInputModule,
-    MatDialogModule
+    MatDialogModule,
   ],
 })
 export class SharedModule {}
