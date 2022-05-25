@@ -30,21 +30,41 @@
     </div>
 
     <h2>Datos de Contrato</h2>
-    <div class="detail-content">
-      <ul>
-        <li>Nro de Documento</li>
-        <li>Nombres y Apellidos</li>
-        <li>Modalidad</li>
-        <li>Fin de contrato</li>
-        <li>Salario</li>
-        <li>
-          Bono
+    <div class="detail-contract">
+
+        <li class="fila">
+          <div class="left">
+            Nro de Documento
+          </div>
+          <div class="right">
+            {{ contract.nro_documento }}
+          </div>
         </li>
-        <li>
-          CLM
+        <li class="fila">
+          <div class="left">Nombres y Apellidos</div>
+          <div class="right">{{contract.nombres + ' ' + contract.apellido_pat + ' ' + contract.apellido_mat}}</div>
         </li>
-      </ul>
-      <ul>
+        <li class="fila">
+          <div class="left">Modalidad</div>
+          <div class="right">{{contract.modalidad | titlecase}}</div>
+        </li>
+        <li class="fila">
+          <div class="left">Fin de contrato</div>
+          <div class="right">{{ contract.fecha_fin | date:'dd/MM/YYYY' }}</div>
+        </li>
+        <li class="fila">
+          <div class="left">Salario</div>
+          <div class="right">{{ contract.sueldo_planilla }}</div>
+        </li>
+        <li class="fila">
+          <div class="left">Bono</div>
+          <div class="right">{{ contract.bono }}</div>
+        </li>
+        <li class="fila">
+          <div class="left">CLM</div>
+          <div class="right">{{contract.clm }}</div>
+        </li>
+      <!-- <ul>
         <li>{{ contract.nro_documento }}</li>
         <li>{{contract.nombres + ' ' + contract.apellido_pat + ' ' + contract.apellido_mat}}</li>
         <li>{{ contract.modalidad | titlecase }}</li>
@@ -52,7 +72,7 @@
         <li>{{ contract.sueldo_planilla }}</li>
         <li>{{ contract.bono }}</li>
         <li>{{contract.clm }}</li>
-      </ul>
+      </ul> -->
     </div>
 
     <div class="content-around">
