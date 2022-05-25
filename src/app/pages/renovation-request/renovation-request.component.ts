@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, AfterViewInit, ChangeDetectorRef, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
+import { MatRadioButton } from '@angular/material/radio';
+import { IGetRenovationData } from 'src/app/core/models/contract-renovation.model';
 
 @Component({
   selector: 'app-renovation-request',
@@ -10,20 +11,47 @@ import { Router } from '@angular/router';
   encapsulation: ViewEncapsulation.None,
 })
 export class RenovationRequestComponent implements OnInit {
-  
-    formRenovationRequest: FormGroup;
+  @ViewChild('contratoNuevo') contratoNuevo!: ElementRef;
+  @ViewChild('mismasCondiciones') mismasCondRadio!: MatRadioButton;
+  @ViewChild('cambioContractual') cambioContractRadio!: MatRadioButton;
 
-constructor(private formBuilder: FormBuilder,) {
-    this.formRenovationRequest = this.formBuilder.group({
-        inputClient: ['', null],
-        
-    })
-}
+
+  nvaModalidad: boolean = false;
+  nvoSueldo: boolean = false;
+  nvoBono: boolean = false;
+  nvoPuesto: boolean = false;
+  nvoNivel: boolean = false;
+  
+  formRenovationRequest: FormGroup;
+
+  formData: IGetRenovationData = {
+    nro_documento: 0,
+    nombres: "",
+    nombre_corto: "",
+    empresa: "",
+    modalidad: "",
+    remuneracion: "",
+    bono_men: "",
+    fecha_fin_ant: "",
+    fecha_inicio_nuevo: "",
+    puesto: "",
+    nivel: "",
+    modalidad_bono: "",
+    linea_negocio: "",
+    motivo_rechazo: ""
+  }
+
+  constructor(private formBuilder: FormBuilder,) {
+      this.formRenovationRequest = this.formBuilder.group({
+          inputClient: ['', null],
+          
+      })
+  }
 
   ngOnInit(): void {
   }
 
-  onSubmitRenovationRequest() {
-
+  acceptRenovation() {
+    console.log("Se acepta la renovación", this.formData)
   }
 }

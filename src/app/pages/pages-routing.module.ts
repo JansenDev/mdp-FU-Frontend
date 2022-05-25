@@ -64,6 +64,11 @@ const routes: Routes = [
         // canActivate: [AuthorizationGuard],
       },
       {
+        path: 'contract-imbox/renovation-request/:idHiringRequest',
+        component: RenovationRequestComponent,
+        // canActivate: [AuthorizationGuard],
+      },
+      {
         path: 'period-administration',
         component: PeriodAdministrationComponent,
         canActivate: [AuthorizationGuard],

@@ -146,11 +146,21 @@ export class ContractImboxComponent implements OnInit {
   }
 
   onApproveHiringRequest(hiringRequestSelected: IContractImbox) {
-    this.router.navigate([
-      'contract-imbox',
-      'approveHiringRequestComponent',
-      hiringRequestSelected.cod_solicitud_contratacion,
-    ]);
+    console.log("hiringRequestSelected", hiringRequestSelected)
+    if(hiringRequestSelected.tipo_solicitud == "contratacion") {
+      this.router.navigate([
+        'contract-imbox',
+        'approveHiringRequestComponent',
+        hiringRequestSelected.cod_solicitud_contratacion,
+      ]);
+    } else if(hiringRequestSelected.tipo_solicitud == "renovacion") {
+      this.router.navigate([
+        'contract-imbox',
+        'renovation-request',
+        hiringRequestSelected.cod_solicitud_contratacion,
+      ]);
+    }
+    
   }
 
   private get userProfile() {

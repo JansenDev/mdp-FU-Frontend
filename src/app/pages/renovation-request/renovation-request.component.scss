@@ -1,22 +1,110 @@
-$width_page: 90%;
+@import "src/assets/scss/_variables.scss";
 
-
-.renovation-request {
-  width: calc(100% - 60px);
-  display: inline-block;
-  margin-left: 60px;
+section{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
-.renovation-request--container {
-    width: $width_page;
-    margin: 20px auto 0 auto;
-  
-    & .renovation-request--title {
-      // padding-top: 10px;
-      font-weight: 600;
-      text-shadow: 2px 2px var(--gray);
-      color: var(--black);
-      font-family: var(--font-family);
-      font-size: 30px;
-    }
-}  
+.collaborator-data{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  border-radius: 5px;
+  border: 1px solid var(--black);
+  padding: 0.75rem;
+  gap: 1rem;
+  margin-bottom: 30px;
+}
+
+.renovation-data{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  border-radius: 5px;
+  border: 1px solid var(--black);
+  padding: 0.75rem;
+  gap: 1rem;
+}
+
+.conditions{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  flex-direction: row;
+}
+
+.renovation-details {
+  flex-direction: column;
+}
+
+.checkboxes {
+  flex-direction: row;
+}
+
+.checkboxes, .renovation-details{
+  display: flex;
+  column-gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.mat-radio-group{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 1rem;
+}
+
+::ng-deep .-mat-checkbox-checked.mat-accent .mat-checkbox-ripple .mat-ripple-element{
+  background-color: var(--primary);
+}
+
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+  background-color: var(--primary);
+}
+
+/* Eliminar flechas de number inputs */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] { //Firefox
+  -moz-appearance: textfield;
+}
+/* ----------------------------------- */
+
+.btn-area{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.accept-btn{
+  background-color: var(--primary);
+  color: var(--white);
+}
+
+.cancel-btn{
+  background-color: var(--red);
+  color: var(--white);
+}
+
+
+.renovation-container {
+  margin-top: 30px;
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
+.mat-form-field {
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.mat-form-field-appearance-fill .mat-form-field-flex {
+  background-color: rgba(0,0,0, .0);
+}

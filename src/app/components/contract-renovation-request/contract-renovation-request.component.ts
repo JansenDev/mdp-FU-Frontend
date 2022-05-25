@@ -41,7 +41,8 @@ export class ContractRenovationRequestComponent implements OnInit, AfterViewInit
     puesto: "",
     nivel: "",
     modalidad_bono: "",
-    linea_negocio: ""
+    linea_negocio: "",
+    motivo_rechazo: ""
   }
 
   constructor(private cd: ChangeDetectorRef,

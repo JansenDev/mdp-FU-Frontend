@@ -11,5 +11,6 @@ export interface IGetRenovationData {
   puesto: string,
   nivel: string,
   modalidad_bono: string,
-  linea_negocio: string
+  linea_negocio: string,
+  motivo_rechazo: string
 }
