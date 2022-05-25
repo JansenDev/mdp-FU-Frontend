@@ -10,5 +10,5 @@ export interface Contract {
   clm: string;
   cod_contrato: number;
   modalidad: string;
-  fecha_fin: Date;
+  fecha_fin: Date | null;
 }

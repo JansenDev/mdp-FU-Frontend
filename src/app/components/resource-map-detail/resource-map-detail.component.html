@@ -1,5 +1,3 @@
-<!-- Botón de detalle usado en la rama en la que el componente estaba solo -->
-<!-- <button (click)="toggleDetail()" mat-raised-button color="primary">Abrir detalle</button> --> <!-- (click)="loadDetail(1)" -->
 <aside class="detail" [class.active]="showDetail">
   <div class="detail-container">
     <img (click)="closeDetail()" class="close-icon" src="../../../assets/img/close_icon.png" alt="close">
@@ -43,20 +41,16 @@
           Bono
         </li>
         <li>
-          EPS
-        </li>
-        <li>
           CLM
         </li>
       </ul>
       <ul>
         <li>{{ contract.nro_documento }}</li>
         <li>{{contract.nombres + ' ' + contract.apellido_pat + ' ' + contract.apellido_mat}}</li>
-        <li>{{ contract.modalidad }}</li>
+        <li>{{ contract.modalidad | titlecase }}</li>
         <li>{{ contract.fecha_fin | date:'dd/MM/YYYY' }}</li>
         <li>{{ contract.sueldo_planilla }}</li>
         <li>{{ contract.bono }}</li>
-        <li>{{ contract.eps }}</li>
         <li>{{contract.clm }}</li>
       </ul>
     </div>

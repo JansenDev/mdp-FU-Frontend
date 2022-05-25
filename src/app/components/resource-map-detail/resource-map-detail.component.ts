@@ -21,7 +21,6 @@ export class ResourceMapDetailComponent implements OnInit {
   @Input() cod_colaborador = 0;
   @Input() cod_mapa_recurso = null;
   @Output() closed = new EventEmitter(); //Emitter para mandar el valor de cerrar detalle de vuelta al padre
-  currentTab = 0;
 
   productivity: Productivity = {
     eficiencia: "",
@@ -49,7 +48,7 @@ export class ResourceMapDetailComponent implements OnInit {
     clm: "",
     cod_contrato: 0,
     modalidad: "",
-    fecha_fin: new Date()
+    fecha_fin: null
   };
 
   periodStatusSelected = '';
@@ -60,12 +59,9 @@ export class ResourceMapDetailComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  toggleDetail() {
-    this.showDetail = !this.showDetail;
-  }
-
   closeDetail() {
     this.showDetail = false;
+    this.clearFields();
     this.closed.emit();
   }
 
@@ -97,6 +93,40 @@ export class ResourceMapDetailComponent implements OnInit {
         }, error => {
           console.error(error);
         })
+  }
+
+  clearFields(){
+    this.contract = {
+      cod_colaborador: 0,
+      nro_documento: "",
+      nombres: "",
+      apellido_pat: "",
+      apellido_mat: "",
+      sueldo_planilla: "",
+      bono: "",
+      eps: "",
+      clm: "",
+      cod_contrato: 0,
+      modalidad: "",
+      fecha_fin: null
+    }
+
+    this.productivity = {
+      eficiencia: "",
+      rendimiento: "",
+      horas_servicio: 0,
+      licencias: 0,
+      faltas: 0,
+      vacaciones: 0,
+      horas_extras: 0,
+      total_horas_asignaciones: 0,
+      total_horas_facturables: 0,
+      capacity: 0,
+      estado: ""
+    }
+
+    this.assignments = [];
+    this.tableData = [];
   }
 
   openDialog(): void {

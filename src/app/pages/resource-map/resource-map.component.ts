@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -28,7 +28,7 @@ import { getToken } from 'src/app/core/utils/token.storage';
   encapsulation: ViewEncapsulation.None,
 })
 export class ResourceMapComponent implements OnInit {
-  @ViewChild(ResourceMapDetailComponent, { static: false }) //permite llamar a los métodos del componente hijo desde este padre
+  @ViewChild(ResourceMapDetailComponent, { static: true }) //permite llamar a los métodos del componente hijo desde este padre
   private resourceDetailComponent!: ResourceMapDetailComponent;
   @ViewChild(MatPaginator)
   paginator: MatPaginator = {} as MatPaginator;
@@ -52,6 +52,7 @@ export class ResourceMapComponent implements OnInit {
     'productividad',
   ];
   rowSelected: IResourceResponse = {} as IResourceResponse;
+  lastRowSelected: IResourceResponse = {} as IResourceResponse;
   resourceForm: FormGroup;
   periodsList: IPeriodResponse[] = [] as IPeriodResponse[];
   profileList: IProfileResponse[] = [];
@@ -86,7 +87,8 @@ export class ResourceMapComponent implements OnInit {
   contractExpireSelect: string = '';
   constructor(
     private resourceService: ResourceService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private cd: ChangeDetectorRef
   ) {
     this.resourceForm = this.formBuilder.group({
       cboxPeriod: ['', Validators.required],
@@ -168,22 +170,25 @@ export class ResourceMapComponent implements OnInit {
     this.rowSelected = resourceMapItem;
     this.cod_colaborador = parseInt(resourceMapItem.cod_colaborador);
     this.cod_mapa_recurso = parseInt(resourceMapItem.cod_mapa_recurso);
-    this.resourceDetailComponent.loadProductivity(this.cod_mapa_recurso);
-    this.resourceDetailComponent.loadContract(
-      this.cod_colaborador,
-      this.periodSelected,
-      this.periodStatusSelected
-    );
-    this.resourceDetailComponent.loadAssignments(
-      this.cod_colaborador,
-      this.periodSelected,
-      this.idClient
-    );
+    if (!this.showDetail){
+        this.resourceDetailComponent.loadProductivity(this.cod_mapa_recurso);
+      this.resourceDetailComponent.loadContract(
+        this.cod_colaborador,
+        this.periodSelected,
+        this.periodStatusSelected
+      );
+      this.resourceDetailComponent.loadAssignments(
+        this.cod_colaborador,
+        this.periodSelected,
+        this.idClient
+      );
+    }
 
-    if (this.showDetail) {
-      this.showDetail = false;
-    } else {
+
+    if (!this.showDetail) {
       this.showDetail = true;
+    } else {
+      this.resourceDetailComponent.closeDetail();
     }
     console.log(this.showDetail);
   }
