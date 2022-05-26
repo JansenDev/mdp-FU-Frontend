@@ -1,5 +1,5 @@
 export interface IGetRenovationData {
-  nro_documento: number,
+  nro_documento: string,
   nombres: string,
   nombre_corto: string,
   cod_linea_negocio: string,

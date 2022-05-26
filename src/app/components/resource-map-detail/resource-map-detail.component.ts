@@ -6,6 +6,7 @@ import { Productivity } from 'src/app/core/models/productivity.model';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { IPeriodResponse } from 'src/app/core/models/period.model';
 import { ContractRenovationRequestComponent } from '../contract-renovation-request/contract-renovation-request.component';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-resource-map-detail',
@@ -16,7 +17,8 @@ import { ContractRenovationRequestComponent } from '../contract-renovation-reque
 export class ResourceMapDetailComponent implements OnInit {
 
   constructor(private resourceDetailService: ResourceDetailService,
-              private dialog: MatDialog) {  }
+              private dialog: MatDialog,
+              private notificationService: NotificationService) {  }
   @Input() showDetail = false;
   @Input() cod_colaborador = 0;
   @Input() cod_mapa_recurso = null;
@@ -56,6 +58,7 @@ export class ResourceMapDetailComponent implements OnInit {
   assignments: Assignment[] = [];
   tableData: Assignment[] = [];
   columnsToDisplay = ['service', 'name', 'percentage', 'start', 'end'];
+  allowDialog : boolean = false;
 
   ngOnInit(): void {}
 
@@ -77,9 +80,20 @@ export class ResourceMapDetailComponent implements OnInit {
   loadContract(id: number, period: string, estatus: string){
     this.resourceDetailService.getContractByCollaboratorIdAndPeriod(id, period)
       .subscribe(contractData => {
-        this.contract = contractData;
+        if (contractData){
+          this.contract = contractData;
+          this.allowDialog = true;
+        } else {
+          this.allowDialog = false;
+        }
       }, error => {
         console.error(error);
+        this.notificationService.toast(
+          'error',
+          'No se encontró contrato para el colaborador',
+          'ERROR',
+          5000
+        )
       })
     this.periodStatusSelected = estatus;
   }
@@ -129,15 +143,37 @@ export class ResourceMapDetailComponent implements OnInit {
     this.tableData = [];
   }
 
+  //Para evitar falla del diálogo si algún valor es nulo
+  checkNulls() : boolean {
+    return (this.contract.nro_documento == null && !this.contract.nombres && !this.contract.apellido_mat &&
+      !this.contract.apellido_pat && !this.contract.sueldo_planilla && !this.contract.bono &&
+      !this.contract.eps && !this.contract.clm && !this.contract.modalidad &&
+      this.contract.cod_contrato == 0 && !this.contract.fecha_fin && this.contract.cod_contrato == 0 &&
+      !this.assignments)
+  }
+
   openDialog(): void {
-    const dialogRef = this.dialog.open(ContractRenovationRequestComponent,
-      {
-        autoFocus: false, //Desactiva el foco auto. en el 1er input
-        width: '80%',
-        data: {
-          codigo: this.cod_mapa_recurso
-        }
-      })
+    //let anyNulls = this.checkNulls();
+
+    if (this.allowDialog){
+      const dialogRef = this.dialog.open(ContractRenovationRequestComponent,
+        {
+          autoFocus: false, //Desactiva el foco auto. en el 1er input
+          width: '80%',
+          data: {
+            codigo: this.cod_mapa_recurso
+          }
+        })
+    } else {
+      console.log("No se puede abrir el dialogo!");
+      this.notificationService.toast(
+        'error',
+        '¡No se puede renovar sin contrato!',
+        'ERROR',
+        5000
+      )
+
+    }
 
   }
 }
