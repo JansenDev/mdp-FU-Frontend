@@ -89,7 +89,7 @@ export class RenovationRequestComponent implements OnInit {
   }
 
   refuseRenovation() {
-    this.contractRenovationService.refuseRenovation(this.idContract)
+    this.contractRenovationService.refuseRenovation({"cod_solicitud_renovacion": this.idContract, "motivo_rechazo": this.formData.motivo_rechazo})
     .subscribe(data => {
       console.log("datos de rechazo de renovación", data);
       this.notification.toast('success', 'Se rechazó la renovación correctamente!');
