@@ -39,7 +39,7 @@ export class RenovationRequestComponent implements OnInit {
     puesto: "",
     nivel: "",
     modalidad_bono: "",
-    linea_negocio: "",
+    cod_linea_negocio: "",
     motivo_rechazo: ""
   }
 
