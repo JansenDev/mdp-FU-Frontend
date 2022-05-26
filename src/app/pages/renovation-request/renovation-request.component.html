@@ -110,7 +110,7 @@
           <mat-form-field>
             <mat-label>Fecha de fin <b>(contrato anterior)</b></mat-label>
             <input type="text" matInput disabled 
-            [ngModel]="this.formData.fecha_fin_ant | date:'dd/M/yyyy'"
+            [ngModel]="this.formData.fecha_fin_ant | date:'dd/MM/yyyy'"
             (ngModelChange)="this.formData.fecha_fin_ant=$event"
             >
           </mat-form-field>
@@ -120,7 +120,7 @@
           <mat-form-field>
             <mat-label>Fecha de inicio <b>(contrato nuevo)</b></mat-label>
             <input type="text" matInput disabled 
-            [ngModel]="this.formData.fecha_inicio_nuevo | date:'dd/M/yyyy'"
+            [ngModel]="this.formData.fecha_inicio_nuevo | date:'dd/MM/yyyy'"
             (ngModelChange)="this.formData.fecha_inicio_nuevo=$event"
             >
           </mat-form-field>
@@ -128,7 +128,7 @@
           <mat-form-field>
             <mat-label>Fecha de fin <b>(contrato nuevo)</b></mat-label>
             <input type="text" matInput #contratoNuevo disabled 
-            [ngModel]="this.formData.fecha_fin_nuevo | date:'dd/M/yyyy'"
+            [ngModel]="this.formData.fecha_fin_nuevo | date:'dd/MM/yyyy'"
             (ngModelChange)="this.formData.fecha_fin_nuevo=$event"
             >
           </mat-form-field>
@@ -142,7 +142,7 @@
               matInput 
               placeholder="Motivo del rechazo" 
               [(ngModel)]="this.formData.motivo_rechazo"
-              [disabled]="this.state"
+              [disabled]="!this.state"
               required
               >
             </textarea>
