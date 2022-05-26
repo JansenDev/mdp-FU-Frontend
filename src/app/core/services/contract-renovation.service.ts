@@ -21,8 +21,8 @@ export class ContractRenovationService {
     return this.http.post<ICreateRenovationResponse>(`${url}/create`, postData);
   }
   
-  refuseRenovation(cod_solicitud_renovacion: number) {
-    return this.http.get<any>(`${url}/reject/${cod_solicitud_renovacion}`);
+  refuseRenovation(body: any) {
+    return this.http.post<any>(`${url}/reject/${body.cod_solicitud_renovacion}`, body.motivo_rechazo);
   }
 
   acceptRenovation(cod_solicitud_renovacion: number) {

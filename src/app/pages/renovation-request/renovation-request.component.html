@@ -121,7 +121,7 @@
 
           <mat-form-field>
             <mat-label>Fecha de fin <b>(contrato nuevo)</b></mat-label>
-            <input type="text" matInput #contratoNuevo>
+            <input type="text" matInput #contratoNuevo disabled [(ngModel)]="this.formData.fecha_fin_nuevo">
           </mat-form-field>
         </div>
 
