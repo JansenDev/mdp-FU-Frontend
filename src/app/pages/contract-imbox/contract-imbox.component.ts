@@ -158,7 +158,9 @@ export class ContractImboxComponent implements OnInit {
         ['contract-imbox',
         'renovation-request',
         hiringRequestSelected.cod_solicitud_contratacion],
-        { state: { id: hiringRequestSelected.cod_solicitud_contratacion } }
+        { state: { id: hiringRequestSelected.cod_solicitud_contratacion, 
+          tipo_solicitud: hiringRequestSelected.tipo_solicitud }
+        }
       );
     }
     

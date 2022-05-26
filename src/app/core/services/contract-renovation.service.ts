@@ -20,4 +20,12 @@ export class ContractRenovationService {
   createRenovationRequest(postData: ICreateRenovationRequest){ //TODO: tipar data
     return this.http.post<ICreateRenovationResponse>(`${url}/create`, postData);
   }
+  
+  refuseRenovation(cod_solicitud_renovacion: number) {
+    return this.http.get<any>(`${url}/reject/${cod_solicitud_renovacion}`);
+  }
+  
+  getRenovationFields(idContract : number) {
+    return this.http.get<any>(`${url_base}/solicitude/${idContract}/renovacion`);
+  }
 }

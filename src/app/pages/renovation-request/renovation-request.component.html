@@ -140,6 +140,7 @@
         class="accept-btn" 
         mat-raised-button
         (click)="acceptRenovation()"
+        *ngIf="!(this.typeRequest == 'renovacion')"
       >
         Aceptar
       </button>
@@ -148,6 +149,7 @@
         class="refuse-btn" 
         mat-raised-button
         (click)="refuseRenovation()"
+        *ngIf="!(this.typeRequest == 'renovacion')"
       >
         Rechazar
       </button>
@@ -155,6 +157,7 @@
         type="button" 
         class="cancel-btn" 
         mat-raised-button
+        routerLink="/contract-imbox"
       >
         Cancelar
       </button>

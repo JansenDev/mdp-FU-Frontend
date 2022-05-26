@@ -23,6 +23,7 @@ export class RenovationRequestComponent implements OnInit {
   nvoPuesto: boolean = false;
   nvoNivel: boolean = false;
   idContract: number = 0;
+  typeRequest: string = "";
   formRenovationRequest: FormGroup;
 
   formData: any = {
@@ -44,9 +45,11 @@ export class RenovationRequestComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, 
     private router: Router,
-    private contractRenovationService:ContractRenovationService) {
+    private contractRenovationService:ContractRenovationService,
+    private cd: ChangeDetectorRef,) {
       let route = this.router.getCurrentNavigation();
       this.idContract = route?.extras.state != undefined ? route.extras.state['id'] : undefined;
+      this.typeRequest = route?.extras.state != undefined ? route.extras.state['tipo_solicitud'] : undefined;
       this.formRenovationRequest = this.formBuilder.group({
           inputClient: ['', null],
           
@@ -56,19 +59,36 @@ export class RenovationRequestComponent implements OnInit {
   ngOnInit(): void {
     this.getFields()
   }
+  
+  ngAfterViewInit(): void {
+    this.checkSameConditions();
+    //Se llama a la detección de cambios después de actualizar los valores para
+    //evitar el error NG0100: Expression has changed after it was checked
+    this.cd.detectChanges();
+  }
+
+  checkSameConditions(): void {
+    if (this.mismasCondRadio){
+      this.mismasCondRadio.checked = true;
+    }
+  }
 
   acceptRenovation() {
     console.log("Se acepta la renovación", this.formData)
   }
 
   refuseRenovation() {
-    
+    this.contractRenovationService.refuseRenovation(this.idContract)
+    .subscribe(data => {
+      console.log("datos de rechazo de renovación", data);
+    })
   }
   
   getFields() {
-    this.contractRenovationService.autocompleteFields(this.idContract)
+    this.contractRenovationService.getRenovationFields(this.idContract)
     .subscribe(data => {
       console.log("datos de renovación", data);
+      this.formData = data;
     })
   }
 }
