@@ -159,7 +159,8 @@ export class ContractImboxComponent implements OnInit {
         'renovation-request',
         hiringRequestSelected.cod_solicitud_contratacion],
         { state: { id: hiringRequestSelected.cod_solicitud_contratacion, 
-          tipo_solicitud: hiringRequestSelected.tipo_solicitud }
+          tipo_solicitud: hiringRequestSelected.tipo_solicitud, 
+          estado: this.isPendingHiringRequest(hiringRequestSelected.estado) }
         }
       );
     }

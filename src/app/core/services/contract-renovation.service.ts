@@ -24,6 +24,10 @@ export class ContractRenovationService {
   refuseRenovation(cod_solicitud_renovacion: number) {
     return this.http.get<any>(`${url}/reject/${cod_solicitud_renovacion}`);
   }
+
+  acceptRenovation(cod_solicitud_renovacion: number) {
+    return this.http.get<any>(`${url}/approve/${cod_solicitud_renovacion}`);
+  }
   
   getRenovationFields(idContract : number) {
     return this.http.get<any>(`${url_base}/solicitude/${idContract}/renovacion`);

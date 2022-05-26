@@ -28,7 +28,7 @@ export class SummaryService {
   }
 
   getPrueba(input : any) {
-    let URL = 'https://futurov01.herokuapp.com/api/v1' + '/resources/montoservicio/';
+    let URL = url_base + '/resources/montoservicio/';
     // console.log("URL CARLOS:", URL);
     console.log("print", input);
     return this.httpClient.post<any>(URL, input);

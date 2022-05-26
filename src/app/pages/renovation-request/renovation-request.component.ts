@@ -24,6 +24,7 @@ export class RenovationRequestComponent implements OnInit {
   nvoNivel: boolean = false;
   idContract: number = 0;
   typeRequest: string = "";
+  state: boolean = false;
   formRenovationRequest: FormGroup;
 
   formData: any = {
@@ -50,6 +51,7 @@ export class RenovationRequestComponent implements OnInit {
       let route = this.router.getCurrentNavigation();
       this.idContract = route?.extras.state != undefined ? route.extras.state['id'] : undefined;
       this.typeRequest = route?.extras.state != undefined ? route.extras.state['tipo_solicitud'] : undefined;
+      this.state = route?.extras.state != undefined ? route.extras.state['estado'] : undefined;
       this.formRenovationRequest = this.formBuilder.group({
           inputClient: ['', null],
           
@@ -74,7 +76,10 @@ export class RenovationRequestComponent implements OnInit {
   }
 
   acceptRenovation() {
-    console.log("Se acepta la renovación", this.formData)
+    this.contractRenovationService.acceptRenovation(this.idContract)
+    .subscribe(data => {
+      console.log("datos de aceptación de renovación", data);
+    })
   }
 
   refuseRenovation() {
