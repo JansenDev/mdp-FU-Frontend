@@ -22,7 +22,7 @@ export class ContractRenovationService {
   }
   
   refuseRenovation(body: any) {
-    return this.http.post<any>(`${url}/reject/${body.cod_solicitud_renovacion}`, body.motivo_rechazo);
+    return this.http.post<any>(`${url}/reject/${body.cod_solicitud_renovacion}`, {"motivo_rechazo":body.motivo_rechazo});
   }
 
   acceptRenovation(cod_solicitud_renovacion: number) {
