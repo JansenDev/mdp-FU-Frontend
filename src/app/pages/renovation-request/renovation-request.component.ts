@@ -9,7 +9,6 @@ import { NotificationService } from 'src/app/core/services/notification.service'
   selector: 'app-renovation-request',
   templateUrl: './renovation-request.component.html',
   styleUrls: ['./renovation-request.component.scss'],
-  encapsulation: ViewEncapsulation.None,
 })
 export class RenovationRequestComponent implements OnInit {
   @ViewChild('contratoNuevo') contratoNuevo!: ElementRef;
@@ -45,7 +44,7 @@ export class RenovationRequestComponent implements OnInit {
   }
 
   constructor(
-    private formBuilder: FormBuilder, 
+    private formBuilder: FormBuilder,
     private router: Router,
     private contractRenovationService:ContractRenovationService,
     private cd: ChangeDetectorRef,
@@ -56,14 +55,14 @@ export class RenovationRequestComponent implements OnInit {
       this.state = route?.extras.state != undefined ? route.extras.state['estado'] : undefined;
       this.formRenovationRequest = this.formBuilder.group({
           inputClient: ['', null],
-          
+
       })
   }
 
   ngOnInit(): void {
     this.getFields()
   }
-  
+
   ngAfterViewInit(): void {
     this.checkSameConditions();
     //Se llama a la detección de cambios después de actualizar los valores para
@@ -98,7 +97,7 @@ export class RenovationRequestComponent implements OnInit {
       this.notification.toast('error', 'Error! No se pudo rechazar la renovación');
     })
   }
-  
+
   getFields() {
     this.contractRenovationService.getRenovationFields(this.idContract)
     .subscribe(data => {

@@ -31,13 +31,13 @@
             <mat-radio-button #mismasCondiciones value="mismasCondiciones" disabled>
               Mismas condiciones
             </mat-radio-button>
-  
+
             <mat-radio-button #cambioContractual value="cambioContractual" disabled>
               Cambio contractual
             </mat-radio-button>
           </mat-radio-group>
         </div>
-        
+
 
         <mat-form-field>
           <mat-label>Empresa</mat-label>
@@ -75,51 +75,51 @@
             <input type="text" matInput [disabled]="!this.nvaModalidad"
              [(ngModel)]="this.formData.modalidad" >
           </mat-form-field>
-  
+
           <mat-form-field>
             <mat-label>Remuneración</mat-label>
             <input type="number" matInput [disabled]="!this.nvoSueldo"
             [(ngModel)]="this.formData.remuneracion">
           </mat-form-field>
-  
+
           <mat-form-field>
             <mat-label>Bono</mat-label>
             <input type="number" matInput [disabled]="!this.nvoBono" max="600"
             [(ngModel)]="this.formData.bono_men">
           </mat-form-field>
-  
+
           <mat-form-field>
             <mat-label>Modalidad Bono</mat-label>
             <input type="text" matInput disabled [(ngModel)]="this.formData.modalidad_bono">
           </mat-form-field>
         </div>
-        
+
         <div>
           <mat-form-field>
             <mat-label>Puesto</mat-label>
             <input type="text" matInput [disabled]="!this.nvoPuesto"
             [(ngModel)]="this.formData.puesto">
           </mat-form-field>
-  
+
           <mat-form-field>
             <mat-label>Nivel</mat-label>
             <input type="text" matInput [disabled]="!this.nvoNivel"
             [(ngModel)]="this.formData.nivel">
           </mat-form-field>
-  
+
           <mat-form-field>
             <mat-label>Fecha de fin <b>(contrato anterior)</b></mat-label>
-            <input type="text" matInput disabled 
+            <input type="text" matInput disabled
             [ngModel]="this.formData.fecha_fin_ant | date:'dd/MM/yyyy'"
             (ngModelChange)="this.formData.fecha_fin_ant=$event"
             >
           </mat-form-field>
         </div>
-        
+
         <div>
           <mat-form-field>
             <mat-label>Fecha de inicio <b>(contrato nuevo)</b></mat-label>
-            <input type="text" matInput disabled 
+            <input type="text" matInput disabled
             [ngModel]="this.formData.fecha_inicio_nuevo | date:'dd/MM/yyyy'"
             (ngModelChange)="this.formData.fecha_inicio_nuevo=$event"
             >
@@ -127,7 +127,7 @@
 
           <mat-form-field>
             <mat-label>Fecha de fin <b>(contrato nuevo)</b></mat-label>
-            <input type="text" matInput #contratoNuevo disabled 
+            <input type="text" matInput #contratoNuevo disabled
             [ngModel]="this.formData.fecha_fin_nuevo | date:'dd/MM/yyyy'"
             (ngModelChange)="this.formData.fecha_fin_nuevo=$event"
             >
@@ -135,12 +135,12 @@
         </div>
 
         <div>
-          <mat-form-field class="example-full-width" appearance="fill">
+          <mat-form-field appearance="fill">
             <mat-label>Motivo rechazo</mat-label>
-            <textarea 
+            <textarea
               id="text-area"
-              matInput 
-              placeholder="Motivo del rechazo" 
+              matInput
+              placeholder="Motivo del rechazo"
               [(ngModel)]="this.formData.motivo_rechazo"
               [disabled]="!this.state"
               required
@@ -152,18 +152,18 @@
     </div>
 
     <div class="btn-area">
-      <button 
-        type="submit" 
-        class="accept-btn" 
+      <button
+        type="submit"
+        class="accept-btn"
         mat-raised-button
         (click)="acceptRenovation()"
         *ngIf="this.state"
       >
         Aceptar
       </button>
-      <button 
-        type="submit" 
-        class="refuse-btn" 
+      <button
+        type="submit"
+        class="refuse-btn"
         mat-raised-button
         (click)="refuseRenovation()"
         *ngIf="this.state"
@@ -171,9 +171,9 @@
       >
         Rechazar
       </button>
-      <button 
-        type="button" 
-        class="cancel-btn" 
+      <button
+        type="button"
+        class="cancel-btn"
         mat-raised-button
         routerLink="/contract-imbox"
       >
