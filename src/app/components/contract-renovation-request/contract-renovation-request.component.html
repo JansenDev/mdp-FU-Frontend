@@ -138,8 +138,7 @@
         <mat-form-field floatLabel="always">
           <mat-label>Fecha de fin <b>(contrato nuevo)</b></mat-label>
           <input matInput [matDatepicker]="nvaFechaFin" [min]="this.minDate" required
-          #nvaFechaFinInput #nvaFechaValida="ngModel" [ngModel]="this.postData.fecha_fin_nuevo | date:'dd/MM/yyyy' "
-          (ngModelChange)="this.postData.fecha_fin_nuevo=$event">
+          #nvaFechaFinInput #nvaFechaValida="ngModel" [(ngModel)]="this.postData.fecha_fin_nuevo">
           <mat-datepicker-toggle matSuffix [for]="nvaFechaFin"></mat-datepicker-toggle>
           <mat-datepicker #nvaFechaFin></mat-datepicker>
           <mat-hint class="error" *ngIf="nvaFechaValida.invalid &&
