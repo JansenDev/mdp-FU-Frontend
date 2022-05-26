@@ -1,6 +1,6 @@
 <div class="renovation-container">
   <h2>Datos del colaborador</h2>
-  <div class="collaborator-data">
+  <div class="data-collaborator">
     <mat-form-field>
       <mat-label>Cliente</mat-label>
       <input type="text" matInput disabled [(ngModel)]="this.formData.nombre_corto">
@@ -23,16 +23,16 @@
   </div>
 
     <h2>Datos de renovación</h2>
-    <div class="renovation-data">
+    <div class="data-renovation">
 
-      <div class="conditions">
+      <div class="conditions-group">
         <div>
           <mat-radio-group>
-            <mat-radio-button #mismasCondiciones value="mismasCondiciones">
+            <mat-radio-button #mismasCondiciones value="mismasCondiciones" disabled>
               Mismas condiciones
             </mat-radio-button>
   
-            <mat-radio-button #cambioContractual value="cambioContractual">
+            <mat-radio-button #cambioContractual value="cambioContractual" disabled>
               Cambio contractual
             </mat-radio-button>
           </mat-radio-group>
@@ -45,7 +45,7 @@
         </mat-form-field>
       </div>
 
-      <div class="checkboxes" *ngIf="this.mismasCondRadio &&
+      <div class="checkboxs" *ngIf="this.mismasCondRadio &&
       this.mismasCondRadio.checked == false">
         <mat-checkbox [(ngModel)]="this.nvaModalidad">
           Nueva modalidad
@@ -68,7 +68,7 @@
         </mat-checkbox>
       </div>
 
-      <div class="renovation-details">
+      <div class="renovation-detail">
         <div>
           <mat-form-field>
             <mat-label>Modalidad</mat-label>
@@ -142,6 +142,7 @@
               matInput 
               placeholder="Motivo del rechazo" 
               [(ngModel)]="this.formData.motivo_rechazo"
+              [disabled]="this.state"
               required
               >
             </textarea>

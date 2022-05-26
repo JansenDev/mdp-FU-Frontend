@@ -6,7 +6,7 @@ section{
   gap: 1rem;
 }
 
-.collaborator-data{
+.data-collaborator {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
@@ -17,7 +17,7 @@ section{
   margin-bottom: 30px;
 }
 
-.renovation-data{
+.data-renovation {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -27,7 +27,7 @@ section{
   gap: 1rem;
 }
 
-.conditions{
+.conditions-group {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
@@ -38,11 +38,11 @@ section{
   flex-direction: column;
 }
 
-.checkboxes {
+.checkboxs {
   flex-direction: row;
 }
 
-.checkboxes, .renovation-details{
+.checkboxes, .renovation-detail{
   display: flex;
   column-gap: 1rem;
   flex-wrap: wrap;
