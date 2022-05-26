@@ -29,7 +29,7 @@
 
       <div class="conditions">
         <mat-radio-group [(ngModel)]="this.postData.opcion_renovacion">
-          <mat-radio-button #mismasCondiciones value="mismas condiciones">
+          <mat-radio-button #mismasCondiciones (change)="this.onSameConditionsChange()" value="mismas condiciones">
             Mismas condiciones
           </mat-radio-button>
 
@@ -70,7 +70,7 @@
       <div class="renovation-details">
         <mat-form-field>
           <mat-label>Modalidad</mat-label>
-          <input type="text" matInput [disabled]="!this.nvaModalidad"
+          <input type="text" matInput [disabled]="!this.nvaModalidad || !this.cambioContractRadio"
            [ngModel]="this.formData.modalidad | titlecase"
            (ngModelChange)="this.formData.modalidad=$event">
            <!-- Se está separando [(ngModel)] en [ngModel] y (ngModelChange) para

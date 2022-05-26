@@ -14,7 +14,7 @@ import { NotificationService } from 'src/app/core/services/notification.service'
   styleUrls: ['./contract-renovation-request.component.scss']
 })
 export class ContractRenovationRequestComponent implements OnInit, AfterViewInit {
-  //@ViewChild('contratoNuevo') contratoNuevo!: ElementRef;
+  //Referenciass a los radio buttons y al input para fijar valores iniciales/hacer foco
   @ViewChild('nvaFechaFinInput') nvaFechaFinInput!: ElementRef;
   @ViewChild('mismasCondiciones') mismasCondRadio!: MatRadioButton;
   @ViewChild('cambioContractual') cambioContractRadio!: MatRadioButton;
@@ -33,7 +33,7 @@ export class ContractRenovationRequestComponent implements OnInit, AfterViewInit
   ]
 
   formData: IGetRenovationData = {
-    nro_documento: 0,
+    nro_documento: "",
     nombres: "",
     nombre_corto: "",
     cod_linea_negocio: "",
@@ -63,7 +63,6 @@ export class ContractRenovationRequestComponent implements OnInit, AfterViewInit
               private notificationService: NotificationService) { }
 
   ngOnInit(): void {
-    console.log('dialog data: ', this.data);
     this.postData.cod_mapa_recurso = this.data.codigo;
     this.getRenovationData(this.data.codigo);
   }
@@ -71,24 +70,31 @@ export class ContractRenovationRequestComponent implements OnInit, AfterViewInit
   ngAfterViewInit(): void {
       this.checkSameConditions();
       this.focusNewContract();
-
       //Se llama a la detección de cambios después de actualizar los valores para
       //evitar el error NG0100: Expression has changed after it was checked
       this.cd.detectChanges();
-
   }
 
   focusNewContract(): void {
       this.nvaFechaFinInput.nativeElement.focus(); //Hacer foco en el input de fecha de contrato nuevo.
   }
 
-  checkSameConditions(): void {
+  checkSameConditions(): void { //Marcar por default el radio button de mismas condiciones (caso más común)
     if (this.mismasCondRadio){
       this.mismasCondRadio.checked = true;
     }
   }
 
-  //TODO: revisar
+  onSameConditionsChange(){
+    this.nvaModalidad = false;
+    this.nvoSueldo = false;
+    this.nvoBono = false;
+    this.nvoPuesto = false;
+    this.nvoNivel = false;
+  }
+
+  //Llamadas a métodos de backend
+
   getRenovationData(resourceMapId: number){
     this.contractRenovationService.autocompleteFields(resourceMapId)
       .subscribe(renovationData => {
