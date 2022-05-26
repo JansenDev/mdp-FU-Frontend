@@ -26,15 +26,18 @@
     <div class="renovation-data">
 
       <div class="conditions">
-        <mat-radio-group>
-          <mat-radio-button #mismasCondiciones value="mismasCondiciones">
-            Mismas condiciones
-          </mat-radio-button>
-
-          <mat-radio-button #cambioContractual value="cambioContractual">
-            Cambio contractual
-          </mat-radio-button>
-        </mat-radio-group>
+        <div>
+          <mat-radio-group>
+            <mat-radio-button #mismasCondiciones value="mismasCondiciones">
+              Mismas condiciones
+            </mat-radio-button>
+  
+            <mat-radio-button #cambioContractual value="cambioContractual">
+              Cambio contractual
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+        
 
         <mat-form-field>
           <mat-label>Empresa</mat-label>
@@ -125,9 +128,13 @@
         <div>
           <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>Motivo rechazo</mat-label>
-            <textarea matInput 
+            <textarea 
+              id="text-area"
+              matInput 
               placeholder="Motivo del rechazo" 
-              [(ngModel)]="this.formData.motivo_rechazo">
+              [(ngModel)]="this.formData.motivo_rechazo"
+              required
+              >
             </textarea>
           </mat-form-field>
         </div>
@@ -150,6 +157,7 @@
         mat-raised-button
         (click)="refuseRenovation()"
         *ngIf="this.state"
+        [disabled]="formData.motivo_rechazo == '' || formData.motivo_rechazo == null"
       >
         Rechazar
       </button>

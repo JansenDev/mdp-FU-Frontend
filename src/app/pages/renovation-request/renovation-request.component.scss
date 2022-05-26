@@ -114,3 +114,15 @@ input[type=number] { //Firefox
 .mat-form-field-appearance-fill .mat-form-field-flex {
   background-color: rgba(0,0,0, .0);
 }
+
+div > .mat-form-field-infix {
+  display: block;
+  position: relative;
+  flex: auto;
+  min-width: 200px;
+  width: 350px;
+}
+
+#text-area {
+  width: 500px;
+}

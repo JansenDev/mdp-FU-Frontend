@@ -2,8 +2,8 @@ import { Component, OnInit, ViewChild, ViewEncapsulation, AfterViewInit, ChangeD
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatRadioButton } from '@angular/material/radio';
-import { IGetRenovationData } from 'src/app/core/models/contract-renovation.model';
 import { ContractRenovationService } from 'src/app/core/services/contract-renovation.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-renovation-request',
@@ -44,10 +44,12 @@ export class RenovationRequestComponent implements OnInit {
     motivo_rechazo: ""
   }
 
-  constructor(private formBuilder: FormBuilder, 
+  constructor(
+    private formBuilder: FormBuilder, 
     private router: Router,
     private contractRenovationService:ContractRenovationService,
-    private cd: ChangeDetectorRef,) {
+    private cd: ChangeDetectorRef,
+    private notification: NotificationService,) {
       let route = this.router.getCurrentNavigation();
       this.idContract = route?.extras.state != undefined ? route.extras.state['id'] : undefined;
       this.typeRequest = route?.extras.state != undefined ? route.extras.state['tipo_solicitud'] : undefined;
@@ -79,6 +81,10 @@ export class RenovationRequestComponent implements OnInit {
     this.contractRenovationService.acceptRenovation(this.idContract)
     .subscribe(data => {
       console.log("datos de aceptación de renovación", data);
+      this.notification.toast('success', 'Se aceptó la renovación correctamente!');
+      this.router.navigate(['/contract-imbox']);
+    }, err => {
+      this.notification.toast('error', 'Error! No se pudo aceptar la renovación');
     })
   }
 
@@ -86,6 +92,10 @@ export class RenovationRequestComponent implements OnInit {
     this.contractRenovationService.refuseRenovation(this.idContract)
     .subscribe(data => {
       console.log("datos de rechazo de renovación", data);
+      this.notification.toast('success', 'Se rechazó la renovación correctamente!');
+      this.router.navigate(['/contract-imbox']);
+    }, err => {
+      this.notification.toast('error', 'Error! No se pudo rechazar la renovación');
     })
   }
   
