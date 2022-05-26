@@ -155,25 +155,16 @@ export class ResourceMapDetailComponent implements OnInit {
   openDialog(): void {
     //let anyNulls = this.checkNulls();
 
-    if (this.allowDialog){
-      const dialogRef = this.dialog.open(ContractRenovationRequestComponent,
-        {
-          autoFocus: false, //Desactiva el foco auto. en el 1er input
-          width: '80%',
-          data: {
-            codigo: this.cod_mapa_recurso
-          }
-        })
-    } else {
-      console.log("No se puede abrir el dialogo!");
-      this.notificationService.toast(
-        'error',
-        '¡No se puede renovar sin contrato!',
-        'ERROR',
-        5000
-      )
 
+    const dialogRef = this.dialog.open(ContractRenovationRequestComponent,
+      {
+        autoFocus: false, //Desactiva el foco auto. en el 1er input
+        width: '80%',
+        data: {
+          codigo: this.cod_mapa_recurso
+        }
+      })
     }
 
   }
-}
+
