@@ -88,6 +88,10 @@ export class RenovationRequestComponent implements OnInit {
   }
 
   refuseRenovation() {
+    if(this.formData.motivo_rechazo == null || this.formData.motivo_rechazo == '') {
+      this.notification.toast('warning', 'Se debe colocar un motivo de rechazo!');
+      return;
+    }
     this.contractRenovationService.refuseRenovation({"cod_solicitud_renovacion": this.idContract, "motivo_rechazo": this.formData.motivo_rechazo})
     .subscribe(data => {
       console.log("datos de rechazo de renovación", data);

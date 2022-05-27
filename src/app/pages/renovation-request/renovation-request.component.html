@@ -167,7 +167,6 @@
         mat-raised-button
         (click)="refuseRenovation()"
         *ngIf="this.state"
-        [disabled]="formData.motivo_rechazo == '' || formData.motivo_rechazo == null"
       >
         Rechazar
       </button>
