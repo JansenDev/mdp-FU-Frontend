@@ -39,6 +39,13 @@ export class HiringRequestComponent implements OnInit {
   documentMaxLength: number = DOCUMENT_TYPY_LENGTH['DNI'];
   isvalidDocumentNumber = true;
   fileCv: any = undefined;
+  clm_validacion = 0;
+  factorPlanilla = 0;
+  factorRxh = 0;
+  rem_validacion = 0;
+  bono_validacion = 0;
+  auxProd = 0;
+  minProd = 1.3;
 
   // amountCurrent: IEPS = {} as IEPS;
   constructor(
@@ -97,6 +104,7 @@ export class HiringRequestComponent implements OnInit {
   ngOnInit(): void {
     this.fillAllCBoxInit();
     this.setSpanishDateFormat();
+    this.getFactors();
   }
 
   fillAllCBoxInit() {
@@ -445,7 +453,6 @@ export class HiringRequestComponent implements OnInit {
               bonus = 0;
             }
           }
-
           const clm = remuneration * parameter + bonus;
 
           let resultProductity = tariff / clm;
@@ -453,6 +460,7 @@ export class HiringRequestComponent implements OnInit {
           this.formHiringRequest.controls['inputProductivity'].setValue(
             resultProductity.toFixed(2)
           );
+          this.auxProd = this.formHiringRequest.controls['inputProductivity'].value;
         });
     }
   }
@@ -574,4 +582,46 @@ export class HiringRequestComponent implements OnInit {
 
     // this.router.navigate(['/home']);
   }
+
+  getFactors(){
+    this.hiringRequestService.getParameters('factor_planilla')
+    .subscribe((parameterResponse) => {
+      const [parameterObj] = parameterResponse;
+      this.factorPlanilla = parseFloat(parameterObj.valor_num_1);
+      console.log('planilla: ', this.factorPlanilla);
+    });
+
+    this.hiringRequestService.getParameters('factor_rxh_practicas')
+    .subscribe((parameterResponse) => {
+      const [parameterObj] = parameterResponse;
+      this.factorRxh = parseFloat(parameterObj.valor_num_1);
+      console.log('rxh: ', this.factorRxh);
+    });
+  }
+
+  //Para calcular el clm mientras se ingresan los valores. Se puede optimizar usando eventos/valores que ya se tienen
+  calcClmValidacion(){
+    console.log('clm: ', this.clm_validacion);
+    let bonoInput = this.formHiringRequest.controls['inputMonthlyBonus'].value;
+    if (bonoInput){
+      this.bono_validacion = parseFloat(bonoInput);
+    } else {
+      this.bono_validacion = 0;
+    }
+    let remInput = this.formHiringRequest.controls['inputRemuneration'].value;
+    if (remInput){
+      this.rem_validacion = parseFloat(remInput);
+    } else {
+      this.rem_validacion = 0;
+    }
+
+    const modality = this.formHiringRequest.controls['cBoxmodality'].value;
+    if (modality == 'planilla'){
+      this.clm_validacion = this.rem_validacion * this.factorPlanilla + this.bono_validacion
+    } else {
+        this.clm_validacion = this.rem_validacion * this.factorRxh + this.bono_validacion
+    }
+  }
+
+
 }

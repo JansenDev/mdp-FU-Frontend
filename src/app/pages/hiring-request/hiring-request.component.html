@@ -188,7 +188,8 @@
         <div class="contract--row2">
           <mat-form-field>
             <mat-label>Puesto</mat-label>
-            <mat-select formControlName="cBoxProfile" required>
+            <mat-select formControlName="cBoxProfile" required
+            (valueChange)="calcClmValidacion()">
               <mat-option
                 *ngFor="let profile of profileList"
                 [value]="profile.cod_perfil"
@@ -199,7 +200,8 @@
 
           <mat-form-field>
             <mat-label>Nivel</mat-label>
-            <mat-select formControlName="cBoxLevel" required>
+            <mat-select formControlName="cBoxLevel" required
+            (valueChange)="calcClmValidacion()">
               <mat-option value="junior">Junior</mat-option>
               <mat-option value="semisenior">Semi Senior</mat-option>
               <mat-option value="senior">Senior</mat-option>
@@ -220,7 +222,7 @@
 
           <mat-form-field>
             <mat-label>Modalidad</mat-label>
-            <mat-select formControlName="cBoxmodality" required>
+            <mat-select formControlName="cBoxmodality" required (valueChange)="calcClmValidacion()" >
               <mat-option value="planilla">Planilla</mat-option>
               <mat-option value="practicante">Practicante</mat-option>
               <mat-option value="RXH">RXH</mat-option>
@@ -236,12 +238,18 @@
               formControlName="inputRemuneration"
               matInput
               required
+              (ngModelChange)="calcClmValidacion()"
             />
+            <mat-hint *ngIf="this.clm_validacion > salaryBandObj.maximo"
+              class="warning">
+              Sueldo excede banda salarial.
+            </mat-hint>
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>Bono</mat-label>
-            <input maxlength="5" formControlName="inputMonthlyBonus" matInput />
+            <input maxlength="5" formControlName="inputMonthlyBonus" matInput
+            (ngModelChange)="calcClmValidacion()" />
           </mat-form-field>
 
           <mat-form-field>
@@ -251,7 +259,7 @@
 
           <mat-form-field>
             <mat-label>Productividad</mat-label>
-            <input formControlName="inputProductivity" matInput />
+            <input formControlName="inputProductivity" matInput #prod />
           </mat-form-field>
         </div>
 
@@ -319,7 +327,10 @@
 
           <mat-form-field>
             <mat-label>Condición</mat-label>
-            <textarea formControlName="inputCondition" matInput></textarea>
+            <textarea formControlName="inputCondition" matInput #condicion
+            [required]="this.clm_validacion > salaryBandObj.maximo ||
+            (this.auxProd != 0 && this.auxProd < this.minProd) "></textarea>
+            <mat-hint *ngIf="condicion.required" >Campo requerido</mat-hint>
           </mat-form-field>
         </div>
       </div>
