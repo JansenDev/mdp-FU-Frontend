@@ -1,9 +1,11 @@
 .header {
   background-color: var(--primary);
+  color: var(--white);
   text-align: right;
   padding-top: 10px;
-  text-shadow: 1px 1px var(--black);
-  font-weight: 600;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
 }
 
 a {

@@ -1,4 +1,5 @@
 <div *ngIf="already_logued" class="header">
+  <p>{{ this.name }}</p>
   <a *ngIf="already_logued" routerLink="/login" (click)="logout()">
     <!-- <span>Cerrar Sesión</span> -->
     <mat-icon>exit_to_app</mat-icon>

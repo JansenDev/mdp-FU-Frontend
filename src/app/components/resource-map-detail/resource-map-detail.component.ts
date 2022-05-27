@@ -63,7 +63,7 @@ export class ResourceMapDetailComponent implements OnInit {
   allowedRoles: string[] = [
     'JEFE_DE_SERVICIOS',
     'DELIVERY_MANAGER',
-    'GERENTE_OUTSOURCING'
+    'GERENTE_DE_OUTSOURCING'
   ];
 
   ngOnInit(): void {

@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class HeaderComponent implements OnInit {
 
   already_logued : boolean = true;
+  name: string = "";
 
   constructor() { }
 
@@ -15,6 +16,9 @@ export class HeaderComponent implements OnInit {
     // if(localStorage.getItem("jwt"))
     //   this.already_logued = true;
     // else this.already_logued = false;
+    let jwt = localStorage.getItem("jwt_decoded") + "" ;
+    let obj = JSON.parse(jwt);
+    this.name = obj.nombre;
   }
   logout() {
     // localStorage.removeItem("user");
