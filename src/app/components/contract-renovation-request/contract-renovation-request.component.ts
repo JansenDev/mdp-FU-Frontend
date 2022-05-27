@@ -25,6 +25,7 @@ export class ContractRenovationRequestComponent implements OnInit, AfterViewInit
   nvoBono: boolean = false;
   nvoPuesto: boolean = false;
   nvoNivel: boolean = false;
+  allowRenovation: boolean = false;
 
   modes = [
     'Planilla',

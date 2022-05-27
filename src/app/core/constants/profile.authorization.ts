@@ -32,6 +32,13 @@ export const authorizations: IAuthorizations = {
     'service-map',
     'services-configuration',
   ],
+  GERENTE_OUTSOURCING: [
+    ...BASIC_ROUTES,
+    'resources',
+    'hiring-request',
+    'service-map',
+    'services-configuration',
+  ],
 };
 
 export interface IAuthorizations {
@@ -41,4 +48,5 @@ export interface IAuthorizations {
   GERENTE_GENERAL: string[];
   ANALYST: string[];
   JEFE_DE_SERVICIOS: string[];
+  GERENTE_OUTSOURCING: string[];
 }

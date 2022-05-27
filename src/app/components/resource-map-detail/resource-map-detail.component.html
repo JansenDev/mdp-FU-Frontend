@@ -76,8 +76,10 @@
     </div>
 
     <div class="content-around">
+
       <button
-            [disabled]="productivity.estado != 'A' || periodStatusSelected != 'A'"
+            [disabled]="productivity.estado != 'A' || periodStatusSelected != 'A' ||
+            !this.allowedRoles.includes(this.role) "
             type="submit"
             mat-raised-button
             color="primary"

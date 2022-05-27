@@ -23,6 +23,7 @@ export class ResourceMapDetailComponent implements OnInit {
   @Input() cod_colaborador = 0;
   @Input() cod_mapa_recurso = null;
   @Output() closed = new EventEmitter(); //Emitter para mandar el valor de cerrar detalle de vuelta al padre
+  role: string = "";
 
   productivity: Productivity = {
     eficiencia: "",
@@ -59,8 +60,18 @@ export class ResourceMapDetailComponent implements OnInit {
   tableData: Assignment[] = [];
   columnsToDisplay = ['service', 'name', 'percentage', 'start', 'end'];
   allowDialog : boolean = false;
+  allowedRoles: string[] = [
+    'JEFE_DE_SERVICIOS',
+    'DELIVERY_MANAGER',
+    'GERENTE_OUTSOURCING'
+  ];
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    let jwt = localStorage.getItem("jwt_decoded") + "" ;
+    let obj = JSON.parse(jwt);
+    this.role = obj.userProfile;
+    console.log(this.role);
+  }
 
   closeDetail() {
     this.showDetail = false;
