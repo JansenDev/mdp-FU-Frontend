@@ -6,6 +6,7 @@ export const authorizations: IAuthorizations = {
     'resources',
     'hiring-request',
     'service-map',
+    'contract-imbox',
     'services-configuration',
   ],
   JEFE_DE_PROYECTO: [...BASIC_ROUTES, 'service-map', 'services-configuration'],
@@ -30,6 +31,7 @@ export const authorizations: IAuthorizations = {
     'resources',
     'hiring-request',
     'service-map',
+    'contract-imbox',
     'services-configuration',
   ],
   GERENTE_DE_OUTSOURCING: [
@@ -37,6 +39,7 @@ export const authorizations: IAuthorizations = {
     'resources',
     'hiring-request',
     'service-map',
+    'contract-imbox',
     'services-configuration',
   ],
 };
