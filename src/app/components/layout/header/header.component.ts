@@ -20,6 +20,7 @@ export class HeaderComponent implements OnInit {
     // localStorage.removeItem("user");
     // localStorage.removeItem("token");
     localStorage.removeItem("jwt");
+    localStorage.removeItem("jwt_decoded");
     // localStorage.removeItem("already_logued");
     // localStorage.setItem("already_logued", "false");
     // this.already_logued = localStorage.getItem("already_logued") == "false";

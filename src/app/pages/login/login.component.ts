@@ -49,14 +49,9 @@ export class LoginComponent implements OnInit {
     // console.log('input:', input);
     this.service.login(input).subscribe((data) => {
       setToken(data.token);
-      console.log("data login", data);
-      // console.log(data)
-      // localStorage.setItem("jwt", data.token);
-      // let jwt_decoded : any = jwtDecode(data.token)
-      // jwt_decoded = {...jwt_decoded, id_sesion : 40}
-      // console.log("jwt_decoded", jwt_decoded);
-      // localStorage.setItem("token", JSON.stringify(jwt_decoded));
-      // localStorage.setItem("already_logued", "true");
+      let jwt_decoded : any = jwtDecode(data.token)
+      localStorage.setItem("jwt", data.token);      
+      localStorage.setItem("jwt_decoded", JSON.stringify(jwt_decoded));
       this.router.navigate(['/home']);
     }
     , error => {
