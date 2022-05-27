@@ -157,7 +157,7 @@
         class="accept-btn"
         mat-raised-button
         (click)="acceptRenovation()"
-        *ngIf="this.state"
+        *ngIf="this.state && isValidUser()"
       >
         Aceptar
       </button>
@@ -166,7 +166,7 @@
         class="refuse-btn"
         mat-raised-button
         (click)="refuseRenovation()"
-        *ngIf="this.state"
+        *ngIf="this.state && isValidUser()"
       >
         Rechazar
       </button>

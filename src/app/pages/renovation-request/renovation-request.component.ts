@@ -61,6 +61,7 @@ export class RenovationRequestComponent implements OnInit {
 
   ngOnInit(): void {
     this.getFields()
+    this.isValidUser()
   }
 
   ngAfterViewInit(): void {
@@ -108,5 +109,15 @@ export class RenovationRequestComponent implements OnInit {
       console.log("datos de renovación", data);
       this.formData = data;
     })
+  }
+
+  isValidUser() {
+    let userProfile = localStorage.getItem("jwt_decoded");
+    userProfile = JSON.parse(userProfile + "").userProfile;
+    if((userProfile == 'DELIVERY_MANAGER') 
+      || (userProfile == 'JEFE_DE_SERVICIOS') 
+      ||  (userProfile == 'GERENTE_DE_OUTSOURCING')) 
+        return false;
+    else return true;
   }
 }
