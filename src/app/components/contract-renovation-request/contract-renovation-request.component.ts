@@ -14,10 +14,14 @@ import { NotificationService } from 'src/app/core/services/notification.service'
   styleUrls: ['./contract-renovation-request.component.scss']
 })
 export class ContractRenovationRequestComponent implements OnInit, AfterViewInit {
-  //Referenciass a los radio buttons y al input para fijar valores iniciales/hacer foco
-  @ViewChild('nvaFechaFinInput') nvaFechaFinInput!: ElementRef;
+  //Referencias a los radio buttons/inputs para fijar valores iniciales/hacer foco según sea necesario
+
+  //Radio buttons
   @ViewChild('mismasCondiciones') mismasCondRadio!: MatRadioButton;
   @ViewChild('cambioContractual') cambioContractRadio!: MatRadioButton;
+
+  //Inputs
+  @ViewChild('nvaFechaFinInput') nvaFechaFinInput!: ElementRef;
 
   //Valores iniciales de checkboxes
   nvaModalidad: boolean = false;
@@ -27,13 +31,37 @@ export class ContractRenovationRequestComponent implements OnInit, AfterViewInit
   nvoNivel: boolean = false;
   allowRenovation: boolean = false;
 
-  modes = [
+  //modalidades
+  contractModes = [
     'Planilla',
     'RxH',
     'Practicante'
   ]
 
+  //Modalidades de bono
+  bonusModes = [
+    'Mensual',
+    'Trimestral',
+    'Otros'
+  ]
+
   formData: IGetRenovationData = {
+    nro_documento: "",
+    nombres: "",
+    nombre_corto: "",
+    cod_linea_negocio: "",
+    empresa: "",
+    modalidad: "",
+    remuneracion: "",
+    bono_men: "",
+    fecha_fin_ant: "",
+    fecha_inicio_nuevo: "",
+    puesto: "",
+    nivel: "",
+    modalidad_bono: "",
+  }
+
+  auxForm: IGetRenovationData = {
     nro_documento: "",
     nombres: "",
     nombre_corto: "",
@@ -92,6 +120,21 @@ export class ContractRenovationRequestComponent implements OnInit, AfterViewInit
     this.nvoBono = false;
     this.nvoPuesto = false;
     this.nvoNivel = false;
+    console.log('cond change');
+    this.resetFields();
+  }
+
+  resetFields(): void {
+    /* this.formData.bono_men = this.auxForm.bono_men;
+    this.formData.modalidad = this.auxForm.modalidad;
+    this.formData.remuneracion = this.auxForm.remuneracion;
+    this.formData.fecha_fin_ant = this.auxForm.fecha_fin_ant
+    this.formData.puesto = this.auxForm.puesto;
+    this.formData.nivel = this.auxForm.nivel;
+    this.formData.modalidad_bono = this.auxForm.modalidad_bono; */
+    this.formData = {...this.auxForm};
+    console.log('formData: ', this.formData);
+    console.log('auxForm: ', this.auxForm);
   }
 
   //Llamadas a métodos de backend
@@ -101,6 +144,9 @@ export class ContractRenovationRequestComponent implements OnInit, AfterViewInit
       .subscribe(renovationData => {
         console.log('autocomp. datos: ', renovationData);
         this.formData = renovationData;
+        this.auxForm = {...this.formData};
+        console.log('formData: ', this.formData);
+        console.log('auxForm: ', this.auxForm);
         let fechaIni = renovationData.fecha_inicio_nuevo;
         console.log('fecha ini:', fechaIni);
         this.minDate = new Date(fechaIni);
